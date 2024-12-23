@@ -1,0 +1,16 @@
+{
+  "name": "@fluxora/utils",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "main": "build/fluxora.utils.js",
+  "types": "build/fluxora.utils.d.ts",
+  "dependencies": {
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "vite": "^6.0.4",
+    "vite-plugin-dts": "^4.4.0",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}

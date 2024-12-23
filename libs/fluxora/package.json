@@ -1,0 +1,9 @@
+{
+  "name": "fluxora",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "bin": "./bin/fluxora.js",
+  "dependencies": {
+    "@fluxora/cli": "workspace:^"
+  }
+}

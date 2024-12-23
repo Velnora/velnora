@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "jsx": "react-jsx",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "downlevelIteration": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@fluxora/cli": ["libs/cli/src/main.ts"],
+      "@fluxora/core": ["libs/core/src/main.ts"],
+      "@fluxora/utils": ["libs/utils/src/main.ts"],
+      "@fluxora/cli-commands": ["libs/cli-commands/src/main.ts"]
+    }
+  }
+}

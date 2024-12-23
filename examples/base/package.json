@@ -1,0 +1,14 @@
+{
+  "name": "@fluxora/base-example",
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
+  "scripts": {
+    "dev": "fluxora dev"
+  },
+  "devDependencies": {
+    "fluxora": "workspace:^",
+    "vite": "^6.0.4"
+  }
+}

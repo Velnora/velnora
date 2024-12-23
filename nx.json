@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/build"],
+      "cache": true
+    },
+    "watch": {
+      "outputs": ["{projectRoot}/build"],
+      "cache": true
+    }
+  },
+  "defaultBase": "master",
+  "plugins": [
+    {
+      "plugin": "@nx/vite/plugin",
+      "options": {
+        "buildTargetName": "vite:build",
+        "testTargetName": "test",
+        "serveTargetName": "serve",
+        "previewTargetName": "preview",
+        "serveStaticTargetName": "serve-static",
+        "typecheckTargetName": "typecheck"
+      }
+    }
+  ]
+}

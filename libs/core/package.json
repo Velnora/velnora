@@ -1,0 +1,17 @@
+{
+  "name": "@fluxora/core",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "main": "build/fluxora.core.js",
+  "types": "build/fluxora.core.d.ts",
+  "dependencies": {
+    "@fluxora/utils": "workspace:^"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "type-fest": "^4.30.2",
+    "vite": "^6.0.4",
+    "vite-plugin-dts": "^4.4.0",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}

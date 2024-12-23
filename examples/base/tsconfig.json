@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "paths": {
+      "@base-example/utils": ["./libs/utils/src/main.ts"]
+    }
+  }
+}
