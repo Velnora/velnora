@@ -1,1 +1,3 @@
-export type Merge<T, U> = Omit<T, keyof U> & U;
+import type { Prettify } from "../prettify";
+
+export type Merge<T, U> = Prettify<Omit<T, keyof U> & U>;

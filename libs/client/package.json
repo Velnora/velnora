@@ -1,0 +1,42 @@
+{
+  "name": "@fluxora/client",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./build/fluxora.client.js",
+      "require": "./build/fluxora.client.js",
+      "types": "./build/fluxora.client.d.ts"
+    },
+    "./react/entry-client": {
+      "import": "./build/fluxora.entry-client.react.js",
+      "require": "./build/fluxora.entry-client.react.js",
+      "types": "./build/fluxora.entry-client.react.d.ts"
+    },
+    "./react/entry-server": {
+      "import": "./build/fluxora.entry-server.react.js",
+      "require": "./build/fluxora.entry-server.react.js",
+      "types": "./build/fluxora.entry-server.react.d.ts"
+    }
+  },
+  "main": "build/fluxora.client.js",
+  "types": "build/fluxora.client.d.ts",
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "vite": "^6.0.7",
+    "vite-plugin-dts": "^4.5.0",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "devDependecies": {
+    "@types/node": "^22.10.2",
+    "vite": "^6.0.4",
+    "vite-plugin-dts": "^4.4.0",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}

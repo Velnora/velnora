@@ -8,7 +8,7 @@ export const createLogger = (options?: LoggerOptions): Logger => {
 
   const printFormat = format.printf(({ level, message, timestamp, ...meta }) => {
     const metaString = Object.keys(meta).length ? ` ${JSON.stringify(meta, null, 2)}` : "";
-    return `${timestamp} [${name}] [${level}]: ${message} ${metaString}`;
+    return `[Fluxora] ${process.pid} - ${timestamp} [${level}] (${name}): ${message} ${metaString}`;
   });
 
   const loggerTransports: Transport[] = [];

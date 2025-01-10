@@ -1,0 +1,37 @@
+{
+  "name": "@fluxora/server",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./build/fluxora.server.js",
+      "require": "./build/fluxora.server.js",
+      "types": "./build/fluxora.server.d.ts"
+    },
+    "./entry-dev": {
+      "import": "./build/fluxora.entry-dev.js",
+      "require": "./build/fluxora.entry-dev.js",
+      "types": "./build/fluxora.entry-dev.d.ts"
+    },
+    "./entry-prod": {
+      "import": "./build/fluxora.entry-prod.js",
+      "require": "./build/fluxora.entry-prod.js",
+      "types": "./build/fluxora.entry-prod.d.ts"
+    }
+  },
+  "main": "build/fluxora.client.js",
+  "types": "build/fluxora.client.d.ts",
+  "dependencies": {
+    "@nestjs/core": "^10.4.15",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react-dom": "^19.0.2"
+  },
+  "devDependecies": {
+    "@types/node": "^22.10.2",
+    "vite": "^6.0.4",
+    "vite-plugin-dts": "^4.4.0",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}

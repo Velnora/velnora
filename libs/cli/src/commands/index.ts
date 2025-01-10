@@ -7,4 +7,4 @@ export const defineCommand = (name: string, description?: string) => {
   return new Command(name, description);
 };
 
-export const commands: CommandsType = [import("./dev")];
+export const commands: CommandsType = [import("./dev"), import("./build")];

@@ -1,0 +1,10 @@
+{
+  "name": "@base-example/template",
+  "dependencies": {
+    "@babel/parser": "^7.26.3",
+    "@fluxora/core": "workspace:^"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.2"
+  }
+}

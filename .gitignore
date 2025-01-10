@@ -256,8 +256,10 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 
-
-
 .nx/cache
 .nx/workspace-data
 vite.config.*.timestamp*
+
+# App based
+libs/*/build
+examples/*/build

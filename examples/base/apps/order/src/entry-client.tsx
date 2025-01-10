@@ -1,5 +1,8 @@
 import { type FC, use } from "react";
 
+import { Footer } from "./components/footer";
+import { Header } from "./components/header";
+import { Header2 } from "./components/header2";
 import { OrderController } from "./order/order-controller";
 
 declare const useBackendController: <TType extends import("@nestjs/common").Type>(
@@ -7,8 +10,15 @@ declare const useBackendController: <TType extends import("@nestjs/common").Type
 ) => InstanceType<TType>;
 
 export const Order: FC = () => {
-  const api = useBackendController(OrderController);
-  const orders = use(api.getAllOrders());
+  // const api = useBackendController(OrderController);
+  // const orders = use(api.getAllOrders());
 
-  return <div>Hello World</div>;
+  return (
+    <div>
+      <Header />
+      <Header2 />
+      <h1>Orders</h1>
+      <Footer />
+    </div>
+  );
 };

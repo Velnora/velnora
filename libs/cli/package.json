@@ -7,11 +7,6 @@
       "types": "./build/fluxora.cli.d.ts",
       "import": "./build/fluxora.cli.js",
       "require": "./build/fluxora.cli.js"
-    },
-    "./commands": {
-      "types": "./build/fluxora.cli.commands.d.ts",
-      "import": "./build/fluxora.cli.commands.js",
-      "require": "./build/fluxora.cli.commands.js"
     }
   },
   "main": "build/fluxora.cli.js",

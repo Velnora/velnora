@@ -3,6 +3,6 @@ import { Module } from "@nestjs/common";
 import { OrderController } from "./order-controller";
 
 @Module({
-  imports: [OrderController]
+  controllers: [OrderController]
 })
 export class OrderModule {}

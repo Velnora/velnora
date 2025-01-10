@@ -3,8 +3,10 @@ import dtsPlugin from "vite-plugin-dts";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
+  mode: process.env.NODE_ENV,
   plugins: [tsconfigPaths(), dtsPlugin({ rollupTypes: true })],
   esbuild: { target: "esnext" },
+  define: { __DEV__: process.env.NODE_ENV === "development" },
   build: {
     outDir: "build",
     target: "esnext",
@@ -12,11 +14,7 @@ export default defineConfig({
     sourcemap: true,
     assetsInlineLimit: 0,
     emptyOutDir: true,
-    lib: {
-      entry: { "fluxora.core": "src/main.ts" },
-      name: "Fluxora Core",
-      formats: ["es"]
-    },
+    lib: { entry: { "fluxora.core": "src/main.ts" }, name: "Fluxora Core", formats: ["es"] },
     rollupOptions: {
       output: {
         chunkFileNames(chunkInfo) {

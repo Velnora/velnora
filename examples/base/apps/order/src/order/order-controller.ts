@@ -4,6 +4,6 @@ import { Controller, Get } from "@nestjs/common";
 export class OrderController {
   @Get()
   getAllOrders() {
-    return Promise.resolve([] as string[]);
+    return Promise.resolve([1]);
   }
 }

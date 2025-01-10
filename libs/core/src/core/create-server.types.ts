@@ -10,7 +10,6 @@ interface ServerOptions {
 }
 
 export interface CreateServerOptions {
-  type: "client" | "server";
   env: "development" | "production";
   server?: ServerOptions;
 }
