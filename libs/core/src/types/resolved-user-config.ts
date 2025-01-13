@@ -35,10 +35,22 @@ export interface ResolvedUserAppConfig {
   remoteEntryPath?: string;
 }
 
+export interface CacheSettings {
+  /**
+   * Specifies the path to the cache directory.
+   * The path is relative to the project root.
+   *
+   * @type {string}
+   * @default ".fluxora"
+   */
+  root?: string;
+}
+
 export interface ResolvedUserConfig {
   apps?: ApplicationSettings;
   libs?: LibrarySettings;
   vite?: ViteConfigOptions;
   hosts?: Record<string, string>;
   config?: Record<string, ResolvedUserAppConfig>;
+  cache?: CacheSettings;
 }

@@ -30,6 +30,8 @@ export const createDevServer = async (options: CreateServerOptions) => {
     config.assignHost(false).setRemoteEntry().retrieveViteConfigFile();
   });
 
+  checkAndGenerateGitignore(config);
+
   await config.withApps(async config => {
     const clientViteConfig = await getClientConfiguration(config, { mode: options.env });
     const client = await viteCreateServer(clientViteConfig);
