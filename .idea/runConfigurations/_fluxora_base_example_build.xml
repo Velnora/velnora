@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="@fluxora/base-example:build" type="NxRunConfigurationType">
+    <option name="nx-projects" value="@fluxora/base-example" />
+    <option name="nx-targets" value="build" />
+    <option name="nx-target-configuration" value="" />
+    <envs>
+      <env name="NODE_ENV" value="production" />
+      <env name="LOG_LEVEL" value="debug" />
+    </envs>
+    <option name="arguments" value="" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="false" run_configuration_name="@fluxora/cli:vite:build" run_configuration_type="NxRunConfigurationType" />
+    </method>
+  </configuration>
+</component>
