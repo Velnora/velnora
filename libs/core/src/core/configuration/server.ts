@@ -16,6 +16,7 @@ export const getServerConfiguration = (config: FluxoraApp, appSpecificConfig: Us
   const appConfig: InlineConfig = {
     root: config.app.root,
     configFile: config.vite?.configFile,
+    cacheDir: resolve(process.cwd(), ".fluxora/cache/apps", config.app.name, "server"),
     server: { port, host: true, middlewareMode: true },
     build: { ssr: true, emptyOutDir: true, outDir: resolve(process.cwd(), "build", config.app.name) },
     plugins: [
@@ -28,10 +29,6 @@ export const getServerConfiguration = (config: FluxoraApp, appSpecificConfig: Us
     logLevel: "silent",
     appType: "custom"
   };
-
-  if (config.server.vite?.wsPort) {
-    appConfig.server!.hmr = { path: "/ws", protocol: "ws", port: config.server.vite.wsPort };
-  }
 
   return mergeConfig(appConfig, appSpecificConfig);
 };

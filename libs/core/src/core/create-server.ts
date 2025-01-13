@@ -2,12 +2,19 @@ import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import { createServer as viteCreateServer } from "vite";
 
+import type { FluxoraApp } from "../types";
 import { FluxoraConfigBuilder } from "../utils/fluxora-config.builder";
 import { logger } from "../utils/logger";
 import { resolveUserConfig } from "../utils/resolve-user-config";
 import { getClientConfiguration } from "./configuration/client";
 import { getServerConfiguration } from "./configuration/server";
 import type { CreateServerOptions } from "./create-server.types";
+
+declare module "vite" {
+  interface ViteDevServer {
+    appConfig: FluxoraApp;
+  }
+}
 
 export const createServer = async (options: CreateServerOptions) => {
   const userConfig = await resolveUserConfig();
@@ -21,6 +28,7 @@ export const createServer = async (options: CreateServerOptions) => {
   await config.withApps(async config => {
     const clientViteConfig = await getClientConfiguration(config, { mode: options.env });
     const client = await viteCreateServer(clientViteConfig);
+    client.appConfig = config;
     config.client.vite.devServer = client;
     config.client.vite.config = clientViteConfig;
     config.client.server = express()
@@ -32,7 +40,6 @@ export const createServer = async (options: CreateServerOptions) => {
       .listen(clientViteConfig.server?.port, () => {
         logger.debug(`Frontend for ${config.app.name} is running at http://localhost:${clientViteConfig.server?.port}`);
       });
-    console.log('Mapping client "/%s" -> %s', config.app.name, `http://localhost:${clientViteConfig.server?.port}`);
     app.use(
       `/${config.app.name}`,
       createProxyMiddleware({ target: `http://localhost:${clientViteConfig.server?.port}` })
@@ -40,6 +47,7 @@ export const createServer = async (options: CreateServerOptions) => {
 
     const serverViteConfig = getServerConfiguration(config, { mode: options.env });
     const server = await viteCreateServer(serverViteConfig);
+    server.appConfig = config;
     config.server.vite.devServer = server;
     config.server.vite.config = serverViteConfig;
     config.server.server = express()

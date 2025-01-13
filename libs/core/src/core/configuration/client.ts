@@ -1,3 +1,5 @@
+import { resolve } from "node:path";
+
 import { type InlineConfig, type UserConfig, mergeConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -17,7 +19,8 @@ export const getClientConfiguration = async (
   const appConfig: InlineConfig = {
     root: config.app.root,
     configFile: config.vite?.configFile,
-    server: { port, host: true },
+    server: { port, host: true, watch: {} },
+    cacheDir: resolve(process.cwd(), ".fluxora/cache/apps", config.app.name, "client"),
     plugins: [
       tsconfigPaths({ root: process.cwd(), projects: ["tsconfig.json"] }),
       react({ tsDecorators: true }),
@@ -30,7 +33,7 @@ export const getClientConfiguration = async (
   };
 
   if (config.client.vite?.wsPort) {
-    appConfig.server!.hmr = { path: "/ws", protocol: "ws", port: config.client.vite.wsPort };
+    appConfig.server!.hmr = { path: "/ws/hmr", protocol: "ws", port: config.client.vite.wsPort };
   }
 
   return mergeConfig(appConfig, appSpecificConfig);
