@@ -34,6 +34,11 @@ export class FluxoraConfigBuilder extends AsyncTask {
     return this;
   }
 
+  retrieveCacheOptions() {
+    this.fluxoraConfig.cacheRoot = this.userConfig.cache?.root || resolve(process.cwd(), ".fluxora");
+    return this;
+  }
+
   getAppConfig(app: string) {
     if (!this.appConfigurations.has(app)) return null;
     const appConfig = this.appConfigurations.get(app);
