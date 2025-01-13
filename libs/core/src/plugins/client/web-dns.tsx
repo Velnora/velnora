@@ -1,12 +1,9 @@
 import { Plugin, defineConfig } from "vite";
 
-import type { WebDnsOptions } from "./web-dns.types";
+import type { FluxoraApp } from "@fluxora/core";
 
-export const webDns = ({ allAppsConfigurations }: WebDnsOptions): Plugin => {
-  const appDomains = Array.from(allAppsConfigurations.entries()).reduce(
-    (acc, [app, config]) => ({ ...acc, [app]: config.domain }),
-    {} as Record<string, string>
-  );
+export const webDns = (config: FluxoraApp): Plugin => {
+  const appDomains = config.apps.reduce((acc, { name }) => ({ ...acc, [name]: `` }), {} as Record<string, string>);
 
   return {
     name: "fluxora:core-plugins:fluxora-entry",

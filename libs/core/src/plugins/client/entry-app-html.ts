@@ -1,11 +1,13 @@
 import { parse } from "node-html-parser";
-import { type PluginOption } from "vite";
+import type { Plugin } from "vite";
 
-import { FEDERATION_PLUGIN_NAME, HTML_SCRIPT_TAG, PACKAGE_ENTRIES } from "../../const";
+import type { FluxoraApp } from "@fluxora/core";
 
-export const entryPlugin = (): PluginOption => {
+import { HTML_SCRIPT_TAG, PACKAGE_ENTRIES } from "../../const";
+
+export const entryAppHtml = (_config: FluxoraApp): Plugin => {
   return {
-    name: `${FEDERATION_PLUGIN_NAME}:entry`,
+    name: "fluxora:core-plugins:entry-app-html",
 
     transformIndexHtml: {
       order: "pre",
