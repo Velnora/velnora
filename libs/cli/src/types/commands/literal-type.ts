@@ -1,1 +1,1 @@
-export type LiteralType = "string" | "number" | "boolean";
+export type LiteralType = "string" | "number" | "boolean" | "union";

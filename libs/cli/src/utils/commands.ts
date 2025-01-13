@@ -31,15 +31,28 @@ export class Commands {
         yargs => {
           for (const [optionName, optionDetails] of Object.entries(options)) {
             const { type, defaultValue, alias, description } = optionDetails;
+
             logger.debug(
               `Adding option to command '${commandStr}': ${optionName} (${type})${alias ? ` aliased to ${alias}` : ""}`
             );
-            yargs.option(optionName, {
-              type,
-              alias,
-              description,
-              default: defaultValue ?? undefined
-            });
+
+            if (type === "union") {
+              yargs.option(optionName, {
+                type,
+                alias,
+                description,
+                // @ts-ignore
+                choices: optionDetails.values,
+                default: defaultValue ?? undefined
+              });
+            } else {
+              yargs.option(optionName, {
+                type,
+                alias,
+                description,
+                default: defaultValue ?? undefined
+              });
+            }
           }
           return yargs.version(false).help().alias("help", "h");
         },
