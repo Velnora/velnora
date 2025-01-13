@@ -6,8 +6,8 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import react from "@vitejs/plugin-react-swc";
 
 import { dynamicFederationPlugin } from "../../plugins/client/dynamic-federation.plugin";
+import { fluxoraPlugin } from "../../plugins/client/fluxora-entry/fluxora.plugin";
 import { prettierPlugin } from "../../plugins/dev/prettier.plugin";
-import { fluxoraPlugin } from "../../plugins/main/fluxora.plugin";
 import type { FluxoraApp } from "../../types";
 
 export const getClientConfiguration = async (

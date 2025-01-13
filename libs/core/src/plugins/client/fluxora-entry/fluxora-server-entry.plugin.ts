@@ -6,9 +6,9 @@ import {
   PACKAGE_ENTRIES,
   PACKAGE_ORIGINALS,
   SERVER_ENTRY_FILE_EXTENSIONS
-} from "../../const";
-import type { FluxoraApp } from "../../types";
-import { findEntryFile } from "../../utils/find-entry-file";
+} from "../../../const";
+import type { FluxoraApp } from "../../../types";
+import { findEntryFile } from "../../../utils/find-entry-file";
 
 export const fluxoraServerEntryPlugin = async (config: FluxoraApp): Promise<Plugin> => {
   return {

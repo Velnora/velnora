@@ -8,9 +8,9 @@ import {
   PACKAGE_ORIGINALS,
   VIRTUAL_ENTRIES,
   VIRTUAL_ENTRY_NAMES
-} from "../../const";
-import type { FluxoraApp } from "../../types";
-import { findEntryFile } from "../../utils/find-entry-file";
+} from "../../../const";
+import type { FluxoraApp } from "../../../types";
+import { findEntryFile } from "../../../utils/find-entry-file";
 
 export const fluxoraClientEntryPlugin = (config: FluxoraApp): Plugin => {
   return {
@@ -27,21 +27,19 @@ export const fluxoraClientEntryPlugin = (config: FluxoraApp): Plugin => {
       });
     },
 
-    resolveId(id, importer) {
+    async resolveId(id, importer) {
       if (id === PACKAGE_ENTRIES.FLUXORA_CLIENT) {
-        return this.resolve(
-          PACKAGE_ORIGINALS.FLUXORA_CLIENT,
-
-          importer,
-          { skipSelf: true }
-        );
+        console.log(id, await this.resolve(id));
+        return this.resolve(PACKAGE_ORIGINALS.FLUXORA_CLIENT, importer, { skipSelf: true });
       }
 
       if (id === PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_CLIENT_REACT) {
+        console.log(id, await this.resolve(id));
         return this.resolve(PACKAGE_ORIGINALS.FLUXORA_CLIENT_ENTRY_CLIENT_REACT, importer, { skipSelf: true });
       }
 
       if (id === PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_SERVER_REACT) {
+        console.log(id, await this.resolve(id));
         return this.resolve(PACKAGE_ORIGINALS.FLUXORA_CLIENT_ENTRY_SERVER_REACT, importer, { skipSelf: true });
       }
 

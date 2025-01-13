@@ -1,12 +1,13 @@
 import { type Plugin } from "vite";
 
-import { PACKAGE_ENTRIES, PACKAGE_ORIGINALS } from "../../const";
-import type { FluxoraApp } from "../../types";
-import { getEntryInTsconfig } from "../../utils/get-entry-in-tsconfig";
+import { PACKAGE_ENTRIES, PACKAGE_ORIGINALS } from "../../../const";
+import type { FluxoraApp } from "../../../types";
+import { getEntryInTsconfig } from "../../../utils/get-entry-in-tsconfig";
 
 export const fluxoraClientEntryDevPlugin = (_config: FluxoraApp): Plugin => {
   return {
     name: "fluxora:core-plugins:entry-client:dev",
+    enforce: "pre",
 
     apply(_conf, env) {
       return env.mode === "development" && env.command === "serve";

@@ -3,11 +3,12 @@ import type { Plugin } from "vite";
 
 import type { FluxoraApp } from "@fluxora/core";
 
-import { HTML_SCRIPT_TAG, PACKAGE_ENTRIES } from "../../const";
+import { HTML_SCRIPT_TAG, PACKAGE_ENTRIES } from "../../../const";
 
 export const entryAppHtml = (_config: FluxoraApp): Plugin => {
   return {
     name: "fluxora:core-plugins:entry-app-html",
+    enforce: "pre",
 
     transformIndexHtml: {
       order: "pre",
