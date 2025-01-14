@@ -7,7 +7,6 @@ import react from "@vitejs/plugin-react-swc";
 
 import { dynamicFederationPlugin } from "../../plugins/client/dynamic-federation.plugin";
 import { fluxoraPlugin } from "../../plugins/client/fluxora-entry/fluxora.plugin";
-import { prettierPlugin } from "../../plugins/dev/prettier.plugin";
 import type { FluxoraApp } from "../../types";
 
 export const getClientConfiguration = async (
@@ -24,9 +23,8 @@ export const getClientConfiguration = async (
     plugins: [
       tsconfigPaths({ root: process.cwd(), projects: ["tsconfig.json"] }),
       react({ tsDecorators: true }),
-      fluxoraPlugin(config),
+      fluxoraPlugin(config)
       await dynamicFederationPlugin(config),
-      await prettierPlugin()
     ],
     logLevel: "silent",
     appType: "custom"

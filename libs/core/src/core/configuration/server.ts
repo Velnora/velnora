@@ -6,7 +6,6 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import react from "@vitejs/plugin-react-swc";
 
 import { fluxoraPlugin } from "../../plugins/client/fluxora-entry/fluxora.plugin";
-import { prettierPlugin } from "../../plugins/dev/prettier.plugin";
 import { microNestAppPlugin } from "../../plugins/server/micro-nest-app.plugin";
 import type { FluxoraApp } from "../../types";
 
@@ -23,8 +22,7 @@ export const getServerConfiguration = (config: FluxoraApp, appSpecificConfig: Us
       tsconfigPaths({ root: process.cwd(), projects: ["tsconfig.json"] }),
       react({ tsDecorators: true }),
       fluxoraPlugin(config),
-      microNestAppPlugin(config),
-      prettierPlugin()
+      microNestAppPlugin(config)
     ],
     logLevel: "silent",
     appType: "custom"
