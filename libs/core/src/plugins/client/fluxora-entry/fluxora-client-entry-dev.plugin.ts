@@ -1,4 +1,4 @@
-import { type Plugin } from "vite";
+import type { Plugin } from "vite";
 
 import { PACKAGE_ENTRIES, PACKAGE_ORIGINALS } from "../../../const";
 import type { FluxoraApp } from "../../../types";
@@ -17,21 +17,21 @@ export const fluxoraClientEntryDevPlugin = (_config: FluxoraApp): Plugin => {
       let entry: string | null;
 
       if (id === PACKAGE_ENTRIES.FLUXORA_CLIENT && (entry = getEntryInTsconfig(PACKAGE_ORIGINALS.FLUXORA_CLIENT))) {
-        return entry;
+        return `/@fluxora:fs?file=${entry}`;
       }
 
       if (
         id === PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_CLIENT_REACT &&
         (entry = getEntryInTsconfig(PACKAGE_ORIGINALS.FLUXORA_CLIENT_ENTRY_CLIENT_REACT))
       ) {
-        return entry;
+        return `/@fluxora:fs?file=${entry}`;
       }
 
       if (
         id === PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_SERVER_REACT &&
         (entry = getEntryInTsconfig(PACKAGE_ORIGINALS.FLUXORA_CLIENT_ENTRY_SERVER_REACT))
       ) {
-        return entry;
+        return `/@fluxora:fs?file=${entry}`;
       }
     }
   };
