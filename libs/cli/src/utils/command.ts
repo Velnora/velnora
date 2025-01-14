@@ -7,7 +7,7 @@ import type { OptionType } from "../types/commands/option-type";
 import type { InferType } from "../types/infer/infer-type";
 import { logger } from "./logger";
 
-interface Type<TType extends LiteralType = LiteralType, TValues extends string = string> {
+export interface Type<TType extends LiteralType = LiteralType, TValues extends string = string> {
   type: TType;
   values: TValues;
 }
