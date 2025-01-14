@@ -51,9 +51,6 @@ export class FluxoraAppConfigBuilder extends AsyncTask {
       if (!host && !isBuild) {
         this.fluxoraAppConfig.client.vite ||= {};
         this.fluxoraAppConfig.client.vite.wsPort = this.availablePort;
-
-        this.fluxoraAppConfig.server.vite ||= {};
-        this.fluxoraAppConfig.server.vite.wsPort = this.availablePort;
       }
     });
     return this;
