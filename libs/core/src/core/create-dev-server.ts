@@ -2,14 +2,14 @@ import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import { createServer as viteCreateServer } from "vite";
 
-import type { CreateServerOptions, FluxoraApp } from "@fluxora/core";
-
+import type { FluxoraApp } from "../types";
 import { checkAndGenerateGitignore } from "../utils/check-and-generate-gitignore";
 import { FluxoraConfigBuilder } from "../utils/fluxora-config.builder";
 import { logger } from "../utils/logger";
 import { resolveUserConfig } from "../utils/resolve-user-config";
 import { getClientConfiguration } from "./configuration/client";
 import { getServerConfiguration } from "./configuration/server";
+import type { CreateServerOptions } from "./create-server.types";
 
 declare module "vite" {
   interface ViteDevServer {
@@ -17,7 +17,7 @@ declare module "vite" {
   }
 }
 
-export const createDevServer = async (options: CreateServerOptions) => {
+export const createDevServer = async (options?: CreateServerOptions) => {
   const userConfig = await resolveUserConfig();
   const config = await new FluxoraConfigBuilder(userConfig)
     .resolveTemplate()
@@ -33,7 +33,7 @@ export const createDevServer = async (options: CreateServerOptions) => {
   checkAndGenerateGitignore(config);
 
   await config.withApps(async config => {
-    const clientViteConfig = await getClientConfiguration(config, { mode: options.env });
+    const clientViteConfig = await getClientConfiguration(config, { mode: process.env.NODE_ENV });
     const client = await viteCreateServer(clientViteConfig);
     client.appConfig = config;
     config.client.vite.devServer = client;
@@ -52,7 +52,7 @@ export const createDevServer = async (options: CreateServerOptions) => {
       createProxyMiddleware({ target: `http://localhost:${clientViteConfig.server?.port}` })
     );
 
-    const serverViteConfig = getServerConfiguration(config, { mode: options.env });
+    const serverViteConfig = getServerConfiguration(config, { mode: process.env.NODE_ENV });
     const server = await viteCreateServer(serverViteConfig);
     server.appConfig = config;
     config.server.vite.devServer = server;
@@ -74,7 +74,7 @@ export const createDevServer = async (options: CreateServerOptions) => {
     res.json({ done: false });
   });
 
-  const port = options.server?.port || 3000;
+  const port = options?.port || 3000;
   app.listen(port, async () => {
     logger.info(`Combined apps together and run on port ${port}`);
     await config.withApps(config => {

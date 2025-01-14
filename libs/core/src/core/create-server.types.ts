@@ -3,13 +3,8 @@ interface ProxyOptions {
   changeOrigin?: boolean;
 }
 
-interface ServerOptions {
+export interface CreateServerOptions {
   port?: number;
   hostname?: string;
   proxy?: ProxyOptions;
-}
-
-export interface CreateServerOptions {
-  env: "development" | "production";
-  server?: ServerOptions;
 }
