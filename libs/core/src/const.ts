@@ -17,11 +17,11 @@ export const FEDERATION_INTERNALS = {
 } as const;
 
 export const PACKAGE_ENTRIES = {
-  FLUXORA_CLIENT: "/@fluxora:client",
-  FLUXORA_CLIENT_ENTRY_CLIENT_REACT: "/@fluxora:client/entry-client/react",
-  FLUXORA_CLIENT_ENTRY_SERVER_REACT: "/@fluxora:client/entry-server/react",
-  FLUXORA_SERVER: "/@fluxora:server",
-  FLUXORA_SERVER_ENTRY: "/@fluxora:server/entry-server"
+  FLUXORA_CLIENT: "/@fluxora/client",
+  FLUXORA_CLIENT_ENTRY_CLIENT_REACT: "/@fluxora/client/react",
+  FLUXORA_CLIENT_ENTRY_SERVER_REACT: "/@fluxora/client-server/react",
+  FLUXORA_SERVER: "/@fluxora/server",
+  FLUXORA_SERVER_ENTRY: "/@fluxora/server/entry-server"
 } as const;
 
 export const PACKAGE_ORIGINALS = {
