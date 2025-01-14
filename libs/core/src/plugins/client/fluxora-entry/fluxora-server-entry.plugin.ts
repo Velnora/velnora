@@ -5,7 +5,8 @@ import {
   NESTJS_PLUGIN_VIRTUAL_ENTRY_NAMES,
   PACKAGE_ENTRIES,
   PACKAGE_ORIGINALS,
-  SERVER_ENTRY_FILE_EXTENSIONS
+  SERVER_ENTRY_FILE_EXTENSIONS,
+  VIRTUAL_ALIAS_ENTRIES
 } from "../../../const";
 import type { FluxoraApp } from "../../../types";
 import { findEntryFile } from "../../../utils/find-entry-file";
@@ -18,8 +19,8 @@ export const fluxoraServerEntryPlugin = async (config: FluxoraApp): Promise<Plug
       return defineConfig({
         resolve: {
           alias: {
-            "/@fluxora:virtual/entry/app.module": NESTJS_PLUGIN_VIRTUAL_ENTRIES.APP_MODULE,
-            "/@fluxora:virtual/entry/app-config": NESTJS_PLUGIN_VIRTUAL_ENTRIES.APP_CONFIG
+            [VIRTUAL_ALIAS_ENTRIES.APP_MODULE]: NESTJS_PLUGIN_VIRTUAL_ENTRIES.APP_MODULE,
+            [VIRTUAL_ALIAS_ENTRIES.APP_CONFIG]: NESTJS_PLUGIN_VIRTUAL_ENTRIES.APP_CONFIG
           }
         }
       });

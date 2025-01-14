@@ -6,6 +6,7 @@ import {
   CLIENT_ENTRY_FILE_EXTENSIONS,
   PACKAGE_ENTRIES,
   PACKAGE_ORIGINALS,
+  VIRTUAL_ALIAS_ENTRIES,
   VIRTUAL_ENTRIES,
   VIRTUAL_ENTRY_NAMES
 } from "../../../const";
@@ -20,8 +21,8 @@ export const fluxoraClientEntryPlugin = (config: FluxoraApp): Plugin => {
       return defineConfig({
         resolve: {
           alias: {
-            "/@fluxora:virtual/entry/react/app": VIRTUAL_ENTRIES.APP,
-            "/@fluxora:virtual/entry/react/template": VIRTUAL_ENTRIES.TEMPLATE
+            [VIRTUAL_ALIAS_ENTRIES.APP]: VIRTUAL_ENTRIES.APP,
+            [VIRTUAL_ALIAS_ENTRIES.TEMPLATE]: VIRTUAL_ENTRIES.TEMPLATE
           }
         }
       });
