@@ -23,8 +23,8 @@ export const getClientConfiguration = async (
     plugins: [
       tsconfigPaths({ root: process.cwd(), projects: ["tsconfig.json"] }),
       react({ tsDecorators: true }),
-      fluxoraPlugin(config)
-      await dynamicFederationPlugin(config),
+      fluxoraPlugin(config),
+      await dynamicFederationPlugin(config)
     ],
     logLevel: "silent",
     appType: "custom"
