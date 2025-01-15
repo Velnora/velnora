@@ -56,8 +56,8 @@ export const fluxoraClientEntryPlugin = (config: FluxoraApp): Plugin => {
         let templatePath: string;
         return config.template &&
           (templatePath = findEntryFile(config.template.root, "main", CLIENT_ENTRY_FILE_EXTENSIONS))
-          ? `import * as TemplateApp_client from "${templatePath}";\n\nexport const App = "Template" in TemplateApp_client ? TemplateApp_client["Template"] : "App" in TemplateApp_client ? TemplateApp_client["App"] : "default" in TemplateApp_client ? TemplateApp_client["default"] : undefined`
-          : `export const App = undefined;`;
+          ? `import * as TemplateApp_client from "${templatePath}";\n\nexport const App = "Template" in TemplateApp_client ? TemplateApp_client["Template"] : "App" in TemplateApp_client ? TemplateApp_client["App"] : "default" in TemplateApp_client ? TemplateApp_client["default"] : ({ children }) => children;`
+          : `export const App = ({ children }) => children;`;
       }
     }
   };

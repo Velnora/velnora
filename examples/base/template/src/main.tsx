@@ -1,17 +1,13 @@
-import { type FC } from "react";
+import type { FC, PropsWithChildren } from "react";
 
-import { Outlet } from "@fluxora/client";
-
-export const App: FC = () => {
+export const App: FC<PropsWithChildren> = ({ children }) => {
   return (
     <html>
       <head>
         <title>Some Dummy shit</title>
       </head>
 
-      <body>
-        <Outlet />
-      </body>
+      <body>{children}</body>
     </html>
   );
 };
