@@ -4,19 +4,19 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./build/fluxora.client.d.ts",
       "import": "./build/fluxora.client.js",
-      "require": "./build/fluxora.client.js",
-      "types": "./build/fluxora.client.d.ts"
+      "require": "./build/fluxora.client.js"
     },
     "./react/entry-client": {
+      "types": "./build/fluxora.entry-client.react.d.ts",
       "import": "./build/fluxora.entry-client.react.js",
-      "require": "./build/fluxora.entry-client.react.js",
-      "types": "./build/fluxora.entry-client.react.d.ts"
+      "require": "./build/fluxora.entry-client.react.js"
     },
     "./react/entry-server": {
+      "types": "./build/fluxora.entry-server.react.d.ts",
       "import": "./build/fluxora.entry-server.react.js",
-      "require": "./build/fluxora.entry-server.react.js",
-      "types": "./build/fluxora.entry-server.react.d.ts"
+      "require": "./build/fluxora.entry-server.react.js"
     }
   },
   "main": "build/fluxora.client.js",
