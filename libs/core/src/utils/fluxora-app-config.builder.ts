@@ -94,9 +94,13 @@ export class FluxoraAppConfigBuilder extends AsyncTask {
     const fluxoraConfig = await this.fluxoraConfigBuilder.build();
     const methods: FluxoraAppConfigMethods = {
       async getOtherAppConfig(app: MicroApp) {
-        return (await self.fluxoraConfigBuilder.getAppConfig(app.name)?.build()) || null;
+        return (await self.fluxoraConfigBuilder.getAppConfigBuilder(app.name)?.build()) || null;
       }
     };
+    self.fluxoraConfigBuilder.setAppConfig(
+      this.app.name,
+      merge(fluxoraConfig, this.fluxoraAppConfig, methods) as FluxoraApp
+    );
     return merge(fluxoraConfig, this.fluxoraAppConfig, methods) as FluxoraApp;
   }
 

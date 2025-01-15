@@ -3,7 +3,8 @@ import type { MicroApp } from "../micro-app";
 import type { FluxoraApp } from "./index";
 
 export interface FluxoraConfigMethods {
-  getAppConfig(app: MicroApp): Promise<FluxoraAppConfigBuilder>;
+  getAppConfigBuilder(app: MicroApp): Promise<FluxoraAppConfigBuilder>;
   configureApps(fn: (config: FluxoraAppConfigBuilder) => void): Promise<void>;
+  getAppConfig(app: MicroApp): Promise<FluxoraApp>;
   withApps(fn: (config: FluxoraApp) => void | Promise<void>): Promise<void>;
 }
