@@ -14,7 +14,11 @@ export default defineConfig({
     sourcemap: true,
     assetsInlineLimit: 0,
     emptyOutDir: true,
-    lib: { entry: { "fluxora.core": "src/main.ts" }, name: "Fluxora Core", formats: ["es"] },
+    lib: {
+      entry: { "fluxora.core": "src/main.ts", "fluxora.worker": "src/vite-dev-server-worker.ts" },
+      name: "Fluxora Core",
+      formats: ["es"]
+    },
     rollupOptions: {
       output: {
         chunkFileNames(chunkInfo) {

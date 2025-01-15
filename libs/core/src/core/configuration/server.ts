@@ -11,7 +11,7 @@ import { microNestAppPlugin } from "../../plugins/server/micro-nest-app.plugin";
 import type { FluxoraApp } from "../../types";
 
 export const getServerConfiguration = (config: FluxoraApp, appSpecificConfig: UserConfig = {}): InlineConfig => {
-  const port = +new URL(config.server.host, "http://localhost").port;
+  const port = +new URL(config.app.host.serverHost, "http://localhost").port;
 
   const appConfig: InlineConfig = {
     root: config.app.root,

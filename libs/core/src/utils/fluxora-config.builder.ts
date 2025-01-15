@@ -1,29 +1,36 @@
 import merge from "lodash.merge";
 
+import { createServer } from "node:net";
 import { basename, resolve } from "node:path";
 
 import { glob } from "glob";
 
 import type {
-  FluxoraApp,
   FluxoraConfig,
   FluxoraConfigMethods,
+  MicroAppHost,
   PartialFluxoraConfig,
   ResolvedUserConfig
 } from "../types";
 import { AsyncTask } from "./async-task";
-import { FluxoraAppConfigBuilder } from "./fluxora-app-config.builder";
 import { logger } from "./logger";
-import { resolveUserAppConfig } from "./resolve-user-app-config";
 
 export class FluxoraConfigBuilder extends AsyncTask {
   private readonly fluxoraConfig: PartialFluxoraConfig = {};
-  private readonly appConfigurationBuilders = new Map<string, FluxoraAppConfigBuilder>();
-  private readonly appConfigurations = new Map<string, FluxoraApp>();
+  private readonly definedPorts = new Set<number>();
+  private startingPort = 32768;
 
   constructor(private readonly userConfig: ResolvedUserConfig) {
     super();
     this.fluxoraConfig.resolvedUserConfig = this.userConfig;
+  }
+
+  get resolvedUserConfig() {
+    return this.userConfig;
+  }
+
+  static from(userConfig: ResolvedUserConfig) {
+    return new FluxoraConfigBuilder(userConfig);
   }
 
   resolveTemplate() {
@@ -36,7 +43,12 @@ export class FluxoraConfigBuilder extends AsyncTask {
     const appsRelativeRoot = this.userConfig.apps?.root || "apps";
     const appsRoot = resolve(process.cwd(), appsRelativeRoot);
     const apps = glob.sync(`${appsRoot}/*`, { absolute: true });
-    this.fluxoraConfig.apps = apps.map(app => ({ root: app, name: basename(app) }));
+
+    this.addTask(async () => {
+      this.fluxoraConfig.apps = await Promise.all(
+        apps.map(async app => ({ root: app, name: basename(app), host: await this.resolveHostForApp() }))
+      );
+    });
 
     return this;
   }
@@ -46,56 +58,24 @@ export class FluxoraConfigBuilder extends AsyncTask {
     return this;
   }
 
-  getAppConfigBuilder(app: string) {
-    if (!this.appConfigurationBuilders.has(app)) return null;
-    const appConfig = this.appConfigurationBuilders.get(app);
-    if (!appConfig) return null;
-    return appConfig;
-  }
-
-  getAppConfig(app: string) {
-    if (!this.appConfigurations.has(app)) return null;
-    const appConfig = this.appConfigurations.get(app);
-    if (!appConfig) return null;
-    return appConfig;
-  }
-
-  setAppConfig(app: string, config: FluxoraApp) {
-    this.appConfigurations.set(app, config);
-  }
-
   async build() {
     await this.executeTasks();
     if (!this.validateConfig()) process.exit(1);
 
-    const self = this;
     const conf = this.fluxoraConfig as FluxoraConfig;
-    const appConfigurations = this.appConfigurationBuilders;
 
     const fluxoraConfigMethods: FluxoraConfigMethods = {
-      async configureApps(fn) {
-        await Promise.all(conf.apps.map(async app => fn(await fluxoraConfigMethods.getAppConfigBuilder(app))));
-      },
-      async getAppConfigBuilder(app) {
-        if (appConfigurations.has(app.name)) return appConfigurations.get(app.name)!;
-        const userAppConfig = await resolveUserAppConfig(app.name);
-        const appConfig = new FluxoraAppConfigBuilder(self, self.userConfig, userAppConfig, app);
-        appConfigurations.set(app.name, appConfig);
-        return appConfig;
-      },
-      async getAppConfig(app) {
-        const appConfig = await (await fluxoraConfigMethods.getAppConfigBuilder(app)).build();
-        self.setAppConfig(app.name, appConfig);
-        return appConfig;
-      },
       async withApps(fn) {
         for (const app of conf.apps) {
-          await fn(await fluxoraConfigMethods.getAppConfig(app));
+          await fn(app);
         }
+      },
+      getRawConfig() {
+        return conf;
       }
     };
 
-    return merge(conf, fluxoraConfigMethods);
+    return merge({}, conf, fluxoraConfigMethods);
   }
 
   private validateConfig() {
@@ -104,6 +84,49 @@ export class FluxoraConfigBuilder extends AsyncTask {
       return false;
     }
 
+    // ForEachApp
+    /*
+    *
+    if (!conf.client?.host) {
+      logger.error("Current app's client host is not defined");
+      return false;
+    }
+
+    if (!conf.server?.host) {
+      logger.error("Current app's server host is not defined");
+      return false;
+    }
+    * */
+
     return true;
+  }
+
+  private async resolveHostForApp(): Promise<MicroAppHost> {
+    const clientHost = `http://localhost:${await this.getNextPort()}`;
+    const serverHost = `http://localhost:${await this.getNextPort()}`;
+    const devWsPort = await this.getNextPort();
+
+    return { clientHost, serverHost, devWsPort };
+  }
+
+  private async getNextPort() {
+    let port = this.startingPort;
+    while (!this.definedPorts.has(port) && !(await this.isPortAvailable(port))) {
+      port++;
+    }
+    this.startingPort = port + 1;
+    return port;
+  }
+
+  private async isPortAvailable(port: number) {
+    return new Promise<boolean>(resolve => {
+      const server = createServer();
+      server.on("error", () => resolve(false));
+      server.on("listening", () => {
+        server.close();
+        resolve(true);
+      });
+      server.listen(port);
+    });
   }
 }

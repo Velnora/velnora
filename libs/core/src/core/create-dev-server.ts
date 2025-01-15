@@ -1,87 +1,48 @@
 import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
-import { createServer as viteCreateServer } from "vite";
 
-import type { FluxoraApp } from "../types";
 import { checkAndGenerateGitignore } from "../utils/check-and-generate-gitignore";
+import { createViteInstance } from "../utils/create-vite-instance";
 import { FluxoraConfigBuilder } from "../utils/fluxora-config.builder";
 import { logger } from "../utils/logger";
 import { resolveUserConfig } from "../utils/resolve-user-config";
-import { getClientConfiguration } from "./configuration/client";
-import { getServerConfiguration } from "./configuration/server";
 import type { CreateServerOptions } from "./create-server.types";
-
-declare module "vite" {
-  interface ViteDevServer {
-    appConfig: FluxoraApp;
-  }
-}
 
 export const createDevServer = async (options?: CreateServerOptions) => {
   const userConfig = await resolveUserConfig();
-  const config = await new FluxoraConfigBuilder(userConfig)
+  const config = await FluxoraConfigBuilder.from(userConfig)
     .resolveTemplate()
     .resolveApps()
     .retrieveCacheOptions()
     .build();
   const app = express();
 
-  await config.configureApps(config => {
-    config.assignHost().setRemoteEntry().retrieveViteConfigFile();
-  });
-
   checkAndGenerateGitignore(config);
 
-  await config.withApps(async config => {
-    const clientViteConfig = await getClientConfiguration(config, { mode: process.env.NODE_ENV });
-    const client = await viteCreateServer(clientViteConfig);
-    client.appConfig = config;
-    config.client.vite.devServer = client;
-    config.client.vite.config = clientViteConfig;
-    config.client.server = express()
-      .use(client.middlewares)
-      .get("*", async (req, res) => {
-        const html = await client.transformIndexHtml(req.url, "");
-        res.status(200).end(html);
-      })
-      .listen(clientViteConfig.server?.port, () => {
-        logger.debug(`Frontend for ${config.app.name} is running at http://localhost:${clientViteConfig.server?.port}`);
-      });
-    client.ws.listen();
+  await config.withApps(async microApp => {
+    const clientPort = await createViteInstance(microApp, config, true);
+    const serverPort = await createViteInstance(microApp, config, false);
 
+    app.use(`/${microApp.name}`, createProxyMiddleware({ target: `http://localhost:${clientPort}` }));
     app.use(
-      `/${config.app.name}`,
-      createProxyMiddleware({ target: `http://localhost:${clientViteConfig.server?.port}` })
-    );
-
-    const serverViteConfig = getServerConfiguration(config, { mode: process.env.NODE_ENV });
-    const server = await viteCreateServer(serverViteConfig);
-    server.appConfig = config;
-    config.server.vite.devServer = server;
-    config.server.vite.config = serverViteConfig;
-    config.server.server = express()
-      .use(server.middlewares)
-      .listen(serverViteConfig.server?.port, () => {
-        logger.debug(`Backend for ${config.app.name} is running at http://localhost:${serverViteConfig.server?.port}`);
-      });
-    app.use(
-      `/api/v1/${config.app.name}`,
+      `/api/v1/${microApp.name}`,
       createProxyMiddleware({
-        target: `http://localhost:${serverViteConfig.server?.port}/api/v1/${config.app.name}`
+        target: `http://localhost:${serverPort}/api/v1/${microApp.name}`
       })
     );
   });
 
-  app.all("*", (_req, res) => {
-    res.json({ done: false });
-  });
+  // app.all("*", (_req, res) => {
+  //   res.json({ done: false });
+  // });
 
   const port = options?.port || 3000;
-  app.listen(port, async () => {
-    logger.info(`Combined apps together and run on port ${port}`);
-    await config.withApps(config => {
-      logger.info(` - ${config.app.name} (frontend) -> /${config.app.name} (${config.client.host})`);
-      logger.info(` - ${config.app.name} (backend)  -> /api/v1/${config.app.name} (${config.server.host})`);
-    });
+  // app.listen(port, async () => {
+  logger.info(`Combined apps together and run on port ${port}`);
+  await config.withApps(app => {
+    logger.info(` - ${app.name} (frontend) -> /${app.name} (${app.host.clientHost})`);
+    // if (app.host.devWsPort) logger.info(` - ${app.name} (frontend/hmr) -> ws://localhost:${app.host.devWsPort}/hmr`);
+    logger.info(` - ${app.name} (backend)  -> /api/v1/${app.name} (${app.host.serverHost})`);
   });
+  // });
 };

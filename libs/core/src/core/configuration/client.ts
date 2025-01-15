@@ -14,13 +14,13 @@ export const getClientConfiguration = async (
   config: FluxoraApp,
   appSpecificConfig: UserConfig = {}
 ): Promise<InlineConfig> => {
-  const port = +new URL(config.client.host, "http://localhost").port;
+  const port = +new URL(config.app.host.clientHost, "http://localhost").port;
 
   const appConfig: InlineConfig = {
     root: config.app.root,
     mode: process.env.NODE_ENV,
     configFile: config.vite?.configFile,
-    server: { port, host: true, watch: {} },
+    server: { port, host: true, ws: false, watch: {} },
     cacheDir: resolve(process.cwd(), ".fluxora/cache/apps", config.app.name, "client"),
     plugins: [
       inspect(),
@@ -33,8 +33,9 @@ export const getClientConfiguration = async (
     appType: "custom"
   };
 
-  if (config.client.vite?.wsPort) {
-    appConfig.server!.hmr = { host: "localhost", path: "hmr", protocol: "ws", port: config.client.vite.wsPort };
+  if (appConfig.mode === "development" && config.app.host.devWsPort) {
+    appConfig.server!.ws = undefined;
+    appConfig.server!.hmr = { host: "localhost", path: "hmr", protocol: "ws", port: config.app.host.devWsPort };
   }
 
   return mergeConfig(appConfig, appSpecificConfig);

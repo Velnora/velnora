@@ -4,51 +4,42 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { FEDERATION_PLUGIN_REMOTE_ENTRY_FILE_PATH_DEFAULT } from "../const";
-import type { MicroApp } from "../types";
-import type { FluxoraApp, PartialFluxoraAppConfig, ResolvedUserAppConfig, ResolvedUserConfig } from "../types";
-import type { FluxoraAppConfigMethods } from "../types/fluxora/fluxora-app-config-methods";
+import type {
+  FluxoraApp,
+  FluxoraAppConfig,
+  FluxoraConfig,
+  MicroApp,
+  PartialFluxoraAppConfig,
+  ResolvedUserAppConfig,
+  ResolvedUserConfig
+} from "../types";
 import { AsyncTask } from "./async-task";
-import type { FluxoraConfigBuilder } from "./fluxora-config.builder";
 import { logger } from "./logger";
+import { resolveUserAppConfig } from "./resolve-user-app-config";
+import { resolveUserConfig } from "./resolve-user-config";
 
 export class FluxoraAppConfigBuilder extends AsyncTask {
-  private readonly fluxoraAppConfig: PartialFluxoraAppConfig = {};
+  private readonly config: PartialFluxoraAppConfig = {};
 
   constructor(
-    private readonly fluxoraConfigBuilder: FluxoraConfigBuilder,
+    private readonly fluxoraConfig: FluxoraConfig,
     private readonly userConfig: ResolvedUserConfig,
     private readonly userAppConfig: ResolvedUserAppConfig,
     private readonly app: MicroApp
   ) {
     super();
-    this.fluxoraAppConfig.app = this.app;
-    this.fluxoraAppConfig.exposedModules = new Map();
+    this.config.app = this.app;
+    this.config.exposedModules = new Map();
   }
 
-  private static _availablePort = 32768;
-
-  private get availablePort() {
-    return FluxoraAppConfigBuilder._availablePort++;
-  }
-
-  assignHost() {
-    const host = this.userConfig.hosts?.[this.app.name];
-    this.fluxoraAppConfig.client ||= {};
-    this.fluxoraAppConfig.server ||= {};
-
-    if (host?.match(/^https?:\/\//)) {
-      logger.error("Host should not contain protocol");
-      process.exit(1);
-    }
-
-    this.fluxoraAppConfig.client.host = host || `http://localhost:${this.availablePort}`;
-    this.fluxoraAppConfig.server.host = host ? `api.${host}` : `http://localhost:${this.availablePort}`;
-
-    return this;
+  static async from(app: MicroApp, fluxoraConfig: FluxoraConfig): Promise<FluxoraAppConfigBuilder> {
+    const userConfig = await resolveUserConfig();
+    const userAppConfig = await resolveUserAppConfig(app.name);
+    return new FluxoraAppConfigBuilder(fluxoraConfig, userConfig, userAppConfig, app);
   }
 
   setRemoteEntry() {
-    this.fluxoraAppConfig.remoteEntry = {
+    this.config.remoteEntry = {
       entryPath:
         this.userConfig?.config?.[this.app.name]?.remoteEntryPath ||
         this.userAppConfig?.remoteEntryPath ||
@@ -58,15 +49,15 @@ export class FluxoraAppConfigBuilder extends AsyncTask {
   }
 
   retrieveViteConfigFile() {
-    this.fluxoraAppConfig.vite ||= {};
+    this.config.vite ||= {};
 
     let resolvedConfigFile: string;
     if (this.userConfig.vite?.configFile) {
-      this.fluxoraAppConfig.vite.configFile = resolve(this.userConfig.vite.configFile);
+      this.config.vite.configFile = resolve(this.userConfig.vite.configFile);
     } else if (existsSync((resolvedConfigFile = resolve(this.app.root, "vite.config.ts")))) {
-      this.fluxoraAppConfig.vite.configFile = resolvedConfigFile;
+      this.config.vite.configFile = resolvedConfigFile;
     } else if (existsSync((resolvedConfigFile = resolve(this.app.root, "vite.config.js")))) {
-      this.fluxoraAppConfig.vite.configFile = resolvedConfigFile;
+      this.config.vite.configFile = resolvedConfigFile;
     }
 
     return this;
@@ -75,18 +66,8 @@ export class FluxoraAppConfigBuilder extends AsyncTask {
   async build() {
     await this.executeTasks();
     if (!this.validateConfig()) process.exit(1);
-    const self = this;
-    const fluxoraConfig = await this.fluxoraConfigBuilder.build();
-    const methods: FluxoraAppConfigMethods = {
-      async getOtherAppConfig(app: MicroApp) {
-        return (await self.fluxoraConfigBuilder.getAppConfigBuilder(app.name)?.build()) || null;
-      }
-    };
-    self.fluxoraConfigBuilder.setAppConfig(
-      this.app.name,
-      merge(fluxoraConfig, this.fluxoraAppConfig, methods) as FluxoraApp
-    );
-    return merge(fluxoraConfig, this.fluxoraAppConfig, methods) as FluxoraApp;
+    const conf = this.config as FluxoraAppConfig;
+    return merge(this.fluxoraConfig, conf) as FluxoraApp;
   }
 
   checkHostForProduction(isBuild = false) {
@@ -97,20 +78,10 @@ export class FluxoraAppConfigBuilder extends AsyncTask {
   }
 
   private validateConfig() {
-    const conf = this.fluxoraAppConfig;
+    const conf = this.config;
 
     if (!conf.app) {
       logger.error("Current app is not defined");
-      return false;
-    }
-
-    if (!conf.client?.host) {
-      logger.error("Current app's client host is not defined");
-      return false;
-    }
-
-    if (!conf.server?.host) {
-      logger.error("Current app's server host is not defined");
       return false;
     }
 
