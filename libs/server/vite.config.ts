@@ -23,7 +23,7 @@ export default defineConfig({
       formats: ["es"]
     },
     rollupOptions: {
-      external: [/^\/@fluxora\/\w+\/.*$/],
+      external: [/^\/@fluxora\/.*$/],
       output: { chunkFileNames: "chunks/[hash].js" }
     }
   }
