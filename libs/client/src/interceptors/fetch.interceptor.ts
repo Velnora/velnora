@@ -7,5 +7,14 @@ export const fetchInterceptor = () => {
     const resolvedUrl = resolveUrl(url);
     return originalFetch(resolvedUrl, init);
   };
-  console.debug("[interceptor] Fetch interception enabled.");
+  if (import.meta.env.DEV) {
+    console.debug("[interceptor] Fetch interception enabled.");
+  }
 };
+
+if (import.meta.hot) {
+  import.meta.hot.accept(module => {
+    if (!module) return;
+    module.fetchInterceptor();
+  });
+}

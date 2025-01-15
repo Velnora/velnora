@@ -12,5 +12,14 @@ export const xhrInterceptor = () => {
     const resolvedUrl = resolveUrl(url.toString());
     originalXHR.call(this, method, resolvedUrl, isAsync, user, password);
   };
-  console.debug("[interceptor] XHR interception enabled.");
+  if (import.meta.env.DEV) {
+    console.debug("[interceptor] XHR interception enabled.");
+  }
 };
+
+if (import.meta.hot) {
+  import.meta.hot.accept(module => {
+    if (!module) return;
+    module.xhrInterceptor();
+  });
+}
