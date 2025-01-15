@@ -12,5 +12,5 @@ export const xhrInterceptor = () => {
     const resolvedUrl = resolveUrl(url.toString());
     originalXHR.call(this, method, resolvedUrl, isAsync, user, password);
   };
-  console.log("[interceptor] XHR interception enabled.");
+  console.debug("[interceptor] XHR interception enabled.");
 };

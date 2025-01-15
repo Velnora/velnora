@@ -7,5 +7,5 @@ export const fetchInterceptor = () => {
     const resolvedUrl = resolveUrl(url);
     return originalFetch(resolvedUrl, init);
   };
-  console.log("[interceptor] Fetch interception enabled.");
+  console.debug("[interceptor] Fetch interception enabled.");
 };
