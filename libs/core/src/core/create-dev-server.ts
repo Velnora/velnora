@@ -47,6 +47,8 @@ export const createDevServer = async (options?: CreateServerOptions) => {
       .listen(clientViteConfig.server?.port, () => {
         logger.debug(`Frontend for ${config.app.name} is running at http://localhost:${clientViteConfig.server?.port}`);
       });
+    client.ws.listen();
+
     app.use(
       `/${config.app.name}`,
       createProxyMiddleware({ target: `http://localhost:${clientViteConfig.server?.port}` })
