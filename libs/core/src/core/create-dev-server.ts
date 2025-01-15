@@ -27,7 +27,7 @@ export const createDevServer = async (options?: CreateServerOptions) => {
   const app = express();
 
   await config.configureApps(config => {
-    config.assignHost(false).setRemoteEntry().retrieveViteConfigFile();
+    config.assignHost().setRemoteEntry().retrieveViteConfigFile();
   });
 
   checkAndGenerateGitignore(config);

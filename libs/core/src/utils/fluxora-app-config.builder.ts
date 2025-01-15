@@ -31,7 +31,7 @@ export class FluxoraAppConfigBuilder extends AsyncTask {
     return FluxoraAppConfigBuilder._availablePort++;
   }
 
-  assignHost(isBuild: boolean) {
+  assignHost() {
     const host = this.userConfig.hosts?.[this.app.name];
     this.fluxoraAppConfig.client ||= {};
     this.fluxoraAppConfig.server ||= {};
@@ -44,15 +44,6 @@ export class FluxoraAppConfigBuilder extends AsyncTask {
     this.fluxoraAppConfig.client.host = host || `http://localhost:${this.availablePort}`;
     this.fluxoraAppConfig.server.host = host ? `api.${host}` : `http://localhost:${this.availablePort}`;
 
-    this.addTask(async () => {
-      this.fluxoraAppConfig.client ||= {};
-      this.fluxoraAppConfig.server ||= {};
-
-      if (!host && !isBuild) {
-        this.fluxoraAppConfig.client.vite ||= {};
-        this.fluxoraAppConfig.client.vite.wsPort = this.availablePort;
-      }
-    });
     return this;
   }
 
@@ -68,12 +59,6 @@ export class FluxoraAppConfigBuilder extends AsyncTask {
 
   retrieveViteConfigFile() {
     this.fluxoraAppConfig.vite ||= {};
-
-    this.fluxoraAppConfig.client ||= {};
-    this.fluxoraAppConfig.client.vite ||= {};
-
-    this.fluxoraAppConfig.server ||= {};
-    this.fluxoraAppConfig.server.vite ||= {};
 
     let resolvedConfigFile: string;
     if (this.userConfig.vite?.configFile) {

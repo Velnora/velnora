@@ -10,7 +10,7 @@ export const build = async () => {
   const fluxoraConfig = await new FluxoraConfigBuilder(userConfig).resolveApps().build();
 
   await fluxoraConfig.configureApps(configBuilder => {
-    configBuilder.assignHost(true).retrieveViteConfigFile();
+    configBuilder.assignHost().retrieveViteConfigFile();
   });
 
   await fluxoraConfig.withApps(async config => {
