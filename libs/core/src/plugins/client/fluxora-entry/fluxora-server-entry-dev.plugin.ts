@@ -16,14 +16,14 @@ export const fluxoraServerEntryDevPlugin = async (_config: FluxoraApp): Promise<
       let entry: string | null;
 
       if (id === PACKAGE_ENTRIES.FLUXORA_SERVER && (entry = getEntryInTsconfig(PACKAGE_ORIGINALS.FLUXORA_SERVER))) {
-        return `/@fluxora:fs?file=${entry}`;
+        return `/@fluxora:fs/${entry}`;
       }
 
       if (
         id === PACKAGE_ENTRIES.FLUXORA_SERVER_ENTRY &&
         (entry = getEntryInTsconfig(PACKAGE_ORIGINALS.FLUXORA_SERVER_DEV_ENTRY))
       ) {
-        return `/@fluxora:fs?file=${entry}`;
+        return `/@fluxora:fs/${entry}`;
       }
     }
   };

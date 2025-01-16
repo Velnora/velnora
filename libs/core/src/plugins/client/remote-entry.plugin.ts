@@ -7,15 +7,15 @@ import type { FluxoraApp } from "../../types";
 export const remoteEntryPlugin = async (config: FluxoraApp): Promise<Plugin> => {
   const externalImportListPromises = config.apps
     .filter(configApp => configApp.name !== config.app.name)
-    .map(async app => [app.name, app.host.serverHost] as const);
+    .map(async app => [app.name, app.host] as const);
 
   const externalImportList = (await Promise.all(externalImportListPromises)).filter(([, conf]) => !!conf);
   const externalImports = Object.fromEntries(externalImportList);
 
   const importMap = {
     imports: externalImportList.reduce(
-      (acc, [appName, appConfig]) => {
-        //     acc[appName] = new URL(appConfig.remoteEntry.entryPath, appConfig.client.host).toString();
+      (acc, [appName, appConfigHosts]) => {
+        //     acc[appName] = new URL(appConfig.remoteEntry.entryPath, appConfigHosts.clientHost).toString();
         //
         //     Array.from(appConfig.exposedModules.entries()).forEach(([, moduleName]) => {
         //       acc[`${appName}/${moduleName}`] = new URL(

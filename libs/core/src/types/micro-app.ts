@@ -1,6 +1,5 @@
 export interface MicroAppHost {
-  clientHost: string;
-  serverHost: string;
+  host: string;
   devWsPort: number;
 }
 

@@ -17,21 +17,21 @@ export const fluxoraClientEntryDevPlugin = (_config: FluxoraApp): Plugin => {
       let entry: string | null;
 
       if (id === PACKAGE_ENTRIES.FLUXORA_CLIENT && (entry = getEntryInTsconfig(PACKAGE_ORIGINALS.FLUXORA_CLIENT))) {
-        return `/@fluxora:fs?file=${entry}`;
+        return `/@fluxora:fs/${entry}`;
       }
 
       if (
         id === PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_CLIENT_REACT &&
         (entry = getEntryInTsconfig(PACKAGE_ORIGINALS.FLUXORA_CLIENT_ENTRY_CLIENT_REACT))
       ) {
-        return `/@fluxora:fs?file=${entry}`;
+        return `/@fluxora:fs/${entry}`;
       }
 
       if (
         id === PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_SERVER_REACT &&
         (entry = getEntryInTsconfig(PACKAGE_ORIGINALS.FLUXORA_CLIENT_ENTRY_SERVER_REACT))
       ) {
-        return `/@fluxora:fs?file=${entry}`;
+        return `/@fluxora:fs/${entry}`;
       }
     }
   };

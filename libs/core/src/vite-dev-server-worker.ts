@@ -1,35 +1,50 @@
 import { parentPort, workerData } from "worker_threads";
 
 import express from "express";
-import { createServer } from "vite";
+import { createServer, isRunnableDevEnvironment } from "vite";
 
-import { getClientConfiguration } from "./core/configuration/client";
-import { getServerConfiguration } from "./core/configuration/server";
+import type { INestApplication } from "@nestjs/common";
+
+import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "./const";
+import { getAppConfiguration } from "./core/configuration/app";
 import type { WorkerCreateServerData } from "./types/worker-create-server-data";
 import type { WorkerMessage } from "./types/worker-message";
 import { FluxoraAppConfigBuilder } from "./utils/fluxora-app-config.builder";
 import { logger } from "./utils/logger";
 
 const data = workerData as WorkerCreateServerData;
-const { app: microApp, config, isClient } = data;
+const { app: microApp, config } = data;
 
 const appConfigBuilder = await FluxoraAppConfigBuilder.from(microApp, config);
 const appConfig = await appConfigBuilder.setRemoteEntry().retrieveViteConfigFile().build();
-const viteConfig = isClient ? await getClientConfiguration(appConfig) : getServerConfiguration(appConfig);
+const viteConfig = await getAppConfiguration(appConfig);
 const vite = await createServer(viteConfig);
+vite.ws.listen();
 
-const app = express().use(vite.middlewares);
+const serverEnv = vite.environments[VITE_ENVIRONMENTS.SERVER];
 
-if (isClient) {
-  app.use("*", async (req, res) => {
+let module: { main: () => Promise<INestApplication> };
+if (isRunnableDevEnvironment(serverEnv)) {
+  module = await serverEnv.runner.import(PACKAGE_ENTRIES.FLUXORA_SERVER_ENTRY);
+} else {
+  throw new Error("Server environment is not runnable");
+}
+
+const nestApp = await module.main();
+const nestMiddleware = nestApp.getHttpAdapter().getInstance();
+
+const app = express()
+  .use(vite.middlewares)
+  .use((req, res, next) => {
+    if (req.url?.startsWith(`/api/v1/${appConfig.app.name}`)) return nestMiddleware(req, res);
+    next();
+  })
+  .use("*", async (req, res) => {
     const html = await vite.transformIndexHtml(req.url, "");
     res.status(200).end(html);
   });
-  vite.ws.listen();
-}
 
 app.listen(viteConfig.server!.port, () => {
-  const side = isClient ? "Frontend" : "Backend";
-  logger.debug(`${side} for ${app.name} is running at http://localhost:${viteConfig.server?.port}`);
+  logger.debug(`App (${app.name}) is running at http://localhost:${viteConfig.server?.port}`);
   parentPort?.postMessage({ status: "ok", port: viteConfig.server!.port! } satisfies WorkerMessage);
 });

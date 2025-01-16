@@ -52,4 +52,10 @@ export const NESTJS_PLUGIN_VIRTUAL_ENTRIES = {
 } as const;
 export const NESTJS_PLUGIN_VIRTUAL_ENTRY_NAMES = new Set<string>(Object.values(NESTJS_PLUGIN_VIRTUAL_ENTRIES));
 
+export const VITE_ENVIRONMENTS = {
+  SERVER: "server",
+  CLIENT: "client",
+  SSR: "ssr"
+} as const;
+
 export const HTML_SCRIPT_TAG = `<script type="module" src="${PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_CLIENT_REACT}"></script>`;

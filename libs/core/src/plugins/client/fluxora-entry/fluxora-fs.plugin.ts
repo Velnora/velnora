@@ -13,7 +13,7 @@ export const fluxoraFsPlugin = (): Plugin => {
 
     load(id) {
       if (id.startsWith("/@fluxora:fs")) {
-        const file = id.split("/@fluxora:fs?file=")[1];
+        const file = id.split("/@fluxora:fs")[1];
         return `export * from "${file}"`;
       }
     }

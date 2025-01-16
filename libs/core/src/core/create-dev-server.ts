@@ -20,29 +20,23 @@ export const createDevServer = async (options?: CreateServerOptions) => {
   checkAndGenerateGitignore(config);
 
   await config.withApps(async microApp => {
-    const clientPort = await createViteInstance(microApp, config, true);
-    const serverPort = await createViteInstance(microApp, config, false);
+    const port = await createViteInstance(microApp, config);
 
-    app.use(`/${microApp.name}`, createProxyMiddleware({ target: `http://localhost:${clientPort}` }));
+    app.use(`/${microApp.name}`, createProxyMiddleware({ target: `http://localhost:${port}` }));
     app.use(
       `/api/v1/${microApp.name}`,
       createProxyMiddleware({
-        target: `http://localhost:${serverPort}/api/v1/${microApp.name}`
+        target: `http://localhost:${port}/api/v1/${microApp.name}`
       })
     );
   });
 
-  // app.all("*", (_req, res) => {
-  //   res.json({ done: false });
-  // });
-
   const port = options?.port || 3000;
-  // app.listen(port, async () => {
-  logger.info(`Combined apps together and run on port ${port}`);
-  await config.withApps(app => {
-    logger.info(` - ${app.name} (frontend) -> /${app.name} (${app.host.clientHost})`);
-    // if (app.host.devWsPort) logger.info(` - ${app.name} (frontend/hmr) -> ws://localhost:${app.host.devWsPort}/hmr`);
-    logger.info(` - ${app.name} (backend)  -> /api/v1/${app.name} (${app.host.serverHost})`);
+  app.listen(port, async () => {
+    logger.info(`Combined apps together and run on port ${port}`);
+    await config.withApps(app => {
+      logger.info(` - ${app.name} bound to \`/${app.name}\` (${app.host.host})`);
+      // if (app.host.devWsPort) logger.info(` - ${app.name} (frontend/hmr) -> ws://localhost:${app.host.devWsPort}/hmr`);
+    });
   });
-  // });
 };

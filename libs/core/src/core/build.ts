@@ -11,12 +11,12 @@ export const build = async () => {
   const fluxoraConfig = await FluxoraConfigBuilder.from(userConfig).resolveApps().build();
 
   await fluxoraConfig.withApps(async app => {
-    const config = await (await FluxoraAppConfigBuilder.from(app, fluxoraConfig)).retrieveViteConfigFile().build();
-    const viteConfig = getServerConfiguration(config);
-    const startTime = performance.now();
-    const builder = await createBuilder(viteConfig);
-    await builder.buildApp();
-    const diff = (performance.now() - startTime).toFixed(2);
-    logger.info(`Backend for ${config.app.name} built in ${diff}ms`);
+    // const config = await (await FluxoraAppConfigBuilder.from(app, fluxoraConfig)).retrieveViteConfigFile().build();
+    // const viteConfig = getServerConfiguration(config);
+    // const startTime = performance.now();
+    // const builder = await createBuilder(viteConfig);
+    // await builder.buildApp();
+    // const diff = (performance.now() - startTime).toFixed(2);
+    // logger.info(`Backend for ${config.app.name} built in ${diff}ms`);
   });
 };

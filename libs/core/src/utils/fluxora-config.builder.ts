@@ -84,29 +84,21 @@ export class FluxoraConfigBuilder extends AsyncTask {
       return false;
     }
 
-    // ForEachApp
-    /*
-    *
-    if (!conf.client?.host) {
-      logger.error("Current app's client host is not defined");
-      return false;
+    for (const app of this.fluxoraConfig.apps) {
+      if (!app.host?.host) {
+        logger.error(`Host for app ${app.name} is not defined`);
+        return false;
+      }
     }
-
-    if (!conf.server?.host) {
-      logger.error("Current app's server host is not defined");
-      return false;
-    }
-    * */
 
     return true;
   }
 
   private async resolveHostForApp(): Promise<MicroAppHost> {
-    const clientHost = `http://localhost:${await this.getNextPort()}`;
-    const serverHost = `http://localhost:${await this.getNextPort()}`;
+    const host = `http://localhost:${await this.getNextPort()}`;
     const devWsPort = await this.getNextPort();
 
-    return { clientHost, serverHost, devWsPort };
+    return { host, devWsPort };
   }
 
   private async getNextPort() {
