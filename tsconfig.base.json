@@ -16,20 +16,36 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
+      // CLI
       "@fluxora/cli": ["libs/cli/src/main.ts"],
+
+      // Client
       "@fluxora/client": ["libs/client/src/main.ts"],
       "@fluxora/client/react/entry-client": ["libs/client/src/react/entry-client.ts"],
       "@fluxora/client/react/entry-server": ["libs/client/src/react/entry-server.ts"],
       "/@fluxora/client-server/react": ["libs/client/src/react/entry-server.ts"],
+
+      // Core
+      "@fluxora/core": ["libs/core/src/main.ts"],
+
+      // Server
       "@fluxora/server": ["libs/server/src/main.ts"],
       "@fluxora/server/entry-dev": ["libs/server/src/entry-dev.ts"],
       "@fluxora/server/entry-prod": ["libs/server/src/entry-prod.ts"],
-      "@fluxora/core": ["libs/core/src/main.ts"],
+
+      // Types
+      "@fluxora/types": ["libs/types/src/main.ts"],
+      "@fluxora/types/cli": ["libs/types/src/cli/main.ts"],
+
+      // Utils
       "@fluxora/utils": ["libs/utils/src/main.ts"],
+
+      // Vite
       "@fluxora/vite": ["libs/vite/src/main.ts"],
 
       // Imaginary Modules
       "/@fluxora/virtual/entry/*": ["libs/internal/src/*"]
     }
-  }
+  },
+  "exclude": ["node_modules"]
 }

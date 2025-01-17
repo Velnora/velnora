@@ -1,29 +1,19 @@
 import type { CamelCase, Promisable } from "type-fest";
-import type { Arguments } from "yargs";
 
-import type { LiteralType } from "../types/commands/literal-type";
-import type { Merge } from "../types/commands/merge";
-import type { OptionType } from "../types/commands/option-type";
-import type { InferType } from "../types/infer/infer-type";
+import type { Merge } from "@fluxora/types";
+import type {
+  Command as Cmd,
+  CommandOptions,
+  CommandReturnType,
+  InferType,
+  LiteralType,
+  OptionType,
+  Type
+} from "@fluxora/types/cli";
+
 import { logger } from "./logger";
 
-export interface Type<TType extends LiteralType = LiteralType, TValues extends string = string> {
-  type: TType;
-  values: TValues;
-}
-
-type CommandOptions<TOptions extends Record<string, Type>> = {
-  [K in keyof TOptions]: OptionType<TOptions[K]["type"]> | (OptionType<"union"> & { values: TOptions[K]["values"] });
-};
-
-export interface CommandReturnType<TOptions extends Record<string, Type>> {
-  command: string;
-  description: string | null;
-  options: CommandOptions<TOptions>;
-  execute(args: Omit<Arguments, "_" | "$0">): Promise<void>;
-}
-
-export class Command<TOptions extends Record<string, Type> = {}> {
+export class Command<TOptions extends Record<string, Type> = {}> implements Cmd<TOptions> {
   private options = {} as CommandOptions<TOptions>;
 
   constructor(

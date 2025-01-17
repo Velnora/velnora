@@ -1,4 +1,4 @@
-import type { LiteralType } from "../commands/literal-type";
+import type { LiteralType } from "../literal-type";
 
 export type InferType<T extends LiteralType, TUnionType = any> = T extends "string"
   ? string

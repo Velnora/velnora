@@ -1550,6 +1550,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fluxora/types@workspace:libs/types":
+  version: 0.0.0-use.local
+  resolution: "@fluxora/types@workspace:libs/types"
+  dependencies:
+    "@fluxora/vite": "workspace:^"
+    "@types/yargs": "npm:^17.0.33"
+    type-fest: "npm:^4.32.0"
+  languageName: unknown
+  linkType: soft
+
 "@fluxora/utils@workspace:^, @fluxora/utils@workspace:libs/utils":
   version: 0.0.0-use.local
   resolution: "@fluxora/utils@workspace:libs/utils"

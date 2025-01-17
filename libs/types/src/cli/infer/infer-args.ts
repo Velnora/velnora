@@ -1,4 +1,6 @@
-import { Command, type CommandReturnType, type Type } from "../../utils/command";
+import type { Command } from "../command/command";
+import type { CommandReturnType } from "../command/command-return-type";
+import type { Type } from "../type";
 import type { InferType } from "./infer-type";
 
 export type InferArgs<T extends Command<any> | CommandReturnType<any>> =

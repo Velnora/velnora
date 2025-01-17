@@ -1,8 +1,10 @@
 import yargs, { type Arguments } from "yargs";
 import { hideBin } from "yargs/helpers";
 
+import type { CommandReturnType } from "@fluxora/types/cli";
+
 import { version } from "../../package.json";
-import { Command, type CommandReturnType } from "./command";
+import { Command } from "./command";
 import { logger } from "./logger";
 
 export type CommandsType = Promise<Record<string, Command<any> | CommandReturnType<any>>>[];
