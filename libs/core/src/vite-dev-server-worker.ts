@@ -45,6 +45,6 @@ const app = express()
   });
 
 app.listen(viteConfig.server!.port, () => {
-  logger.debug(`App (${app.name}) is running at http://localhost:${viteConfig.server?.port}`);
+  logger.debug(`App (${microApp.name}) is running at http://localhost:${viteConfig.server?.port}`);
   parentPort?.postMessage({ status: "ok", port: viteConfig.server!.port! } satisfies WorkerMessage);
 });
