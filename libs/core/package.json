@@ -14,7 +14,6 @@
     "express": "^4.21.2",
     "get-tsconfig": "^4.8.1",
     "glob": "^11.0.1",
-    "http-proxy-middleware": "^3.0.3",
     "lodash.merge": "^4.6.2",
     "node-html-parser": "^7.0.1",
     "vite-plugin-inspect": "^10.0.6"
