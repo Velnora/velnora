@@ -1470,12 +1470,10 @@ __metadata:
   resolution: "@fluxora/cli@workspace:libs/cli"
   dependencies:
     "@fluxora/utils": "workspace:^"
+    "@fluxora/vite": "workspace:^"
     "@types/node": "npm:^22.10.5"
     "@types/yargs": "npm:^17.0.33"
     type-fest: "npm:^4.32.0"
-    vite: "npm:^6.0.7"
-    vite-plugin-dts: "npm:^4.5.0"
-    vite-tsconfig-paths: "npm:^5.1.4"
     yargs: "npm:^17.7.2"
   bin:
     fluxora: ./bin/fluxora.js
@@ -1486,14 +1484,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fluxora/client@workspace:libs/client"
   dependencies:
+    "@fluxora/vite": "workspace:^"
     "@types/react": "npm:^19.0.6"
     "@types/react-dom": "npm:^19.0.3"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
-    vite: "npm:^6.0.7"
-    vite-plugin-dts: "npm:^4.5.0"
-    vite-tsconfig-paths: "npm:^5.1.4"
-    winston: "npm:^3.17.0"
   languageName: unknown
   linkType: soft
 
@@ -1505,6 +1500,7 @@ __metadata:
     "@fluxora/client": "workspace:^"
     "@fluxora/server": "workspace:^"
     "@fluxora/utils": "workspace:^"
+    "@fluxora/vite": "workspace:^"
     "@nestjs/common": "npm:^10.4.15"
     "@types/babel__core": "npm:^7.20.5"
     "@types/express": "npm:^5.0.0"
@@ -1520,9 +1516,7 @@ __metadata:
     prettier: "npm:^3.4.2"
     type-fest: "npm:^4.32.0"
     vite: "npm:^6.0.7"
-    vite-plugin-dts: "npm:^4.5.0"
     vite-plugin-inspect: "npm:^10.0.6"
-    vite-tsconfig-paths: "npm:^5.1.4"
   languageName: unknown
   linkType: soft
 
@@ -1549,6 +1543,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fluxora/server@workspace:libs/server"
   dependencies:
+    "@fluxora/vite": "workspace:^"
     "@nestjs/core": "npm:^10.4.15"
     "@types/react-dom": "npm:^19.0.3"
     react-dom: "npm:^19.0.0"
@@ -1559,11 +1554,19 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fluxora/utils@workspace:libs/utils"
   dependencies:
+    "@fluxora/vite": "workspace:^"
     "@types/node": "npm:^22.10.5"
+    winston: "npm:^3.17.0"
+  languageName: unknown
+  linkType: soft
+
+"@fluxora/vite@workspace:^, @fluxora/vite@workspace:libs/vite":
+  version: 0.0.0-use.local
+  resolution: "@fluxora/vite@workspace:libs/vite"
+  dependencies:
     vite: "npm:^6.0.7"
     vite-plugin-dts: "npm:^4.5.0"
     vite-tsconfig-paths: "npm:^5.1.4"
-    winston: "npm:^3.17.0"
   languageName: unknown
   linkType: soft
 

@@ -26,6 +26,7 @@
       "@fluxora/server/entry-prod": ["libs/server/src/entry-prod.ts"],
       "@fluxora/core": ["libs/core/src/main.ts"],
       "@fluxora/utils": ["libs/utils/src/main.ts"],
+      "@fluxora/vite": ["libs/vite/src/main.ts"],
 
       // Imaginary Modules
       "/@fluxora/virtual/entry/*": ["libs/internal/src/*"]

@@ -26,12 +26,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@fluxora/vite": "workspace:^",
     "@types/react-dom": "^19.0.3"
-  },
-  "devDependecies": {
-    "@types/node": "^22.10.2",
-    "vite": "^6.0.4",
-    "vite-plugin-dts": "^4.4.0",
-    "vite-tsconfig-paths": "^5.1.4"
   }
 }
