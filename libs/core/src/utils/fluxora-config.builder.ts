@@ -10,8 +10,9 @@ import type {
   FluxoraConfigMethods,
   MicroAppHost,
   PartialFluxoraConfig,
-  ResolvedUserConfig
-} from "../types";
+  UserConfig
+} from "@fluxora/types/core";
+
 import { AsyncTask } from "./async-task";
 import { logger } from "./logger";
 
@@ -20,7 +21,7 @@ export class FluxoraConfigBuilder extends AsyncTask {
   private readonly definedPorts = new Set<number>();
   private startingPort = 32768;
 
-  constructor(private readonly userConfig: ResolvedUserConfig) {
+  constructor(private readonly userConfig: UserConfig) {
     super();
     this.fluxoraConfig.resolvedUserConfig = this.userConfig;
   }
@@ -29,7 +30,7 @@ export class FluxoraConfigBuilder extends AsyncTask {
     return this.userConfig;
   }
 
-  static from(userConfig: ResolvedUserConfig) {
+  static from(userConfig: UserConfig) {
     return new FluxoraConfigBuilder(userConfig);
   }
 

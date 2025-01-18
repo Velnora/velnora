@@ -1,6 +1,6 @@
 import { basename, extname } from "node:path";
 
-import type { FluxoraAppConfig } from "../types";
+import type { FluxoraAppConfig } from "@fluxora/types/core";
 
 export const handleDirectives = (code: string, id: string, exposedModules: FluxoraAppConfig["exposedModules"]) => {
   const directiveRegex = /^(["'])use (.*)\1;?$/gm;

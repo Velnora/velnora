@@ -7,6 +7,21 @@
       "types": "./build/fluxora.types.d.ts",
       "import": "./build/fluxora.types.js",
       "require": "./build/fluxora.types.js"
+    },
+    "./cli": {
+      "types": "./build/cli.types.d.ts",
+      "import": "./build/cli.types.js",
+      "require": "./build/cli.types.js"
+    },
+    "./core": {
+      "types": "./build/core.types.d.ts",
+      "import": "./build/core.types.js",
+      "require": "./build/core.types.js"
+    },
+    "./worker": {
+      "types": "./build/worker.types.d.ts",
+      "import": "./build/worker.types.js",
+      "require": "./build/worker.types.js"
     }
   },
   "main": "build/fluxora.types.js",

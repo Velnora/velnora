@@ -1,6 +1,7 @@
 import type { PluginOption } from "vite";
 
-import type { FluxoraApp } from "../../../types";
+import type { FluxoraApp } from "@fluxora/types/core";
+
 import { entryAppHtml } from "./entry-app-html";
 import { fluxoraClientEntryDevPlugin } from "./fluxora-client-entry-dev.plugin";
 import { fluxoraClientEntryPlugin } from "./fluxora-client-entry.plugin";

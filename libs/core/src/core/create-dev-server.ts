@@ -1,8 +1,9 @@
+import type { CreateServerOptions } from "@fluxora/types/core";
+
 import { checkAndGenerateGitignore } from "../utils/check-and-generate-gitignore";
 import { createViteInstance } from "../utils/create-vite-instance";
 import { FluxoraConfigBuilder } from "../utils/fluxora-config.builder";
 import { resolveUserConfig } from "../utils/resolve-user-config";
-import type { CreateServerOptions } from "./create-server.types";
 
 export const createDevServer = async (_options?: CreateServerOptions) => {
   const userConfig = await resolveUserConfig();

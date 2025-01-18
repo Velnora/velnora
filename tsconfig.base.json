@@ -26,6 +26,7 @@
       "/@fluxora/client-server/react": ["libs/client/src/react/entry-server.ts"],
 
       // Core
+      "fluxora/core": ["libs/fluxora/core.js", "libs/fluxora/core.d.ts"],
       "@fluxora/core": ["libs/core/src/main.ts"],
 
       // Server
@@ -34,8 +35,11 @@
       "@fluxora/server/entry-prod": ["libs/server/src/entry-prod.ts"],
 
       // Types
+      "fluxora/types": ["libs/fluxora/types.js", "libs/fluxora/types.d.ts"],
       "@fluxora/types": ["libs/types/src/main.ts"],
       "@fluxora/types/cli": ["libs/types/src/cli/main.ts"],
+      "@fluxora/types/core": ["libs/types/src/core/main.ts"],
+      "@fluxora/types/worker": ["libs/types/src/worker/main.ts"],
 
       // Utils
       "@fluxora/utils": ["libs/utils/src/main.ts"],

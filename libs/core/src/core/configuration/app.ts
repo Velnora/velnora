@@ -2,9 +2,10 @@ import { resolve } from "node:path";
 
 import type { InlineConfig } from "vite";
 
+import type { FluxoraApp } from "@fluxora/types/core";
+
 import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "../../const";
 import { fluxoraPlugin } from "../../plugins/client/fluxora-entry/fluxora.plugin";
-import type { FluxoraApp } from "../../types";
 import { logger } from "../../utils/logger";
 
 export const getAppConfiguration = async (config: FluxoraApp): Promise<InlineConfig> => {

@@ -20,12 +20,12 @@ interface ViteConfigOptions {
    * The path is relative to the project root.
    *
    * @type {string}
-   * @default "vite.config.ts"
+   * @default "vite.config.[jt]s"
    */
   configFile?: string;
 }
 
-export interface ResolvedUserAppConfig {
+export interface UserAppConfig {
   /**
    * Specifies the path to the remote entry file.
    * The path is relative to the project root.
@@ -33,6 +33,17 @@ export interface ResolvedUserAppConfig {
    * @type {string}
    */
   remoteEntryPath?: string;
+
+  /**
+   * Application vite configuration
+   */
+  vite?: ViteConfigOptions;
+
+  /**
+   * Host of the application. Required for production environment.
+   * Ignored in development environment.
+   */
+  host?: string;
 }
 
 export interface CacheSettings {
@@ -46,11 +57,24 @@ export interface CacheSettings {
   root?: string;
 }
 
-export interface ResolvedUserConfig {
+export interface UserConfig {
+  /**
+   * Apps configuration
+   */
   apps?: ApplicationSettings;
+
+  /**
+   * Libs configuration
+   */
   libs?: LibrarySettings;
-  vite?: ViteConfigOptions;
-  hosts?: Record<string, string>;
-  config?: Record<string, ResolvedUserAppConfig>;
+
+  /**
+   * Specifies the settings for the projects.
+   */
+  configs?: Record<string, UserAppConfig>;
+
+  /**
+   * Specifies the settings for the cache.
+   */
   cache?: CacheSettings;
 }

@@ -1,8 +1,9 @@
 import { parse } from "node-html-parser";
 import { type Plugin, defineConfig } from "vite";
 
+import type { FluxoraApp } from "@fluxora/types/core";
+
 import { FEDERATION_PLUGIN_NAME } from "../../const";
-import type { FluxoraApp } from "../../types";
 
 export const remoteEntryPlugin = async (config: FluxoraApp): Promise<Plugin> => {
   const externalImportListPromises = config.apps

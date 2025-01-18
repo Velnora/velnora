@@ -1,10 +1,10 @@
 import type { MicroApp } from "../micro-app";
-import type { ResolvedUserConfig } from "../resolved-user-config";
+import type { UserConfig } from "../user-config";
 import type { TemplateOptions } from "./template-options";
 
 export interface FluxoraConfig {
   apps: MicroApp[];
-  resolvedUserConfig: ResolvedUserConfig;
+  resolvedUserConfig: UserConfig;
   template?: TemplateOptions;
   cacheRoot?: string;
 }

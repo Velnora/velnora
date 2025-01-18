@@ -3,16 +3,17 @@ import merge from "lodash.merge";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { FEDERATION_PLUGIN_REMOTE_ENTRY_FILE_PATH_DEFAULT } from "../const";
 import type {
   FluxoraApp,
   FluxoraAppConfig,
   FluxoraConfig,
   MicroApp,
   PartialFluxoraAppConfig,
-  ResolvedUserAppConfig,
-  ResolvedUserConfig
-} from "../types";
+  UserAppConfig,
+  UserConfig
+} from "@fluxora/types/core";
+
+import { FEDERATION_PLUGIN_REMOTE_ENTRY_FILE_PATH_DEFAULT } from "../const";
 import { AsyncTask } from "./async-task";
 import { logger } from "./logger";
 import { resolveUserAppConfig } from "./resolve-user-app-config";
@@ -21,10 +22,10 @@ import { resolveUserConfig } from "./resolve-user-config";
 export class FluxoraAppConfigBuilder extends AsyncTask {
   private readonly config: PartialFluxoraAppConfig = {};
 
-  constructor(
+  private constructor(
     private readonly fluxoraConfig: FluxoraConfig,
-    private readonly userConfig: ResolvedUserConfig,
-    private readonly userAppConfig: ResolvedUserAppConfig,
+    private readonly userConfig: UserConfig,
+    private readonly userAppConfig: UserAppConfig,
     private readonly app: MicroApp
   ) {
     super();
@@ -35,13 +36,14 @@ export class FluxoraAppConfigBuilder extends AsyncTask {
   static async from(app: MicroApp, fluxoraConfig: FluxoraConfig): Promise<FluxoraAppConfigBuilder> {
     const userConfig = await resolveUserConfig();
     const userAppConfig = await resolveUserAppConfig(app.name);
-    return new FluxoraAppConfigBuilder(fluxoraConfig, userConfig, userAppConfig, app);
+    const resolvedUserAppConfig = merge(userConfig.configs?.[app.name], userAppConfig);
+    return new FluxoraAppConfigBuilder(fluxoraConfig, userConfig, resolvedUserAppConfig, app);
   }
 
   setRemoteEntry() {
     this.config.remoteEntry = {
       entryPath:
-        this.userConfig?.config?.[this.app.name]?.remoteEntryPath ||
+        this.userConfig?.configs?.[this.app.name]?.remoteEntryPath ||
         this.userAppConfig?.remoteEntryPath ||
         FEDERATION_PLUGIN_REMOTE_ENTRY_FILE_PATH_DEFAULT
     };
@@ -52,8 +54,8 @@ export class FluxoraAppConfigBuilder extends AsyncTask {
     this.config.vite ||= {};
 
     let resolvedConfigFile: string;
-    if (this.userConfig.vite?.configFile) {
-      this.config.vite.configFile = resolve(this.userConfig.vite.configFile);
+    if (this.userAppConfig.vite?.configFile) {
+      this.config.vite.configFile = resolve(this.userAppConfig.vite.configFile);
     } else if (existsSync((resolvedConfigFile = resolve(this.app.root, "vite.config.ts")))) {
       this.config.vite.configFile = resolvedConfigFile;
     } else if (existsSync((resolvedConfigFile = resolve(this.app.root, "vite.config.js")))) {
@@ -71,7 +73,7 @@ export class FluxoraAppConfigBuilder extends AsyncTask {
   }
 
   checkHostForProduction(isBuild = false) {
-    if (!__DEV__ && isBuild && !this.userConfig.hosts?.[this.app.name]) {
+    if (!__DEV__ && isBuild && !this.userAppConfig.host) {
       logger.error("Host which defined by default isn't valid for production. Please define it in fluxora.config.ts");
       process.exit(1);
     }

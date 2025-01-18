@@ -1492,7 +1492,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fluxora/core@workspace:libs/core":
+"@fluxora/core@workspace:^, @fluxora/core@workspace:libs/core":
   version: 0.0.0-use.local
   resolution: "@fluxora/core@workspace:libs/core"
   dependencies:
@@ -1550,7 +1550,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fluxora/types@workspace:libs/types":
+"@fluxora/types@workspace:^, @fluxora/types@workspace:libs/types":
   version: 0.0.0-use.local
   resolution: "@fluxora/types@workspace:libs/types"
   dependencies:
@@ -4276,8 +4276,10 @@ __metadata:
   resolution: "fluxora@workspace:libs/fluxora"
   dependencies:
     "@fluxora/cli": "workspace:^"
+    "@fluxora/core": "workspace:^"
+    "@fluxora/types": "workspace:^"
   bin:
-    fluxora: ./bin/fluxora.js
+    fluxora: ./bn/fluxora.js
   languageName: unknown
   linkType: soft
 

@@ -1,6 +1,7 @@
 import type { PluginOption } from "vite";
 
-import type { FluxoraApp } from "../../types";
+import type { FluxoraApp } from "@fluxora/types/core";
+
 import { moduleExposerPlugin } from "./module-exposer.plugin";
 import { remoteEntryPlugin } from "./remote-entry.plugin";
 

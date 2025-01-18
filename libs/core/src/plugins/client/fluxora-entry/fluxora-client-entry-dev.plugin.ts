@@ -1,7 +1,8 @@
 import type { Plugin } from "vite";
 
+import type { FluxoraApp } from "@fluxora/types/core";
+
 import { PACKAGE_ENTRIES, PACKAGE_ORIGINALS } from "../../../const";
-import type { FluxoraApp } from "../../../types";
 import { getEntryInTsconfig } from "../../../utils/get-entry-in-tsconfig";
 
 export const fluxoraClientEntryDevPlugin = (_config: FluxoraApp): Plugin => {

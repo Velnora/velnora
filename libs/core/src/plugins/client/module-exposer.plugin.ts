@@ -2,8 +2,9 @@ import { readFile } from "node:fs/promises";
 
 import { type Plugin, defineConfig } from "vite";
 
+import type { FluxoraAppConfig } from "@fluxora/types/core";
+
 import { FEDERATION_INTERNALS, FEDERATION_PLUGIN_NAME } from "../../const";
-import type { FluxoraAppConfig } from "../../types";
 import { handleDirectives } from "../../utils/handle-directives";
 import { initialLoadExposedModules } from "../../utils/initial-load-exposed-modules";
 

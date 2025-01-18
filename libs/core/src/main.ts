@@ -1,5 +1,6 @@
 export * from "./core";
-export * from "./types";
+
+export * from "./utils/define-config";
 
 declare global {
   const __DEV__: boolean;

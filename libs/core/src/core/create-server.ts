@@ -1,6 +1,7 @@
+import type { CreateServerOptions } from "@fluxora/types/core";
+
 import { createDevServer } from "./create-dev-server";
 import { createProdServer } from "./create-prod-server";
-import type { CreateServerOptions } from "./create-server.types";
 
 export const createServer = async (options?: CreateServerOptions) => {
   if (process.env.NODE_ENV === "development") {

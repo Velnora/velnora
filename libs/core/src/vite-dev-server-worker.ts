@@ -3,12 +3,11 @@ import { parentPort, workerData } from "worker_threads";
 import express from "express";
 import { createServer, isRunnableDevEnvironment } from "vite";
 
+import type { WorkerCreateServerData, WorkerMessage } from "@fluxora/types/worker";
 import type { INestApplication } from "@nestjs/common";
 
 import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "./const";
 import { getAppConfiguration } from "./core/configuration/app";
-import type { WorkerCreateServerData } from "./types/worker-create-server-data";
-import type { WorkerMessage } from "./types/worker-message";
 import { FluxoraAppConfigBuilder } from "./utils/fluxora-app-config.builder";
 import { logger } from "./utils/logger";
 

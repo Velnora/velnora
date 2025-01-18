@@ -2,8 +2,27 @@
   "name": "fluxora",
   "version": "0.0.0-dev.0",
   "type": "module",
-  "bin": "./bin/fluxora.js",
+  "exports": {
+    ".": {
+      "types": "./core.d.ts",
+      "import": "./core.js",
+      "require": "./core.js"
+    },
+    "./types": {
+      "types": "./types.d.ts",
+      "import": "./types.js",
+      "require": "./types.js"
+    },
+    "./core": {
+      "types": "./core.d.ts",
+      "import": "./core.js",
+      "require": "./core.js"
+    }
+  },
+  "bin": "./bn/fluxora.js",
   "dependencies": {
-    "@fluxora/cli": "workspace:^"
+    "@fluxora/cli": "workspace:^",
+    "@fluxora/core": "workspace:^",
+    "@fluxora/types": "workspace:^"
   }
 }

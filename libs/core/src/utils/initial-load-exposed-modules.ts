@@ -3,8 +3,9 @@ import { resolve } from "node:path";
 
 import { glob } from "glob";
 
+import type { FluxoraAppConfig } from "@fluxora/types/core";
+
 import { CLIENT_ENTRY_FILE_EXTENSIONS } from "../const";
-import type { FluxoraAppConfig } from "../types";
 import { handleDirectives } from "./handle-directives";
 
 export const initialLoadExposedModules = async (

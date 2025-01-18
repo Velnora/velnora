@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-import type { FluxoraConfig } from "../types";
+import type { FluxoraConfig } from "@fluxora/types/core";
 
 export const checkAndGenerateGitignore = (config: FluxoraConfig) => {
   const cacheRoot = config.cacheRoot || resolve(process.cwd(), ".fluxora");
