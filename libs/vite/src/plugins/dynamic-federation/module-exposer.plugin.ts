@@ -3,14 +3,14 @@ import { readFile } from "node:fs/promises";
 import { type Plugin, defineConfig } from "vite";
 
 import type { FluxoraAppConfig } from "@fluxora/types/core";
+import { FEDERATION_INTERNALS } from "@fluxora/utils";
 
-import { FEDERATION_INTERNALS, FEDERATION_PLUGIN_NAME } from "../../const";
 import { handleDirectives } from "../../utils/handle-directives";
 import { initialLoadExposedModules } from "../../utils/initial-load-exposed-modules";
 
 export const moduleExposerPlugin = (config: FluxoraAppConfig): Plugin => {
   return {
-    name: `${FEDERATION_PLUGIN_NAME}:module-exposer`,
+    name: "fluxora:core-plugins:dynamic-federation:module-exposer",
     enforce: "pre",
 
     config() {

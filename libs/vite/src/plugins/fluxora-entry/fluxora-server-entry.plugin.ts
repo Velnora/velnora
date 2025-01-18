@@ -1,7 +1,6 @@
 import { type Plugin, defineConfig } from "vite";
 
 import type { FluxoraApp } from "@fluxora/types/core";
-
 import {
   NESTJS_PLUGIN_VIRTUAL_ENTRIES,
   NESTJS_PLUGIN_VIRTUAL_ENTRY_NAMES,
@@ -9,8 +8,9 @@ import {
   PACKAGE_ORIGINALS,
   SERVER_ENTRY_FILE_EXTENSIONS,
   VIRTUAL_ALIAS_ENTRIES
-} from "../../../const";
-import { findEntryFile } from "../../../utils/find-entry-file";
+} from "@fluxora/utils";
+
+import { findEntryFile } from "../../utils/find-entry-file";
 
 export const fluxoraServerEntryPlugin = async (config: FluxoraApp): Promise<Plugin> => {
   return {

@@ -1,9 +1,9 @@
 import { type Plugin } from "vite";
 
 import type { FluxoraApp } from "@fluxora/types/core";
+import { PACKAGE_ENTRIES, PACKAGE_ORIGINALS } from "@fluxora/utils";
 
-import { PACKAGE_ENTRIES, PACKAGE_ORIGINALS } from "../../../const";
-import { getEntryInTsconfig } from "../../../utils/get-entry-in-tsconfig";
+import { getEntryInTsconfig } from "../../utils/get-entry-in-tsconfig";
 
 export const fluxoraServerEntryDevPlugin = async (_config: FluxoraApp): Promise<Plugin> => {
   return {

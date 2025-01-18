@@ -14,7 +14,14 @@
   "scripts": {
     "build": "vite build"
   },
-  "devDependencies": {
+  "dependencies": {
+    "@fluxora/utils": "workspace:^",
+    "get-tsconfig": "^4.8.1",
+    "glob": "^11.0.1",
+    "node-html-parser": "^7.0.1",
     "vite": "^6.0.7"
+  },
+  "devDependencies": {
+    "@fluxora/types": "workspace:^"
   }
 }

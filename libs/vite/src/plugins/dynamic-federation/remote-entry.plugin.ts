@@ -3,8 +3,6 @@ import { type Plugin, defineConfig } from "vite";
 
 import type { FluxoraApp } from "@fluxora/types/core";
 
-import { FEDERATION_PLUGIN_NAME } from "../../const";
-
 export const remoteEntryPlugin = async (config: FluxoraApp): Promise<Plugin> => {
   const externalImportListPromises = config.apps
     .filter(configApp => configApp.name !== config.app.name)
@@ -34,7 +32,7 @@ export const remoteEntryPlugin = async (config: FluxoraApp): Promise<Plugin> => 
   const importMapScript = `<script type="importmap">${JSON.stringify(importMap)}</script>`;
 
   return {
-    name: `${FEDERATION_PLUGIN_NAME}:remote-entry`,
+    name: "fluxora:core-plugins:dynamic-federation:remote-entry",
     enforce: "pre",
 
     config() {

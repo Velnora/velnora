@@ -3,10 +3,10 @@ import { resolve } from "node:path";
 import type { InlineConfig } from "vite";
 
 import type { FluxoraApp } from "@fluxora/types/core";
+import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "@fluxora/utils";
 
-import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "../../const";
-import { fluxoraPlugin } from "../../plugins/client/fluxora-entry/fluxora.plugin";
-import { logger } from "../../utils/logger";
+import { fluxoraPlugin } from "../plugins/fluxora-entry/fluxora.plugin";
+import { logger } from "../utils/logger";
 
 export const getAppConfiguration = async (config: FluxoraApp): Promise<InlineConfig> => {
   const port = +new URL(config.app.host.host, "http://localhost").port;

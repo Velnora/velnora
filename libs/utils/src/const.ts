@@ -7,8 +7,6 @@ export const JS_EXTENSIONS = ["js", "jsx", "mjs", "cjs", "ts", "tsx"];
 export const isProd = process.env.NODE_ENV === "production";
 export const isDev = !isProd;
 
-export const FEDERATION_PLUGIN_NAME = "fluxora:app-plugins:dynamic-federation";
-
 export const FEDERATION_PLUGIN_REMOTE_ENTRY_FILE_PATH_DEFAULT = "/assets/remoteEntry.js";
 
 export const FEDERATION_INTERNALS = {

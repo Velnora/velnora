@@ -12,8 +12,8 @@ import type {
   UserAppConfig,
   UserConfig
 } from "@fluxora/types/core";
+import { FEDERATION_PLUGIN_REMOTE_ENTRY_FILE_PATH_DEFAULT } from "@fluxora/utils";
 
-import { FEDERATION_PLUGIN_REMOTE_ENTRY_FILE_PATH_DEFAULT } from "../const";
 import { AsyncTask } from "./async-task";
 import { logger } from "./logger";
 import { resolveUserAppConfig } from "./resolve-user-app-config";

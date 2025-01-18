@@ -1,17 +1,17 @@
 import { type Plugin, defineConfig } from "vite";
 
 import type { FluxoraApp } from "@fluxora/types/core";
-import { capitalize } from "@fluxora/utils";
-
 import {
   CLIENT_ENTRY_FILE_EXTENSIONS,
   PACKAGE_ENTRIES,
   PACKAGE_ORIGINALS,
   VIRTUAL_ALIAS_ENTRIES,
   VIRTUAL_ENTRIES,
-  VIRTUAL_ENTRY_NAMES
-} from "../../../const";
-import { findEntryFile } from "../../../utils/find-entry-file";
+  VIRTUAL_ENTRY_NAMES,
+  capitalize
+} from "@fluxora/utils";
+
+import { findEntryFile } from "../../utils/find-entry-file";
 
 export const fluxoraClientEntryPlugin = (config: FluxoraApp): Plugin => {
   return {

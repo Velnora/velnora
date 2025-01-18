@@ -2,8 +2,7 @@ import { parse } from "node-html-parser";
 import type { Plugin } from "vite";
 
 import type { FluxoraApp } from "@fluxora/types/core";
-
-import { HTML_SCRIPT_TAG, PACKAGE_ENTRIES } from "../../../const";
+import { HTML_SCRIPT_TAG, PACKAGE_ENTRIES } from "@fluxora/utils";
 
 export const entryAppHtml = (_config: FluxoraApp): Plugin => {
   return {

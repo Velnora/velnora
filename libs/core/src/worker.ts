@@ -4,10 +4,10 @@ import express from "express";
 import { createServer, isRunnableDevEnvironment } from "vite";
 
 import type { WorkerCreateServerData, WorkerMessage } from "@fluxora/types/worker";
+import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "@fluxora/utils";
+import { getAppConfiguration } from "@fluxora/vite";
 import type { INestApplication } from "@nestjs/common";
 
-import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "./const";
-import { getAppConfiguration } from "./core/configuration/app";
 import { FluxoraAppConfigBuilder } from "./utils/fluxora-app-config.builder";
 import { logger } from "./utils/logger";
 
