@@ -20,7 +20,6 @@
     "vite-plugin-inspect": "^10.0.6"
   },
   "devDependencies": {
-    "@fluxora/vite": "workspace:^",
     "@types/babel__core": "^7.20.5",
     "@types/express": "^5.0.0",
     "@types/lodash": "^4.17.14",

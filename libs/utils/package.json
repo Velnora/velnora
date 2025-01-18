@@ -8,7 +8,6 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
-    "@fluxora/vite": "workspace:^",
     "@types/node": "^22.10.5"
   }
 }

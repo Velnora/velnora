@@ -19,7 +19,7 @@
       "require": "./core.js"
     }
   },
-  "bin": "./bn/fluxora.js",
+  "bin": "./bin/fluxora.js",
   "dependencies": {
     "@fluxora/cli": "workspace:^",
     "@fluxora/core": "workspace:^",

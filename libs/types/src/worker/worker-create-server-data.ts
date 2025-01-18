@@ -1,4 +1,4 @@
-import type { FluxoraAppConfig, FluxoraConfig } from "@fluxora/core";
+import type { FluxoraAppConfig, FluxoraConfig } from "../core/main";
 
 export interface WorkerCreateServerData extends Pick<FluxoraAppConfig, "app"> {
   config: FluxoraConfig;

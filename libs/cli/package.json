@@ -19,7 +19,6 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@fluxora/vite": "workspace:^",
     "@types/node": "^22.10.5",
     "@types/yargs": "^17.0.33",
     "type-fest": "^4.32.0"

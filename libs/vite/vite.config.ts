@@ -1,3 +1,3 @@
-import { defineFluxoraConfig } from "./src/main";
+import { defineFluxoraConfig } from "../../scripts/define-fluxora-config";
 
 export default defineFluxoraConfig("vite");

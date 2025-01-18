@@ -27,7 +27,6 @@
   "main": "build/fluxora.types.js",
   "types": "build/fluxora.types.d.ts",
   "devDependencies": {
-    "@fluxora/vite": "workspace:^",
     "@types/yargs": "^17.0.33",
     "type-fest": "^4.32.0"
   }

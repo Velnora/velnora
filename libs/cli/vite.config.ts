@@ -1,4 +1,4 @@
-import { defineFluxoraConfig } from "@fluxora/vite";
+import { defineFluxoraConfig } from "../../scripts/define-fluxora-config";
 
 export default defineFluxoraConfig("cli", {
   build: {
