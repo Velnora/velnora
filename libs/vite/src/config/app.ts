@@ -6,13 +6,14 @@ import type { FluxoraApp } from "@fluxora/types/core";
 import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "@fluxora/utils";
 import react from "@vitejs/plugin-react-swc";
 
+import { dynamicFederationPlugin } from "../plugins/dynamic-federation/dynamic-federation.plugin";
 import { fluxoraPlugin } from "../plugins/fluxora/fluxora.plugin";
 import { isModuleInstalled } from "../utils/is-module-installed";
 import { logger } from "../utils/logger";
 
 export const getAppConfiguration = async (config: FluxoraApp): Promise<InlineConfig> => {
   const port = +new URL(config.app.host.host, "http://localhost").port;
-  const plugins: PluginOption[] = [react(), fluxoraPlugin(config)];
+  const plugins: PluginOption[] = [react(), fluxoraPlugin(config), await dynamicFederationPlugin(config)];
 
   if (isModuleInstalled("vite-plugin-inspect")) {
     const { default: inspect } = await import("vite-plugin-inspect");
@@ -28,7 +29,13 @@ export const getAppConfiguration = async (config: FluxoraApp): Promise<InlineCon
       emptyOutDir: true,
       sourcemap: true,
       ssrManifest: "ssr-manifest.json",
-      rollupOptions: { external: [/^@fluxora\/(?!server|client)\/?.*/] }
+      rollupOptions: {
+        external: [/^@fluxora\/(?!server|client)\/?.*/],
+        onwarn(warning, warn) {
+          if (warning.message.includes("Module level directives cause errors when bundled")) return;
+          warn(warning);
+        }
+      }
     },
     cacheDir: resolve(config.cacheRoot, "apps", config.app.name, ".vite"),
     plugins,

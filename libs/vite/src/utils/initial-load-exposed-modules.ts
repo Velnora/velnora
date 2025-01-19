@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 import { glob } from "glob";
 
 import type { FluxoraAppConfig } from "@fluxora/types/core";
-import { CLIENT_ENTRY_FILE_EXTENSIONS } from "@fluxora/utils/src/const";
+import { CLIENT_ENTRY_FILE_EXTENSIONS } from "@fluxora/utils";
 
 import { handleDirectives } from "./handle-directives";
 

@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { type Plugin, defineConfig } from "vite";
 
 import type { FluxoraAppConfig } from "@fluxora/types/core";
-import { FEDERATION_INTERNALS } from "@fluxora/utils";
+import { FEDERATION_INTERNALS, VITE_ENVIRONMENTS } from "@fluxora/utils";
 
 import { handleDirectives } from "../../utils/handle-directives";
 import { initialLoadExposedModules } from "../../utils/initial-load-exposed-modules";
@@ -20,20 +20,23 @@ export const moduleExposerPlugin = (config: FluxoraAppConfig): Plugin => {
       return defineConfig({ build: { lib: { entry: entries, formats: ["es"] } } });
     },
 
+    applyToEnvironment(env) {
+      return env.name === VITE_ENVIRONMENTS.CLIENT;
+    },
+
     async buildStart() {
       await initialLoadExposedModules(config.app.name, config.exposedModules);
     },
 
     resolveId(id) {
-      if (id === config.remoteEntry.entryPath) {
-        return FEDERATION_INTERNALS.REMOTE_ENTRY;
-      }
-
-      for (const module of config.exposedModules.values()) {
-        if (id === config.remoteEntry.entryPath.replace(".js", `/${module}.js`)) {
-          return FEDERATION_INTERNALS.SINGLE_REMOTE_ENTRY(module);
-        }
-      }
+      // if (id === config.remoteEntry.entryPath) {
+      //   return FEDERATION_INTERNALS.REMOTE_ENTRY;
+      // }
+      // for (const module of config.exposedModules.values()) {
+      //   if (id === config.remoteEntry.entryPath.replace(".js", `/${module}.js`)) {
+      //     return FEDERATION_INTERNALS.SINGLE_REMOTE_ENTRY(module);
+      //   }
+      // }
     },
 
     async load(id) {
