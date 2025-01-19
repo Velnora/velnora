@@ -1,15 +1,23 @@
 import { resolve } from "node:path";
 
-import type { InlineConfig } from "vite";
+import type { InlineConfig, PluginOption } from "vite";
 
 import type { FluxoraApp } from "@fluxora/types/core";
 import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "@fluxora/utils";
+import react from "@vitejs/plugin-react-swc";
 
 import { fluxoraPlugin } from "../plugins/fluxora-entry/fluxora.plugin";
+import { isModuleInstalled } from "../utils/is-module-installed";
 import { logger } from "../utils/logger";
 
 export const getAppConfiguration = async (config: FluxoraApp): Promise<InlineConfig> => {
   const port = +new URL(config.app.host.host, "http://localhost").port;
+  const plugins: PluginOption[] = [react(), fluxoraPlugin(config)];
+
+  if (isModuleInstalled("vite-plugin-inspect")) {
+    const { default: inspect } = await import("vite-plugin-inspect");
+    plugins.push(inspect());
+  }
 
   const viteConfig: InlineConfig = {
     root: config.app.root,
@@ -22,17 +30,16 @@ export const getAppConfiguration = async (config: FluxoraApp): Promise<InlineCon
       ssrManifest: "ssr-manifest.json",
       rollupOptions: { external: [/^@fluxora\/(?!server|client)\/?.*/] }
     },
-    cacheDir: resolve(process.cwd(), ".fluxora/apps", config.app.name, ".vite"),
-    plugins: [fluxoraPlugin(config)],
+    cacheDir: resolve(config.cacheRoot, "apps", config.app.name, ".vite"),
+    plugins,
     logLevel: "silent",
     appType: "custom",
     environments: {
       [VITE_ENVIRONMENTS.SERVER]: {
         build: {
           ssr: true,
-
           lib: { entry: { server: PACKAGE_ENTRIES.FLUXORA_SERVER_ENTRY }, formats: ["es"] },
-          outDir: resolve(process.cwd(), "build", config.app.name, "server")
+          outDir: resolve(config.outDirRoot, config.app.name, "server")
         },
         consumer: "server"
       },
@@ -41,14 +48,14 @@ export const getAppConfiguration = async (config: FluxoraApp): Promise<InlineCon
           minify: true,
           manifest: "manifest.json",
           lib: { entry: { client: PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_CLIENT_REACT }, formats: ["es"] },
-          outDir: resolve(process.cwd(), "build", config.app.name, "client")
+          outDir: resolve(config.outDirRoot, config.app.name, "client")
         }
       },
       [VITE_ENVIRONMENTS.SSR]: {
         build: {
           ssr: true,
           lib: { entry: { ssr: PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_CLIENT_REACT }, formats: ["es"] },
-          outDir: resolve(process.cwd(), "build", config.app.name, "ssr")
+          outDir: resolve(config.outDirRoot, config.app.name, "ssr")
         }
       }
     },

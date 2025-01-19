@@ -6,5 +6,6 @@ export interface FluxoraConfig {
   apps: MicroApp[];
   resolvedUserConfig: UserConfig;
   template?: TemplateOptions;
-  cacheRoot?: string;
+  cacheRoot: string;
+  outDirRoot: string;
 }

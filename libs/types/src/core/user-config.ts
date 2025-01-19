@@ -57,6 +57,17 @@ export interface CacheSettings {
   root?: string;
 }
 
+export interface BuildSettings {
+  /**
+   * Specifies the path to the build directory.
+   * The path is relative to the project root.
+   *
+   * @type {string}
+   * @default "build"
+   */
+  root?: string;
+}
+
 export interface UserConfig {
   /**
    * Apps configuration
@@ -72,6 +83,11 @@ export interface UserConfig {
    * Specifies the settings for the projects.
    */
   configs?: Record<string, UserAppConfig>;
+
+  /**
+   * Specifies the settings for build.
+   */
+  build?: BuildSettings;
 
   /**
    * Specifies the settings for the cache.

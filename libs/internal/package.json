@@ -1,3 +1,6 @@
 {
-  "name": "@fluxora/internal"
+  "name": "@fluxora/internal",
+  "devDependencies": {
+    "@types/react": "^19.0.7"
+  }
 }

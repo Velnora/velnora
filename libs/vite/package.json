@@ -13,12 +13,14 @@
   "types": "build/fluxora.vite.d.ts",
   "dependencies": {
     "@fluxora/utils": "workspace:^",
+    "@vitejs/plugin-react-swc": "^3.7.2",
     "get-tsconfig": "^4.8.1",
     "glob": "^11.0.1",
     "node-html-parser": "^7.0.1",
     "vite": "^6.0.7"
   },
   "devDependencies": {
-    "@fluxora/types": "workspace:^"
+    "@fluxora/types": "workspace:^",
+    "vite-plugin-inspect": "^10.0.7"
   }
 }

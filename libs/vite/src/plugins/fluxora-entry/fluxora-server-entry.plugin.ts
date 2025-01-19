@@ -27,6 +27,11 @@ export const fluxoraServerEntryPlugin = async (config: FluxoraApp): Promise<Plug
       });
     },
 
+    async buildStart() {
+      const appConfigurationFile = config.cacheRoot;
+      console.log(config, appConfigurationFile);
+    },
+
     resolveId(id, importer) {
       if (id === PACKAGE_ENTRIES.FLUXORA_SERVER) {
         return this.resolve(PACKAGE_ORIGINALS.FLUXORA_SERVER, importer, { skipSelf: true });

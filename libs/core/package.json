@@ -5,26 +5,18 @@
   "main": "build/fluxora.core.js",
   "types": "build/fluxora.core.d.ts",
   "dependencies": {
-    "@babel/core": "^7.26.0",
-    "@fluxora/client": "workspace:^",
-    "@fluxora/server": "workspace:^",
     "@fluxora/utils": "workspace:^",
     "@fluxora/vite": "workspace:^",
     "@nestjs/common": "^10.4.15",
-    "@vitejs/plugin-react-swc": "^3.7.2",
     "express": "^4.21.2",
     "glob": "^11.0.1",
     "lodash.merge": "^4.6.2",
-    "vite": "^6.0.7",
-    "vite-plugin-inspect": "^10.0.6"
+    "vite": "^6.0.7"
   },
   "devDependencies": {
-    "@types/babel__core": "^7.20.5",
+    "@fluxora/types": "workspace:^",
     "@types/express": "^5.0.0",
-    "@types/lodash": "^4.17.14",
     "@types/lodash.merge": "^4.6.9",
-    "@types/node": "^22.10.5",
-    "prettier": "^3.4.2",
-    "type-fest": "^4.32.0"
+    "@types/node": "^22.10.5"
   }
 }

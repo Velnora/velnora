@@ -59,6 +59,11 @@ export class FluxoraConfigBuilder extends AsyncTask {
     return this;
   }
 
+  resolveOutputOptions() {
+    this.fluxoraConfig.outDirRoot = resolve(process.cwd(), this.userConfig.build?.root || "build");
+    return this;
+  }
+
   async build() {
     await this.executeTasks();
     if (!this.validateConfig()) process.exit(1);
