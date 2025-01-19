@@ -26,20 +26,16 @@ export const PACKAGE_ORIGINALS = {
   FLUXORA_CLIENT: "@fluxora/client",
   FLUXORA_CLIENT_ENTRY_CLIENT_REACT: "@fluxora/client/react/entry-client",
   FLUXORA_CLIENT_ENTRY_SERVER_REACT: "@fluxora/client/react/entry-server",
+  FLUXORA_CLIENT_NOOP_REACT: "@fluxora/client/react/noop",
   FLUXORA_SERVER: "@fluxora/server",
   FLUXORA_SERVER_DEV_ENTRY: "@fluxora/server/entry-dev",
   FLUXORA_SERVER_PROD_ENTRY: "@fluxora/server/entry-prod"
 } as const;
 
-export const VIRTUAL_ENTRIES = {
-  APP: "/@fluxora/plugins.entry/virtual:entry/app.tsx",
-  TEMPLATE: "/@fluxora/plugins.entry/virtual:entry/template.tsx"
-} as const;
-export const VIRTUAL_ENTRY_NAMES = new Set<string>(Object.values(VIRTUAL_ENTRIES));
-
 export const VIRTUAL_ALIAS_ENTRIES = {
   APP: "/@fluxora/virtual/entry/react/app",
   TEMPLATE: "/@fluxora/virtual/entry/react/template",
+  NOOP: "/@fluxora/virtual/entry/react/noop",
   APP_MODULE: "/@fluxora/virtual/entry/app.module",
   APP_CONFIG: "/@fluxora/virtual/entry/app-config"
 } as const;

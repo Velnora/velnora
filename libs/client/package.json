@@ -17,6 +17,11 @@
       "types": "./build/fluxora.entry-server.react.d.ts",
       "import": "./build/fluxora.entry-server.react.js",
       "require": "./build/fluxora.entry-server.react.js"
+    },
+    "./react/noop": {
+      "types": "./build/fluxora.noop.react.d.ts",
+      "import": "./build/fluxora.noop.react.js",
+      "require": "./build/fluxora.noop.react.js"
     }
   },
   "main": "build/fluxora.client.js",

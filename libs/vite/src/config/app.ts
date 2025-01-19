@@ -16,8 +16,13 @@ export const getAppConfiguration = async (config: FluxoraApp): Promise<InlineCon
     mode: process.env.NODE_ENV,
     configFile: config.vite.configFile,
     server: { port, host: true, ws: false, watch: {} },
-    build: { outDir: "build" },
-    cacheDir: resolve(process.cwd(), ".fluxora/cache/apps", config.app.name),
+    build: {
+      emptyOutDir: true,
+      sourcemap: true,
+      ssrManifest: "ssr-manifest.json",
+      rollupOptions: { external: [/^@fluxora\/(?!server|client)\/?.*/] }
+    },
+    cacheDir: resolve(process.cwd(), ".fluxora/apps", config.app.name, ".vite"),
     plugins: [fluxoraPlugin(config)],
     logLevel: "silent",
     appType: "custom",
@@ -25,28 +30,39 @@ export const getAppConfiguration = async (config: FluxoraApp): Promise<InlineCon
       [VITE_ENVIRONMENTS.SERVER]: {
         build: {
           ssr: true,
-          lib: { entry: { server: PACKAGE_ENTRIES.FLUXORA_SERVER_ENTRY }, formats: ["es"] }
+
+          lib: { entry: { server: PACKAGE_ENTRIES.FLUXORA_SERVER_ENTRY }, formats: ["es"] },
+          outDir: resolve(process.cwd(), "build", config.app.name, "server")
         },
         consumer: "server"
       },
       [VITE_ENVIRONMENTS.CLIENT]: {
         build: {
-          lib: { entry: { client: PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_CLIENT_REACT }, formats: ["es"] }
+          minify: true,
+          manifest: "manifest.json",
+          lib: { entry: { client: PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_CLIENT_REACT }, formats: ["es"] },
+          outDir: resolve(process.cwd(), "build", config.app.name, "client")
         }
       },
       [VITE_ENVIRONMENTS.SSR]: {
         build: {
           ssr: true,
-          lib: { entry: { client: PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_CLIENT_REACT }, formats: ["es"] }
+          lib: { entry: { ssr: PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_CLIENT_REACT }, formats: ["es"] },
+          outDir: resolve(process.cwd(), "build", config.app.name, "ssr")
         }
       }
     },
     builder: {
       async buildApp(builder) {
         logger.info(`Building (${config.app.name})`);
+        const startTime = performance.now();
+
         await builder.build(builder.environments[VITE_ENVIRONMENTS.SERVER]);
         await builder.build(builder.environments[VITE_ENVIRONMENTS.CLIENT]);
         await builder.build(builder.environments[VITE_ENVIRONMENTS.SSR]);
+
+        const diff = (performance.now() - startTime).toFixed(2);
+        logger.info(`Application ${config.app.name} built in ${diff}ms`);
       }
     }
   };

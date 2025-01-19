@@ -1,7 +1,7 @@
 import type { FC } from "react";
 
-import { App } from "/@fluxora/virtual/entry/react/app";
-import { App as TemplateApp } from "/@fluxora/virtual/entry/react/template";
+import { App } from "../../utils/app-entrypoint";
+import { App as TemplateApp } from "../../utils/template-entrypoint";
 
 export const EntryApp: FC = () => {
   return (

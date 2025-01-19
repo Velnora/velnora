@@ -5,7 +5,8 @@ export default defineFluxoraConfig("client", {
     lib: {
       entry: {
         "fluxora.entry-client.react": "src/react/entry-client.ts",
-        "fluxora.entry-server.react": "src/react/entry-server.ts"
+        "fluxora.entry-server.react": "src/react/entry-server.ts",
+        "fluxora.noop.react": "src/react/noop.ts"
       }
     }
   }

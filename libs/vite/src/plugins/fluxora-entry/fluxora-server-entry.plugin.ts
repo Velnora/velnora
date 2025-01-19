@@ -14,7 +14,7 @@ import { findEntryFile } from "../../utils/find-entry-file";
 
 export const fluxoraServerEntryPlugin = async (config: FluxoraApp): Promise<Plugin> => {
   return {
-    name: `fluxora:core-plugins:entry-server`,
+    name: "fluxora:core-plugins:entry-server",
 
     config() {
       return defineConfig({

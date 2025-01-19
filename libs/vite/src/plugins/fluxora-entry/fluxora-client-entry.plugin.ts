@@ -5,10 +5,7 @@ import {
   CLIENT_ENTRY_FILE_EXTENSIONS,
   PACKAGE_ENTRIES,
   PACKAGE_ORIGINALS,
-  VIRTUAL_ALIAS_ENTRIES,
-  VIRTUAL_ENTRIES,
-  VIRTUAL_ENTRY_NAMES,
-  capitalize
+  VIRTUAL_ALIAS_ENTRIES
 } from "@fluxora/utils";
 
 import { findEntryFile } from "../../utils/find-entry-file";
@@ -18,11 +15,16 @@ export const fluxoraClientEntryPlugin = (config: FluxoraApp): Plugin => {
     name: "fluxora:core-plugins:entry-client",
 
     config() {
+      const appEntry = findEntryFile(config.app.root, "entry-client", CLIENT_ENTRY_FILE_EXTENSIONS);
+      const templatePath = config.template
+        ? findEntryFile(config.template.root, "main", CLIENT_ENTRY_FILE_EXTENSIONS)
+        : VIRTUAL_ALIAS_ENTRIES.NOOP;
+
       return defineConfig({
         resolve: {
           alias: {
-            [VIRTUAL_ALIAS_ENTRIES.APP]: VIRTUAL_ENTRIES.APP,
-            [VIRTUAL_ALIAS_ENTRIES.TEMPLATE]: VIRTUAL_ENTRIES.TEMPLATE
+            [VIRTUAL_ALIAS_ENTRIES.APP]: appEntry,
+            [VIRTUAL_ALIAS_ENTRIES.TEMPLATE]: templatePath
           }
         }
       });
@@ -41,23 +43,8 @@ export const fluxoraClientEntryPlugin = (config: FluxoraApp): Plugin => {
         return this.resolve(PACKAGE_ORIGINALS.FLUXORA_CLIENT_ENTRY_SERVER_REACT, importer, { skipSelf: true });
       }
 
-      if (VIRTUAL_ENTRY_NAMES.has(id)) {
-        return id;
-      }
-    },
-
-    load(id) {
-      if (id === VIRTUAL_ENTRIES.APP) {
-        const appEntry = findEntryFile(config.app.root, "entry-client", CLIENT_ENTRY_FILE_EXTENSIONS);
-        return `import * as App_client from "${appEntry}";\n\nexport const App = "${capitalize(config.app.name)}" in App_client ? App_client["${capitalize(config.app.name)}"] : "App" in App_client ? App_client["App"] : "default" in App_client ? App_client["default"] : () => { throw new Error("App not found"); };`;
-      }
-
-      if (id === VIRTUAL_ENTRIES.TEMPLATE) {
-        let templatePath: string;
-        return config.template &&
-          (templatePath = findEntryFile(config.template.root, "main", CLIENT_ENTRY_FILE_EXTENSIONS))
-          ? `import * as TemplateApp_client from "${templatePath}";\n\nexport const App = "Template" in TemplateApp_client ? TemplateApp_client["Template"] : "App" in TemplateApp_client ? TemplateApp_client["App"] : "default" in TemplateApp_client ? TemplateApp_client["default"] : ({ children }) => children;`
-          : `export const App = ({ children }) => children;`;
+      if (id === VIRTUAL_ALIAS_ENTRIES.NOOP) {
+        return this.resolve(PACKAGE_ORIGINALS.FLUXORA_CLIENT_NOOP_REACT, importer, { skipSelf: true });
       }
     }
   };
