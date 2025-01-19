@@ -1,0 +1,12 @@
+{
+  "targets": {
+    "build": {
+      "cache": false,
+      "dependsOn": ["^build", "^vite:build"]
+    },
+    "dev": {
+      "cache": false,
+      "dependsOn": ["^build", "^vite:build"]
+    }
+  }
+}

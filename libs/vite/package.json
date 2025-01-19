@@ -11,9 +11,6 @@
   },
   "main": "build/fluxora.vite.js",
   "types": "build/fluxora.vite.d.ts",
-  "scripts": {
-    "build": "vite build"
-  },
   "dependencies": {
     "@fluxora/utils": "workspace:^",
     "get-tsconfig": "^4.8.1",
