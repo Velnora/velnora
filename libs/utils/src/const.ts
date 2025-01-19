@@ -41,8 +41,7 @@ export const VIRTUAL_ALIAS_ENTRIES = {
 } as const;
 
 export const NESTJS_PLUGIN_VIRTUAL_ENTRIES = {
-  APP_MODULE: "/@fluxora/plugins.nestjs/virtual:entry/app.module.ts",
-  APP_CONFIG: "/@fluxora/plugins.nestjs/virtual:entry/app.config.ts"
+  APP_MODULE: "/@fluxora/plugins.nestjs/virtual:entry/app.module.ts"
 } as const;
 export const NESTJS_PLUGIN_VIRTUAL_ENTRY_NAMES = new Set<string>(Object.values(NESTJS_PLUGIN_VIRTUAL_ENTRIES));
 

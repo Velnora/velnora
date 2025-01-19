@@ -18,18 +18,8 @@ export const fluxoraServerEntryPlugin = async (config: FluxoraApp): Promise<Plug
 
     config() {
       return defineConfig({
-        resolve: {
-          alias: {
-            [VIRTUAL_ALIAS_ENTRIES.APP_MODULE]: NESTJS_PLUGIN_VIRTUAL_ENTRIES.APP_MODULE,
-            [VIRTUAL_ALIAS_ENTRIES.APP_CONFIG]: NESTJS_PLUGIN_VIRTUAL_ENTRIES.APP_CONFIG
-          }
-        }
+        resolve: { alias: { [VIRTUAL_ALIAS_ENTRIES.APP_MODULE]: NESTJS_PLUGIN_VIRTUAL_ENTRIES.APP_MODULE } }
       });
-    },
-
-    async buildStart() {
-      const appConfigurationFile = config.cacheRoot;
-      console.log(config, appConfigurationFile);
     },
 
     resolveId(id, importer) {
@@ -48,12 +38,6 @@ export const fluxoraServerEntryPlugin = async (config: FluxoraApp): Promise<Plug
 
       if (NESTJS_PLUGIN_VIRTUAL_ENTRY_NAMES.has(id)) {
         return id;
-      }
-    },
-
-    load(id) {
-      if (id === NESTJS_PLUGIN_VIRTUAL_ENTRIES.APP_CONFIG) {
-        return `export const name = "${config.app.name}";`;
       }
     }
   };

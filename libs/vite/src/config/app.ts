@@ -6,7 +6,7 @@ import type { FluxoraApp } from "@fluxora/types/core";
 import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "@fluxora/utils";
 import react from "@vitejs/plugin-react-swc";
 
-import { fluxoraPlugin } from "../plugins/fluxora-entry/fluxora.plugin";
+import { fluxoraPlugin } from "../plugins/fluxora/fluxora.plugin";
 import { isModuleInstalled } from "../utils/is-module-installed";
 import { logger } from "../utils/logger";
 
