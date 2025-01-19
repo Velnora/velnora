@@ -7,5 +7,3 @@ export const cli = async () => {
   const commands = new Commands(commandList);
   await commands.executeCommands();
 };
-
-export type { InferArgs } from "./types/infer/infer-args";

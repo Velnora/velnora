@@ -8,6 +8,12 @@ export default defineFluxoraConfig("types", {
         "fluxora.core.types": "./src/core/main.ts",
         "fluxora.worker.types": "./src/worker/main.ts"
       }
+    },
+    rollupOptions: {
+      onwarn(warning, warn) {
+        if (warning.code === "EMPTY_BUNDLE") return;
+        warn(warning);
+      }
     }
   }
 });
