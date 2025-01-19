@@ -10,7 +10,8 @@ export const createDevServer = async (_options?: CreateServerOptions) => {
   const config = await FluxoraConfigBuilder.from(userConfig)
     .resolveTemplate()
     .resolveApps()
-    .retrieveCacheOptions()
+    .resolveCacheOptions()
+    .resolveOutputOptions()
     .build();
 
   checkAndGenerateGitignore(config);

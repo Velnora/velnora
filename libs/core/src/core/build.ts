@@ -9,7 +9,12 @@ import { resolveUserConfig } from "../utils/resolve-user-config";
 
 export const build = async () => {
   const userConfig = await resolveUserConfig();
-  const fluxoraConfig = await FluxoraConfigBuilder.from(userConfig).resolveApps().build();
+  const fluxoraConfig = await FluxoraConfigBuilder.from(userConfig)
+    .resolveApps()
+    .resolveTemplate()
+    .resolveCacheOptions()
+    .resolveOutputOptions()
+    .build();
 
   checkAndGenerateGitignore(fluxoraConfig);
 
