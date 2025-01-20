@@ -2,13 +2,10 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build", "^vite:build"],
-      "outputs": ["{projectRoot}/build"],
-      "cache": true
+      "dependsOn": ["^build", "^vite:build"]
     },
-    "watch": {
-      "outputs": ["{projectRoot}/build"],
-      "cache": true
+    "dev": {
+      "dependsOn": ["^build", "^vite:build"]
     }
   },
   "defaultBase": "master",
