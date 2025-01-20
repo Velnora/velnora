@@ -19,7 +19,10 @@ export const build = async () => {
   checkAndGenerateGitignore(fluxoraConfig);
 
   await fluxoraConfig.withApps(async app => {
-    const config = await (await FluxoraAppConfigBuilder.from(app, fluxoraConfig)).retrieveViteConfigFile().build();
+    const config = await (await FluxoraAppConfigBuilder.from(app, fluxoraConfig))
+      .setRemoteEntry()
+      .retrieveViteConfigFile()
+      .build();
     const viteConfig = await getAppConfiguration(config);
     const builder = await createBuilder(viteConfig);
     await builder.buildApp();

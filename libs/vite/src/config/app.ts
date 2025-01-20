@@ -13,7 +13,11 @@ import { logger } from "../utils/logger";
 
 export const getAppConfiguration = async (config: FluxoraApp): Promise<InlineConfig> => {
   const port = +new URL(config.app.host.host, "http://localhost").port;
-  const plugins: PluginOption[] = [react(), fluxoraPlugin(config), await dynamicFederationPlugin(config)];
+  const plugins: PluginOption[] = [
+    react({ tsDecorators: true }),
+    fluxoraPlugin(config),
+    await dynamicFederationPlugin(config)
+  ];
 
   if (isModuleInstalled("vite-plugin-inspect")) {
     const { default: inspect } = await import("vite-plugin-inspect");

@@ -29,14 +29,15 @@ export const moduleExposerPlugin = (config: FluxoraAppConfig): Plugin => {
     },
 
     resolveId(id) {
-      // if (id === config.remoteEntry.entryPath) {
-      //   return FEDERATION_INTERNALS.REMOTE_ENTRY;
-      // }
-      // for (const module of config.exposedModules.values()) {
-      //   if (id === config.remoteEntry.entryPath.replace(".js", `/${module}.js`)) {
-      //     return FEDERATION_INTERNALS.SINGLE_REMOTE_ENTRY(module);
-      //   }
-      // }
+      if (id === config.remoteEntry.entryPath) {
+        return FEDERATION_INTERNALS.REMOTE_ENTRY;
+      }
+
+      for (const [path, module] of config.exposedModules.entries()) {
+        if (id === config.remoteEntry.entryPath.replace(".js", `/${module}.js`)) {
+          return `/@fluxora:fs${path}`;
+        }
+      }
     },
 
     async load(id) {
@@ -44,14 +45,6 @@ export const moduleExposerPlugin = (config: FluxoraAppConfig): Plugin => {
         return Array.from(config.exposedModules)
           .map(([module, name]) => `export * as ${name} from "${module}"`)
           .join("\n");
-      }
-
-      for (const module of config.exposedModules.values()) {
-        if (id === FEDERATION_INTERNALS.SINGLE_REMOTE_ENTRY(module)) {
-          const entryFile = Array.from(config.exposedModules.entries()).find(([, name]) => name === module);
-          if (!entryFile) return;
-          return `export * from "${entryFile[0]}"`;
-        }
       }
     },
 
