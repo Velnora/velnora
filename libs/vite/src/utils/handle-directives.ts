@@ -19,7 +19,8 @@ export const handleDirectives = (code: string, id: string, exposedModules: Fluxo
 
   traverseFn(ast, {
     DirectiveLiteral(literal) {
-      directives.push({ code: literal.node.value, start: literal.node.start!, end: literal.node.end! });
+      if (!literal.node.value.startsWith("use ")) return;
+      directives.push({ code: literal.node.value.slice(4), start: literal.node.start!, end: literal.node.end! });
     }
   });
 
