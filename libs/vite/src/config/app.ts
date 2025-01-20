@@ -6,7 +6,7 @@ import type { FluxoraApp } from "@fluxora/types/core";
 import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "@fluxora/utils";
 import react from "@vitejs/plugin-react-swc";
 
-import { dynamicFederationPlugin } from "../plugins/dynamic-federation/dynamic-federation.plugin";
+// import { dynamicFederationPlugin } from "../plugins/dynamic-federation/dynamic-federation.plugin";
 import { fluxoraPlugin } from "../plugins/fluxora/fluxora.plugin";
 import { isModuleInstalled } from "../utils/is-module-installed";
 import { logger } from "../utils/logger";
@@ -15,8 +15,8 @@ export const getAppConfiguration = async (config: FluxoraApp): Promise<InlineCon
   const port = +new URL(config.app.host.host, "http://localhost").port;
   const plugins: PluginOption[] = [
     react({ tsDecorators: true }),
-    fluxoraPlugin(config),
-    await dynamicFederationPlugin(config)
+    fluxoraPlugin(config)
+    // await dynamicFederationPlugin(config)
   ];
 
   if (isModuleInstalled("vite-plugin-inspect")) {
