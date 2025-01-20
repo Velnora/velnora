@@ -30,8 +30,15 @@ export class FluxoraConfigBuilder extends AsyncTask {
     return this.userConfig;
   }
 
-  static from(userConfig: UserConfig) {
-    return new FluxoraConfigBuilder(userConfig);
+  static from(prevConfig: FluxoraConfig): FluxoraConfigBuilder;
+  static from(userConfig: UserConfig): FluxoraConfigBuilder;
+  static from(userOrFluxoraConfig: UserConfig | FluxoraConfig) {
+    if ("cacheRoot" in userOrFluxoraConfig) {
+      const configBuilder = new FluxoraConfigBuilder({});
+      Object.assign(configBuilder.fluxoraConfig, userOrFluxoraConfig);
+      return configBuilder;
+    }
+    return new FluxoraConfigBuilder(userOrFluxoraConfig);
   }
 
   resolveTemplate() {

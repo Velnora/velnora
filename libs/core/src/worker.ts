@@ -9,12 +9,14 @@ import { getAppConfiguration } from "@fluxora/vite";
 import type { INestApplication } from "@nestjs/common";
 
 import { FluxoraAppConfigBuilder } from "./utils/fluxora-app-config.builder";
+import { FluxoraConfigBuilder } from "./utils/fluxora-config.builder";
 import { logger } from "./utils/logger";
 
 const data = workerData as WorkerCreateServerData;
 const { app: microApp, config } = data;
 
-const appConfigBuilder = await FluxoraAppConfigBuilder.from(microApp, config);
+const configBuilder = FluxoraConfigBuilder.from(config);
+const appConfigBuilder = await FluxoraAppConfigBuilder.from(microApp, await configBuilder.build());
 const appConfig = await appConfigBuilder.setRemoteEntry().retrieveViteConfigFile().build();
 const viteConfig = await getAppConfiguration(appConfig);
 const vite = await createServer(viteConfig);
