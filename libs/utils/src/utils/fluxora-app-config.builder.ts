@@ -14,6 +14,7 @@ import type {
 } from "@fluxora/types/core";
 import { FEDERATION_PLUGIN_REMOTE_ENTRY_FILE_PATH_DEFAULT } from "@fluxora/utils";
 
+import { ErrorMessages } from "../helpers/error-messages";
 import { AsyncTask } from "./async-task";
 import { logger } from "./logger";
 import { resolveUserAppConfig } from "./resolve-user-app-config";
@@ -73,8 +74,8 @@ export class FluxoraAppConfigBuilder extends AsyncTask {
   }
 
   checkHostForProduction(isBuild = false) {
-    if (!__DEV__ && isBuild && !this.userAppConfig.host) {
-      logger.error("Host which defined by default isn't valid for production. Please define it in fluxora.config.ts");
+    if (import.meta.env.PROD && isBuild && !this.userAppConfig.host) {
+      logger.error(ErrorMessages.HOST_NOT_VALID_FOR_PRODUCTION);
       process.exit(1);
     }
   }
@@ -83,7 +84,7 @@ export class FluxoraAppConfigBuilder extends AsyncTask {
     const conf = this.config;
 
     if (!conf.app) {
-      logger.error("Current app is not defined");
+      logger.error(ErrorMessages.APP_NOT_DEFINED);
       return false;
     }
 

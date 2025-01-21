@@ -1,3 +1,6 @@
+/**
+ * A class to execute async tasks in sequence
+ */
 export class AsyncTask {
   private tasks: (() => Promise<any>)[] = [];
 
@@ -6,8 +9,11 @@ export class AsyncTask {
   }
 
   async executeTasks() {
-    for (const task of this.tasks) {
-      await task();
+    let taskIdx = 0;
+
+    while (taskIdx < this.tasks.length) {
+      await this.tasks[taskIdx]();
+      taskIdx++;
     }
   }
 }

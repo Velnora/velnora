@@ -4,20 +4,17 @@ import express from "express";
 import { createServer, isRunnableDevEnvironment } from "vite";
 
 import type { WorkerCreateServerData, WorkerMessage } from "@fluxora/types/worker";
-import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "@fluxora/utils";
+import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS, getFluxoraAppConfig, getFluxoraConfig } from "@fluxora/utils";
 import { getAppConfiguration } from "@fluxora/vite";
 import type { INestApplication } from "@nestjs/common";
 
-import { FluxoraAppConfigBuilder } from "./utils/fluxora-app-config.builder";
-import { FluxoraConfigBuilder } from "./utils/fluxora-config.builder";
 import { logger } from "./utils/logger";
 
 const data = workerData as WorkerCreateServerData;
 const { app: microApp, config } = data;
 
-const configBuilder = FluxoraConfigBuilder.from(config);
-const appConfigBuilder = await FluxoraAppConfigBuilder.from(microApp, await configBuilder.build());
-const appConfig = await appConfigBuilder.setRemoteEntry().retrieveViteConfigFile().build();
+const fluxoraConfig = await getFluxoraConfig(config);
+const appConfig = await getFluxoraAppConfig(microApp, fluxoraConfig);
 const viteConfig = await getAppConfiguration(appConfig);
 const vite = await createServer(viteConfig);
 vite.ws.listen();

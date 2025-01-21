@@ -1,3 +1,2 @@
-export * from "./logger";
-export * from "./capitalize";
+export * from "./utils";
 export * from "./const";

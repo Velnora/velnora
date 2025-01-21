@@ -1,7 +1,7 @@
 import { Logger, createLogger as createWinstonLogger, format, transports } from "winston";
 import * as Transport from "winston-transport";
 
-import type { LoggerOptions } from "./logger.types";
+import type { LoggerOptions } from "./create-logger.types";
 
 export const createLogger = (options?: LoggerOptions): Logger => {
   const { name, pipeToConsole = true, pipeToFile = false, pipeToUrl = false, http, logLevel = "info" } = options || {};
