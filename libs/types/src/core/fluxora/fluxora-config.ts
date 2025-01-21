@@ -11,3 +11,7 @@ export interface FluxoraConfig {
   cacheRoot: string;
   outDirRoot: string;
 }
+
+export interface FluxoraRawConfig extends FluxoraConfig {
+  __raw: true;
+}

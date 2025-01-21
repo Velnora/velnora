@@ -1,7 +1,7 @@
 import type { MicroApp } from "../micro-app";
-import type { FluxoraConfig } from "./index";
+import type { FluxoraRawConfig } from "./index";
 
 export interface FluxoraConfigMethods {
   withApps(fn: (config: MicroApp) => void | Promise<void>): Promise<void>;
-  getRawConfig(): FluxoraConfig;
+  getRawConfig(): FluxoraRawConfig;
 }

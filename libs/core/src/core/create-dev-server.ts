@@ -1,7 +1,8 @@
 import type { CreateServerOptions } from "@fluxora/types/core";
 import { checkAndGenerateGitignore, getFluxoraConfig } from "@fluxora/utils";
 
-import { createViteInstance } from "../utils/create-vite-instance";
+import { viteWorkerManager } from "../utils/vite-worker-manager";
+import { viteWorkerPath } from "../utils/vite-worker-path";
 
 export const createDevServer = async (options?: CreateServerOptions) => {
   const config = await getFluxoraConfig(options);
@@ -9,7 +10,11 @@ export const createDevServer = async (options?: CreateServerOptions) => {
   checkAndGenerateGitignore(config);
 
   await config.withApps(async microApp => {
-    await createViteInstance(microApp, config);
+    await viteWorkerManager.register(microApp.name, viteWorkerPath);
+
+    const proxy = await viteWorkerManager.proxy(microApp.name);
+    await proxy.createViteServer(microApp, config.getRawConfig());
+    await proxy.serve();
 
     // Mapping ->
     // - /{app-name} -> http://localhost:{port}

@@ -89,7 +89,7 @@ export class FluxoraConfigBuilder extends AsyncTask {
         }
       },
       getRawConfig() {
-        return conf;
+        return Object.assign({}, conf, { __raw: true as true });
       }
     };
 

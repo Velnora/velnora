@@ -1,48 +1,5 @@
-import { parentPort, workerData } from "worker_threads";
+import type * as viteHandlers from "./core/vite";
 
-import express from "express";
-import { createServer, isRunnableDevEnvironment } from "vite";
+export type FluxoraViteWorker = typeof viteHandlers;
 
-import type { WorkerCreateServerData, WorkerMessage } from "@fluxora/types/worker";
-import { PACKAGE_ENTRIES, VITE_ENVIRONMENTS, getFluxoraAppConfig, getFluxoraConfig } from "@fluxora/utils";
-import { getAppConfiguration } from "@fluxora/vite";
-import type { INestApplication } from "@nestjs/common";
-
-import { logger } from "./utils/logger";
-
-const data = workerData as WorkerCreateServerData;
-const { app: microApp, config } = data;
-
-const fluxoraConfig = await getFluxoraConfig(config);
-const appConfig = await getFluxoraAppConfig(microApp, fluxoraConfig);
-const viteConfig = await getAppConfiguration(appConfig);
-const vite = await createServer(viteConfig);
-vite.ws.listen();
-
-const serverEnv = vite.environments[VITE_ENVIRONMENTS.SERVER];
-
-let module: { main: () => Promise<INestApplication> };
-if (isRunnableDevEnvironment(serverEnv)) {
-  module = await serverEnv.runner.import(PACKAGE_ENTRIES.FLUXORA_SERVER_ENTRY);
-} else {
-  throw new Error("Server environment is not runnable");
-}
-
-const nestApp = await module.main();
-const nestMiddleware = nestApp.getHttpAdapter().getInstance();
-
-const app = express()
-  .use(vite.middlewares)
-  .use((req, res, next) => {
-    if (req.url?.startsWith(`/api/v1/${appConfig.app.name}`)) return nestMiddleware(req, res);
-    next();
-  })
-  .use("*", async (req, res) => {
-    const html = await vite.transformIndexHtml(req.url, "");
-    res.status(200).end(html);
-  });
-
-app.listen(viteConfig.server!.port, () => {
-  logger.debug(`App (${microApp.name}) is running at http://localhost:${viteConfig.server?.port}`);
-  parentPort?.postMessage({ status: "ok", port: viteConfig.server!.port! } satisfies WorkerMessage);
-});
+export * from "./core/worker-manager";

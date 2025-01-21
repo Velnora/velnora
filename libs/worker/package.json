@@ -2,14 +2,27 @@
   "name": "@fluxora/worker",
   "version": "0.0.0-dev.0",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.worker.d.ts",
+      "import": "./build/fluxora.worker.js",
+      "require": "./build/fluxora.worker.js"
+    },
+    "./vite": {
+      "types": "./build/fluxora.vite.d.ts",
+      "import": "./build/fluxora.vite.js",
+      "require": "./build/fluxora.vite.js"
+    }
+  },
   "main": "build/fluxora.worker.js",
-  "types": "build/fluxora.worker.d.ts",
+  "types": "bild/fluxora.worker.d.ts",
   "dependencies": {
     "@fluxora/utils": "workspace:^",
     "@fluxora/vite": "workspace:^",
     "@nestjs/common": "^10.4.15",
     "express": "^4.21.2",
-    "vite": "^6.0.7"
+    "vite": "^6.0.7",
+    "workerpool": "^9.2.0"
   },
   "devDependencies": {
     "@fluxora/types": "workspace:^",

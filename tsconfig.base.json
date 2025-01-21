@@ -44,6 +44,9 @@
       // Utils
       "@fluxora/utils": ["libs/utils/src/main.ts"],
 
+      // Worker
+      "@fluxora/worker": ["libs/worker/src/main.ts"],
+
       // Vite
       "@fluxora/vite": ["libs/vite/src/main.ts"],
 

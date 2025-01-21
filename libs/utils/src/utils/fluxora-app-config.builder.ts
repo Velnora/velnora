@@ -14,7 +14,7 @@ import type {
 } from "@fluxora/types/core";
 
 import { FEDERATION_PLUGIN_REMOTE_ENTRY_FILE_PATH_DEFAULT } from "../const";
-import { ErrorMessages } from "../helpers/error-messages";
+import { ErrorMessages } from "../helpers";
 import { AsyncTask } from "./async-task";
 import { logger } from "./logger";
 import { resolveUserAppConfig } from "./resolve-user-app-config";
