@@ -1,3 +1,5 @@
+import type { CreateServerOptions } from "./create-server-options";
+
 interface ProjectSettings {
   /**
    * Specifies the root directory of the project.
@@ -80,6 +82,11 @@ export interface UserConfig {
   libs?: LibrarySettings;
 
   /**
+   * Server configuration
+   */
+  server?: CreateServerOptions;
+
+  /**
    * Specifies the settings for the projects.
    */
   configs?: Record<string, UserAppConfig>;
@@ -93,4 +100,10 @@ export interface UserConfig {
    * Specifies the settings for the cache.
    */
   cache?: CacheSettings;
+
+  /**
+   * Root Application name
+   * @default "host"
+   */
+  rootAppName?: string;
 }

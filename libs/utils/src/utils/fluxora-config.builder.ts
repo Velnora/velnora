@@ -6,6 +6,7 @@ import { basename, resolve } from "node:path";
 import { glob } from "glob";
 
 import type {
+  CreateServerOptions,
   FluxoraConfig,
   FluxoraConfigMethods,
   MicroAppHost,
@@ -21,9 +22,13 @@ export class FluxoraConfigBuilder extends AsyncTask {
   private readonly definedPorts = new Set<number>();
   private startingPort = 32768;
 
-  constructor(private readonly userConfig: UserConfig) {
+  constructor(
+    private readonly userConfig: UserConfig,
+    private readonly serverOptions?: CreateServerOptions
+  ) {
     super();
     this.fluxoraConfig.resolvedUserConfig = this.userConfig;
+    this.fluxoraConfig.server = this.serverOptions;
   }
 
   get resolvedUserConfig() {
@@ -31,14 +36,14 @@ export class FluxoraConfigBuilder extends AsyncTask {
   }
 
   static from(prevConfig: FluxoraConfig): FluxoraConfigBuilder;
-  static from(userConfig: UserConfig): FluxoraConfigBuilder;
-  static from(userOrFluxoraConfig: UserConfig | FluxoraConfig) {
+  static from(userConfig: UserConfig, serverOptions?: CreateServerOptions): FluxoraConfigBuilder;
+  static from(userOrFluxoraConfig: UserConfig | FluxoraConfig, serverOptions?: CreateServerOptions) {
     if ("cacheRoot" in userOrFluxoraConfig) {
       const configBuilder = new FluxoraConfigBuilder({});
       Object.assign(configBuilder.fluxoraConfig, userOrFluxoraConfig);
       return configBuilder;
     }
-    return new FluxoraConfigBuilder(userOrFluxoraConfig);
+    return new FluxoraConfigBuilder(userOrFluxoraConfig, serverOptions);
   }
 
   resolveTemplate() {

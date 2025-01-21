@@ -1,10 +1,6 @@
-interface ProxyOptions {
-  target?: string;
-  changeOrigin?: boolean;
-}
+import type { ProxyOptions } from "vite";
 
 export interface CreateServerOptions {
   port?: number;
-  hostname?: string;
-  proxy?: ProxyOptions;
+  proxy?: Record<string, ProxyOptions>;
 }
