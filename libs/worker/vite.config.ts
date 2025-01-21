@@ -1,3 +1,3 @@
 import { defineFluxoraConfig } from "../../scripts/define-fluxora-config";
 
-export default defineFluxoraConfig("core");
+export default defineFluxoraConfig("worker");

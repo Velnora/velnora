@@ -1,14 +1,15 @@
-import { resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 import { Worker } from "node:worker_threads";
 
 import type { FluxoraConfig, FluxoraConfigMethods, MicroApp } from "@fluxora/types/core";
 import type { WorkerCreateServerData, WorkerMessage } from "@fluxora/types/worker";
 
+const require = createRequire(import.meta.url);
+const workerPath = require.resolve("@fluxora/worker");
+
 export const createViteInstance = async (app: MicroApp, config: FluxoraConfig & FluxoraConfigMethods) => {
-  const worker = new Worker(resolve(fileURLToPath(import.meta.url), "../fluxora.worker.js"), {
-    workerData: { app, config: config.getRawConfig() } satisfies WorkerCreateServerData
-  });
+  const workerData: WorkerCreateServerData = { app, config: config.getRawConfig() };
+  const worker = new Worker(workerPath, { workerData });
   return new Promise<number>((resolve, reject) => {
     worker.on("message", (message: WorkerMessage) => {
       if (message.status === "ok") {

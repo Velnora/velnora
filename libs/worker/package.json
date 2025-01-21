@@ -1,17 +1,19 @@
 {
-  "name": "@fluxora/core",
+  "name": "@fluxora/worker",
   "version": "0.0.0-dev.0",
   "type": "module",
-  "main": "build/fluxora.core.js",
-  "types": "build/fluxora.core.d.ts",
+  "main": "build/fluxora.worker.js",
+  "types": "build/fluxora.worker.d.ts",
   "dependencies": {
     "@fluxora/utils": "workspace:^",
     "@fluxora/vite": "workspace:^",
-    "@fluxora/worker": "workspace:^",
+    "@nestjs/common": "^10.4.15",
+    "express": "^4.21.2",
     "vite": "^6.0.7"
   },
   "devDependencies": {
     "@fluxora/types": "workspace:^",
+    "@types/express": "^5.0.0",
     "@types/node": "^22.10.5"
   }
 }
