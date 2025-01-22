@@ -7,7 +7,8 @@ import { getEntryInTsconfig } from "../../utils/get-entry-in-tsconfig";
 
 export const fluxoraServerEntryDevPlugin = async (_config: FluxoraApp): Promise<Plugin> => {
   return {
-    name: `fluxora:core-plugins:entry-server:dev`,
+    name: "fluxora:core-plugins:entry-server:dev",
+    enforce: "pre",
 
     apply(_conf, env) {
       return env.mode === "development" && env.command === "serve";

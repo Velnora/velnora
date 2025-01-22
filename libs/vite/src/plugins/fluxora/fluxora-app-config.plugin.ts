@@ -9,10 +9,14 @@ import { VIRTUAL_ALIAS_ENTRIES, capitalize } from "@fluxora/utils";
 export const fluxoraAppConfigPlugin = async (config: FluxoraApp): Promise<Plugin> => {
   const appConfigurationFile = resolve(config.cacheRoot, "apps", config.app.name, "app-config.ts");
 
-  const appConfig = {
-    name: config.app.name,
-    componentName: capitalize(config.app.name)
-  };
+  const appConfig = { name: config.app.name, componentName: capitalize(config.app.name) };
+
+  const content = Object.entries(appConfig)
+    .map(([key, value]) => `export const ${key} = "${value}";`)
+    .join("\n");
+
+  await mkdir(dirname(appConfigurationFile), { recursive: true });
+  await writeFile(appConfigurationFile, content);
 
   return {
     name: "fluxora:core-plugins:app-config",
@@ -25,15 +29,6 @@ export const fluxoraAppConfigPlugin = async (config: FluxoraApp): Promise<Plugin
           }
         }
       });
-    },
-
-    async buildStart() {
-      const content = Object.entries(appConfig)
-        .map(([key, value]) => `export const ${key} = "${value}";`)
-        .join("\n");
-
-      await mkdir(dirname(appConfigurationFile), { recursive: true });
-      await writeFile(appConfigurationFile, content);
     }
   };
 };

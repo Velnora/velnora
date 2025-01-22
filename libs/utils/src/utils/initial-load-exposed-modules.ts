@@ -12,9 +12,10 @@ export const initialLoadExposedModules = async (
   appName: string,
   exposedModules: FluxoraAppConfig["exposedModules"]
 ) => {
-  const files = glob.sync(resolve("apps", appName, "src", "**", `*.{${CLIENT_ENTRY_FILE_EXTENSIONS.join(",")}}`), {
-    absolute: true
-  });
+  const files = await glob(
+    resolve(process.cwd(), "apps", appName, "src", "**", `*.{${CLIENT_ENTRY_FILE_EXTENSIONS.join(",")}}`),
+    { absolute: true }
+  );
 
   for (const file of files) {
     const content = await readFile(file, "utf-8");

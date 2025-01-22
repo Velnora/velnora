@@ -1,5 +1,5 @@
 import type { CreateServerOptions } from "@fluxora/types/core";
-import { checkAndGenerateGitignore, getFluxoraConfig } from "@fluxora/utils";
+import { generateDotFluxoraExtraFiles, getFluxoraConfig } from "@fluxora/utils";
 
 import { viteWorkerManager } from "../utils/vite-worker-manager";
 import { viteWorkerPath } from "../utils/vite-worker-path";
@@ -7,7 +7,7 @@ import { viteWorkerPath } from "../utils/vite-worker-path";
 export const createDevServer = async (options?: CreateServerOptions) => {
   const config = await getFluxoraConfig(options);
 
-  checkAndGenerateGitignore(config);
+  generateDotFluxoraExtraFiles(config);
 
   await config.withApps(async microApp => {
     await viteWorkerManager.register(microApp.name, viteWorkerPath);
