@@ -23,15 +23,15 @@
   "types": "build/fluxora.client.d.ts",
   "dependencies": {
     "@fluxora/utils": "workspace:^",
-    "@nestjs/common": "^11.0.1",
-    "@nestjs/core": "^10.4.15",
+    "@nestjs/common": "^11.0.6",
+    "@nestjs/core": "^11.0.6",
     "express": "^4.21.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/react": "^19.0.6",
+    "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3"
   }
 }

@@ -8,10 +8,10 @@
     "@fluxora/utils": "workspace:^",
     "@fluxora/vite": "workspace:^",
     "@fluxora/worker": "workspace:^",
-    "vite": "^6.0.7"
+    "vite": "^6.0.11"
   },
   "devDependencies": {
     "@fluxora/types": "workspace:^",
-    "@types/node": "^22.10.5"
+    "@types/node": "^22.12.0"
   }
 }
