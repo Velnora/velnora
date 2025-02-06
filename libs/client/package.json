@@ -28,7 +28,8 @@
   "types": "build/fluxora.client.d.ts",
   "dependencies": {
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-error-boundary": "^5.0.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.8",

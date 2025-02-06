@@ -9,19 +9,24 @@
       "require": "./build/fluxora.types.js"
     },
     "./cli": {
-      "types": "./build/cli.types.d.ts",
-      "import": "./build/cli.types.js",
-      "require": "./build/cli.types.js"
+      "types": "./build/fluxora.cli.types.d.ts",
+      "import": "./build/fluxora.cli.types.js",
+      "require": "./build/fluxora.cli.types.js"
     },
     "./core": {
-      "types": "./build/core.types.d.ts",
-      "import": "./build/core.types.js",
-      "require": "./build/core.types.js"
+      "types": "./build/fluxora.core.types.d.ts",
+      "import": "./build/fluxora.core.types.js",
+      "require": "./build/fluxora.core.types.js"
+    },
+    "./utils": {
+      "types": "./build/fluxora.utils.types.d.ts",
+      "import": "./build/fluxora.utils.types.js",
+      "require": "./build/fluxora.utils.types.js"
     },
     "./worker": {
-      "types": "./build/worker.types.d.ts",
-      "import": "./build/worker.types.js",
-      "require": "./build/worker.types.js"
+      "types": "./build/fluxora.worker.types.d.ts",
+      "import": "./build/fluxora.worker.types.js",
+      "require": "./build/fluxora.worker.types.js"
     }
   },
   "main": "build/fluxora.types.js",
@@ -29,6 +34,7 @@
   "devDependencies": {
     "@types/yargs": "^17.0.33",
     "type-fest": "^4.33.0",
-    "vite": "^6.0.11"
+    "vite": "^6.0.11",
+    "yargs": "^17.7.2"
   }
 }

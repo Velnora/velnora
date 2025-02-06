@@ -21,5 +21,10 @@
   "devDependencies": {
     "@fluxora/types": "workspace:^",
     "vite-plugin-inspect": "^10.1.0"
+  },
+  "peerDependencies": {
+    "@fluxora/client": "workspace:^",
+    "@fluxora/nestjs": "workspace:^",
+    "@fluxora/server": "workspace:^"
   }
 }

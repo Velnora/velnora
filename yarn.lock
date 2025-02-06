@@ -1274,9 +1274,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@base-example/utils@workspace:examples/base/libs/utils":
+"@base-example/template@workspace:examples/base/template":
   version: 0.0.0-use.local
-  resolution: "@base-example/utils@workspace:examples/base/libs/utils"
+  resolution: "@base-example/template@workspace:examples/base/template"
   languageName: unknown
   linkType: soft
 
@@ -1514,18 +1514,20 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fluxora/base-example@workspace:examples/base"
   dependencies:
+    "@hookform/resolvers": "npm:^3.10.0"
     "@nestjs/common": "npm:^11.0.6"
     "@nestjs/core": "npm:^11.0.6"
     "@nestjs/platform-express": "npm:^11.0.6"
     "@types/react": "npm:^19.0.8"
     "@types/react-dom": "npm:^19.0.3"
     fluxora: "workspace:^"
-    nx: "npm:^20.4.0"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
+    react-hook-form: "npm:^7.54.2"
     reflect-metadata: "npm:^0.2.2"
     rxjs: "npm:^7.8.1"
     vite: "npm:^6.0.11"
+    zod: "npm:^3.24.1"
   languageName: unknown
   linkType: soft
 
@@ -1556,6 +1558,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fluxora/common@workspace:libs/common":
+  version: 0.0.0-use.local
+  resolution: "@fluxora/common@workspace:libs/common"
+  languageName: unknown
+  linkType: soft
+
 "@fluxora/core@workspace:^, @fluxora/core@workspace:libs/core":
   version: 0.0.0-use.local
   resolution: "@fluxora/core@workspace:libs/core"
@@ -1565,7 +1573,14 @@ __metadata:
     "@fluxora/vite": "workspace:^"
     "@fluxora/worker": "workspace:^"
     "@types/node": "npm:^22.12.0"
+    chalk: "npm:^5.4.1"
     vite: "npm:^6.0.11"
+  languageName: unknown
+  linkType: soft
+
+"@fluxora/generator@workspace:libs/generator":
+  version: 0.0.0-use.local
+  resolution: "@fluxora/generator@workspace:libs/generator"
   languageName: unknown
   linkType: soft
 
@@ -1628,6 +1643,7 @@ __metadata:
     "@types/yargs": "npm:^17.0.33"
     type-fest: "npm:^4.33.0"
     vite: "npm:^6.0.11"
+    yargs: "npm:^17.7.2"
   languageName: unknown
   linkType: soft
 
@@ -1644,6 +1660,7 @@ __metadata:
     glob: "npm:^11.0.1"
     lodash.merge: "npm:^4.6.2"
     type-fest: "npm:^4.33.0"
+    vite: "npm:^6.0.11"
     winston: "npm:^3.17.0"
     winston-transport: "npm:^4.9.0"
   languageName: unknown
@@ -1660,6 +1677,10 @@ __metadata:
     glob: "npm:^11.0.1"
     vite: "npm:^6.0.11"
     vite-plugin-inspect: "npm:^10.1.0"
+  peerDependencies:
+    "@fluxora/client": "workspace:^"
+    "@fluxora/nestjs": "workspace:^"
+    "@fluxora/server": "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -1675,9 +1696,17 @@ __metadata:
     "@types/node": "npm:^22.12.0"
     express: "npm:^4.21.2"
     vite: "npm:^6.0.11"
-    workerpool: "npm:^9.2.0"
   languageName: unknown
   linkType: soft
+
+"@hookform/resolvers@npm:^3.10.0":
+  version: 3.10.0
+  resolution: "@hookform/resolvers@npm:3.10.0"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: 10c0/7ee44533b4cdc28c4fa2a94894c735411e5a1f830f4a617c580533321a9b901df0cc8c1e2fad81ad8d55154ebc5cb844cf9c116a3148ffae2bc48758c33cbb8e
+  languageName: node
+  linkType: hard
 
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
@@ -3488,6 +3517,13 @@ __metadata:
     ansi-styles: "npm:^4.1.0"
     supports-color: "npm:^7.1.0"
   checksum: 10c0/4a3fef5cc34975c898ffe77141450f679721df9dde00f6c304353fa9c8b571929123b26a0e4617bde5018977eb655b31970c297b91b63ee83bb82aeb04666880
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^5.4.1":
+  version: 5.4.1
+  resolution: "chalk@npm:5.4.1"
+  checksum: 10c0/b23e88132c702f4855ca6d25cb5538b1114343e41472d5263ee8a37cccfccd9c4216d111e1097c6a27830407a1dc81fecdf2a56f2c63033d4dbbd88c10b0dcef
   languageName: node
   linkType: hard
 
@@ -5973,7 +6009,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nx@npm:20.4.0, nx@npm:^20.4.0":
+"nx@npm:20.4.0":
   version: 20.4.0
   resolution: "nx@npm:20.4.0"
   dependencies:
@@ -6505,6 +6541,15 @@ __metadata:
   peerDependencies:
     react: ">=16.13.1"
   checksum: 10c0/38da5e7e81016a4750d3b090e3c740c2c1125c0bb9de14e1ab92ee3b5190d34517c199935302718a24aa35d3f89081412b3444edc23f63729bde2e862a2fbfec
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:^7.54.2":
+  version: 7.54.2
+  resolution: "react-hook-form@npm:7.54.2"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 10c0/6eebead2900e3d369a989e7a20429f390dc75b3897142aa3107f1f6dabb9ae64fed201ea98cdcd8676e40466c97748aeb0c0d83264f5bd3a84dbc0b8e4863415
   languageName: node
   linkType: hard
 
@@ -7932,13 +7977,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workerpool@npm:^9.2.0":
-  version: 9.2.0
-  resolution: "workerpool@npm:9.2.0"
-  checksum: 10c0/71d47fba55d168d989318c20d50ec4912ec1e6abe777387437209b58ccdee88d6abe783643bb168d89f0980725ace9d7f25f69f567c80ce270318d92c8c1d923
-  languageName: node
-  linkType: hard
-
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0, wrap-ansi@npm:^7.0.0":
   version: 7.0.0
   resolution: "wrap-ansi@npm:7.0.0"
@@ -8067,5 +8105,12 @@ __metadata:
   version: 3.1.1
   resolution: "yn@npm:3.1.1"
   checksum: 10c0/0732468dd7622ed8a274f640f191f3eaf1f39d5349a1b72836df484998d7d9807fbea094e2f5486d6b0cd2414aad5775972df0e68f8604db89a239f0f4bf7443
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.24.1":
+  version: 3.24.1
+  resolution: "zod@npm:3.24.1"
+  checksum: 10c0/0223d21dbaa15d8928fe0da3b54696391d8e3e1e2d0283a1a070b5980a1dbba945ce631c2d1eccc088fdbad0f2dfa40155590bf83732d3ac4fcca2cc9237591b
   languageName: node
   linkType: hard

@@ -4,6 +4,9 @@
     "libs/*",
     "examples/*"
   ],
+  "scripts": {
+    "check:libs:deps": "./scripts/check-libs-deps.sh"
+  },
   "devDependencies": {
     "@nx/vite": "20.4.0",
     "@nx/web": "20.4.0",

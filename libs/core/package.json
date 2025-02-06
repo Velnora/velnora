@@ -8,6 +8,7 @@
     "@fluxora/utils": "workspace:^",
     "@fluxora/vite": "workspace:^",
     "@fluxora/worker": "workspace:^",
+    "chalk": "^5.4.1",
     "vite": "^6.0.11"
   },
   "devDependencies": {
