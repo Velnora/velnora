@@ -10,5 +10,12 @@ export const ErrorMessages = {
 
   WORKER_VITE_NOT_INITIALIZED:
     "Vite server is not initialized yet. Please run `createViteServer` before calling this function",
-  WORKER_APP_NOT_INITIALIZED: "App is not initialized yet. Please run `serve` before calling this function"
+  WORKER_APP_NOT_INITIALIZED: "App is not initialized yet. Please run `serve` before calling this function",
+  WORKER_UNKNOWN_ERROR_ON_RENDER: "An error occurred while rendering the page",
+  WORKER_APP_THROW_ERROR: "An error occurred in the app",
+
+  SERVER_ENV_NOT_RUNNABLE: "Server environment is not runnable",
+
+  VITE_FEDERATION_MODULE_NOT_FOUND: (exposedModule: string, appName: string) =>
+    `Module "${exposedModule}" not exposed from app "${appName}"`
 } as const;

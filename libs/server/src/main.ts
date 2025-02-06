@@ -1,1 +1,1 @@
-export * from "./utils/render-html";
+export * from "./utils/render-pipeable-stream";

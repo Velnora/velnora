@@ -1,14 +1,20 @@
 import e from "express";
 
+import { renderPipeableStream } from "./main";
 import { createApp } from "./utils/create-app";
-import { renderHtml } from "./utils/render-html";
 
 export const main = async () => {
   const app = await createApp();
-  const html = renderHtml();
 
   app.use("*", async (_req: e.Request, res: e.Response) => {
-    res.send(html);
+    const stream = renderPipeableStream({
+      onAllReady() {
+        stream.pipe(res);
+      },
+      onError(error) {
+        stream.abort(error);
+      }
+    });
   });
 
   await app.listen(5000);

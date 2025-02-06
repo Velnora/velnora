@@ -1,4 +1,4 @@
-import { App as NoopApp } from "/@fluxora/virtual/entry/react/noop";
+import { App as NoopApp } from "/@fluxora/client/noop";
 import * as TEMPLATE from "/@fluxora/virtual/entry/react/template";
 
 const __importName = ["Template", "App", "default"].find(e => e in TEMPLATE);

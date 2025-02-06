@@ -1,4 +1,4 @@
-import { Logger, createLogger as createWinstonLogger, format, transports } from "winston";
+import { Logger, config, createLogger as createWinstonLogger, format, transports } from "winston";
 import * as Transport from "winston-transport";
 
 import type { LoggerOptions } from "./create-logger.types";
@@ -82,9 +82,21 @@ export const createLogger = (options?: LoggerOptions): Logger => {
 
   return createWinstonLogger({
     level: logLevel,
-    levels: { error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 },
+    levels: config.npm.levels,
     format: format.combine(
-      format.colorize({ all: true }),
+      format.colorize({
+        all: true,
+        colors: {
+          error: "red",
+          warn: "orange",
+          data: "grey",
+          info: "white",
+          debug: "cyan",
+          verbose: "cyan",
+          silly: "magenta",
+          custom: "blue"
+        }
+      }),
       format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
       format.simple(),
       printFormat

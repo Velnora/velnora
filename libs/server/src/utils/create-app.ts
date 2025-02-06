@@ -1,7 +1,7 @@
 import { NestFactory } from "@nestjs/core";
 
 import { LoggerService } from "../services/logger.service";
-import { name } from "/@fluxora/virtual/entry/app-config";
+import { name } from "/@fluxora/virtual/entry/app-config.json";
 import { AppModule } from "/@fluxora/virtual/entry/app.module";
 
 export const createApp = async () => {

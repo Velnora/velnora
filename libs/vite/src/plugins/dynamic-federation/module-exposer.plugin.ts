@@ -1,31 +1,26 @@
-import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
-
 import type { Plugin } from "vite";
 
+import type { AppConfig } from "@fluxora/types";
 import type { FluxoraApp } from "@fluxora/types/core";
-import { initialLoadExposedModules } from "@fluxora/utils";
+import { initialLoadExposedModules, projectFs } from "@fluxora/utils";
 
 export const moduleExposerPlugin = (config: FluxoraApp): Plugin => {
-  const module = resolve(config.cacheRoot, "apps", config.app.name, "modules", `${config.app.name}.ts`);
-
   return {
     name: "fluxora:core-plugins:federation:module-exposer",
 
-    resolveId(id, importer) {
+    resolveId(id) {
       if (id === config.remoteEntry.entryPath) {
         return id;
-      }
-
-      if (importer === config.remoteEntry.entryPath) {
-        return this.resolve(id, module, { skipSelf: true });
       }
     },
 
     async load(id) {
       if (id === config.remoteEntry.entryPath) {
         await initialLoadExposedModules(config.app.name, config.exposedModules);
-        return readFile(module, "utf-8");
+        const fs = projectFs(config.fluxoraRoot).cache.app(config.app.name);
+        const appConfig = await fs.appConfig.readJson<AppConfig>();
+        const files = Object.values(appConfig.exposedModules);
+        return files.map(file => `export * from "${file}";`).join("\n");
       }
     }
   };

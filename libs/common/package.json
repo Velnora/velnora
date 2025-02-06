@@ -1,0 +1,14 @@
+{
+  "name": "@fluxora/common",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.common.d.ts",
+      "import": "./build/fluxora.common.js",
+      "require": "./build/fluxora.common.js"
+    }
+  },
+  "main": "build/fluxora.common.js",
+  "types": "build/fluxora.common.d.ts"
+}

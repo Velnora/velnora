@@ -1,11 +1,13 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="@fluxora/base-example:dev" type="NxRunConfigurationType">
+  <configuration default="false" name="@fluxora/base-example:dev" type="NxRunConfigurationType" activateToolWindowBeforeRun="false">
     <option name="nx-projects" value="@fluxora/base-example" />
     <option name="nx-targets" value="dev" />
     <option name="nx-target-configuration" value="" />
     <envs>
+      <env name="NODE_ENV" value="development" />
       <env name="LOG_LEVEL" value="debug" />
     </envs>
     <option name="arguments" value="--port 3500" />
+    <method v="2" />
   </configuration>
 </component>

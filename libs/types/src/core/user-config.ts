@@ -1,16 +1,6 @@
 import type { CreateServerOptions } from "./create-server-options";
 
-interface ProjectSettings {
-  /**
-   * Specifies the root directory of the project.
-   * Supports glob patterns for flexible matching.
-   * The path is relative to the project root.
-   *
-   * @type {string}
-   * @default "apps"
-   */
-  root?: string;
-}
+interface ProjectSettings {}
 
 interface LibrarySettings extends ProjectSettings {}
 
@@ -105,5 +95,5 @@ export interface UserConfig {
    * Root Application name
    * @default "host"
    */
-  rootAppName?: string;
+  hostAppName?: string;
 }

@@ -1,5 +1,5 @@
+import type { Name, Path } from "../../main";
 import type { MicroApp } from "../micro-app";
-import type { Name, Path } from "../unions";
 import type { AppViteConfig } from "./app-vite-config";
 import type { FluxoraConfig } from "./fluxora-config";
 import type { RemoteEntry } from "./remote-entry";

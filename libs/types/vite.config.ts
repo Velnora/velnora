@@ -6,6 +6,7 @@ export default defineFluxoraConfig("types", {
       entry: {
         "fluxora.cli.types": "./src/cli/main.ts",
         "fluxora.core.types": "./src/core/main.ts",
+        "fluxora.utils.types": "./src/utils/main.ts",
         "fluxora.worker.types": "./src/worker/main.ts"
       }
     },

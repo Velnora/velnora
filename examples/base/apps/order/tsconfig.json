@@ -1,4 +1,5 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["../../.fluxora/apps/order/types/**/*.d.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "references": [{ "path": "../../.fluxora/apps/order/tsconfig.json" }]
 }

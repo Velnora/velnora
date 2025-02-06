@@ -1,5 +1,5 @@
-import type * as viteHandlers from "./core/vite";
+import type * as viteHandlers from "./vite/core";
 
 export type FluxoraViteWorker = typeof viteHandlers;
 
-export * from "./core/worker-manager";
+export * from "./node/core/worker-manager";

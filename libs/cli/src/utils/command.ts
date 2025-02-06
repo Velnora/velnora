@@ -1,6 +1,6 @@
 import type { CamelCase, Promisable } from "type-fest";
 
-import type { Merge } from "@fluxora/types";
+import type { MergeObjects } from "@fluxora/types";
 import type {
   Command as Cmd,
   CommandOptions,
@@ -32,7 +32,10 @@ export class Command<TOptions extends Record<string, Type> = {}> implements Cmd<
     name: TName,
     type: TType | OptionType<TType, TAliasName> | (OptionType<"union", TAliasName> & { values: TUnionType[] })
   ): Command<
-    Merge<TOptions, Record<TName | TAliasName | CamelCase<TName> | CamelCase<TAliasName>, Type<TType, TUnionType>>>
+    MergeObjects<
+      TOptions,
+      Record<TName | TAliasName | CamelCase<TName> | CamelCase<TAliasName>, Type<TType, TUnionType>>
+    >
   > {
     const resolvedValue = (typeof type === "string" ? { type } : type) as
       | OptionType<TType, TAliasName>
@@ -40,7 +43,7 @@ export class Command<TOptions extends Record<string, Type> = {}> implements Cmd<
     const defaultValue = resolvedValue.defaultValue || null;
 
     const self = this as unknown as Command<
-      Merge<TOptions, Record<TName | TAliasName | CamelCase<TName> | CamelCase<TAliasName>, TType>>
+      MergeObjects<TOptions, Record<TName | TAliasName | CamelCase<TName> | CamelCase<TAliasName>, TType>>
     >;
     // @ts-ignore
     self.options[name] = {

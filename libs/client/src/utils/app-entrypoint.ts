@@ -1,4 +1,4 @@
-import { componentName } from "/@fluxora/virtual/entry/app-config";
+import { componentName } from "/@fluxora/virtual/entry/app-config.json" with { type: "json" };
 import * as APP from "/@fluxora/virtual/entry/react/app";
 
 const __importName = [componentName, "App", "default"].find(e => e in APP);

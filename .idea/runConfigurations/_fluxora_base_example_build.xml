@@ -4,9 +4,9 @@
     <option name="nx-targets" value="build" />
     <option name="nx-target-configuration" value="" />
     <envs>
-      <env name="NODE_ENV" value="production" />
       <env name="LOG_LEVEL" value="debug" />
     </envs>
     <option name="arguments" value="" />
+    <method v="2" />
   </configuration>
 </component>

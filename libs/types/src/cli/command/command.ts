@@ -1,6 +1,6 @@
 import type { CamelCase, Promisable } from "type-fest";
 
-import type { Merge } from "../../common/merge";
+import type { MergeObjects } from "../../common/merge-objects";
 import type { InferType } from "../infer/infer-type";
 import type { LiteralType } from "../literal-type";
 import type { Type } from "../type";
@@ -17,7 +17,10 @@ export interface Command<TOptions extends Record<string, Type> = {}> {
     name: TName,
     type: TType | OptionType<TType, TAliasName> | (OptionType<"union", TAliasName> & { values: TUnionType[] })
   ): Command<
-    Merge<TOptions, Record<TName | TAliasName | CamelCase<TName> | CamelCase<TAliasName>, Type<TType, TUnionType>>>
+    MergeObjects<
+      TOptions,
+      Record<TName | TAliasName | CamelCase<TName> | CamelCase<TAliasName>, Type<TType, TUnionType>>
+    >
   >;
 
   execute(

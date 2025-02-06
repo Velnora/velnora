@@ -1,26 +1,36 @@
-import type { CreateServerOptions } from "@fluxora/types/core";
-import { generateDotFluxoraExtraFiles, getFluxoraConfig } from "@fluxora/utils";
+import chalk from "chalk";
 
+import { appManager } from "@fluxora/common";
+import type { CreateServerOptions } from "@fluxora/types/core";
+
+import { logger } from "../utils/logger";
 import { viteWorkerManager } from "../utils/vite-worker-manager";
-import { viteWorkerPath } from "../utils/vite-worker-path";
 
 export const createDevServer = async (options?: CreateServerOptions) => {
-  const config = await getFluxoraConfig(options);
+  await appManager.resolvePkgJson();
 
-  generateDotFluxoraExtraFiles(config);
-
-  await config.withApps(async microApp => {
-    await viteWorkerManager.register(microApp.name, viteWorkerPath);
-
-    const proxy = await viteWorkerManager.proxy(microApp.name);
-    await proxy.createViteServer(microApp, config.getRawConfig());
-    await proxy.serve();
-
-    // Mapping ->
-    // - /{app-name} -> http://localhost:{port}
-    // - /api/v1/{app-name} -> http://localhost:{port}/api/v1/{app-name}
-  });
-
+  // const template = appManager.registerTemplate("template");
+  // await template.resolveUserConfig();
+  //
+  // logger.info(`Compiling template`);
+  // await template.build();
+  // logger.info(chalk.green`Template compiled successfully`);
+  // logger.info(chalk.green`Watching installed for template changes...`);
+  //
+  // const templateViteConfig = await getTemplateConfiguration();
+  // await dotFluxoraContentGenerator(config);
+  // await config.withApps(async microApp => {
+  //   const proxy = await viteWorkerManager.new(microApp.name);
+  // await proxy.createViteServer(microApp, config.getRawConfig()).catch(console.error);
+  // await proxy.serve().catch(console.error);
+  // Mapping ->
+  // - /{app-name} -> http://localhost:{port}
+  // - /api/v1/{app-name} -> http://localhost:{port}/api/v1/{app-name}
+  // });
+  // await config.withApps(async microApp => {
+  //   const conf = await getFluxoraAppConfig(microApp, config);
+  // await dotFluxoraContentGenerator.postScripting(conf);
+  // });
   // logger.info(`Combined apps together and run on port ${config.server.port}`);
   // await config.withApps(app => {
   //   logger.info(` - ${app.name} bound to \`/${app.name}\` (${app.host.host})`);

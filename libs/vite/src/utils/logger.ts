@@ -1,4 +1,4 @@
-import { createLogger } from "@fluxora/utils";
+import { createLogger } from "@fluxora/utils/node";
 
 export const logger = createLogger({
   name: "fluxora/vite",

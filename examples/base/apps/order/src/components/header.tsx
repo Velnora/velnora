@@ -2,6 +2,13 @@
 
 import type { FC } from "react";
 
+import { UnknownHeader } from "./unknown-header";
+
 export const Header: FC = () => {
-  return <header>Header2</header>;
+  return (
+    <header>
+      <UnknownHeader />
+      Header2
+    </header>
+  );
 };

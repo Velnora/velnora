@@ -5,4 +5,5 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   }
+  //  "references": [{ "path": "apps/order/tsconfig.json" }, { "path": "apps/profile/tsconfig.json" }]
 }
