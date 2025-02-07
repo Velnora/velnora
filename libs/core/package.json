@@ -5,14 +5,14 @@
   "main": "build/fluxora.core.js",
   "types": "build/fluxora.core.d.ts",
   "dependencies": {
+    "@fluxora/common": "workspace:^",
     "@fluxora/utils": "workspace:^",
-    "@fluxora/vite": "workspace:^",
     "@fluxora/worker": "workspace:^",
     "chalk": "^5.4.1",
-    "vite": "^6.0.11"
+    "vite": "^6.1.0"
   },
   "devDependencies": {
     "@fluxora/types": "workspace:^",
-    "@types/node": "^22.12.0"
+    "@types/node": "^22.13.1"
   }
 }

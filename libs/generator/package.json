@@ -10,5 +10,13 @@
     }
   },
   "main": "build/fluxora.generator.js",
-  "types": "build/fluxora.generator.d.ts"
+  "types": "build/fluxora.generator.d.ts",
+  "devDependencies": {
+    "@fluxora/types": "workspace:^",
+    "type-fest": "^4.33.0"
+  },
+  "dependencies": {
+    "@fluxora/common": "workspace:^",
+    "@fluxora/utils": "workspace:^"
+  }
 }

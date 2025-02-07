@@ -8,11 +8,11 @@
     "check:libs:deps": "./scripts/check-libs-deps.sh"
   },
   "devDependencies": {
-    "@nx/vite": "20.4.0",
-    "@nx/web": "20.4.0",
+    "@nx/vite": "20.4.1",
+    "@nx/web": "20.4.1",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "depcheck": "^1.4.7",
-    "nx": "20.4.0",
+    "nx": "20.4.1",
     "prettier": "^3.4.2",
     "prettier-plugin-packagejson": "^2.5.8",
     "vite-plugin-dts": "^4.5.0",

@@ -20,16 +20,15 @@
     "@babel/parser": "^7.26.7",
     "@babel/traverse": "^7.26.7",
     "glob": "^11.0.1",
-    "lodash.merge": "^4.6.2",
-    "vite": "^6.0.11",
+    "vite": "^6.1.0",
     "winston": "^3.17.0",
     "winston-transport": "^4.9.0"
   },
   "devDependencies": {
     "@fluxora/types": "workspace:^",
     "@types/babel__traverse": "^7.20.6",
-    "@types/lodash.merge": "^4.6.9",
-    "@types/node": "^22.12.0",
+    "@types/node": "^22.13.1",
+    "rollup": "^4.34.4",
     "type-fest": "^4.33.0"
   }
 }
