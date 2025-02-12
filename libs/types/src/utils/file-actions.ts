@@ -11,6 +11,7 @@ export interface FileActions {
 
   // region Path actions
   relative(to: string): string;
+  dirname(): string;
   fixed(): string;
   // endregion
 }

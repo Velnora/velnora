@@ -1,36 +1,44 @@
-import chalk from "chalk";
-
 import { appManager } from "@fluxora/common";
-import type { CreateServerOptions } from "@fluxora/types/core";
+import { contentGenerator } from "@fluxora/generator";
+import { type CreateServerOptions } from "@fluxora/types/core";
 
-import { logger } from "../utils/logger";
-import { viteWorkerManager } from "../utils/vite-worker-manager";
+import { workerPool } from "../utils/worker-pool";
 
 export const createDevServer = async (options?: CreateServerOptions) => {
-  await appManager.resolvePkgJson();
+  appManager.init(options);
 
-  // const template = appManager.registerTemplate("template");
-  // await template.resolveUserConfig();
-  //
+  await appManager.resolveUserConfig();
+  await appManager.resolvePackages();
+
+  // const template = appManager.getTemplateApp();
   // logger.info(`Compiling template`);
-  // await template.build();
+  // const root = await compileAndWatch(template);
+  // root && (template.root = root);
   // logger.info(chalk.green`Template compiled successfully`);
-  // logger.info(chalk.green`Watching installed for template changes...`);
-  //
-  // const templateViteConfig = await getTemplateConfiguration();
-  // await dotFluxoraContentGenerator(config);
-  // await config.withApps(async microApp => {
-  //   const proxy = await viteWorkerManager.new(microApp.name);
-  // await proxy.createViteServer(microApp, config.getRawConfig()).catch(console.error);
-  // await proxy.serve().catch(console.error);
-  // Mapping ->
-  // - /{app-name} -> http://localhost:{port}
-  // - /api/v1/{app-name} -> http://localhost:{port}/api/v1/{app-name}
-  // });
-  // await config.withApps(async microApp => {
-  //   const conf = await getFluxoraAppConfig(microApp, config);
-  // await dotFluxoraContentGenerator.postScripting(conf);
-  // });
+  // logger.info(chalk.green`Watcher installed for template changes...`);
+
+  const apps = appManager.getApps();
+
+  await contentGenerator();
+
+  for (const app of apps) {
+    const worker = workerPool.new(app.name);
+    appManager.communicateWithWorkers(worker, workerPool);
+    await worker.init();
+  }
+
+  for (const app of apps) {
+    const worker = workerPool.proxy(app.name);
+
+    await worker.createViteServer(app).catch(console.error);
+    await worker.serve().catch(console.error);
+
+    // Mapping ->
+    // - /{app-name} -> http://localhost:{port}
+    // - /api/v1/{app-name} -> http://localhost:{port}/api/v1/{app-name}
+    // });
+  }
+
   // logger.info(`Combined apps together and run on port ${config.server.port}`);
   // await config.withApps(app => {
   //   logger.info(` - ${app.name} bound to \`/${app.name}\` (${app.host.host})`);

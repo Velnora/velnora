@@ -24,4 +24,3 @@ const App = ({ children }) => {
 export {
   App
 };
-//# sourceMappingURL=template.js.map

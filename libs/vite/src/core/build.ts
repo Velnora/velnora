@@ -1,7 +1,9 @@
-import { type InlineConfig, build as viteBuild } from "vite";
+import { build as viteBuild } from "vite";
 
-import { getConfiguration } from "@fluxora/vite";
+import type { Package } from "@fluxora/types/core";
 
-export const build = async (config: InlineConfig) => {
-  return viteBuild(await getConfiguration(config));
+import { getConfiguration } from "../config";
+
+export const build = async (pkg: Package) => {
+  return viteBuild(await getConfiguration(pkg));
 };

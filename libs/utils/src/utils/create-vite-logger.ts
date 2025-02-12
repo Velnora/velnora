@@ -1,4 +1,4 @@
-import { RollupError } from "rollup";
+import type { RollupError } from "rollup";
 import { createLogger } from "vite";
 import type { Logger } from "winston";
 

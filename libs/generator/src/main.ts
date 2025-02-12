@@ -1,1 +1,1 @@
-export * from "./dot-fluxora-content.generator";
+export * from "./content.generator";

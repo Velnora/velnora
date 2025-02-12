@@ -1,8 +1,6 @@
-export * from "./fluxora-config";
-export * from "./fluxora-config-methods";
-export * from "./partial-fluxora-config";
+export * from "./app";
+export * from "./lib";
+export * from "./template";
+export * from "./pkg";
 
-export * from "./fluxora-app";
-export * from "./fluxora-app-config";
-export * from "./fluxora-app-config-methods";
-export * from "./partial-fluxora-app-config";
+export * from "../_fluxora";

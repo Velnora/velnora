@@ -13,7 +13,6 @@
   "types": "build/fluxora.common.d.ts",
   "dependencies": {
     "@fluxora/utils": "workspace:^",
-    "@fluxora/vite": "workspace:^",
     "glob": "^11.0.1",
     "lodash.merge": "^4.6.2"
   },

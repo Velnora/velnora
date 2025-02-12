@@ -6,7 +6,7 @@ export const CLIENT_ENTRY_FILE_EXTENSIONS = ["ts", "js", "mjs", "cjs", "jsx", "t
 export const isProd = process.env.NODE_ENV === "production";
 export const isDev = !isProd;
 
-export const FEDERATION_PLUGIN_REMOTE_ENTRY_FILE_PATH_DEFAULT = "/assets/remoteEntry.js";
+export const DEFAULT_REMOTE_ENTRY_PATH = "/assets/remoteEntry.js";
 
 export const INTERNAL_PACKAGES = {
   REMOTE_ENTRY: "/@fluxora/plugins.module-federation/remote-entry.js",
@@ -57,7 +57,7 @@ export const VITE_ENVIRONMENTS = {
   CLIENT: "client"
 } as const;
 
-const messageVariants = ["^vite v\\d+\\.\\d+\\.\\d+", "watching for file changes", "buil[dt]"];
+const messageVariants = ["^vite v\\d+\\.\\d+\\.\\d+", "watching for file changes", "buil[dt]", "modules transformed"];
 
 export const VITE_MESSAGES_RE = new RegExp(messageVariants.join("|"));
 export const FEDERATION_MICRO_APP_IMPORT_RE = /^\w+(?:\/\w+)?$/;
@@ -66,3 +66,9 @@ export const CONTROL_CHARS_RE = /[\u0000-\u001F\u007F-\u009F]\[\d+\w/g;
 export const DEFAULT_HTML_TEMPLATE = `<!DOCTYPE html><html><head></head><body></body></html>`;
 
 export const FEDERATION_SHARED_PACKAGES = "__fluxora__federation__shared__";
+
+export const DIRECTORY_NAMES = {
+  APP: ["apps", "applications"],
+  LIB: ["libs", "libraries"],
+  TEMPLATE: ["template", "libs/template", "libraries/template"]
+} as const;

@@ -1,4 +1,4 @@
-import { createLogger } from "./create-logger";
+import { createLogger } from "../node/create-logger";
 
 export const logger = createLogger({
   name: "fluxora/utils",

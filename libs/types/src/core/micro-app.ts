@@ -1,20 +1,13 @@
-export type AppName = `${AppType.APPLICATION | AppType.LIBRARY | AppType.TEMPLATE}::${string}`;
-
-export enum AppType {
-  APPLICATION = "application",
-  LIBRARY = "library",
-  TEMPLATE = "template"
-}
+import { AppType } from "./app-type";
 
 export interface MicroLibrary {
   type: AppType.LIBRARY;
   root: string;
-  name: AppName;
+  name: string;
 }
 
 export interface MicroTemplate extends Pick<MicroLibrary, "root" | "name"> {
   type: AppType.TEMPLATE;
-  buildOutput?: string;
 }
 
 export interface MicroAppHost {

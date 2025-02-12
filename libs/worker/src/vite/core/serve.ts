@@ -1,18 +1,19 @@
 import express from "express";
 import { isRunnableDevEnvironment } from "vite";
 
+import { AppType } from "@fluxora/types/core";
 import type { WorkerMessage } from "@fluxora/types/worker";
 import { ErrorMessages, PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "@fluxora/utils";
 import type { INestApplication } from "@nestjs/common";
 
-import { logger } from "../../node/utils/logger";
-import { checkViteServer, getAppConfig } from "./create-vite-server";
+import { logger } from "../../utils/logger";
+import { getAppPackage, getViteServerInstance } from "./create-vite-server";
 
 export let __APP__: express.Application;
 
 export const serve = async () => {
-  const vite = checkViteServer();
-  const appConfig = getAppConfig();
+  const vite = getViteServerInstance();
+  const app = getAppPackage();
 
   const clientEnv = vite.environments[VITE_ENVIRONMENTS.CLIENT];
   const serverEnv = vite.environments[VITE_ENVIRONMENTS.SERVER];
@@ -29,22 +30,25 @@ export const serve = async () => {
 
   __APP__ = express()
     .use(vite.middlewares)
-    .all(`/api/v1/${appConfig.app.name}*`, (req, res) => {
+    .all(`/api/v1/${app.name}*`, (req, res) => {
       nestMiddleware(req, res);
-    })
-    .get(appConfig.remoteEntry.entryPath, async (req, res) => {
-      const js = await clientEnv.transformRequest(req.url);
-      res.status(200).setHeader("Content-Type", "application/javascript").end(js);
-    })
-    .use("*", async (req, res) => {
-      const html = await vite.transformIndexHtml(req.url, "");
-      res.status(200).end(html);
     });
 
+  if (app.type === AppType.APPLICATION) {
+    __APP__.get(app.remoteEntry.entryPath, async (req, res) => {
+      const js = await clientEnv.transformRequest(req.url);
+      res.status(200).setHeader("Content-Type", "application/javascript").end(js);
+    });
+  }
+
+  __APP__.use("*", async (req, res) => {
+    const html = await vite.transformIndexHtml(req.url, "");
+    res.status(200).end(html);
+  });
+
   const { promise, resolve } = Promise.withResolvers<WorkerMessage>();
-  vite.ws.listen();
   __APP__.listen(vite.config.server!.port, () => {
-    logger.debug(`App (${appConfig.app.name}) is running at http://localhost:${vite.config.server?.port}`);
+    logger.debug(`App (${app.name}) is running at http://localhost:${vite.config.server?.port}`);
     resolve({ port: vite.config.server!.port! });
   });
 

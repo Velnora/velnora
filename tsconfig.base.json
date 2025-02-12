@@ -55,10 +55,12 @@
 
       // Utils
       "@fluxora/utils": ["libs/utils/src/main.ts"],
-      "@fluxora/utils/node": ["libs/utils/src/node.ts"],
+      "@fluxora/utils/node": ["libs/utils/src/node/main.ts"],
+      "@fluxora/utils/worker": ["libs/utils/src/worker/main.ts"],
 
       // Worker
       "@fluxora/worker": ["libs/worker/src/main.ts"],
+      "@fluxora/worker/vite": ["libs/worker/src/vite/main.ts"],
 
       // Vite
       "@fluxora/vite": ["libs/vite/src/main.ts"],

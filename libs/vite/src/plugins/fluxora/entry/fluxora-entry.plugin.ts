@@ -1,6 +1,7 @@
 import { type Plugin, defineConfig } from "vite";
 
-import type { FluxoraApp } from "@fluxora/types/core";
+import { appManager } from "@fluxora/common";
+import type { App } from "@fluxora/types/core";
 import {
   CLIENT_ENTRY_FILE_EXTENSIONS,
   PACKAGE_ENTRIES,
@@ -13,14 +14,16 @@ import {
 
 import { findEntryFile } from "../../../utils/find-entry-file";
 
-export const fluxoraEntryPlugin = (config: FluxoraApp): Plugin => {
+export const fluxoraEntryPlugin = (app: App): Plugin => {
   return {
     name: "fluxora:core-plugins:entry-client",
 
     config() {
-      const appEntry = findEntryFile(config.app.root, "entry-client", CLIENT_ENTRY_FILE_EXTENSIONS);
-      const templatePath = config.template
-        ? findEntryFile(config.template.root, "main", CLIENT_ENTRY_FILE_EXTENSIONS)
+      const appEntry = findEntryFile(app.root, "entry-client", CLIENT_ENTRY_FILE_EXTENSIONS);
+      const template = appManager.getTemplateApp();
+
+      const templatePath = template
+        ? findEntryFile(template.root, "main", CLIENT_ENTRY_FILE_EXTENSIONS)
         : PACKAGE_ORIGINALS.FLUXORA_CLIENT_NOOP_REACT;
 
       return defineConfig({
@@ -46,14 +49,12 @@ export const fluxoraEntryPlugin = (config: FluxoraApp): Plugin => {
 
       // Server Handling
       if (id === VIRTUAL_ALIAS_ENTRIES.APP_MODULE) {
-        const root = config.app.root;
-        return findEntryFile(root, "entry-server", SERVER_ENTRY_FILE_EXTENSIONS);
+        return findEntryFile(app.root, "entry-server", SERVER_ENTRY_FILE_EXTENSIONS);
       }
 
       if (importer === VIRTUAL_ALIAS_ENTRIES.APP_MODULE) {
-        const root = config.app.root;
-        const file = findEntryFile(root, "entry-server", SERVER_ENTRY_FILE_EXTENSIONS);
-        return this.resolve(id, file, { skipSelf: true });
+        const importer = findEntryFile(app.root, "entry-server", SERVER_ENTRY_FILE_EXTENSIONS);
+        return this.resolve(id, importer, { skipSelf: true });
       }
 
       if (id === VIRTUAL_ALIAS_ENTRIES.SSR_ENTRY) {

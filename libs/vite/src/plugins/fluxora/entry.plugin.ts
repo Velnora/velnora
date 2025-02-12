@@ -2,10 +2,9 @@ import { PassThrough } from "node:stream";
 
 import { type ErrorPayload, type Plugin, isRunnableDevEnvironment } from "vite";
 
-import type { FluxoraApp } from "@fluxora/types/core";
 import { DEFAULT_HTML_TEMPLATE, ErrorMessages, PACKAGE_ENTRIES, VITE_ENVIRONMENTS } from "@fluxora/utils";
 
-export const entryPlugin = (_config: FluxoraApp): Plugin => {
+export const entryPlugin = (): Plugin => {
   return {
     name: "fluxora:core-plugins:entry-app-html",
     enforce: "pre",

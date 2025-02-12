@@ -12,6 +12,11 @@
       "types": "./build/fluxora.node.d.ts",
       "import": "./build/fluxora.node.js",
       "require": "./build/fluxora.node.js"
+    },
+    "./worker": {
+      "types": "./build/fluxora.worker.d.ts",
+      "import": "./build/fluxora.worker.js",
+      "require": "./build/fluxora.worker.js"
     }
   },
   "main": "build/fluxora.utils.js",
