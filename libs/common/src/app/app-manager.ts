@@ -158,7 +158,7 @@ export class AppManager {
               remoteEntry: {
                 entryPath: resolvedConfig.configs?.[appName]?.remoteEntryPath || DEFAULT_REMOTE_ENTRY_PATH
               },
-              appConfig: {
+              config: {
                 name: basename(appLib),
                 componentName: capitalize(basename(appLib)),
                 exposedModules: {}

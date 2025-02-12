@@ -16,7 +16,7 @@ export const contentGenerator = async (): Promise<void> => {
 contentGenerator.app = async (app: Package) => {
   const appFs = projectFs.cache.app(app.name);
 
-  await appFs.appConfig.writeJson(appManager.getApp(app.name).appConfig!);
+  await appFs.appConfig.writeJson(appManager.getApp(app.name).config!);
   await appFs.packageJson.writeJson<PackageJson>({ type: "module" });
 };
 

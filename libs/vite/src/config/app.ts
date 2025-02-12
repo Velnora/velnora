@@ -2,7 +2,7 @@ import { resolve } from "node:path";
 
 import type { InlineConfig, PluginOption } from "vite";
 
-import type { App, FluxoraApp } from "@fluxora/types/core";
+import type { App } from "@fluxora/types/core";
 import { FEDERATION_SHARED_PACKAGES, PACKAGE_ENTRIES, VIRTUAL_ALIAS_ENTRIES, VITE_ENVIRONMENTS } from "@fluxora/utils";
 import { projectFs } from "@fluxora/utils/node";
 

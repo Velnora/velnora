@@ -3,7 +3,7 @@ import { type InlineConfig, type PluginOption, mergeConfig } from "vite";
 import { AppType, type Package } from "@fluxora/types/core";
 import react from "@vitejs/plugin-react-swc";
 
-import { fluxoraPlugin } from "../plugins/fluxora/fluxora.plugin";
+import { dynamicFederationPlugin, fluxoraPlugin } from "../plugins";
 import { isModuleInstalled } from "../utils/is-module-installed";
 
 export const getCommonConfiguration = async (
@@ -12,8 +12,8 @@ export const getCommonConfiguration = async (
 ): Promise<InlineConfig> => {
   const plugins: PluginOption[] = [
     react({ tsDecorators: true }),
-    app.type === AppType.APPLICATION && fluxoraPlugin(app)
-    // await dynamicFederationPlugin(config)
+    app.type === AppType.APPLICATION && fluxoraPlugin(app),
+    app.type === AppType.APPLICATION && dynamicFederationPlugin(app)
   ];
 
   if (isModuleInstalled("vite-plugin-inspect")) {

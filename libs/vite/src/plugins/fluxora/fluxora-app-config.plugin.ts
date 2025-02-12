@@ -1,21 +1,27 @@
-import { type Plugin, defineConfig } from "vite";
+import type { Plugin } from "vite";
 
-import type { Package } from "@fluxora/types/core";
+import { type App, AppType, type Package } from "@fluxora/types/core";
 import { VIRTUAL_ALIAS_ENTRIES } from "@fluxora/utils";
-import { projectFs } from "@fluxora/utils/node";
 
 export const fluxoraAppConfigPlugin = async (app: Package): Promise<Plugin> => {
   return {
     name: "fluxora:core-plugins:app-config",
+    enforce: "pre",
 
-    config() {
-      return defineConfig({
-        resolve: {
-          alias: {
-            [VIRTUAL_ALIAS_ENTRIES.APP_CONFIG]: projectFs.cache.app(app.name).appConfig.$raw
-          }
-        }
-      });
+    apply() {
+      return app.type === AppType.APPLICATION;
+    },
+
+    resolveId(id) {
+      if (id === VIRTUAL_ALIAS_ENTRIES.APP_CONFIG) {
+        return VIRTUAL_ALIAS_ENTRIES.APP_CONFIG;
+      }
+    },
+
+    load(id) {
+      if (id === VIRTUAL_ALIAS_ENTRIES.APP_CONFIG) {
+        return JSON.stringify((app as App).config);
+      }
     }
   };
 };

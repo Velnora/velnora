@@ -1,9 +1,12 @@
 import { type Plugin, defineConfig } from "vite";
 
-import type { FluxoraApp } from "@fluxora/types/core";
+import { appManager } from "@fluxora/common";
+import type { App } from "@fluxora/types/core";
 import { FEDERATION_MICRO_APP_IMPORT_RE } from "@fluxora/utils";
 
-export const localEntryPlugin = (config: FluxoraApp): Plugin => {
+export const localEntryPlugin = (app: App): Plugin => {
+  const allApps = appManager.getApps();
+
   return {
     name: "fluxora:core-plugins:federation:entry",
 
@@ -12,7 +15,7 @@ export const localEntryPlugin = (config: FluxoraApp): Plugin => {
     },
 
     async config() {
-      const external = config.apps.map(app => new RegExp(`^${app.name}(/.*)?$`));
+      const external = allApps.map(app => new RegExp(`^${app.name}(/.*)?$`));
       return defineConfig({ build: { rollupOptions: { external } } });
     },
 
@@ -29,14 +32,9 @@ export const localEntryPlugin = (config: FluxoraApp): Plugin => {
     },
 
     async transformIndexHtml() {
-      const apps = config.apps
-        .filter(app => app.name !== config.app.name)
-        .map(async app => {
-          // const appConfig = await loadAppConfig(app);
-          // return { name: app.name, url: app.host.host, exposedModules: Object.keys(appConfig.exposedModules) };
-        });
-
-      const remotes = await Array.fromAsync(apps);
+      const remotes = allApps
+        .filter(a => a.name !== app.name)
+        .map(app => ({ name: app.name, url: app.host, exposedModules: Object.keys(app.config.exposedModules) }));
 
       return [
         {

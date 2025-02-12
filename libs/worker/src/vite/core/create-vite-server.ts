@@ -17,7 +17,7 @@ export const createViteServer = async (pkg: Package) => {
   logger.debug(`Creating Vite server for ${pkg.name}`);
   const app = appManager.getAppOrThrow(pkg.name);
 
-  await initialLoadExposedModules(app, app.appConfig.exposedModules);
+  await initialLoadExposedModules(app, app.config.exposedModules);
   __VITE_DEV_SERVER_INSTANCE__ = await createServer(app);
   __APP_PKG__ = app;
   await contentGenerator.app(app);

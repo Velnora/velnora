@@ -1,5 +1,5 @@
-// ToDo: Fix typescript type issue. Header is not defined for IDE.
-// import { Header } from "order/header";
+// ToDo: Bundler side done. Need to implement and fix typescript error.
+import { Header } from "order/header";
 import type { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -11,11 +11,13 @@ export const Profile: FC = () => {
 
   return (
     <div>
-      {/*<Header />*/}
+      <Header />
       <h1>Profile</h1>
 
       <form onSubmit={form.handleSubmit(console.log)}>
         <input {...form.register("type")} />
+
+        <button type="submit">xD</button>
       </form>
     </div>
   );

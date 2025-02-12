@@ -1,25 +1,22 @@
 import type { Plugin } from "vite";
 
-import type { AppConfig } from "@fluxora/types";
-import type { FluxoraApp } from "@fluxora/types/core";
-import { initialLoadExposedModules, projectFs } from "@fluxora/utils";
+import type { App } from "@fluxora/types/core";
+import { initialLoadExposedModules } from "@fluxora/utils/node";
 
-export const moduleExposerPlugin = (config: FluxoraApp): Plugin => {
+export const moduleExposerPlugin = (app: App): Plugin => {
   return {
     name: "fluxora:core-plugins:federation:module-exposer",
 
     resolveId(id) {
-      if (id === config.remoteEntry.entryPath) {
+      if (id === app.remoteEntry.entryPath) {
         return id;
       }
     },
 
     async load(id) {
-      if (id === config.remoteEntry.entryPath) {
-        await initialLoadExposedModules(config.app.name, config.exposedModules);
-        const fs = projectFs(config.fluxoraRoot).cache.app(config.app.name);
-        const appConfig = await fs.appConfig.readJson<AppConfig>();
-        const files = Object.values(appConfig.exposedModules);
+      if (id === app.remoteEntry.entryPath) {
+        await initialLoadExposedModules(app, app.config.exposedModules);
+        const files = Object.values(app.config.exposedModules);
         return files.map(file => `export * from "${file}";`).join("\n");
       }
     }

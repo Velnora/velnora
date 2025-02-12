@@ -5,7 +5,7 @@ import type { Package } from "./package";
 import type { RemoteEntry } from "./remote-entry";
 
 export interface App extends Package {
-  appConfig: AppConfig;
+  config: AppConfig;
   type: AppType.APPLICATION;
   host: string;
   devWsPort?: number | null;

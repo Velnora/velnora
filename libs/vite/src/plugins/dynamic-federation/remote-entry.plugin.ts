@@ -1,11 +1,13 @@
 import type { HtmlTagDescriptor, Plugin } from "vite";
 
-import type { FluxoraApp } from "@fluxora/types/core";
+import { appManager } from "@fluxora/common";
+import type { App } from "@fluxora/types/core";
 import { VITE_ENVIRONMENTS } from "@fluxora/utils";
 
-export const remoteEntryPlugin = async (config: FluxoraApp): Promise<Plugin> => {
+export const remoteEntryPlugin = (app: App): Plugin => {
   const externalPkgs = new Map<string, string>();
-  const hostApp = config.apps.find(app => app.isHost)!;
+  const allApps = appManager.getApps();
+  const hostApp = allApps.find(app => app.isHost)!;
 
   return {
     name: "fluxora:core-plugins:federation:dynamic-federation:remote-entry",
@@ -24,7 +26,7 @@ export const remoteEntryPlugin = async (config: FluxoraApp): Promise<Plugin> => 
       if (id.match(/^[.\/]/)) return;
       if (id.match(/^@fluxora\/(server|client)\/?.*/)) return;
 
-      if (config.isHostApp()) {
+      if (app.isHost) {
         const refId = this.emitFile({ type: "chunk", fileName: `shared/${id}.js`, id });
         const filename = this.getFileName(refId);
         externalPkgs.set(id, filename);
@@ -36,7 +38,7 @@ export const remoteEntryPlugin = async (config: FluxoraApp): Promise<Plugin> => 
     transformIndexHtml() {
       const descriptors: HtmlTagDescriptor[] = [];
 
-      if (!config.isHostApp()) {
+      if (!app.isHost) {
         descriptors.push({
           tag: "script",
           attrs: { type: "importmap", id: "__fluxora_remotes_importmap" },
@@ -44,7 +46,7 @@ export const remoteEntryPlugin = async (config: FluxoraApp): Promise<Plugin> => 
             imports: Array.from(externalPkgs).reduce(
               (acc, [pkg, file]) => ({
                 ...acc,
-                [pkg]: new URL(file, hostApp.host.host).href
+                [pkg]: new URL(file, hostApp.host).href
               }),
               {} as Record<string, string>
             )
