@@ -20,7 +20,7 @@ export const serve = async () => {
 
   let module: { main: () => Promise<INestApplication> };
   if (isRunnableDevEnvironment(serverEnv)) {
-    module = await serverEnv.runner.import(PACKAGE_ENTRIES.FLUXORA_SERVER_ENTRY);
+    module = await serverEnv.runner.import(PACKAGE_ENTRIES.SERVER_ENTRY);
   } else {
     throw new Error(ErrorMessages.SERVER_ENV_NOT_RUNNABLE);
   }

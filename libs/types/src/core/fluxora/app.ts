@@ -11,4 +11,5 @@ export interface App extends Package {
   devWsPort?: number | null;
   isHost: boolean;
   remoteEntry: RemoteEntry;
+  outDirRoot: string;
 }

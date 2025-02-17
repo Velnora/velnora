@@ -27,13 +27,18 @@
       "types": "./build/fluxora.worker.types.d.ts",
       "import": "./build/fluxora.worker.types.js",
       "require": "./build/fluxora.worker.types.js"
+    },
+    "./federation": {
+      "types": "./build/fluxora.federation.types.d.ts",
+      "import": "./build/fluxora.federation.types.js",
+      "require": "./build/fluxora.federation.types.js"
     }
   },
   "main": "build/fluxora.types.js",
   "types": "build/fluxora.types.d.ts",
   "devDependencies": {
     "@types/yargs": "^17.0.33",
-    "type-fest": "^4.33.0",
+    "type-fest": "^4.34.1",
     "vite": "^6.1.0",
     "yargs": "^17.7.2"
   }

@@ -13,6 +13,6 @@
   },
   "devDependencies": {
     "@fluxora/types": "workspace:^",
-    "@types/node": "^22.13.1"
+    "@types/node": "^22.13.2"
   }
 }

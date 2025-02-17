@@ -3,7 +3,10 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "paths": {
+      "@base-example/ui-kit": ["libs/ui-kit/src/main.tsx"]
+    }
   }
-  //  "references": [{ "path": "apps/order/tsconfig.json" }, { "path": "apps/profile/tsconfig.json" }]
 }

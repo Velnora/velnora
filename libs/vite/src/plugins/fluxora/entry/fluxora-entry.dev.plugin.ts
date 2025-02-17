@@ -1,5 +1,6 @@
 import type { Plugin } from "vite";
 
+import { appManager } from "@fluxora/common";
 import {
   PACKAGE_ENTRIES,
   PACKAGE_ENTRY_NAMES,
@@ -10,6 +11,9 @@ import {
 import { getEntryInTsconfig } from "../../../utils/get-entry-in-tsconfig";
 
 export const fluxoraEntryDevPlugin = (): Plugin => {
+  const libs = appManager.getLibs();
+  const libNamePathMapping = new Set(libs.map(lib => lib.packageJson.name));
+
   return {
     name: "fluxora:core-plugins:entry-client:dev",
     enforce: "pre",
@@ -19,7 +23,12 @@ export const fluxoraEntryDevPlugin = (): Plugin => {
     },
 
     resolveId(id) {
-      if (id === PACKAGE_ENTRIES.FLUXORA_SERVER_ENTRY) {
+      let entry: string | null;
+      if (libNamePathMapping.has(id) && (entry = getEntryInTsconfig(id))) {
+        return this.resolve(entry);
+      }
+
+      if (id === PACKAGE_ENTRIES.SERVER_ENTRY) {
         return id;
       }
 
@@ -29,17 +38,12 @@ export const fluxoraEntryDevPlugin = (): Plugin => {
     },
 
     load(id) {
-      if (id === PACKAGE_ENTRIES.FLUXORA_SERVER_ENTRY) {
-        const entryInTsConfig = getEntryInTsconfig(PACKAGE_ORIGINALS.FLUXORA_SERVER_DEV_ENTRY);
-        if (!entryInTsConfig) return;
-        return `export * from "${entryInTsConfig}";`;
+      if (id === PACKAGE_ENTRIES.SERVER_ENTRY) {
+        return `export * from "${PACKAGE_ORIGINALS.SERVER_ENTRY_DEV}";`;
       }
 
       if (PACKAGE_ENTRY_NAMES.has(id)) {
-        const entry = PACKAGE_ENTRY_ORIGINAL_MAPPING[id as keyof typeof PACKAGE_ENTRY_ORIGINAL_MAPPING];
-        const entryInTsconfig = getEntryInTsconfig(entry);
-        if (!entryInTsconfig) return;
-        return `export * from "${entryInTsconfig}";`;
+        return `export * from "${PACKAGE_ENTRY_ORIGINAL_MAPPING[id as keyof typeof PACKAGE_ENTRY_ORIGINAL_MAPPING]}";`;
       }
     }
   };

@@ -1,6 +1,6 @@
 import { workerManager } from "@fluxora/utils/worker";
 import { type FluxoraViteWorker } from "@fluxora/worker/vite";
 
-import { viteWorkerPath } from "./vite-worker-path";
+import { viteWorkerScript } from "./vite-worker-script";
 
-export const workerPool = workerManager.pool<FluxoraViteWorker>(viteWorkerPath);
+export const workerPool = workerManager.pool<FluxoraViteWorker>(viteWorkerScript);

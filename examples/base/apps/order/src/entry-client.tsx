@@ -1,5 +1,7 @@
 import { type FC, use } from "react";
 
+import { Button } from "@base-example/ui-kit";
+
 import { Footer } from "./components/footer";
 import { Header } from "./components/header";
 import { Header2 } from "./components/header2";
@@ -19,6 +21,8 @@ export const Order: FC = () => {
       <Header2 />
       <h1>Orders</h1>
       <Footer />
+
+      <Button>1234</Button>
     </div>
   );
 };

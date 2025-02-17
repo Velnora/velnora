@@ -1,3 +1,4 @@
 {
-  "name": "@base-example/profile"
+  "name": "@base-example/profile",
+  "type": "module"
 }

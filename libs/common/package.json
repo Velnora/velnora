@@ -19,8 +19,8 @@
   "devDependencies": {
     "@fluxora/types": "workspace:^",
     "@types/lodash.merge": "^4.6.9",
-    "rollup": "^4.34.4",
-    "type-fest": "^4.33.0",
+    "rollup": "^4.34.6",
+    "type-fest": "^4.34.1",
     "vite": "^6.1.0"
   }
 }

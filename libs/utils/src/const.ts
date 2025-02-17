@@ -15,24 +15,24 @@ export const INTERNAL_PACKAGES = {
 } as const;
 
 export const PACKAGE_ENTRIES = {
-  FLUXORA_CLIENT: "/@fluxora/client",
-  FLUXORA_CLIENT_ENTRY_CLIENT_REACT: "/@fluxora/client/react",
-  FLUXORA_CLIENT_ENTRY_SERVER_REACT: "/@fluxora/client-server/react",
-  FLUXORA_CLIENT_ENTRY_NOOP_REACT: "/@fluxora/client/noop",
-  FLUXORA_SERVER: "/@fluxora/server",
-  FLUXORA_SERVER_ENTRY: "/@fluxora/server/entry-server"
+  CLIENT: "/@fluxora/client",
+  REACT_CLIENT_ENTRY: "/@fluxora/client/react",
+  REACT_CLIENT_SERVER_ENTRY: "/@fluxora/client-server/react",
+  REACT_CLIENT_NOOP: "/@fluxora/client/noop",
+  SERVER: "/@fluxora/server",
+  SERVER_ENTRY: "/@fluxora/server/entry-server"
 } as const;
 
 export const PACKAGE_ENTRY_NAMES = new Set<string>(Object.values(PACKAGE_ENTRIES));
 
 export const PACKAGE_ORIGINALS = {
-  FLUXORA_CLIENT: "@fluxora/client",
-  FLUXORA_CLIENT_ENTRY_CLIENT_REACT: "@fluxora/client/react/entry-client",
-  FLUXORA_CLIENT_ENTRY_SERVER_REACT: "@fluxora/client/react/entry-server",
-  FLUXORA_CLIENT_NOOP_REACT: "@fluxora/client/react/noop",
-  FLUXORA_SERVER: "@fluxora/server",
-  FLUXORA_SERVER_DEV_ENTRY: "@fluxora/server/entry-dev",
-  FLUXORA_SERVER_PROD_ENTRY: "@fluxora/server/entry-prod"
+  CLIENT: "@fluxora/client",
+  REACT_CLIENT_ENTRY: "@fluxora/client/react/entry-client",
+  REACT_CLIENT_SERVER_ENTRY: "@fluxora/client/react/entry-server",
+  REACT_CLIENT_NOOP: "@fluxora/client/react/noop",
+  SERVER: "@fluxora/server",
+  SERVER_ENTRY_DEV: "@fluxora/server/entry-dev",
+  SERVER_ENTRY_PROD: "@fluxora/server/entry-prod"
 } as const;
 
 export const VIRTUAL_ALIAS_ENTRIES = {
@@ -40,16 +40,17 @@ export const VIRTUAL_ALIAS_ENTRIES = {
   TEMPLATE: "/@fluxora/virtual/entry/react/template",
   SSR_ENTRY: "/@fluxora/virtual/entry/react/ssr",
   APP_MODULE: "/@fluxora/virtual/entry/app.module",
-  APP_CONFIG: "/@fluxora/virtual/entry/app-config.json"
+  APP_CONFIG: "/@fluxora/virtual/entry/app-config.json",
+  FEDERATION_EXTERNALS: "/@fluxora/virtual/entry/federation/externals"
 } as const;
 
 export const PACKAGE_ENTRY_ORIGINAL_MAPPING = {
-  [PACKAGE_ENTRIES.FLUXORA_CLIENT]: PACKAGE_ORIGINALS.FLUXORA_CLIENT,
-  [PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_CLIENT_REACT]: PACKAGE_ORIGINALS.FLUXORA_CLIENT_ENTRY_CLIENT_REACT,
-  [PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_SERVER_REACT]: PACKAGE_ORIGINALS.FLUXORA_CLIENT_ENTRY_SERVER_REACT,
-  [PACKAGE_ENTRIES.FLUXORA_CLIENT_ENTRY_NOOP_REACT]: PACKAGE_ORIGINALS.FLUXORA_CLIENT_NOOP_REACT,
-  [PACKAGE_ENTRIES.FLUXORA_SERVER]: PACKAGE_ORIGINALS.FLUXORA_SERVER,
-  [PACKAGE_ENTRIES.FLUXORA_SERVER_ENTRY]: PACKAGE_ORIGINALS.FLUXORA_SERVER_PROD_ENTRY
+  [PACKAGE_ENTRIES.CLIENT]: PACKAGE_ORIGINALS.CLIENT,
+  [PACKAGE_ENTRIES.REACT_CLIENT_ENTRY]: PACKAGE_ORIGINALS.REACT_CLIENT_ENTRY,
+  [PACKAGE_ENTRIES.REACT_CLIENT_SERVER_ENTRY]: PACKAGE_ORIGINALS.REACT_CLIENT_SERVER_ENTRY,
+  [PACKAGE_ENTRIES.REACT_CLIENT_NOOP]: PACKAGE_ORIGINALS.REACT_CLIENT_NOOP,
+  [PACKAGE_ENTRIES.SERVER]: PACKAGE_ORIGINALS.SERVER,
+  [PACKAGE_ENTRIES.SERVER_ENTRY]: PACKAGE_ORIGINALS.SERVER_ENTRY_PROD
 } satisfies Record<ValueOf<typeof PACKAGE_ENTRIES>, string>;
 
 export const VITE_ENVIRONMENTS = {
@@ -63,7 +64,7 @@ export const VITE_MESSAGES_RE = new RegExp(messageVariants.join("|"));
 export const FEDERATION_MICRO_APP_IMPORT_RE = /^\w+(?:\/\w+)?$/;
 export const CONTROL_CHARS_RE = /[\u0000-\u001F\u007F-\u009F]\[\d+\w/g;
 
-export const DEFAULT_HTML_TEMPLATE = `<!DOCTYPE html><html><head></head><body></body></html>`;
+export const DEFAULT_HTML_TEMPLATE = `<!DOCTYPE html><html lang="en"><head><title>Grandma's Heavy Metal Festival Journal</title></head><body></body></html>`;
 
 export const FEDERATION_SHARED_PACKAGES = "__fluxora__federation__shared__";
 

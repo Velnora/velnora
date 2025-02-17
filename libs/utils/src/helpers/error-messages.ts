@@ -17,6 +17,8 @@ export const ErrorMessages = {
 
   SERVER_ENV_NOT_RUNNABLE: "Server environment is not runnable",
 
+  TEMPLATE_BUILD_OUTPUT_NOT_FOUND: "Template build output not found",
+
   VITE_FEDERATION_MODULE_NOT_FOUND: (exposedModule: string, appName: string) =>
     `Module "${exposedModule}" not exposed from app "${appName}"`
 } as const;

@@ -8,5 +8,5 @@ import { fluxoraEntryPlugin } from "./entry/fluxora-entry.plugin";
 import { fluxoraAppConfigPlugin } from "./fluxora-app-config.plugin";
 
 export const fluxoraPlugin = (app: App): PluginOption => {
-  return [entryPlugin(), fluxoraAppConfigPlugin(app), [fluxoraEntryDevPlugin(), fluxoraEntryPlugin(app)]];
+  return [entryPlugin(app), fluxoraAppConfigPlugin(app), [fluxoraEntryDevPlugin(), fluxoraEntryPlugin(app)]];
 };

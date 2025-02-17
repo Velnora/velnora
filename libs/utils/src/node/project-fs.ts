@@ -9,6 +9,7 @@ export const projectFs = pathConstructor(process.cwd(), efn => ({
   cache: efn.f(cacheName, efn => ({
     app(name: string) {
       return efn.e("apps", fixPkgName(name), efn => ({
+        output: efn("build/client.js"),
         appConfig: efn.f("app-config.json"),
         vite: efn(".vite"),
         types: efn.e("types", efn => ({
@@ -18,6 +19,15 @@ export const projectFs = pathConstructor(process.cwd(), efn => ({
         tsconfigJson: efn.f("tsconfig.json")
       }));
     },
+    lib(name: string) {
+      return efn.e("libs", fixPkgName(name), efn => ({
+        packageJson: efn.f("package.json")
+      }));
+    },
+    template: efn.f("template", efn => ({
+      packageJson: efn.f("package.json"),
+      tsconfigJson: efn.f("tsconfig.json")
+    })),
     gitignore: efn.f(".gitignore"),
     packageJson: efn.f("package.json"),
     tsconfigJson: efn.f("tsconfig.json")
@@ -33,7 +43,7 @@ export const projectFs = pathConstructor(process.cwd(), efn => ({
     }));
   },
   tsconfigJson: efn.f("tsconfig.json"),
-  template: efn.f("template", () => ({
+  template: efn.f("template", efn => ({
     packageJson: efn.f("package.json"),
     tsconfigJson: efn.f("tsconfig.json")
   })),

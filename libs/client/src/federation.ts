@@ -1,1 +1,1 @@
-export * from "./federation/index";
+export * from "./federation/main";

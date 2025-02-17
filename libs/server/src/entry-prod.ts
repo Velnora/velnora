@@ -1,7 +1,7 @@
 import e from "express";
 
-import { renderPipeableStream } from "./main";
 import { createApp } from "./utils/create-app";
+import { renderPipeableStream } from "/@fluxora/client-server/react";
 
 export const main = async () => {
   const app = await createApp();

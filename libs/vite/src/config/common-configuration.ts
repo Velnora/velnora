@@ -3,8 +3,12 @@ import { type InlineConfig, type PluginOption, mergeConfig } from "vite";
 import { AppType, type Package } from "@fluxora/types/core";
 import react from "@vitejs/plugin-react-swc";
 
-import { dynamicFederationPlugin, fluxoraPlugin } from "../plugins";
+import { dynamicFederationPlugin, fluxoraPlugin, internalLibDevelopmentPlugin } from "../plugins";
 import { isModuleInstalled } from "../utils/is-module-installed";
+
+declare global {
+  var __IS_LIBRARY_DEVELOPMENT__: boolean;
+}
 
 export const getCommonConfiguration = async (
   app: Package,
@@ -12,6 +16,10 @@ export const getCommonConfiguration = async (
 ): Promise<InlineConfig> => {
   const plugins: PluginOption[] = [
     react({ tsDecorators: true }),
+
+    // ToDo: Check on ci builds
+    __IS_LIBRARY_DEVELOPMENT__ && internalLibDevelopmentPlugin(),
+
     app.type === AppType.APPLICATION && fluxoraPlugin(app),
     app.type === AppType.APPLICATION && dynamicFederationPlugin(app)
   ];
@@ -29,10 +37,11 @@ export const getCommonConfiguration = async (
       build: {
         minify: "terser",
         terserOptions: { compress: { passes: 2, drop_console: true }, format: { comments: false } },
-        emptyOutDir: true,
+        emptyOutDir: false,
         sourcemap: true,
         ssrManifest: "ssr-manifest.json",
         modulePreload: false,
+        write: true,
         rollupOptions: {
           external: [/^@fluxora\/(?!server|client)\/?.*/],
           onwarn(warning, warn) {

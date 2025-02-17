@@ -22,6 +22,11 @@
       "types": "./build/fluxora.noop.react.d.ts",
       "import": "./build/fluxora.noop.react.js",
       "require": "./build/fluxora.noop.react.js"
+    },
+    "./federation": {
+      "types": "./build/fluxora.federation.d.ts",
+      "import": "./build/fluxora.federation.js",
+      "require": "./build/fluxora.federation.js"
     }
   },
   "main": "build/fluxora.client.js",

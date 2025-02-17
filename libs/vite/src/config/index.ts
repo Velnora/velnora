@@ -1,3 +1,4 @@
-export * from "./app";
-export * from "./template";
-export * from "./configuration";
+export * from "./base/app";
+export * from "./base/lib";
+export * from "./base/template";
+export * from "./helper/configuration-resolving";

@@ -2,6 +2,7 @@ import { type Plugin, defineConfig } from "vite";
 
 import { appManager } from "@fluxora/common";
 import type { App } from "@fluxora/types/core";
+import type { RemoteApp } from "@fluxora/types/federation";
 import { FEDERATION_MICRO_APP_IMPORT_RE } from "@fluxora/utils";
 
 export const localEntryPlugin = (app: App): Plugin => {
@@ -34,7 +35,13 @@ export const localEntryPlugin = (app: App): Plugin => {
     async transformIndexHtml() {
       const remotes = allApps
         .filter(a => a.name !== app.name)
-        .map(app => ({ name: app.name, url: app.host, exposedModules: Object.keys(app.config.exposedModules) }));
+        .map<RemoteApp>(app => ({
+          name: app.name,
+          url: app.host,
+          modules: Object.keys(app.config.exposedModules),
+          format: "esm",
+          from: "vite"
+        }));
 
       return [
         {

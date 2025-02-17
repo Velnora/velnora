@@ -1,12 +1,12 @@
 import type { PackageJson } from "type-fest";
 
-import { appManager } from "@fluxora/common";
 import type { Package } from "@fluxora/types/core";
 import { projectFs } from "@fluxora/utils/node";
 
 export const contentGenerator = async (): Promise<void> => {
   await projectFs.cache.gitignore.write(["*", ".*"].join("\n") + "\n");
   await projectFs.cache.packageJson.writeJson<PackageJson>({ type: "module" });
+  await projectFs.cache.template.packageJson.writeJson<PackageJson>({ type: "module" });
   await projectFs.cache.tsconfigJson.writeJson({
     extends: projectFs.cache.tsconfigJson.relative(projectFs.tsconfigJson.$raw),
     compilerOptions: { allowImportingTsExtensions: true }
@@ -16,7 +16,14 @@ export const contentGenerator = async (): Promise<void> => {
 contentGenerator.app = async (app: Package) => {
   const appFs = projectFs.cache.app(app.name);
 
-  await appFs.appConfig.writeJson(appManager.getApp(app.name).config!);
+  // await appFs.appConfig.writeJson(appManager.getApp(app.name).config!);
+  await appFs.packageJson.writeJson<PackageJson>({ type: "module" });
+};
+
+contentGenerator.lib = async (lib: Package) => {
+  const appFs = projectFs.cache.lib(lib.name);
+
+  // await appFs.appConfig.writeJson(appManager.getApp(app.name).config!);
   await appFs.packageJson.writeJson<PackageJson>({ type: "module" });
 };
 

@@ -1,3 +1,7 @@
 {
-  "name": "@base-example/order"
+  "name": "@base-example/order",
+  "type": "module",
+  "dependencies": {
+    "@base-example/ui-kit": "workspace:^"
+  }
 }

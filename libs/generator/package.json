@@ -13,7 +13,7 @@
   "types": "build/fluxora.generator.d.ts",
   "devDependencies": {
     "@fluxora/types": "workspace:^",
-    "type-fest": "^4.33.0"
+    "type-fest": "^4.34.1"
   },
   "dependencies": {
     "@fluxora/common": "workspace:^",

@@ -1,11 +1,9 @@
-import { type FC, StrictMode } from "react";
+import { type FC, type PropsWithChildren, StrictMode } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-import { App } from "../../utils/app-entrypoint";
-import { App as TemplateApp } from "../../utils/template-entrypoint";
 import { FallbackRenderComponent } from "../components/fallback-render-component";
 
-export const EntryApp: FC = () => {
+export const EntryApp: FC<PropsWithChildren> = ({ children }) => {
   return (
     <StrictMode>
       <ErrorBoundary
@@ -14,9 +12,7 @@ export const EntryApp: FC = () => {
           console.error("ErrorBoundary caught an error:", error, info);
         }}
       >
-        <TemplateApp>
-          <App />
-        </TemplateApp>
+        {children}
       </ErrorBoundary>
     </StrictMode>
   );

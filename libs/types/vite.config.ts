@@ -7,7 +7,8 @@ export default defineFluxoraConfig("types", {
         "fluxora.cli.types": "./src/cli/main.ts",
         "fluxora.core.types": "./src/core/main.ts",
         "fluxora.utils.types": "./src/utils/main.ts",
-        "fluxora.worker.types": "./src/worker/main.ts"
+        "fluxora.worker.types": "./src/worker/main.ts",
+        "fluxora.federation.types": "./src/federation/main.ts"
       }
     },
     rollupOptions: {

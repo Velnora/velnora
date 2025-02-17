@@ -7,8 +7,6 @@ export * from "./node/constructor/string-constructor";
 export * from "./utils/capitalize";
 export * from "./utils/async-task";
 export * from "./utils/deep-tracker";
-export * from "./utils/x-map";
-export * from "./utils/x-set";
 
 export * from "./utils/make-throwable";
 export * from "./utils/resolve-shared-pkg";

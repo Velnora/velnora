@@ -1,14 +1,33 @@
-import { createBuilder } from "vite";
+import { appManager } from "@fluxora/common";
+import { contentGenerator } from "@fluxora/generator";
+import { build as viteBuild } from "@fluxora/vite";
 
-// import { getFluxoraAppConfig, getFluxoraConfig } from "@fluxora/utils";
-// import { getAppConfiguration } from "@fluxora/common";
+import { logger } from "../utils/logger";
 
 export const build = async () => {
-  // const fluxoraConfig = await getFluxoraConfig();
-  // await fluxoraConfig.withApps(async app => {
-  //   const config = await getFluxoraAppConfig(app, fluxoraConfig);
-  //   const viteConfig = await getAppConfiguration(config);
-  //   const builder = await createBuilder(viteConfig);
-  //   await builder.buildApp();
-  // });
+  await contentGenerator();
+  await appManager.resolveUserConfig();
+  await appManager.resolvePackages(true);
+
+  const apps = appManager.getApps();
+  const libs = appManager.getLibs();
+  const template = appManager.getTemplateApp();
+
+  const contentGeneratorPromises = [
+    ...apps.map(app => contentGenerator.app(app)),
+    ...libs.map(lib => contentGenerator.lib(lib))
+  ];
+  await Promise.all(contentGeneratorPromises);
+
+  logger.info("Compiling apps, libs and template...");
+  const promises = [
+    ...apps.map(app => viteBuild(app, true)),
+    ...libs.map(lib => viteBuild(lib)),
+    await viteBuild(template)
+  ];
+
+  await Promise.all(promises);
+
+  // logger.info("Building apps...");
+  // await Promise.all(apps.map(app => viteBuild(app)));
 };

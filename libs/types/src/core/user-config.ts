@@ -57,7 +57,7 @@ export interface BuildSettings {
    * @type {string}
    * @default "build"
    */
-  root?: string;
+  outDir?: string;
 }
 
 export interface UserConfig {

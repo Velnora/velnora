@@ -6,10 +6,11 @@ import { isMainThread } from "node:worker_threads";
 import { glob } from "glob";
 import type { PackageJson } from "type-fest";
 
-import { AppType, type CreateServerOptions, type UserConfig } from "@fluxora/types/core";
+import { resolveConfigFile } from "@fluxora/common";
+import { AppType, type CreateServerOptions, type UserAppConfig, type UserConfig } from "@fluxora/types/core";
 import { WORKER_EVENTS } from "@fluxora/types/worker";
 import { AsyncTask, DEFAULT_REMOTE_ENTRY_PATH, DIRECTORY_NAMES, DeepTracker, capitalize } from "@fluxora/utils";
-import { projectFs, resolveConfigFile } from "@fluxora/utils/node";
+import { projectFs } from "@fluxora/utils/node";
 import { Worker, WorkerPool, WorkerProxy } from "@fluxora/utils/worker";
 
 import type { AppsMap } from "../types/apps-map";
@@ -17,6 +18,7 @@ import { logger } from "../utils/logger";
 
 declare global {
   var __RESOLVED_USER_CONFIG__: UserConfig;
+  var __RESOLVED_USER_APP_CONFIGS__: Record<string, UserAppConfig>;
 }
 
 enum AppManagerEventTypes {
@@ -123,9 +125,21 @@ export class AppManager {
     return (globalThis.__RESOLVED_USER_CONFIG__ = (await resolveConfigFile(configFilePath)) || {});
   }
 
-  async resolvePackages() {
-    if (!this.startPort) {
-      logger.error("Port not initialized. Please make sure to call init() before calling resolvingApps.");
+  async resolveUserAppConfig(appName: string) {
+    globalThis.__RESOLVED_USER_APP_CONFIGS__ ||= {};
+    if (globalThis.__RESOLVED_USER_APP_CONFIGS__[appName]) return globalThis.__RESOLVED_USER_APP_CONFIGS__[appName];
+
+    const configFileName = ["fluxora.config.js", "fluxora.config.ts"].find(configFileName =>
+      existsSync(resolve(process.cwd(), "apps", appName, configFileName))
+    );
+    if (!configFileName) return (globalThis.__RESOLVED_USER_APP_CONFIGS__[appName] = {});
+    const configFilePath = resolve(process.cwd(), "apps", appName, configFileName);
+    return (globalThis.__RESOLVED_USER_APP_CONFIGS__[appName] = (await resolveConfigFile(configFilePath)) || {});
+  }
+
+  async resolvePackages(isBuild = false) {
+    if (!this.startPort && !isBuild) {
+      logger.error("Port not initialized. Please make sure to call init() before calling resolvePackages.");
       process.exit(1);
     }
 
@@ -134,7 +148,6 @@ export class AppManager {
       logger.error("No package.json found. Please make sure to have a package.json in your workspace");
       process.exit(1);
     }
-    const resolvedConfig = await this.resolveUserConfig();
     const pkgJson = await pkgJsonFs.readJson<PackageJson>();
     const workspaces = Array.isArray(pkgJson.workspaces) ? pkgJson.workspaces : pkgJson.workspaces?.packages || [];
     const appLibMap = workspaces.flatMap(ws => glob.sync(ws, { cwd: pkgJsonFs.dirname() }));
@@ -146,43 +159,18 @@ export class AppManager {
 
     const { non } = appLibMap.reduce(
       (acc, appLib) => {
-        const appName = appLib.split("/").slice(1).join("/");
-
         if (DIRECTORY_NAMES.APP.some(appDir => appLib.startsWith(appDir))) {
           this.asyncTask.addTask(async () => {
-            this.appsMap[AppType.APPLICATION][appName] = {
-              type: AppType.APPLICATION,
-              root: resolve(appLib),
-              name: basename(appLib),
-              host: `http://localhost:${await this.getNextPort()}`,
-              remoteEntry: {
-                entryPath: resolvedConfig.configs?.[appName]?.remoteEntryPath || DEFAULT_REMOTE_ENTRY_PATH
-              },
-              config: {
-                name: basename(appLib),
-                componentName: capitalize(basename(appLib)),
-                exposedModules: {}
-              },
-              isHost: basename(appLib) === resolvedConfig.hostAppName
-            };
-
-            this.asyncTask.addTask(async () => {
-              const app = this.appsMap[AppType.APPLICATION][appName]!;
-              app.devWsPort = await this.getNextPort();
-            });
+            await this.addApp(appLib, isBuild);
           });
         } else if (DIRECTORY_NAMES.LIB.some(libDir => appLib.startsWith(libDir))) {
-          this.appsMap[AppType.LIBRARY][appName] = {
-            type: AppType.LIBRARY,
-            root: resolve(appLib),
-            name: basename(appLib)
-          };
+          this.asyncTask.addTask(async () => {
+            await this.addLib(appLib);
+          });
         } else if (DIRECTORY_NAMES.TEMPLATE.some(templateDir => appLib === templateDir)) {
-          this.appsMap[AppType.TEMPLATE][appLib] = {
-            type: AppType.TEMPLATE,
-            root: resolve(appLib),
-            name: basename(appLib)
-          };
+          this.asyncTask.addTask(async () => {
+            await this.addTemplate(appLib);
+          });
         } else {
           acc.non.push(appLib);
         }
@@ -241,6 +229,59 @@ export class AppManager {
 
   getLib(name: string) {
     return this.appsMap[AppType.LIBRARY][name];
+  }
+
+  private async addApp(appPath: string, isBuild: boolean) {
+    const appName = appPath.split("/").slice(1).join("/");
+    const resolvedConfig = await this.resolveUserConfig();
+    const pkgJson = await projectFs.app(appPath.split("/").slice(1).join("/")).packageJson.readJson<PackageJson>();
+
+    this.appsMap[AppType.APPLICATION][appName] = {
+      type: AppType.APPLICATION,
+      root: resolve(appPath),
+      name: basename(appPath),
+      host: isBuild ? `` : `http://localhost:${await this.getNextPort()}`,
+      remoteEntry: {
+        entryPath: resolvedConfig.configs?.[appPath]?.remoteEntryPath || DEFAULT_REMOTE_ENTRY_PATH
+      },
+      config: {
+        name: basename(appPath),
+        componentName: capitalize(basename(appPath)),
+        exposedModules: {}
+      },
+      packageJson: pkgJson,
+      outDirRoot: resolvedConfig.build?.outDir || "build",
+      isHost: basename(appPath) === resolvedConfig.hostAppName
+    };
+
+    this.asyncTask.addTask(async () => {
+      const app = this.appsMap[AppType.APPLICATION][appName]!;
+      app.devWsPort = isBuild ? -1 : await this.getNextPort();
+    });
+  }
+
+  private async addLib(libPath: string) {
+    const libName = libPath.split("/").slice(1).join("/");
+    const pkgJson = await projectFs.lib(libPath.split("/").slice(1).join("/")).packageJson.readJson<PackageJson>();
+
+    this.appsMap[AppType.LIBRARY][libName] = {
+      type: AppType.LIBRARY,
+      root: resolve(libPath),
+      name: basename(libPath),
+      packageJson: pkgJson
+    };
+  }
+
+  private async addTemplate(templatePath: string) {
+    const templateName = templatePath.split("/").slice(1).join("/");
+    const pkgJson = await projectFs.template.packageJson.readJson<PackageJson>();
+
+    this.appsMap[AppType.TEMPLATE][templateName] = {
+      type: AppType.TEMPLATE,
+      root: resolve(templatePath),
+      name: templatePath,
+      packageJson: pkgJson
+    };
   }
 
   private async getNextPort() {

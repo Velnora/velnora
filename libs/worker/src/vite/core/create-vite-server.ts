@@ -1,10 +1,9 @@
 import { type ViteDevServer } from "vite";
 
-import { appManager } from "@fluxora/common";
+import { appManager, initialLoadExposedModules } from "@fluxora/common";
 import { contentGenerator } from "@fluxora/generator";
 import type { Package } from "@fluxora/types/core";
 import { ErrorMessages } from "@fluxora/utils";
-import { initialLoadExposedModules } from "@fluxora/utils/node";
 import { createServer } from "@fluxora/vite";
 
 import { logger } from "../../utils/logger";

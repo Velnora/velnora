@@ -19,13 +19,13 @@
   "dependencies": {
     "@fluxora/utils": "workspace:^",
     "@fluxora/vite": "workspace:^",
-    "@nestjs/common": "^11.0.8",
+    "@nestjs/common": "^11.0.9",
     "express": "^4.21.2",
     "vite": "^6.1.0"
   },
   "devDependencies": {
     "@fluxora/types": "workspace:^",
     "@types/express": "^5.0.0",
-    "@types/node": "^22.13.1"
+    "@types/node": "^22.13.2"
   }
 }
