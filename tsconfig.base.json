@@ -16,6 +16,56 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
+      // CLI
+      "@fluxora/cli": ["libs/cli/src/main.ts"],
+
+      // Client
+      "@fluxora/client": ["libs/client/src/main.ts"],
+      "@fluxora/client/react/entry-client": ["libs/client/src/react/entry-client.ts"],
+      "@fluxora/client/react/entry-server": ["libs/client/src/react/entry-server.ts"],
+      "@fluxora/client/react/noop": ["libs/client/src/react/noop.ts"],
+      "/@fluxora/client-server/react": ["libs/client/src/react/entry-server.ts"],
+      "/@fluxora/client/noop": ["libs/client/src/react/noop.ts"],
+
+      // Common
+      "@fluxora/common": ["libs/common/src/main.ts"],
+
+      // Core
+      "fluxora/core": ["libs/fluxora/core.js", "libs/fluxora/core.d.ts"],
+      "@fluxora/core": ["libs/core/src/main.ts"],
+
+      // Common
+      "@fluxora/generator": ["libs/generator/src/main.ts"],
+
+      // NestJS
+      "@fluxora/nestjs": ["libs/nestjs/src/main.ts"],
+
+      // Server
+      "@fluxora/server": ["libs/server/src/main.ts"],
+      "@fluxora/server/entry-dev": ["libs/server/src/entry-dev.ts"],
+      "@fluxora/server/entry-prod": ["libs/server/src/entry-prod.ts"],
+
+      // Types
+      "fluxora/types": ["libs/fluxora/types.js", "libs/fluxora/types.d.ts"],
+      "@fluxora/types": ["libs/types/src/main.ts"],
+      "@fluxora/types/cli": ["libs/types/src/cli/main.ts"],
+      "@fluxora/types/core": ["libs/types/src/core/main.ts"],
+      "@fluxora/types/utils": ["libs/types/src/utils/main.ts"],
+      "@fluxora/types/worker": ["libs/types/src/worker/main.ts"],
+
+      // Utils
+      "@fluxora/utils": ["libs/utils/src/main.ts"],
+      "@fluxora/utils/node": ["libs/utils/src/node/main.ts"],
+      "@fluxora/utils/worker": ["libs/utils/src/worker/main.ts"],
+
+      // Worker
+      "@fluxora/worker": ["libs/worker/src/main.ts"],
+      "@fluxora/worker/vite": ["libs/worker/src/vite/main.ts"],
+
+      // Vite
+      "@fluxora/vite": ["libs/vite/src/main.ts"],
+
+      // Imaginary Modules
       "/@fluxora/virtual/entry/*": ["libs/internal/src/*"]
     }
   },
