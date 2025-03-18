@@ -1,4 +1,11 @@
 {
   "name": "@base-example/profile",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@hookform/resolvers": "^4.0.0",
+    "@nestjs/common": "^11.0.9",
+    "react": "^19.0.0",
+    "react-hook-form": "^7.54.2",
+    "zod": "^3.24.2"
+  }
 }

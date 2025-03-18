@@ -2,6 +2,8 @@
   "name": "@base-example/order",
   "type": "module",
   "dependencies": {
-    "@base-example/ui-kit": "workspace:^"
+    "@base-example/ui-kit": "workspace:^",
+    "@nestjs/common": "^11.0.9",
+    "react": "^19.0.0"
   }
 }

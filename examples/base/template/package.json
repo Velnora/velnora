@@ -1,4 +1,7 @@
 {
   "name": "@base-example/template",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "react": "^19.0.0"
+  }
 }
