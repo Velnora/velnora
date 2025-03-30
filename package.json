@@ -1,7 +1,10 @@
 {
   "name": "@fluxora/monorepo",
   "workspaces": [
-    "libs/*",
+    "libs/fluxora",
+    "libs/adapter/*",
+    "libs/core/*",
+    "libs/frameworks/*",
     "examples/*"
   ],
   "scripts": {
@@ -18,9 +21,9 @@
     "prettier-plugin-packagejson": "^2.5.8",
     "rollup": "^4.35.0",
     "type-fest": "^4.37.0",
-    "vite": "^6.2.1",
+    "vite": "^6.2.2",
     "vite-plugin-dts": "^4.5.3",
     "vite-tsconfig-paths": "^5.1.4"
   },
-  "packageManager": "yarn@4.5.3"
+  "packageManager": "yarn@4.8.1"
 }

@@ -7,8 +7,8 @@
     "template"
   ],
   "scripts": {
-    "build": "fluxora build",
-    "dev": "fluxora dev"
+    "build": "fluxora-dev build",
+    "dev": "fluxora-dev dev"
   },
   "dependencies": {
     "fluxora": "workspace:^",

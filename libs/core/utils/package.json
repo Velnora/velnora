@@ -1,0 +1,26 @@
+{
+  "name": "@fluxora/utils",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.utils.d.ts",
+      "import": "./build/fluxora.utils.js",
+      "require": "./build/fluxora.utils.js"
+    }
+  },
+  "main": "build/fluxora.utils.js",
+  "types": "build/fluxora.utils.d.ts",
+  "dependencies": {
+    "@fluxora/adapter-base": "workspace:^",
+    "@fluxora/framework-base": "workspace:^",
+    "@fluxora/types": "workspace:^",
+    "consola": "^3.4.0",
+    "glob": "^11.0.1",
+    "resolve-tsconfig": "^1.3.0",
+    "vite": "^6.2.2"
+  },
+  "devDependencies": {
+    "type-fest": "^4.37.0"
+  }
+}

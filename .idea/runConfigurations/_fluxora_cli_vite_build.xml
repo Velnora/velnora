@@ -1,9 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="@fluxora/cli:vite:build" type="NxRunConfigurationType">
-    <option name="nx-projects" value="@fluxora/cli" />
-    <option name="nx-targets" value="vite:build" />
-    <option name="nx-target-configuration" value="" />
-    <envs />
-    <option name="arguments" value="" />
-  </configuration>
-</component>

@@ -4,6 +4,7 @@
     <option name="generatorAllowlist">
       <map />
     </option>
+    <option name="toolwindowStyle" value="Folder" />
     <option name="workspacePath" value="" />
   </component>
 </project>

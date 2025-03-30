@@ -4,25 +4,46 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./core.d.ts",
-      "import": "./core.js",
-      "require": "./core.js"
-    },
-    "./types": {
-      "types": "./types.d.ts",
-      "import": "./types.js",
-      "require": "./types.js"
-    },
-    "./core": {
-      "types": "./core.d.ts",
-      "import": "./core.js",
-      "require": "./core.js"
+      "types": "./build/fluxora.core.d.ts",
+      "require": "./build/fluxora.core.js",
+      "import": "./build/fluxora.core.js"
     }
   },
-  "bin": "./bin/fluxora.js",
+  "main": "./build/fluxora.core.js",
+  "types": "./build/fluxora.core.d.ts",
+  "bin": {
+    "fluxora": "./bin/fluxora.js",
+    "fluxora-dev": "bin/fluxora-dev.js"
+  },
+  "scripts": {
+    "build": "vite build"
+  },
   "dependencies": {
-    "@fluxora/cli": "workspace:^",
-    "@fluxora/core": "workspace:^",
-    "@fluxora/types": "workspace:^"
+    "@babel/parser": "^7.26.10",
+    "@babel/traverse": "^7.26.10",
+    "@fluxora/cli-helper": "workspace:^",
+    "@fluxora/utils": "workspace:^",
+    "@nestjs/common": "^11.0.11",
+    "glob": "^11.0.1",
+    "vite": "^6.2.2"
+  },
+  "devDependencies": {
+    "@fluxora/types": "workspace:^",
+    "@types/babel__traverse": "^7",
+    "type-fest": "^4.37.0",
+    "vite-node": "^3.0.8",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "peerDependencies": {
+    "@fluxora/adapter-express": "*",
+    "@fluxora/framework-react": "*"
+  },
+  "peerDependenciesMeta": {
+    "@fluxora/adapter-express": {
+      "optional": true
+    },
+    "@fluxora/framework-react": {
+      "optional": true
+    }
   }
 }

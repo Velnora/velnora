@@ -1,0 +1,22 @@
+{
+  "name": "@fluxora/types",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.types.d.ts",
+      "import": "./build/fluxora.types.js",
+      "require": "./build/fluxora.types.js"
+    },
+    "./adapter": {
+      "types": "./build/fluxora.types.adapter.d.ts",
+      "import": "./build/fluxora.types.adapter.js",
+      "require": "./build/fluxora.types.adapter.js"
+    }
+  },
+  "main": "build/fluxora.types.js",
+  "types": "build/fluxora.types.d.ts",
+  "dependencies": {
+    "vite": "^6.2.2"
+  }
+}

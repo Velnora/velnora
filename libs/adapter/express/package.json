@@ -1,0 +1,22 @@
+{
+  "name": "@fluxora/adapter-express",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.adapter-express.d.ts",
+      "require": "./build/fluxora.adapter-express.js",
+      "default": "./build/fluxora.adapter-express.js"
+    }
+  },
+  "dependencies": {
+    "@fluxora/adapter-base": "workspace:^",
+    "@nestjs/core": "^11.0.12",
+    "@nestjs/platform-express": "^11.0.11",
+    "express": "^4.21.2",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
+  }
+}

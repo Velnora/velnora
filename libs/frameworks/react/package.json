@@ -1,0 +1,34 @@
+{
+  "name": "@fluxora/framework-react",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.framework.react-client.d.ts",
+      "require": "./build/fluxora.framework.react-client.js",
+      "import": "./build/fluxora.framework.react-client.js"
+    },
+    "./server": {
+      "types": "./build/fluxora.framework.react-server.d.ts",
+      "require": "./build/fluxora.framework.react-server.js",
+      "import": "./build/fluxora.framework.react-server.js"
+    },
+    "./vite": {
+      "types": "./build/fluxora.framework.vite.d.ts",
+      "require": "./build/fluxora.framework.vite.js",
+      "import": "./build/fluxora.framework.vite.js"
+    }
+  },
+  "dependencies": {
+    "@fluxora/utils": "workspace:^",
+    "@vitejs/plugin-react-swc": "^3.8.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-error-boundary": "^5.0.0",
+    "vite": "^6.2.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4"
+  }
+}

@@ -1,4 +1,3 @@
-// ToDo: Bundler side done. Need to implement and fix typescript error.
 import { Header } from "order/header";
 import type { FC } from "react";
 import { useForm } from "react-hook-form";
@@ -14,7 +13,7 @@ export const Profile: FC = () => {
       <Header />
       <h1>Profile</h1>
 
-      <form onSubmit={form.handleSubmit(console.log)}>
+      <form onSubmit={form.handleSubmit(console.log, console.error)}>
         <input {...form.register("type")} />
 
         <button type="submit">xD</button>

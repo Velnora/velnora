@@ -1,0 +1,16 @@
+{
+  "name": "@fluxora/framework-base",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.framework.base.d.ts",
+      "require": "./build/fluxora.framework.base.js",
+      "import": "./build/fluxora.framework.base.js"
+    }
+  },
+  "devDependencies": {
+    "type-fest": "^4.37.0",
+    "vite": "^6.2.2"
+  }
+}
