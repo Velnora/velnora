@@ -1,17 +1,12 @@
 import type { AdapterServer as IAdapterServer } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
 
+import { bindThisArg } from "../../utils/bind-this-arg-to-server";
+import { call } from "../../utils/call";
 import type { AdapterContext } from "../adapter.context";
 import { BaseClass } from "../base-class";
 
-function call(value: any) {
-  return typeof value === "function" ? value() : undefined;
-}
-
-function bindThisArg(this: AdapterServer, value: any) {
-  return typeof value === "function" ? value.bind(this) : () => value;
-}
-
+@ClassRawValues()
 @ClassExtensions()
 export class AdapterServer extends BaseClass<AdapterContext> implements IAdapterServer {
   @ClassGetterSetter(undefined, call)

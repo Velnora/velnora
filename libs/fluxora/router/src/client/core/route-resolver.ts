@@ -1,8 +1,8 @@
 import type { Route, RouteWithExact } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
+import { BaseClass, ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
 
 @ClassExtensions()
-export class RouteResolver {
+export class RouteResolver extends BaseClass {
   @ClassGetterSetter()
   declare routes: Map<string, Route>;
 

@@ -1,12 +1,13 @@
 import { RegisteredApp, appCtx } from "@fluxora/runtime";
 import type { FluxoraFramework, SSRRenderContext as ISSRRenderContext, RegisteredModule } from "@fluxora/types";
-import { ClassExtensions, singleton } from "@fluxora/utils";
+import { ClassExtensions, ClassRawValues, singleton } from "@fluxora/utils";
 import { Registry } from "@fluxora/utils/node";
 
 import { logger } from "../utils/logger";
 import { FrameworkContext } from "./framework.context";
 import { SSRRenderContext } from "./ssr-render.context";
 
+@ClassRawValues()
 @ClassExtensions()
 export class FrameworkRegistry extends Registry<FluxoraFramework, FrameworkContext> {
   constructor() {

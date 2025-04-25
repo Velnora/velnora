@@ -6,22 +6,16 @@ import type {
   TemplateRenderContext as ITemplateRenderContext,
   RegisteredTemplate
 } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
 
-import { ContainerBaseClass } from "../container-base-class";
+import type { NonFunction } from "../../types/non-function";
+import { BaseClass } from "../base-class";
 import type { FrameworkContext } from "../framework.context";
 import { TemplateRenderContext } from "./template/template-render.context";
 
-type NonFunction<T> = T extends (...args: any[]) => any
-  ? never
-  : T extends object
-    ? {
-        [K in keyof T as T[K] extends (...args: any[]) => any ? never : K]: T[K];
-      }
-    : T;
-
+@ClassRawValues()
 @ClassExtensions()
-export class TemplateOptions extends ContainerBaseClass<FrameworkContext> implements ITemplateOptions {
+export class TemplateOptions extends BaseClass<FrameworkContext> implements ITemplateOptions {
   @ClassGetterSetter()
   declare render: ITemplateOptions["render"];
 

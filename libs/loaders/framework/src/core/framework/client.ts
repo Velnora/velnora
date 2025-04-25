@@ -1,11 +1,12 @@
 import type { Client as ICLient } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
 
-import { ContainerBaseClass } from "../container-base-class";
+import { BaseClass } from "../base-class";
 import type { FrameworkContext } from "../framework.context";
 
+@ClassRawValues()
 @ClassExtensions()
-export class Client extends ContainerBaseClass<FrameworkContext> implements ICLient {
+export class Client extends BaseClass<FrameworkContext> implements ICLient {
   @ClassGetterSetter()
   declare mount: ICLient["mount"];
 

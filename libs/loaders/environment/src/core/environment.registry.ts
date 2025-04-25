@@ -1,10 +1,11 @@
 import type { FluxoraEnvironment, RegisteredModule } from "@fluxora/types";
-import { ClassExtensions, singleton } from "@fluxora/utils";
+import { ClassExtensions, ClassRawValues, singleton } from "@fluxora/utils";
 import { Registry } from "@fluxora/utils/node";
 
 import { logger } from "../utils/logger";
 import { EnvironmentContext } from "./environment.context";
 
+@ClassRawValues()
 @ClassExtensions()
 export class EnvironmentRegistry extends Registry<FluxoraEnvironment, EnvironmentContext> {
   constructor() {

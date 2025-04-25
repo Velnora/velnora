@@ -1,8 +1,9 @@
 import type { ViteFrameworkOptions as IViteFrameworkOptions } from "@fluxora/types";
-import { ClassExtensions } from "@fluxora/utils";
+import { ClassExtensions, ClassRawValues } from "@fluxora/utils";
 
-import { ContainerBaseClass } from "../container-base-class";
+import { BaseClass } from "../base-class";
 import type { FrameworkContext } from "../framework.context";
 
+@ClassRawValues()
 @ClassExtensions()
-export class ViteFrameworkOptions extends ContainerBaseClass<FrameworkContext> implements IViteFrameworkOptions {}
+export class ViteFrameworkOptions extends BaseClass<FrameworkContext> implements IViteFrameworkOptions {}

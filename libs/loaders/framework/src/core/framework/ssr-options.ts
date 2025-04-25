@@ -1,11 +1,12 @@
 import type { SSROptions as ISSROptions } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
 
-import { ContainerBaseClass } from "../container-base-class";
+import { BaseClass } from "../base-class";
 import type { FrameworkContext } from "../framework.context";
 
+@ClassRawValues()
 @ClassExtensions()
-export class SSROptions extends ContainerBaseClass<FrameworkContext> implements ISSROptions {
+export class SSROptions extends BaseClass<FrameworkContext> implements ISSROptions {
   @ClassGetterSetter()
   declare render: ISSROptions["render"];
 }

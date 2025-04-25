@@ -1,9 +1,10 @@
 import type { RegisteredApp } from "@fluxora/runtime";
 import type { FluxoraEnvironment } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
 
 import { BaseClass } from "./base-class";
 
+@ClassRawValues()
 @ClassExtensions()
 export class EnvironmentContext extends BaseClass implements FluxoraEnvironment {
   @ClassGetterSetter()

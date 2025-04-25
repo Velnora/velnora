@@ -1,11 +1,12 @@
 import { RegisteredApp, RegisteredTemplate } from "@fluxora/runtime";
 import type { SSRRenderContext as ISSRRenderContext, InternalRoute } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
 
-import { ContainerBaseClass } from "./container-base-class";
+import { BaseClass } from "./base-class";
 
+@ClassRawValues()
 @ClassExtensions()
-export class SSRRenderContext extends ContainerBaseClass<void> implements ISSRRenderContext {
+export class SSRRenderContext extends BaseClass<void> implements ISSRRenderContext {
   @ClassGetterSetter()
   declare app: RegisteredApp;
 

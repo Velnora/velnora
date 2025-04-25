@@ -9,5 +9,5 @@ export interface TemplateRenderContext {
   client: DevEnvironment;
   server: RunnableDevEnvironment;
 
-  getEntryFile(): string;
+  getEntryFile(): string | undefined;
 }

@@ -1,9 +1,10 @@
-import { decoratorSettings } from "@fluxora/utils";
+import { BaseClass as RootBaseClass, decoratorSettings } from "@fluxora/utils";
 
-export class BaseClass<TParentClass> {
-  declare protected parentClass: TParentClass;
+export class BaseClass<TParentClass> extends RootBaseClass {
+  declare parentClass: TParentClass;
 
   constructor(parentClass: TParentClass) {
+    super();
     Object.defineProperty(this, "parentClass", {
       value: parentClass,
       writable: false,

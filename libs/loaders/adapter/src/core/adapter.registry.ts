@@ -1,10 +1,11 @@
 import type { FluxoraAdapter, RegisteredModule } from "@fluxora/types";
-import { ClassExtensions, singleton } from "@fluxora/utils";
+import { ClassExtensions, ClassRawValues, singleton } from "@fluxora/utils";
 import { Registry } from "@fluxora/utils/node";
 
 import { logger } from "../utils/logger";
 import { AdapterContext } from "./adapter.context";
 
+@ClassRawValues()
 @ClassExtensions()
 export class AdapterRegistry extends Registry<FluxoraAdapter, AdapterContext> {
   constructor() {
