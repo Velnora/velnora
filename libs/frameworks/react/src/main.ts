@@ -4,10 +4,12 @@ import { defineFramework, frameworkRegistry } from "@fluxora/framework-loader";
 import { appCtx } from "@fluxora/runtime";
 import react from "@vitejs/plugin-react-swc";
 
+const rawConfig = appCtx.raw();
+
 const framework = await defineFramework({
   plugins: [
     react({
-      ...(appCtx.raw.react || {}),
+      ...(rawConfig.react || {}),
       tsDecorators: true,
       useAtYourOwnRisk_mutateSwcOptions(options) {
         options = merge(options, {

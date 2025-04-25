@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 import type { Adapter, UserConfig } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
+import { BaseClass, ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
 import { CONFIG_FILENAMES, resolveConfig } from "@fluxora/utils/node";
 
 import { discoverApps } from "../modules/discover-apps";
@@ -13,7 +13,7 @@ import { BuildSettings, CacheSettings, CreateServerOptions, ProjectStructureCont
 
 @ClassRawValues()
 @ClassExtensions()
-export class AppContext implements UserConfig {
+export class AppContext extends BaseClass<UserConfig> implements UserConfig {
   @ClassGetterSetter()
   declare projectStructure: ProjectStructureContext;
 
@@ -31,10 +31,6 @@ export class AppContext implements UserConfig {
 
   @ClassGetterSetter()
   declare vite: ViteContext;
-
-  get raw(): UserConfig {
-    return this;
-  }
 
   async resolveConfig() {
     const configFile = CONFIG_FILENAMES.map(file => resolve(process.cwd(), file)).find(file => existsSync(file));

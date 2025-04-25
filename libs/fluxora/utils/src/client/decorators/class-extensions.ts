@@ -1,13 +1,14 @@
 import type { Type } from "@nestjs/common";
 
 import { CLASS_METHOD_DATA, CLASS_PROPS_SET } from "../../const";
+import type { BaseClass } from "../modules";
 import { isClass } from "../utils";
 import { logger } from "../utils/logger";
 import { decoratorSettings } from "./decorator.settings";
 
 export const ClassExtensions = (): ClassDecorator => {
   return Target => {
-    const OldTarget = Target as any as Type;
+    const OldTarget = Target as unknown as Type<BaseClass>;
     class InternalTarget extends OldTarget {
       constructor(...args: any[]) {
         super(...args);
@@ -69,19 +70,8 @@ export const ClassExtensions = (): ClassDecorator => {
           .map(key => [key, Reflect.getMetadata("design:type", this, key)])
           .map(([key, Class]) => {
             const baseClassHandler = decoratorSettings.getBaseClass(Class);
-            if (baseClassHandler) this[key].checks();
+            if (baseClassHandler) (this as any)[key].checks();
           });
-      }
-
-      __getSuperPrototype(key: string | symbol) {
-        let proto = this;
-
-        while (proto) {
-          const value = Reflect.getOwnMetadata(key, proto);
-          if (value) break;
-          proto = Object.getPrototypeOf(proto);
-        }
-        return proto;
       }
     }
 

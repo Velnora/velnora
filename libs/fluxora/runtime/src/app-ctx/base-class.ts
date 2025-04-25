@@ -1,23 +1,18 @@
-import { decoratorSettings } from "@fluxora/utils";
+import { BaseClass as RootBaseClass, decoratorSettings } from "@fluxora/utils";
 
 import { AppContext } from "./app.context";
 
-export class BaseClass {
+export class BaseClass extends RootBaseClass {
   declare protected appCtx: AppContext;
 
   constructor(appCtx: AppContext) {
+    super();
     Object.defineProperty(this, "appCtx", {
       enumerable: false,
       writable: false,
       configurable: false,
       value: appCtx
     });
-  }
-
-  checks() {}
-
-  raw(): {} {
-    return {};
   }
 }
 
