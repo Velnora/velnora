@@ -7,7 +7,7 @@ export const internalViteInstance = await createServer({
   root: PROJECT_CWD,
   plugins: [tsconfigPaths({ root: PROJECT_CWD, loose: true })],
   resolve: { preserveSymlinks: false },
-  server: { ws: false, hmr: false },
+  server: { ws: false, hmr: false, middlewareMode: true },
   appType: "custom",
   logLevel: "silent"
 });

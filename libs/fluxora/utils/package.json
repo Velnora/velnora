@@ -17,6 +17,7 @@
   "dependencies": {
     "@fluxora/logger": "workspace:^",
     "@nestjs/common": "^11.1.0",
+    "chokidar": "^4.0.3",
     "glob": "^11.0.2",
     "vite": "^6.3.3",
     "vite-tsconfig-paths": "^5.1.4"
