@@ -1,11 +1,12 @@
 import { resolve } from "node:path";
 
 import type { LibrarySettings as ILibrarySettings, RegisteredLib as IRegisteredLib } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
 
 import { ProjectSettings } from "./project.settings";
 import { RegisteredLib } from "./registered-lib";
 
+@ClassRawValues()
 @ClassExtensions()
 export class LibrarySettings extends ProjectSettings implements ILibrarySettings {
   @ClassGetterSetter("libs", resolve)

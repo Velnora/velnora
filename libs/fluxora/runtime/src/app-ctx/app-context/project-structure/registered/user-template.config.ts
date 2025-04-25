@@ -1,8 +1,9 @@
 import type { Framework, UserTemplateConfig as IUserTemplateConfig } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
 
 import { BaseClass } from "../../../base-class";
 
+@ClassRawValues()
 @ClassExtensions()
 export class UserTemplateConfig extends BaseClass implements IUserTemplateConfig {
   @ClassGetterSetter("src/main")

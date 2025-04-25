@@ -1,9 +1,10 @@
 import { type ViteDevServer, isRunnableDevEnvironment } from "vite";
 
-import { ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
 
 import { BaseClass } from "../base-class";
 
+@ClassRawValues()
 @ClassExtensions()
 export class ViteContext extends BaseClass {
   @ClassGetterSetter()

@@ -1,11 +1,12 @@
 import { resolve } from "node:path";
 
 import type { RegisteredTemplate as IRegisteredTemplate, TemplateSettings as ITemplateSettings } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
 
 import { ProjectSettings } from "./project.settings";
 import { RegisteredTemplate } from "./registered-template";
 
+@ClassRawValues()
 @ClassExtensions()
 export class TemplateSettings extends ProjectSettings implements ITemplateSettings {
   @ClassGetterSetter("template", resolve)
