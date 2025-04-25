@@ -2,9 +2,15 @@ import type { NestJsAdapterOptions as INestJsAdapterOptions } from "@fluxora/typ
 import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
 import type { AbstractHttpAdapter } from "@nestjs/core";
 
-import { bindThisArg } from "../../utils/bind-this-arg-to-server";
 import type { AdapterContext } from "../adapter.context";
 import { BaseClass } from "../base-class";
+
+function bindThisArg(this: NestJsAdapterOptions, value: any) {
+  if (typeof value === "function") {
+    return value.bind(this.parentClass.server);
+  }
+  return () => value;
+}
 
 @ClassRawValues()
 @ClassExtensions()
