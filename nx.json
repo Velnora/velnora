@@ -2,10 +2,15 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build", "^vite:build"]
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/build"],
+      "cache": true
     },
     "dev": {
-      "dependsOn": ["^build", "^vite:build"]
+      "dependsOn": ["build", "vite:build"]
+    },
+    "vite:dev": {
+      "dependsOn": ["vite:build"]
     }
   },
   "defaultBase": "master",
@@ -13,6 +18,7 @@
     {
       "plugin": "@nx/vite/plugin",
       "options": {
+        "devTargetName": "vite:dev",
         "buildTargetName": "vite:build",
         "testTargetName": "test",
         "serveTargetName": "serve",

@@ -1,0 +1,19 @@
+{
+  "name": "@fluxora/core",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.core.d.ts",
+      "import": "./build/fluxora.core.js"
+    }
+  },
+  "main": "./build/fluxora.core.js",
+  "types": "./build/fluxora.core.d.ts",
+  "dependencies": {
+    "@fluxora/logger": "workspace:^"
+  },
+  "devDependencies": {
+    "@fluxora/types": "workspace:^"
+  }
+}

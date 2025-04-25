@@ -1,0 +1,26 @@
+{
+  "name": "@fluxora/router",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.router.d.ts",
+      "import": "./build/fluxora.router.js"
+    },
+    "./node": {
+      "types": "./build/fluxora.router-node.d.ts",
+      "import": "./build/fluxora.router-node.js"
+    }
+  },
+  "main": "./build/fluxora.router.js",
+  "types": "./build/fluxora.router.d.ts",
+  "dependencies": {
+    "@fluxora/runtime": "workspace:^",
+    "@fluxora/utils": "workspace:^",
+    "lodash.omit": "^4.5.0"
+  },
+  "devDependencies": {
+    "@fluxora/types": "workspace:^",
+    "@types/lodash.omit": "^4.5.9"
+  }
+}

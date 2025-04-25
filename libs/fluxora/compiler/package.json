@@ -1,0 +1,13 @@
+{
+  "name": "@fluxora/compiler",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.compiler.d.ts",
+      "import": "./build/fluxora.compiler.js"
+    }
+  },
+  "main": "./build/fluxora.compiler.js",
+  "types": "./build/fluxora.compiler.d.ts"
+}

@@ -3,7 +3,8 @@
   "type": "module",
   "dependencies": {
     "@base-example/ui-kit": "workspace:^",
-    "@nestjs/common": "^11.0.9",
-    "react": "^19.0.0"
+    "@nestjs/common": "^11.1.0",
+    "fluxora": "workspace:^",
+    "react": "^19.1.0"
   }
 }

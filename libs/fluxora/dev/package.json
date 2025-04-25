@@ -1,0 +1,32 @@
+{
+  "name": "@fluxora/dev",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.dev.d.ts",
+      "import": "./build/fluxora.dev.js"
+    }
+  },
+  "main": "./build/fluxora.dev.js",
+  "types": "./build/fluxora.dev.d.ts",
+  "dependencies": {
+    "@fluxora/adapter-loader": "workspace:^",
+    "@fluxora/environment-loader": "workspace:^",
+    "@fluxora/framework-loader": "workspace:^",
+    "@fluxora/logger": "workspace:^",
+    "@fluxora/router": "workspace:^",
+    "@fluxora/runtime": "workspace:^",
+    "@fluxora/utils": "workspace:^",
+    "@swc/helpers": "^0.5.17",
+    "esbuild": "^0.25.3",
+    "lodash.merge": "^4.6.2",
+    "vite": "^6.3.3"
+  },
+  "devDependencies": {
+    "@fluxora/types": "workspace:^",
+    "@swc/core": "^1.11.22",
+    "@types/lodash.merge": "^4",
+    "type-fest": "^4.40.0"
+  }
+}

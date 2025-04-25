@@ -1,5 +1,5 @@
 {
-  "name": "@fluxora/base-example",
+  "name": "@fluxora/example-base",
   "type": "module",
   "workspaces": [
     "apps/*",
@@ -8,9 +8,11 @@
   ],
   "scripts": {
     "build": "fluxora-dev build",
-    "dev": "fluxora-dev dev"
+    "dev": "fluxora-dev dev",
+    "nx:dev": "fluxora dev"
   },
   "dependencies": {
+    "@fluxora/framework-react": "workspace:^",
     "fluxora": "workspace:^",
     "reflect-metadata": "^0.2.2"
   }

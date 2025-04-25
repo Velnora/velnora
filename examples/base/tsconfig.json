@@ -4,10 +4,10 @@
     "jsx": "react-jsx",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@base-example/ui-kit": ["libs/ui-kit/src/main.tsx"],
-      "fluxora": ["../../libs/fluxora/src/main.ts"]
+      "@base-example/ui-kit": ["libs/ui-kit/src/main.tsx"]
     }
-  }
+  },
+  "include": ["fluxora-env.d.ts"]
 }

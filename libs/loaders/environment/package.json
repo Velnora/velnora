@@ -1,0 +1,21 @@
+{
+  "name": "@fluxora/environment-loader",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.environment-loader.d.ts",
+      "import": "./build/fluxora.environment-loader.js"
+    }
+  },
+  "main": "./build/fluxora.environment-loader.js",
+  "types": "./build/fluxora.environment-loader.d.ts",
+  "devDependencies": {
+    "@fluxora/runtime": "workspace:^",
+    "@fluxora/types": "workspace:^"
+  },
+  "dependencies": {
+    "@fluxora/logger": "workspace:^",
+    "@fluxora/utils": "workspace:^"
+  }
+}

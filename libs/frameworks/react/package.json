@@ -4,31 +4,33 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./build/fluxora.framework-react.d.ts",
+      "import": "./build/fluxora.framework-react.js"
+    },
+    "./client": {
       "types": "./build/fluxora.framework.react-client.d.ts",
-      "require": "./build/fluxora.framework.react-client.js",
       "import": "./build/fluxora.framework.react-client.js"
     },
-    "./server": {
-      "types": "./build/fluxora.framework.react-server.d.ts",
-      "require": "./build/fluxora.framework.react-server.js",
-      "import": "./build/fluxora.framework.react-server.js"
-    },
-    "./vite": {
-      "types": "./build/fluxora.framework.vite.d.ts",
-      "require": "./build/fluxora.framework.vite.js",
-      "import": "./build/fluxora.framework.vite.js"
+    "./ssr": {
+      "types": "./build/fluxora.framework.react-ssr.d.ts",
+      "import": "./build/fluxora.framework.react-ssr.js"
     }
   },
+  "main": "./build/fluxora.framework.react.js",
+  "types": "./build/fluxora.framework-react.d.ts",
   "dependencies": {
+    "@fluxora/framework-loader": "workspace:^",
+    "@fluxora/runtime": "workspace:^",
     "@fluxora/utils": "workspace:^",
-    "@vitejs/plugin-react-swc": "^3.8.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-error-boundary": "^5.0.0",
-    "vite": "^6.2.2"
+    "@vitejs/plugin-react-swc": "^3.9.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-error-boundary": "^5.0.0"
   },
   "devDependencies": {
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4"
+    "@fluxora/types": "workspace:^",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "vite": "^6.3.3"
   }
 }

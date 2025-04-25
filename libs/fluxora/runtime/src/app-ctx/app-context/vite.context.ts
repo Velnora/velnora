@@ -1,0 +1,23 @@
+import { type ViteDevServer, isRunnableDevEnvironment } from "vite";
+
+import { ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
+
+import { BaseClass } from "../base-class";
+
+@ClassExtensions()
+export class ViteContext extends BaseClass {
+  @ClassGetterSetter()
+  declare servers: Map<string, ViteDevServer>;
+
+  getSsr(name: string) {
+    const server = this.servers.get(name);
+    if (!server) throw new Error("Vite server is not initialized");
+    const ssrEnv = server.environments.ssr;
+    if (!isRunnableDevEnvironment(ssrEnv)) throw new Error("SSR environment is not runnable");
+    return ssrEnv;
+  }
+
+  setServer(name: string, server: ViteDevServer) {
+    this.servers.set(name, server);
+  }
+}

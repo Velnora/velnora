@@ -9,6 +9,8 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "useDefineForClassFields": true,
+    "importHelpers": true,
     "esModuleInterop": true,
     "strict": true,
     "noUnusedLocals": true,
@@ -18,23 +20,36 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "fluxora": ["./libs/fluxora/src/main.ts"],
+      "@fluxora/cli": ["libs/fluxora/cli/src/main.ts"],
+      "@fluxora/compiler": ["libs/fluxora/compiler/src/main.ts"],
+      "@fluxora/core": ["libs/fluxora/core/src/main.ts"],
+      "@fluxora/daemon": ["libs/fluxora/daemon/src/main.ts"],
+      "@fluxora/daemon/runner": ["libs/fluxora/daemon/src/runner.ts"],
+      "@fluxora/dev": ["libs/fluxora/dev/src/main.ts"],
+      "@fluxora/router": ["libs/fluxora/router/src/main.ts"],
+      "@fluxora/router/node": ["libs/fluxora/router/src/node/main.ts"],
+      "@fluxora/runtime": ["libs/fluxora/runtime/src/main.ts"],
+      "@fluxora/types": ["libs/fluxora/types/src/main.ts"],
+      "@fluxora/utils": ["libs/fluxora/utils/src/main.ts"],
+      "@fluxora/utils/node": ["libs/fluxora/utils/src/node/main.ts"],
 
-      "@fluxora/framework-base": ["./libs/frameworks/base/src/main.ts"],
-      "@fluxora/framework-react": ["./libs/frameworks/react/src/main.ts"],
-      "@fluxora/framework-react/server": ["./libs/frameworks/react/src/server/main.ts"],
-      "@fluxora/framework-react/vite": ["./libs/frameworks/react/src/vite.ts"],
-      "@fluxora/framework-nestjs-client": ["./libs/frameworks/nestjs-client/src/main.ts"],
+      "@fluxora/adapter-loader": ["libs/loaders/adapter/src/main.ts"],
+      "@fluxora/environment-loader": ["libs/loaders/environment/src/main.ts"],
+      "@fluxora/framework-loader": ["libs/loaders/framework/src/main.ts"],
 
-      "@fluxora/utils": ["./libs/core/utils/src/main.ts"],
-      "@fluxora/cli-helper": ["./libs/core/cli-helper/src/main.ts"],
-      "@fluxora/types": ["./libs/core/types/src/main.ts"],
+      "@fluxora/adapter-express": ["libs/adapters/express/src/main.ts"],
+      "@fluxora/adapter-express/adapter": ["libs/adapters/express/src/adapter/main.ts"],
 
-      // Adapters
-      "@fluxora/adapter-base": ["./libs/adapter/base/src/main.ts"],
-      "@fluxora/adapter-express": ["./libs/adapter/express/src/main.ts"],
+      "@fluxora/environment-node": ["libs/environments/node/src/main.ts"],
 
-      "/__virtual__/*": ["./libs/internal/*"]
+      "@fluxora/framework-react": ["libs/frameworks/react/src/main.ts"],
+      "@fluxora/framework-react/client": ["libs/frameworks/react/src/client/main.ts"],
+      "@fluxora/framework-react/ssr": ["libs/frameworks/react/src/ssr/main.ts"],
+
+      "@fluxora/cli-helper": ["libs/helpers/cli-helper/src/main.ts"],
+      "@fluxora/logger": ["libs/helpers/logger/src/main.ts"],
+
+      "/__virtual__/*": ["libs/internal/src/*"]
     }
   },
   "exclude": ["node_modules"]

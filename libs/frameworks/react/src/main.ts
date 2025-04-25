@@ -1,3 +1,26 @@
-export * from "./client/components/entry-app";
+import merge from "lodash.merge";
 
-export * from "./client/core/hydrate";
+import { defineFramework, frameworkRegistry } from "@fluxora/framework-loader";
+import { appCtx } from "@fluxora/runtime";
+import react from "@vitejs/plugin-react-swc";
+
+const framework = await defineFramework({
+  plugins: [
+    react({
+      ...(appCtx.raw.react || {}),
+      tsDecorators: true,
+      useAtYourOwnRisk_mutateSwcOptions(options) {
+        options = merge(options, {
+          jsc: {
+            target: "esnext",
+            parser: { syntax: "typescript", decorators: true },
+            transform: { legacyDecorator: true, decoratorMetadata: true, useDefineForClassFields: false },
+            externalHelpers: true
+          },
+          module: { type: "es6" }
+        });
+      }
+    })
+  ]
+});
+frameworkRegistry.register("@fluxora/framework-react", framework);

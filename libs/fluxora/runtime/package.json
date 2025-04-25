@@ -1,0 +1,23 @@
+{
+  "name": "@fluxora/runtime",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.runtime.d.ts",
+      "import": "./build/fluxora.runtime.js"
+    }
+  },
+  "main": "./build/fluxora.runtime.js",
+  "types": "./build/fluxora.runtime.d.ts",
+  "dependencies": {
+    "@fluxora/logger": "workspace:^",
+    "@fluxora/utils": "workspace:^",
+    "glob": "^11.0.2",
+    "reflect-metadata": "^0.2.2"
+  },
+  "devDependencies": {
+    "@fluxora/types": "workspace:^",
+    "vite": "^6.3.3"
+  }
+}

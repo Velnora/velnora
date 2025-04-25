@@ -1,0 +1,25 @@
+{
+  "name": "@fluxora/environment-node",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/fluxora.environment-node.d.ts",
+      "import": "./build/fluxora.environment-node.js"
+    },
+    "./runner": {
+      "types": "./build/fluxora.environment-node.runner.d.ts",
+      "import": "./build/fluxora.environment-node.runner.js"
+    }
+  },
+  "main": "./build/fluxora.environment-node.js",
+  "types": "./build/fluxora.environment-node.d.ts",
+  "dependencies": {
+    "@fluxora/environment-loader": "workspace:^",
+    "@fluxora/utils": "workspace:^",
+    "semver": "^7.7.1"
+  },
+  "devDependencies": {
+    "@types/semver": "^7.7.0"
+  }
+}

@@ -1,4 +1,3 @@
-#!/usr/bin/env node
-import { cli } from "../build/fluxora.cli.js";
+import { cli } from "@fluxora/cli";
 
 await cli();

@@ -1,0 +1,1 @@
+{ "targets": { "build": { "dependsOn": ["^vite:build"] } } }

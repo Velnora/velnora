@@ -4,9 +4,9 @@ LIBS_JSON="{}"
 depCheckScript=$(yarn bin depcheck)
 
 EXCEPTION_LIST=$(cat <<EOF
-@fluxora/base-example deps:reflect-metadata
+@fluxora/example-base deps:reflect-metadata,@fluxora/framework-react
 @base-example/profile missingDeps:order
-@fluxora/framework-react missingDeps:@fluxora/framework-react
+@fluxora/adapter-express deps:rxjs
 EOF
 )
 
