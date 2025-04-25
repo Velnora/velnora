@@ -1,12 +1,12 @@
-import type { Route, RouteWithExact } from "@fluxora/types";
+import type { InternalRoute, RouteWithExact } from "@fluxora/types";
 import { BaseClass, ClassExtensions, ClassGetterSetter } from "@fluxora/utils";
 
 @ClassExtensions()
 export class RouteResolver extends BaseClass {
   @ClassGetterSetter()
-  declare routes: Map<string, Route>;
+  declare routes: Map<string, InternalRoute>;
 
-  append(path: string, route: Omit<Route, "path">) {
+  append(path: string, route: Omit<InternalRoute, "path">) {
     if (this.routes.has(path)) {
       throw new Error(`Route already exists for path: ${path}`);
     }

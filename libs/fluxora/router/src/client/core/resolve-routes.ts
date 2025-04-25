@@ -14,14 +14,15 @@ export const resolveRoutes = async (app: RegisteredApp): Promise<RouteResolver> 
     const definedRoutes = routesModule?.routes || routesModule.default;
     if (definedRoutes) {
       for (const route of definedRoutes) {
-        routeResolver.append(route.path, route);
+        routeResolver.append(route.path, { ...route, app });
       }
     } else {
       throw "";
     }
   } catch (err) {
     routeResolver.append("/", {
-      component: () => import(/* @vite-ignore */ VIRTUAL_ENTRIES.APP_CLIENT_ENTRY(app.name))
+      app,
+      component: () => import(/* @vite-ignore */ VIRTUAL_ENTRIES.APP_CLIENT_SCRIPT(app.name))
     });
   }
 

@@ -1,6 +1,7 @@
 import { resolve } from "node:path";
 
 import { createServer } from "vite";
+import inspect from "vite-plugin-inspect";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 import { adapterRegistry } from "@fluxora/adapter-loader";
@@ -53,6 +54,7 @@ export const startAppDevServer = async (app: RegisteredApp) => {
     fluxoraAppPlugin(appModule),
     app.config.framework !== "react" && swcPlugin(),
     __DEV__ && tsconfigPaths({ root: PROJECT_CWD, loose: true }),
+    process.env.NODE_ENV === "development" && inspect(),
     ...(appFrameworkPlugins || []),
     ...(templateFrameworkPlugins || []),
     ...(adapterPlugins || [])
@@ -97,7 +99,7 @@ export const startAppDevServer = async (app: RegisteredApp) => {
     const transformStream = injectHtmlTags(tags);
 
     try {
-      const route = routeResolver.getWithFallback(url.pathname, "");
+      const route = routeResolver.getWithFallback(url.pathname, "/");
 
       const htmlStream = await renderer(
         frameworkRegistry.getSSRRenderContext({ app: appModule, template: appTemplate, route })
