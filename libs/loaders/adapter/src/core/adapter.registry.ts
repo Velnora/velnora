@@ -15,7 +15,7 @@ export class AdapterRegistry extends Registry<FluxoraAdapter, AdapterContext> {
   use(name: string, module: RegisteredModule) {
     const resolvedName = this.resolveName(name);
     const adapter = this.registered.get(resolvedName);
-    if (!adapter) throw new Error(`Environment "${resolvedName}" is not registered.`);
+    if (!adapter) throw new Error(`Adapter "${resolvedName}" is not registered.`);
     const context = super.use(name, module);
     Object.assign(context, adapter);
     context.checks();

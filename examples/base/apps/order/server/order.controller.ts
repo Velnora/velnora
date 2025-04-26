@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
 
-@Controller()
+@Controller("order")
 export class OrderController {
   @Get()
   getAllOrders() {

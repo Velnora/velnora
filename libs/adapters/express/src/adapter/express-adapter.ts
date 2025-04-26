@@ -16,7 +16,7 @@ export default defineAdapter({
 
   nestjs: {
     adapter() {
-      return new ExpressAdapter(this.instance);
+      return new ExpressAdapter();
     }
   },
 
@@ -24,7 +24,11 @@ export default defineAdapter({
     instance: express,
 
     use(...middlewares) {
-      this.instance.use(...middlewares);
+      const [middlewareOrPath, ...allMiddlewares] = middlewares;
+      if (typeof middlewareOrPath === "string") {
+        return this.instance.use(middlewareOrPath, ...allMiddlewares);
+      }
+      this.instance.use(middlewareOrPath, ...allMiddlewares);
     },
 
     get(path, ...handlers) {
@@ -45,10 +49,6 @@ export default defineAdapter({
 
     delete(path, ...handlers) {
       this.instance.delete(path, ...handlers);
-    },
-
-    handler() {
-      return this.instance;
     }
   }
 });

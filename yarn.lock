@@ -1690,6 +1690,8 @@ __metadata:
     "@fluxora/runtime": "workspace:^"
     "@fluxora/types": "workspace:^"
     "@fluxora/utils": "workspace:^"
+    "@nestjs/common": "npm:^11.1.0"
+    "@nestjs/core": "npm:^11.1.0"
     "@swc/core": "npm:^1.11.22"
     "@swc/helpers": "npm:^0.5.17"
     "@types/lodash.merge": "npm:^4"
