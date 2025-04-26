@@ -10,8 +10,8 @@ export class ViteContext extends BaseClass {
   @ClassGetterSetter()
   declare servers: Map<string, ViteDevServer>;
 
-  getSsr(name: string) {
-    const server = this.servers.get(name);
+  getSsr(name: string, initialServer?: ViteDevServer) {
+    const server = initialServer || this.servers.get(name);
     if (!server) throw new Error("Vite server is not initialized");
     const ssrEnv = server.environments.ssr;
     if (!isRunnableDevEnvironment(ssrEnv)) throw new Error("SSR environment is not runnable");

@@ -7,7 +7,10 @@ import { BaseClass } from "./base-class";
 
 @ClassRawValues()
 @ClassExtensions()
-export class AdapterContext extends BaseClass<AdapterRegistry> implements Omit<FluxoraAdapter, "name" | "apply"> {
+export class AdapterContext extends BaseClass<AdapterRegistry> implements FluxoraAdapter {
+  @ClassGetterSetter()
+  declare name: string;
+
   @ClassGetterSetter()
   declare nestjs: NestJsAdapterOptions;
 

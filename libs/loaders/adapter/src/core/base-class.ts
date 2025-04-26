@@ -1,19 +1,17 @@
 import { BaseClass as RootBaseClass, decoratorSettings } from "@fluxora/utils";
 
-export class BaseClass<TParentClass> extends RootBaseClass {
-  declare parentClass: TParentClass;
+export class BaseClass<TParent> extends RootBaseClass {
+  declare parent: TParent;
 
-  constructor(parentClass: TParentClass) {
+  constructor(parent: TParent) {
     super();
-    Object.defineProperty(this, "parentClass", {
-      value: parentClass,
+    Object.defineProperty(this, "parent", {
+      value: parent,
       writable: false,
       enumerable: false,
       configurable: false
     });
   }
-
-  checks() {}
 }
 
 decoratorSettings.registerBaseClass(BaseClass, (instance, Class) => {

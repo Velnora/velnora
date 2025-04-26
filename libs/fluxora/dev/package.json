@@ -18,6 +18,8 @@
     "@fluxora/router": "workspace:^",
     "@fluxora/runtime": "workspace:^",
     "@fluxora/utils": "workspace:^",
+    "@nestjs/common": "^11.1.0",
+    "@nestjs/core": "^11.1.0",
     "@swc/helpers": "^0.5.17",
     "esbuild": "^0.25.3",
     "lodash.merge": "^4.6.2",

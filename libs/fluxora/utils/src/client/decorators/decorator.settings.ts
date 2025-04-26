@@ -17,7 +17,7 @@ class DecoratorSettings {
       isSubclassOf(Class, RegisteredClass)
     );
     if (!handler) return;
-    return () => handler[1](handler[0], Class);
+    return (instance: any) => handler[1](instance, Class);
   }
 }
 
