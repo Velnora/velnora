@@ -1,4 +1,4 @@
-import yargs, { type Arguments } from "yargs";
+import yargs, { type Arguments, type Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 
 import type { CommandReturnType } from "../types/command-return-type";
@@ -17,18 +17,38 @@ export class Commands {
     const argv = yargs();
 
     const commandObjects = await Promise.all(this.commands);
-    const commands = commandObjects
-      .flatMap(obj => Object.values(obj))
-      .map(cmdOrObj => (cmdOrObj instanceof Command ? cmdOrObj.execute() : cmdOrObj));
+    this.applyCommands(argv, commandObjects);
 
-    for (const cmd of commands) {
-      const { options, description, command: commandStr, execute } = cmd;
-      logger.debug(`Registering command: ${commandStr}`);
+    const commandArgs = args.map(arg => arg.replace(/(?<!-)-\w/g, m => m.slice(1).toUpperCase()));
+
+    await argv
+      .scriptName("fluxora")
+      .usage("$0 <command> [args]")
+      .help()
+      .alias("help", "h")
+      .version(version)
+      .alias("version", "v")
+      .strict()
+      .demandCommand(1, "You need to call one of the given commands or options.")
+      .parse(commandArgs);
+  }
+
+  private applyCommands(argv: Argv, commands: Awaited<CommandsType[number]>[]) {
+    for (const cmdObject of commands.flatMap(cmd => Object.values(cmd))) {
+      const {
+        description,
+        command: commandStr,
+        childCommands,
+        options = {},
+        execute = () => {}
+      } = cmdObject instanceof Command ? cmdObject.execute() : cmdObject;
 
       argv.command(
         commandStr,
         description || "",
-        yargs => {
+        async yargs => {
+          childCommands && this.applyCommands(yargs, await Array.fromAsync(childCommands));
+
           for (const [optionName, optionDetails] of Object.entries(options)) {
             const { type, defaultValue, alias, description } = optionDetails;
 
@@ -54,7 +74,7 @@ export class Commands {
               });
             }
           }
-          return yargs.version(false).help().alias("help", "h");
+          yargs.version(false).help().alias("help", "h");
         },
         async ({ _: _, $0: $0, ...args }: Arguments) => {
           logger.debug(`Command '${commandStr}' called with args:`, args);
@@ -69,18 +89,5 @@ export class Commands {
         }
       );
     }
-
-    const commandArgs = args.map(arg => arg.replace(/(?<!-)-\w/g, m => m.slice(1).toUpperCase()));
-
-    await argv
-      .scriptName("fluxora")
-      .usage("$0 <command> [args]")
-      .help()
-      .alias("help", "h")
-      .version(version)
-      .alias("version", "v")
-      .strict()
-      .demandCommand(1, "You need to call one of the given commands or options.")
-      .parse(commandArgs);
   }
 }

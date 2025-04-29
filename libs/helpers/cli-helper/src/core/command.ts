@@ -8,12 +8,14 @@ import type { MergeObjects } from "../types/merge-objects";
 import type { OptionType } from "../types/option-type";
 import type { Type } from "../types/type";
 import { logger } from "../utils/logger";
+import type { CommandsType } from "./commands";
 
 export class Command<TOptions extends Record<string, Type> = {}> {
   private options = {} as CommandOptions<TOptions>;
+  private childCommands = [] as CommandsType;
 
   constructor(
-    private readonly command: string,
+    private command: string,
     private readonly description?: string
   ) {
     logger.debug(`Created command: ${command} - ${description}`);
@@ -50,6 +52,12 @@ export class Command<TOptions extends Record<string, Type> = {}> {
     >;
   }
 
+  children(...commands: CommandsType) {
+    logger.debug(`Adding child commands to: ${this.command}`);
+    this.childCommands.push(...commands);
+    return this;
+  }
+
   execute(
     executorFn?: (args: {
       [K in keyof TOptions]: InferType<TOptions[K]["type"], TOptions[K]["values"]>;
@@ -61,6 +69,7 @@ export class Command<TOptions extends Record<string, Type> = {}> {
       command: this.command,
       description: this.description ?? null,
       options: this.options,
+      childCommands: this.childCommands,
       async execute(args) {
         logger.debug(`Executing command: ${self.command} with args:`, args);
         await executorFn?.(args as any);
