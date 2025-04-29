@@ -27,14 +27,12 @@ export const ClassExtensions = (): ClassDecorator => {
             const Class = Reflect.getMetadata("design:type", this, prop);
             const baseClassHandler = decoratorSettings.getBaseClass(Class);
 
-            // console.log(this, prop, Class, baseClassHandler);
-
             Object.defineProperty(this, prop, {
-              enumerable: true,
+              enumerable: false,
               configurable: true,
               get() {
                 if (baseClassHandler && !this[`_${prop}`]) {
-                  const value = baseClassHandler();
+                  const value = baseClassHandler(this);
                   logger.debug(`Creating new instance of ${Class.name} for ${this.constructor.name}.${prop}`, value);
                   this[`_${prop}`] = value;
                 }

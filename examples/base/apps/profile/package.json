@@ -1,5 +1,5 @@
 {
-  "name": "@base-example/profile",
+  "name": "@fluxora-examples/base-profile",
   "type": "module",
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",

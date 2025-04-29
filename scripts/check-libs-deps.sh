@@ -3,40 +3,61 @@
 LIBS_JSON="{}"
 depCheckScript=$(yarn bin depcheck)
 
-EXCEPTION_LIST=$(cat <<EOF
+# IGNORE_LIST format:
+# Each line defines ignored dependencies for workspaces.
+# Supports glob-style patterns like '*' (wildcard matching).
+#
+# Syntax:
+#   <workspace-pattern> <type1>:<packages1>;<type2>:<packages2>;...
+#
+# where:
+# - <workspace-pattern> can use * to match multiple workspaces
+# - <type> is one of: deps, devDeps, missingDeps
+# - <packages> is a comma-separated list of package names
+#
+# Example:
+#   @fluxora/example-* deps:fluxora;devDeps:fluxora
+#     → Matches all workspaces starting with "@fluxora/example-"
+#     → Ignores "fluxora" in dependencies and devDependencies
+#   @fluxora/adapter-express deps:rxjs
+#     → Matches only "@fluxora/adapter-express"
+#     → Ignores "rxjs" in dependencies
+#   @fluxora-examples/base-profile missingDeps:order
+#     → Matches "@fluxora-examples/base-profile"
+#     → Ignores "order" in missing dependencies
+#
+IGNORE_LIST=$(cat <<EOF
 @fluxora/example-base deps:reflect-metadata,@fluxora/framework-react
-@base-example/profile missingDeps:order
+@fluxora-examples/base-* missingDeps:fluxora
+@fluxora-examples/base-profile missingDeps:order
 @fluxora/adapter-express deps:rxjs
 EOF
 )
 
-get_exceptions() {
+get_ignore_packages() {
   local workspace=$1
   local type=$2
 
-  local line=$(echo "$EXCEPTION_LIST" | grep "^$workspace ")
-  if [ -z "$line" ]; then
-    echo ""
-    return
-  fi
+  while IFS= read -r line; do
+    local pattern="${line%% *}"
+    local value="${line#* }"
 
-  # Extract value after workspace name
-  local value=${line#"$workspace "}
-  IFS=';' read -ra parts <<< "$value"
-
-  for part in "${parts[@]}"; do
-    key="${part%%:*}"
-    val="${part#*:}"
-    if [[ "$key" == "$type" ]]; then
-      echo "$val"
-      return
+    if [[ "$workspace" == $pattern ]]; then
+      IFS=';' read -ra parts <<< "$value"
+      for part in "${parts[@]}"; do
+        key="${part%%:*}"
+        val="${part#*:}"
+        if [[ "$key" == "$type" ]]; then
+          echo "$val"
+          return
+        fi
+      done
     fi
-  done
+  done <<< "$IGNORE_LIST"
 
   echo ""
 }
 
-# Remove specified packages from a jq array or object
 filterDependencies() {
   local type=$1
   local json=$2
@@ -78,32 +99,33 @@ checkDependency() {
   local missingDeps=$(echo "$json" | jq -r '.missing // {}')
 
   for type in deps devDeps missingDeps; do
-    local exceptions=$(get_exceptions "$depName" "$type")
-    if [ -n "$exceptions" ]; then
-      echo "⚠️  Filtering $type in $depName: $exceptions"
+    local ignored=$(get_ignore_packages "$depName" "$type")
+    if [ -n "$ignored" ]; then
+      echo "⚠️  Filtering $type in $depName: $ignored"
       if [[ "$type" == "deps" ]]; then
-        deps=$(filterDependencies "$type" "$deps" "$exceptions")
+        deps=$(filterDependencies "$type" "$deps" "$ignored")
       elif [[ "$type" == "devDeps" ]]; then
-        devDeps=$(filterDependencies "$type" "$devDeps" "$exceptions")
+        devDeps=$(filterDependencies "$type" "$devDeps" "$ignored")
       elif [[ "$type" == "missingDeps" ]]; then
-        missingDeps=$(filterDependencies "$type" "$missingDeps" "$exceptions")
+        missingDeps=$(filterDependencies "$type" "$missingDeps" "$ignored")
       fi
     fi
   done
 
-  if [[ "$deps" != "[]" || "$devDeps" != "[]" || "$missingDeps" != "{}" ]]; then
-    echo "📦 Issues found in $depName:"
-    echo "$(
-      jq -n \
-        --argjson deps "$deps" \
-        --argjson devDeps "$devDeps" \
-        --argjson missingDeps "$missingDeps" \
-        '{deps: $deps, devDeps: $devDeps, missingDeps: $missingDeps}'
-    )"
-    LIBS_JSON=$(echo "$LIBS_JSON" | jq ". + { \"$depName\": { \"deps\": $deps, \"devDeps\": $devDeps, \"missingDeps\": $missingDeps } }")
-  else
+  if [[ "$deps" == "[]" && "$devDeps" == "[]" && "$missingDeps" == "{}" ]]; then
     echo "✅ No remaining issues in $depName"
+    return
   fi
+
+  echo "📦 Issues found in $depName:"
+  echo "$(
+    jq -n \
+      --argjson deps "$deps" \
+      --argjson devDeps "$devDeps" \
+      --argjson missingDeps "$missingDeps" \
+      '{deps: $deps, devDeps: $devDeps, missingDeps: $missingDeps}'
+  )"
+  LIBS_JSON=$(echo "$LIBS_JSON" | jq ". + { \"$depName\": { \"deps\": $deps, \"devDeps\": $devDeps, \"missingDeps\": $missingDeps } }")
 
   echo
 }
@@ -120,4 +142,9 @@ processWorkspaces() {
 
 processWorkspaces
 
-echo "$LIBS_JSON" | jq --indent 2 '.' > libs-deps.json
+if [[ "$LIBS_JSON" == "{}" ]]; then
+  echo "🧹 No issues found, cleaning up."
+  rm -f libs-deps.json
+else
+  echo "$LIBS_JSON" | jq --indent 2 '.' > libs-deps.json
+fi

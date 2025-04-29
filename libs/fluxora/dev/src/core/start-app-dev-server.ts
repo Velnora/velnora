@@ -14,6 +14,7 @@ import { FLUXORA_APP_CONTAINER, VIRTUAL_ENTRIES } from "@fluxora/utils";
 import { PROJECT_CWD } from "@fluxora/utils/node";
 
 import { fluxoraAppPlugin } from "../plugins/fluxora-app.plugin";
+import { nestjsPlugin } from "../plugins/nestjs";
 import { swcPlugin } from "../plugins/swc.plugin";
 import type { Inject } from "../types/inject";
 import { injectHtmlTags } from "../utils/inject-html-tags";
@@ -45,13 +46,14 @@ export const startAppDevServer = async (app: RegisteredApp) => {
 
   environmentContext.checkEnvironment(appModule);
 
-  const server = environmentContext.createServer(adapterContext.server.handler());
+  const server = environmentContext.createServer((req, res) => adapterContext.server.instance(req, res));
 
   const appFrameworkPlugins = appFrameworkContext.plugins;
   const templateFrameworkPlugins = templateFrameworkContext.plugins;
   const adapterPlugins = adapterContext.vite.plugins;
   const plugins = new Set([
     fluxoraAppPlugin(appModule),
+    nestjsPlugin(appModule),
     app.config.framework !== "react" && swcPlugin(),
     __DEV__ && tsconfigPaths({ root: PROJECT_CWD, loose: true }),
     process.env.NODE_ENV === "development" && inspect(),

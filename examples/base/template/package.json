@@ -1,5 +1,5 @@
 {
-  "name": "@base-example/template",
+  "name": "@fluxora-examples/base-template",
   "type": "module",
   "dependencies": {
     "react": "^19.1.0"

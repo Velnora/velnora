@@ -4,9 +4,12 @@ import type { Connect } from "vite";
 
 type HandleFunction = Connect.NextHandleFunction;
 
-export interface AdapterServer<TInstance = any> {
+export interface AdapterServer<
+  TInstance extends (req: IncomingMessage, res: ServerResponse) => void | Promise<void> = any
+> {
   instance(): TInstance;
 
+  use(this: InternalAdapterServer<TInstance>, path: string, ...methods: HandleFunction[]): void;
   use(this: InternalAdapterServer<TInstance>, ...methods: HandleFunction[]): void;
 
   get(this: InternalAdapterServer<TInstance>, path: string, ...methods: HandleFunction[]): void;
@@ -14,9 +17,8 @@ export interface AdapterServer<TInstance = any> {
   put(this: InternalAdapterServer<TInstance>, path: string, ...methods: HandleFunction[]): void;
   patch(this: InternalAdapterServer<TInstance>, path: string, ...methods: HandleFunction[]): void;
   delete(this: InternalAdapterServer<TInstance>, path: string, ...methods: HandleFunction[]): void;
-
-  handler(this: InternalAdapterServer<TInstance>): (req: IncomingMessage, res: ServerResponse) => void | Promise<void>;
 }
 
-export type InternalAdapterServer<TInstance = any> = Record<"instance", TInstance> &
-  Omit<AdapterServer<TInstance>, "instance">;
+export type InternalAdapterServer<
+  TInstance extends (req: IncomingMessage, res: ServerResponse) => void | Promise<void> = any
+> = Record<"instance", TInstance> & Omit<AdapterServer<TInstance>, "instance">;

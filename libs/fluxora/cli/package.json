@@ -18,8 +18,5 @@
     "@fluxora/cli-helper": "workspace:^",
     "@fluxora/dev": "workspace:^",
     "@fluxora/logger": "workspace:^"
-  },
-  "devDependencies": {
-    "vite": "^6.3.3"
   }
 }

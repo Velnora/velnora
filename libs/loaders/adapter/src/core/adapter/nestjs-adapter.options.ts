@@ -7,7 +7,7 @@ import { BaseClass } from "../base-class";
 
 function bindThisArg(this: NestJsAdapterOptions, value: any) {
   if (typeof value === "function") {
-    return value.bind(this.parentClass.server);
+    return value.bind(this.parent.server);
   }
   return () => value;
 }

@@ -16,7 +16,7 @@ function bindThisArg(this: AdapterServer, value: any) {
 @ClassExtensions()
 export class AdapterServer extends BaseClass<AdapterContext> implements IAdapterServer {
   @ClassGetterSetter(undefined, call)
-  declare instance: IAdapterServer["instance"];
+  declare instance: ReturnType<IAdapterServer["instance"]>;
 
   @ClassGetterSetter(undefined, bindThisArg)
   declare use: IAdapterServer["use"];
@@ -35,7 +35,4 @@ export class AdapterServer extends BaseClass<AdapterContext> implements IAdapter
 
   @ClassGetterSetter(undefined, bindThisArg)
   declare delete: IAdapterServer["delete"];
-
-  @ClassGetterSetter()
-  declare handler: IAdapterServer["handler"];
 }
