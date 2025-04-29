@@ -1,10 +1,9 @@
 {
-  "name": "@base-example/order",
+  "name": "@fluxora-examples/base-order",
   "type": "module",
   "dependencies": {
-    "@base-example/ui-kit": "workspace:^",
+    "@fluxora-examples/base-ui-kit": "workspace:^",
     "@nestjs/common": "^11.1.0",
-    "fluxora": "workspace:^",
     "react": "^19.1.0"
   }
 }

@@ -12,7 +12,6 @@
   "types": "./build/fluxora.framework-loader.d.ts",
   "dependencies": {
     "@fluxora/logger": "workspace:^",
-    "@fluxora/router": "workspace:^",
     "@fluxora/runtime": "workspace:^",
     "@fluxora/utils": "workspace:^",
     "reflect-metadata": "^0.2.2",

@@ -23,12 +23,14 @@
     "@fluxora/runtime": "workspace:^",
     "@fluxora/utils": "workspace:^",
     "@vitejs/plugin-react-swc": "^3.9.0",
+    "lodash.merge": "^4.6.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-error-boundary": "^5.0.0"
   },
   "devDependencies": {
     "@fluxora/types": "workspace:^",
+    "@types/lodash.merge": "^4",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "vite": "^6.3.3"

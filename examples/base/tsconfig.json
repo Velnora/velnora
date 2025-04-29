@@ -6,7 +6,7 @@
     "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "paths": {
-      "@base-example/ui-kit": ["libs/ui-kit/src/main.tsx"]
+      "@fluxora-examples/base-ui-kit": ["libs/ui-kit/src/main.tsx"]
     }
   },
   "include": ["fluxora-env.d.ts"]
