@@ -21,18 +21,20 @@ export const resolveRoutes = async (app: RegisteredApp) => {
     }
 
     definedRoutes.forEach(route => {
-      routeResolver.append(route.path, route);
+      routeResolver.append(route.path, { app, ...route });
     });
   } else {
     const fileModule = findFile(app.root, "client/entry-client", CLIENT_ENTRY_FILE_EXTENSIONS);
     if (fileModule) {
       routeResolver.append("/", {
-        component: () => vite.runner.import(fileModule)
+        component: () => vite.runner.import(fileModule),
+        app
       });
     }
   }
 
   routeResolver.append(VIRTUAL_ENTRIES.APP_CLIENT_SCRIPT(app.name), {
+    app,
     component: () => vite.transformRequest(VIRTUAL_ENTRIES.APP_CLIENT_SCRIPT(app.name))
   });
 
