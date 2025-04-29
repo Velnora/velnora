@@ -1,8 +1,8 @@
-import { type FC, use } from "react";
+import { type FC } from "react";
 
 import { Button } from "@fluxora-examples/base-ui-kit";
 
-import { OrderController } from "../server/order.controller";
+// import { OrderController } from "../server/order.controller";
 import { Footer } from "./components/footer";
 import { Header } from "./components/header";
 import { Header2 } from "./components/header2";
