@@ -5,12 +5,15 @@ import type { CommandReturnType } from "../types/command-return-type";
 import type { InferType } from "../types/infer-type";
 import type { LiteralType } from "../types/literal-type";
 import type { MergeObjects } from "../types/merge-objects";
-import type { OptionType } from "../types/option-type";
+import type { OptionType, PositionalOption } from "../types/option-type";
+import type { PositionalOptions } from "../types/positional-options";
 import type { Type } from "../types/type";
 import { logger } from "../utils/logger";
 import type { CommandsType } from "./commands";
 
 export class Command<TOptions extends Record<string, Type> = {}> {
+  private positionalMap = new Map<string, PositionalOptions>();
+  private positionalArguments = new Set<string>();
   private options = {} as CommandOptions<TOptions>;
   private childCommands = [] as CommandsType;
 
@@ -21,6 +24,26 @@ export class Command<TOptions extends Record<string, Type> = {}> {
     logger.debug(`Created command: ${command} - ${description}`);
   }
 
+  positional<TProperty extends string, TAliasName extends string = TProperty>(
+    property: TProperty,
+    description: string,
+    options?: Omit<PositionalOption<TAliasName>, "name" | "description">
+  ): Command<
+    MergeObjects<
+      TOptions,
+      Record<TProperty | TAliasName | CamelCase<TProperty> | CamelCase<TAliasName>, Type<"string", never>>
+    >
+  > {
+    logger.debug(`Adding positional argument: ${property} - Options:`, options);
+    const { default: defaultValue, required = true } = options || {};
+    if (this.positionalMap.has(property)) {
+      logger.warn(`Positional argument ${property} already exists. Overwriting.`);
+    }
+    this.positionalMap.set(property, { name: property, description, default: defaultValue ?? undefined, required });
+    this.positionalArguments.add(property);
+    return this as any;
+  }
+
   option<
     TName extends string,
     TType extends LiteralType,
@@ -29,27 +52,27 @@ export class Command<TOptions extends Record<string, Type> = {}> {
   >(
     name: TName,
     type: TType | OptionType<TType, TAliasName> | (OptionType<"union", TAliasName> & { values: TUnionType[] })
-  ) {
+  ): Command<
+    MergeObjects<
+      TOptions,
+      Record<TName | TAliasName | CamelCase<TName> | CamelCase<TAliasName>, Type<TType, TUnionType>>
+    >
+  > {
     const resolvedValue = (typeof type === "string" ? { type } : type) as
       | OptionType<TType, TAliasName>
       | (OptionType<"union", TAliasName> & { values: TUnionType[] });
-    const defaultValue = resolvedValue.defaultValue || null;
+    const defaultValue = resolvedValue.default || null;
 
     // @ts-ignore
     this.options[name] = {
       type: resolvedValue.type,
-      defaultValue,
+      default: defaultValue,
       values: "values" in resolvedValue ? resolvedValue.values : [],
       description: resolvedValue.description,
       alias: resolvedValue.alias
     } as OptionType<TType, TUnionType>;
     logger.debug(`Added option: ${name} - Type: ${resolvedValue.type}, Default: ${defaultValue}`);
-    return this as unknown as Command<
-      MergeObjects<
-        TOptions,
-        Record<TName | TAliasName | CamelCase<TName> | CamelCase<TAliasName>, Type<TType, TUnionType>>
-      >
-    >;
+    return this as any;
   }
 
   children(...commands: CommandsType) {
@@ -69,6 +92,7 @@ export class Command<TOptions extends Record<string, Type> = {}> {
       command: this.command,
       description: this.description ?? null,
       options: this.options,
+      positionalOptions: Array.from(this.positionalArguments).map(arg => this.positionalMap.get(arg)!),
       childCommands: this.childCommands,
       async execute(args) {
         logger.debug(`Executing command: ${self.command} with args:`, args);

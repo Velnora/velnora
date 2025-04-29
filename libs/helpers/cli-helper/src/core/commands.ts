@@ -36,21 +36,32 @@ export class Commands {
   private applyCommands(argv: Argv, commands: Awaited<CommandsType[number]>[]) {
     for (const cmdObject of commands.flatMap(cmd => Object.values(cmd))) {
       const {
-        description,
+        description: commandDescription,
         command: commandStr,
         childCommands,
         options = {},
+        positionalOptions,
         execute = () => {}
       } = cmdObject instanceof Command ? cmdObject.execute() : cmdObject;
 
       argv.command(
         commandStr,
-        description || "",
+        commandDescription || "",
         async yargs => {
           childCommands && this.applyCommands(yargs, await Array.fromAsync(childCommands));
 
+          for (const opt of positionalOptions) {
+            const { name, description: optDescription, required, default: defaultValue } = opt;
+            const isRequired = required ?? !!defaultValue;
+            logger.debug(`Adding positional argument to command '${commandStr}': ${name} (${isRequired})`);
+
+            const optName = isRequired ? `<${name}>` : `[${name}]`;
+            yargs.positional(optName, { type: "string", description: optDescription, default: defaultValue });
+            if (isRequired) yargs.demandOption(name);
+          }
+
           for (const [optionName, optionDetails] of Object.entries(options)) {
-            const { type, defaultValue, alias, description } = optionDetails;
+            const { type, description: optionDescription, default: defaultValue, alias } = optionDetails;
 
             logger.debug(
               `Adding option to command '${commandStr}': ${optionName} (${type})${alias ? ` aliased to ${alias}` : ""}`
@@ -60,7 +71,7 @@ export class Commands {
               yargs.option(optionName, {
                 type,
                 alias,
-                description,
+                description: optionDescription,
                 // @ts-ignore
                 choices: optionDetails.values,
                 default: defaultValue ?? undefined
@@ -69,7 +80,7 @@ export class Commands {
               yargs.option(optionName, {
                 type,
                 alias,
-                description,
+                description: optionDescription,
                 default: defaultValue ?? undefined
               });
             }

@@ -5,5 +5,9 @@ export interface OptionType<TType extends LiteralType, TAlias extends string = s
   type: TType;
   alias?: TAlias;
   description?: string;
-  defaultValue?: InferType<TType> | null;
+  default?: InferType<TType> | null;
+}
+
+export interface PositionalOption<TAlias extends string = string> extends OptionType<"string", TAlias> {
+  required?: boolean;
 }
