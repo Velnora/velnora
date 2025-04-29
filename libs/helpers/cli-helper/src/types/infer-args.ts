@@ -7,5 +7,5 @@ export type InferArgs<T extends Command<any> | CommandReturnType<any>> =
   T extends Command<infer TOptions>
     ? TOptions
     : T extends CommandReturnType<infer TOptions extends Record<string, Type>>
-      ? { [K in keyof TOptions]: InferType<TOptions[K]["type"]> }
+      ? { [K in keyof TOptions]: InferType<TOptions[K]["type"], TOptions[K]["values"]> }
       : never;

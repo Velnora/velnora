@@ -1,6 +1,6 @@
-import type { OptionType } from "./option-type";
+import type { Option } from "./options";
 import type { Type } from "./type";
 
 export type CommandOptions<TOptions extends Record<string, Type>> = {
-  [K in keyof TOptions]: OptionType<TOptions[K]["type"]> | (OptionType<"union"> & { values: TOptions[K]["values"] });
+  [K in keyof TOptions]: Option<TOptions[K]["type"]> | (Option<"union"> & { values: TOptions[K]["values"] });
 };

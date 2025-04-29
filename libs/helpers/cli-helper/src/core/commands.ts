@@ -1,11 +1,9 @@
 import yargs, { type Arguments, type Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import type { CommandReturnType } from "../types/command-return-type";
+import type { CommandsType } from "../types/commands-type";
 import { logger } from "../utils/logger";
 import { Command } from "./command";
-
-export type CommandsType = Promise<Record<string, Command<any> | CommandReturnType<any>>>[];
 
 export class Commands {
   constructor(private readonly commands: CommandsType) {
@@ -44,8 +42,14 @@ export class Commands {
         execute = () => {}
       } = cmdObject instanceof Command ? cmdObject.execute() : cmdObject;
 
-      argv.command(
+      const commandParts: string[] = [
         commandStr,
+        ...positionalOptions.map(opt => ((opt.required ?? !!opt.default) ? `<${opt.name}>` : `[${opt.name}]`)),
+        ...(Object.keys(options).length ? ["[options]"] : [])
+      ];
+
+      argv.command(
+        commandParts.join(" "),
         commandDescription || "",
         async yargs => {
           childCommands && this.applyCommands(yargs, await Array.fromAsync(childCommands));
@@ -54,9 +58,7 @@ export class Commands {
             const { name, description: optDescription, required, default: defaultValue } = opt;
             const isRequired = required ?? !!defaultValue;
             logger.debug(`Adding positional argument to command '${commandStr}': ${name} (${isRequired})`);
-
-            const optName = isRequired ? `<${name}>` : `[${name}]`;
-            yargs.positional(optName, { type: "string", description: optDescription, default: defaultValue });
+            yargs.positional(name, { type: "string", description: optDescription, default: defaultValue });
             if (isRequired) yargs.demandOption(name);
           }
 

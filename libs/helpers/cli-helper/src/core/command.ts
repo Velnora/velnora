@@ -2,14 +2,13 @@ import type { CamelCase, Promisable } from "type-fest";
 
 import type { CommandOptions } from "../types/command-option";
 import type { CommandReturnType } from "../types/command-return-type";
+import type { CommandsType } from "../types/commands-type";
 import type { InferType } from "../types/infer-type";
 import type { LiteralType } from "../types/literal-type";
 import type { MergeObjects } from "../types/merge-objects";
-import type { OptionType, PositionalOption } from "../types/option-type";
-import type { PositionalOptions } from "../types/positional-options";
+import type { Option, PositionalOption, PositionalOptions } from "../types/options";
 import type { Type } from "../types/type";
 import { logger } from "../utils/logger";
-import type { CommandsType } from "./commands";
 
 export class Command<TOptions extends Record<string, Type> = {}> {
   private positionalMap = new Map<string, PositionalOptions>();
@@ -51,7 +50,7 @@ export class Command<TOptions extends Record<string, Type> = {}> {
     TUnionType extends string = string
   >(
     name: TName,
-    type: TType | OptionType<TType, TAliasName> | (OptionType<"union", TAliasName> & { values: TUnionType[] })
+    type: TType | Option<TType, TAliasName> | (Option<"union", TAliasName> & { values: TUnionType[] })
   ): Command<
     MergeObjects<
       TOptions,
@@ -59,8 +58,8 @@ export class Command<TOptions extends Record<string, Type> = {}> {
     >
   > {
     const resolvedValue = (typeof type === "string" ? { type } : type) as
-      | OptionType<TType, TAliasName>
-      | (OptionType<"union", TAliasName> & { values: TUnionType[] });
+      | Option<TType, TAliasName>
+      | (Option<"union", TAliasName> & { values: TUnionType[] });
     const defaultValue = resolvedValue.default || null;
 
     // @ts-ignore
@@ -70,7 +69,7 @@ export class Command<TOptions extends Record<string, Type> = {}> {
       values: "values" in resolvedValue ? resolvedValue.values : [],
       description: resolvedValue.description,
       alias: resolvedValue.alias
-    } as OptionType<TType, TUnionType>;
+    } as Option<TType, TUnionType>;
     logger.debug(`Added option: ${name} - Type: ${resolvedValue.type}, Default: ${defaultValue}`);
     return this as any;
   }

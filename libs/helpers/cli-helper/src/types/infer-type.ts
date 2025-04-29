@@ -1,11 +1,11 @@
 import type { LiteralType } from "./literal-type";
 
-export type InferType<T extends LiteralType, TUnionType = any> = T extends "string"
+export type InferType<TType extends LiteralType, TUnionType = any> = TType extends "string"
   ? string
-  : T extends "number"
+  : TType extends "number"
     ? number
-    : T extends "boolean"
+    : TType extends "boolean"
       ? boolean
-      : T extends "union"
+      : TType extends "union"
         ? TUnionType
         : never;

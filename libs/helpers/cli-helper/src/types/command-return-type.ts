@@ -1,9 +1,8 @@
 import type { Arguments } from "yargs";
 
-import type { CommandsType } from "@fluxora/cli-helper";
-
+import type { CommandsType } from "../types/commands-type";
 import type { CommandOptions } from "./command-option";
-import type { PositionalOptions } from "./positional-options";
+import type { PositionalOptions } from "./options";
 import type { Type } from "./type";
 
 export interface CommandReturnType<TOptions extends Record<string, Type> = Record<string, Type>> {
