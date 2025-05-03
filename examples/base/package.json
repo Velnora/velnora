@@ -9,6 +9,7 @@
   "scripts": {
     "build": "fluxora-dev build",
     "dev": "fluxora-dev dev",
+    "generate:app": "rm -rf apps/landing && fluxora-dev generate app landing",
     "nx:dev": "fluxora dev"
   },
   "dependencies": {

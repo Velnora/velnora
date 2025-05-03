@@ -18,11 +18,13 @@
     "@fluxora/logger": "workspace:^",
     "@nestjs/common": "^11.1.0",
     "glob": "^11.0.2",
+    "lodash.merge": "^4.6.2",
     "vite": "^6.3.3",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
     "@fluxora/types": "workspace:^",
+    "@types/lodash.merge": "^4",
     "type-fest": "^4.40.0"
   }
 }

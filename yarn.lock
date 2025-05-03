@@ -1479,6 +1479,7 @@ __metadata:
   dependencies:
     "@fluxora/cli-helper": "workspace:^"
     "@fluxora/dev": "workspace:^"
+    "@fluxora/generator": "workspace:^"
     "@fluxora/logger": "workspace:^"
   bin:
     fluxora: bin/fluxora.js
@@ -1594,12 +1595,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fluxora/generator@workspace:libs/fluxora/generator":
+"@fluxora/generator@workspace:^, @fluxora/generator@workspace:libs/fluxora/generator":
   version: 0.0.0-use.local
   resolution: "@fluxora/generator@workspace:libs/fluxora/generator"
   dependencies:
     "@fluxora/logger": "workspace:^"
+    "@fluxora/runtime": "workspace:^"
     "@fluxora/types": "workspace:^"
+    "@fluxora/utils": "workspace:^"
+    type-fest: "npm:^4.40.1"
   languageName: unknown
   linkType: soft
 
@@ -1678,7 +1682,9 @@ __metadata:
     "@fluxora/logger": "workspace:^"
     "@fluxora/types": "workspace:^"
     "@nestjs/common": "npm:^11.1.0"
+    "@types/lodash.merge": "npm:^4"
     glob: "npm:^11.0.2"
+    lodash.merge: "npm:^4.6.2"
     type-fest: "npm:^4.40.0"
     vite: "npm:^6.3.3"
     vite-tsconfig-paths: "npm:^5.1.4"
@@ -5370,6 +5376,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"landing@workspace:examples/base/apps/landing":
+  version: 0.0.0-use.local
+  resolution: "landing@workspace:examples/base/apps/landing"
+  languageName: unknown
+  linkType: soft
+
 "lines-and-columns@npm:2.0.3":
   version: 2.0.3
   resolution: "lines-and-columns@npm:2.0.3"
@@ -7323,7 +7335,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^4.40.0":
+"type-fest@npm:^4.40.0, type-fest@npm:^4.40.1":
   version: 4.40.1
   resolution: "type-fest@npm:4.40.1"
   checksum: 10c0/590cb7d4dcd3da83efe49b5b52cd041661f6fa29f18cb76650fe1fdeb4090688e92955656e9d981e606abb13d25c0418be8c6c6504d80e87fe18dc9ca0888392

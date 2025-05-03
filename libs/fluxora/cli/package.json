@@ -17,6 +17,7 @@
   "dependencies": {
     "@fluxora/cli-helper": "workspace:^",
     "@fluxora/dev": "workspace:^",
+    "@fluxora/generator": "workspace:^",
     "@fluxora/logger": "workspace:^"
   }
 }

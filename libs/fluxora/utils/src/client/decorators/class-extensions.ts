@@ -32,7 +32,7 @@ export const ClassExtensions = (): ClassDecorator => {
               configurable: true,
               get() {
                 if (baseClassHandler && !this[`_${prop}`]) {
-                  const value = baseClassHandler(this);
+                  const value = baseClassHandler();
                   logger.debug(`Creating new instance of ${Class.name} for ${this.constructor.name}.${prop}`, value);
                   this[`_${prop}`] = value;
                 }

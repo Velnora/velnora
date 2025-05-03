@@ -26,6 +26,7 @@
       "@fluxora/daemon": ["libs/fluxora/daemon/src/main.ts"],
       "@fluxora/daemon/runner": ["libs/fluxora/daemon/src/runner.ts"],
       "@fluxora/dev": ["libs/fluxora/dev/src/main.ts"],
+      "@fluxora/generator": ["libs/fluxora/generator/src/main.ts"],
       "@fluxora/router": ["libs/fluxora/router/src/main.ts"],
       "@fluxora/router/node": ["libs/fluxora/router/src/node/main.ts"],
       "@fluxora/runtime": ["libs/fluxora/runtime/src/main.ts"],
