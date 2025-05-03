@@ -1,5 +1,4 @@
-import { type ConsolaInstance, type LogObject } from "consola";
-import { Consola, type LogLevel, LogLevels, type LogType } from "consola";
+import { Consola, type ConsolaInstance, type LogLevel, LogLevels, type LogObject, type LogType } from "consola";
 
 import { envLogLevel } from "../const";
 import { baseReporter } from "../reporters/base.reporter";

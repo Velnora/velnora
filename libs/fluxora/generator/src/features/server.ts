@@ -1,0 +1,53 @@
+import { capitalize } from "@fluxora/utils";
+
+import type { AppCommandOptions } from "../../../cli/src/commands/generate/app";
+import type { GeneratedProjectFs } from "../utils/generated-project-fs";
+import { logFileSuccess } from "../utils/log-file-success";
+
+export async function applyServerFiles(fs: GeneratedProjectFs, options: AppCommandOptions) {
+  await fs.server.controller.write(
+    `import { Controller, Get } from "@nestjs/common";
+
+import { ${capitalize(options.name)}Service } from "./${options.name}.service";
+
+@Controller("${options.name}")
+export class ${capitalize(options.name)}Controller {
+  constructor(private readonly ${options.name}Service: ${capitalize(options.name)}Service) {}
+  
+  @Get()
+  getHello(): string {
+    return this.${options.name}Service.getHello();
+  }
+}
+`
+  );
+  logFileSuccess(fs.dot.relative(fs.server.controller.$raw));
+
+  await fs.server.service.write(
+    `import { Injectable } from "@nestjs/common";
+
+@Injectable()
+export class ${capitalize(options.name)}Service {
+  getHello(): string {
+    return "${options.name} service!";
+  }
+}
+`
+  );
+  logFileSuccess(fs.dot.relative(fs.server.service.$raw));
+
+  await fs.server.module.write(
+    `import { Module } from "@nestjs/common";
+
+import { ${capitalize(options.name)}Controller } from "./${options.name}.controller";
+import { ${capitalize(options.name)}Service } from "./${options.name}.service";
+
+@Module({
+  controllers: [${capitalize(options.name)}Controller],
+  providers: [${capitalize(options.name)}Service],
+})
+export class ${capitalize(options.name)}Module {}
+`
+  );
+  logFileSuccess(fs.dot.relative(fs.server.module.$raw));
+}

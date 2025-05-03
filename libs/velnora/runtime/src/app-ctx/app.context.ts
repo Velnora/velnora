@@ -14,6 +14,8 @@ import { BuildSettings, CacheSettings, CreateServerOptions, ProjectStructureCont
 @ClassRawValues()
 @ClassExtensions()
 export class AppContext extends BaseClass<UserConfig> implements UserConfig {
+  private isResolved = false;
+
   @ClassGetterSetter()
   declare projectStructure: ProjectStructureContext;
 
@@ -33,14 +35,15 @@ export class AppContext extends BaseClass<UserConfig> implements UserConfig {
   declare vite: ViteContext;
 
   async resolveConfig() {
+    if (this.isResolved) return;
+    this.isResolved = true;
+
     const configFile = CONFIG_FILENAMES.map(file => resolve(process.cwd(), file)).find(file => existsSync(file));
     if (!configFile) return;
     const config = await resolveConfig<UserConfig>(configFile);
     if (!config) return;
     Object.assign(this, config);
   }
-
-  checks() {}
 
   async discoverModules() {
     return Promise.all([

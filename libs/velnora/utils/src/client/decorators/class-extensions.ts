@@ -1,10 +1,12 @@
 import type { Type } from "@nestjs/common";
 
 import { CLASS_METHOD_DATA, CLASS_PROPS_SET } from "../../const";
-import type { BaseClass } from "../modules";
+import { BaseClass } from "../modules";
 import { isClass } from "../utils";
 import { logger } from "../utils/logger";
 import { decoratorSettings } from "./decorator.settings";
+
+const globalInstance = new BaseClass();
 
 export const ClassExtensions = (): ClassDecorator => {
   return Target => {
@@ -12,6 +14,10 @@ export const ClassExtensions = (): ClassDecorator => {
     class InternalTarget extends OldTarget {
       constructor(...args: any[]) {
         super(...args);
+
+        if (!("__getSuperPrototype" in this)) {
+          console.warn(`Class "${Target.name}" recommended to be extended from BaseClass`);
+        }
 
         const keysSet = (Reflect.getMetadata(CLASS_PROPS_SET, this) ?? new Set()) as Set<string>;
         const keys = Array.from(keysSet);
@@ -58,12 +64,16 @@ export const ClassExtensions = (): ClassDecorator => {
               }
             });
           });
+
+        this.isInitialized = true;
+        this.initFunctions.forEach(fn => fn.call(this));
+        this.initFunctions.clear();
       }
 
-      checks() {
+      override checks() {
         super.checks();
 
-        const proto = this.__getSuperPrototype(CLASS_PROPS_SET);
+        const proto = (this.__getSuperPrototype || globalInstance.__getSuperPrototype)(CLASS_PROPS_SET);
         Array.from((Reflect.getOwnMetadata(CLASS_PROPS_SET, proto) ?? new Set()) as Set<string>)
           .map(key => [key, Reflect.getMetadata("design:type", this, key)])
           .map(([key, Class]) => {

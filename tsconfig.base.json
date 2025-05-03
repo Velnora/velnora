@@ -26,6 +26,7 @@
       "@velnora/daemon": ["libs/velnora/daemon/src/main.ts"],
       "@velnora/daemon/runner": ["libs/velnora/daemon/src/runner.ts"],
       "@velnora/dev": ["libs/velnora/dev/src/main.ts"],
+      "@velnora/generator": ["libs/velnora/generator/src/main.ts"],
       "@velnora/router": ["libs/velnora/router/src/main.ts"],
       "@velnora/router/node": ["libs/velnora/router/src/node/main.ts"],
       "@velnora/runtime": ["libs/velnora/runtime/src/main.ts"],

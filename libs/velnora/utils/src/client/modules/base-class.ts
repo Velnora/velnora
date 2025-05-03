@@ -1,5 +1,13 @@
 export class BaseClass<TRawReturnType = {}> {
-  constructor() {}
+  declare protected isInitialized: boolean;
+  declare protected initFunctions: Set<() => void>;
+
+  constructor() {
+    Object.defineProperties(this, {
+      isInitialized: { enumerable: false, configurable: false, writable: true, value: false },
+      initFunctions: { enumerable: false, configurable: false, writable: true, value: new Set() }
+    });
+  }
 
   checks() {}
 
@@ -16,5 +24,13 @@ export class BaseClass<TRawReturnType = {}> {
       proto = Object.getPrototypeOf(proto);
     }
     return proto;
+  }
+
+  afterInit(cb: () => void) {
+    if (this.isInitialized) {
+      return cb();
+    }
+
+    this.initFunctions.add(cb);
   }
 }
