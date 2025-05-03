@@ -29,9 +29,9 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
-    "@swc/core": "^1.11.22",
-    "@types/lodash.merge": "^4",
+    "@swc/core": "^1.11.24",
+    "@types/lodash.merge": "^4.6.9",
     "@velnora/types": "workspace:^",
-    "type-fest": "^4.40.0"
+    "type-fest": "^4.40.1"
   }
 }

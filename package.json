@@ -17,21 +17,21 @@
     "nx:graph": "nx graph --open false"
   },
   "dependencies": {
-    "@swc/core": "^1.11.22",
+    "@swc/core": "^1.11.24",
     "magic-string": "^0.30.17"
   },
   "devDependencies": {
-    "@nx/vite": "^20.8.0",
+    "@nx/vite": "^20.8.1",
     "@swc-node/register": "^1.10.10",
     "@swc/helpers": "^0.5.17",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "@types/node": "^22.14.1",
+    "@types/node": "^22.15.3",
     "depcheck": "^1.4.7",
-    "nx": "^20.8.0",
+    "nx": "^20.8.1",
     "prettier": "^3.5.3",
     "prettier-plugin-packagejson": "^2.5.10",
-    "rollup": "^4.40.0",
-    "type-fest": "^4.40.0",
+    "rollup": "^4.40.1",
+    "type-fest": "^4.40.1",
     "vite": "^6.3.4",
     "vite-node": "^3.1.2",
     "vite-plugin-dts": "^4.5.3",

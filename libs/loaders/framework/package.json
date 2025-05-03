@@ -15,7 +15,7 @@
     "@velnora/runtime": "workspace:^",
     "@velnora/utils": "workspace:^",
     "reflect-metadata": "^0.2.2",
-    "type-fest": "^4.40.0"
+    "type-fest": "^4.40.1"
   },
   "devDependencies": {
     "@velnora/types": "workspace:^",

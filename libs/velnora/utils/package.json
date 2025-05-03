@@ -23,6 +23,6 @@
   },
   "devDependencies": {
     "@velnora/types": "workspace:^",
-    "type-fest": "^4.40.0"
+    "type-fest": "^4.40.1"
   }
 }

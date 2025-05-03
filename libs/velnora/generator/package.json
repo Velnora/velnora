@@ -1,0 +1,22 @@
+{
+  "name": "@velnora/generator",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/velnora.generator.d.ts",
+      "import": "./build/velnora.generator.js"
+    }
+  },
+  "main": "./build/velnora.generator.js",
+  "types": "./build/velnora.generator.d.ts",
+  "dependencies": {
+    "@velnora/logger": "workspace:^",
+    "@velnora/runtime": "workspace:^",
+    "@velnora/utils": "workspace:^"
+  },
+  "devDependencies": {
+    "@velnora/types": "workspace:^",
+    "type-fest": "^4.40.1"
+  }
+}

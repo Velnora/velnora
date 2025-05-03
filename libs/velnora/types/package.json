@@ -15,7 +15,7 @@
   "types": "./build/velnora.types.d.ts",
   "devDependencies": {
     "@nestjs/core": "^11.1.0",
-    "type-fest": "^4.40.0",
+    "type-fest": "^4.40.1",
     "vite": "^6.3.4"
   }
 }

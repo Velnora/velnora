@@ -1,6 +1,6 @@
 import { PackageJson, TsConfigJson } from "type-fest";
 
-import { appCtx } from "@fluxora/runtime";
+import { appCtx } from "@velnora/runtime";
 
 import type { AppCommandOptions } from "../../../cli/src/commands/generate/app";
 import { applyClientFiles } from "../features/client";
