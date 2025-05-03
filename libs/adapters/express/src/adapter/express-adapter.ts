@@ -1,11 +1,11 @@
 import express from "express";
 
-import { defineAdapter } from "@fluxora/utils/node";
 import { ExpressAdapter } from "@nestjs/platform-express";
+import { defineAdapter } from "@velnora/utils/node";
 
 import { optimizeDepsPlugin } from "./plugins/optimize-deps.plugin";
 
-export const adapterName = "@fluxora/adapter-express";
+export const adapterName = "@velnora/adapter-express";
 
 export default defineAdapter({
   name: adapterName,

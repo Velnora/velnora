@@ -1,23 +1,23 @@
 {
-  "name": "@fluxora/adapter-loader",
+  "name": "@velnora/adapter-loader",
   "version": "0.0.0-dev.0",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./build/fluxora.adapter-loader.d.ts",
-      "import": "./build/fluxora.adapter-loader.js"
+      "types": "./build/velnora.adapter-loader.d.ts",
+      "import": "./build/velnora.adapter-loader.js"
     }
   },
-  "main": "./build/fluxora.adapter-loader.js",
-  "types": "./build/fluxora.adapter-loader.d.ts",
+  "main": "./build/velnora.adapter-loader.js",
+  "types": "./build/velnora.adapter-loader.d.ts",
   "dependencies": {
-    "@fluxora/logger": "workspace:^",
-    "@fluxora/utils": "workspace:^",
     "@nestjs/core": "^11.1.0",
+    "@velnora/logger": "workspace:^",
+    "@velnora/utils": "workspace:^",
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
-    "@fluxora/types": "workspace:^",
+    "@velnora/types": "workspace:^",
     "vite": "^6.3.3"
   }
 }

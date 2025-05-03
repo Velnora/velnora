@@ -1,4 +1,4 @@
-import { adapterRegistry } from "@fluxora/adapter-loader";
+import { adapterRegistry } from "@velnora/adapter-loader";
 
 import expressAdapter, { adapterName } from "./adapter/main";
 

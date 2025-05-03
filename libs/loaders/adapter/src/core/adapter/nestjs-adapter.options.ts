@@ -1,6 +1,6 @@
-import type { NestJsAdapterOptions as INestJsAdapterOptions } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
 import type { AbstractHttpAdapter } from "@nestjs/core";
+import type { NestJsAdapterOptions as INestJsAdapterOptions } from "@velnora/types";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@velnora/utils";
 
 import type { AdapterContext } from "../adapter.context";
 import { BaseClass } from "../base-class";

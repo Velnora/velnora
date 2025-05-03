@@ -1,0 +1,23 @@
+{
+  "name": "@velnora/runtime",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/velnora.runtime.d.ts",
+      "import": "./build/velnora.runtime.js"
+    }
+  },
+  "main": "./build/velnora.runtime.js",
+  "types": "./build/velnora.runtime.d.ts",
+  "dependencies": {
+    "@velnora/logger": "workspace:^",
+    "@velnora/utils": "workspace:^",
+    "glob": "^11.0.2",
+    "reflect-metadata": "^0.2.2"
+  },
+  "devDependencies": {
+    "@velnora/types": "workspace:^",
+    "vite": "^6.3.3"
+  }
+}

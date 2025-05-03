@@ -16,21 +16,21 @@ depCheckScript=$(yarn bin depcheck)
 # - <packages> is a comma-separated list of package names
 #
 # Example:
-#   @fluxora/example-* deps:fluxora;devDeps:fluxora
-#     → Matches all workspaces starting with "@fluxora/example-"
-#     → Ignores "fluxora" in dependencies and devDependencies
-#   @fluxora/adapter-express deps:rxjs
-#     → Matches only "@fluxora/adapter-express"
+#   @velnora/example-* deps:velnora;devDeps:velnora
+#     → Matches all workspaces starting with "@velnora/example-"
+#     → Ignores "velnora" in dependencies and devDependencies
+#   @velnora/adapter-express deps:rxjs
+#     → Matches only "@velnora/adapter-express"
 #     → Ignores "rxjs" in dependencies
-#   @fluxora-examples/base-profile missingDeps:order
-#     → Matches "@fluxora-examples/base-profile"
+#   @velnora-examples/base-profile missingDeps:order
+#     → Matches "@velnora-examples/base-profile"
 #     → Ignores "order" in missing dependencies
 #
 IGNORE_LIST=$(cat <<EOF
-@fluxora/example-base deps:reflect-metadata,@fluxora/framework-react
-@fluxora-examples/base-* missingDeps:fluxora
-@fluxora-examples/base-profile missingDeps:order
-@fluxora/adapter-express deps:rxjs
+@velnora/example-base deps:reflect-metadata,@velnora/framework-react
+@velnora-examples/base-* missingDeps:velnora
+@velnora-examples/base-profile missingDeps:order
+@velnora/adapter-express deps:rxjs
 EOF
 )
 

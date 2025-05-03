@@ -1,27 +1,27 @@
 {
-  "name": "@fluxora/framework-react",
+  "name": "@velnora/framework-react",
   "version": "0.0.0-dev.0",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./build/fluxora.framework-react.d.ts",
-      "import": "./build/fluxora.framework-react.js"
+      "types": "./build/velnora.framework-react.d.ts",
+      "import": "./build/velnora.framework-react.js"
     },
     "./client": {
-      "types": "./build/fluxora.framework.react-client.d.ts",
-      "import": "./build/fluxora.framework.react-client.js"
+      "types": "./build/velnora.framework.react-client.d.ts",
+      "import": "./build/velnora.framework.react-client.js"
     },
     "./ssr": {
-      "types": "./build/fluxora.framework.react-ssr.d.ts",
-      "import": "./build/fluxora.framework.react-ssr.js"
+      "types": "./build/velnora.framework.react-ssr.d.ts",
+      "import": "./build/velnora.framework.react-ssr.js"
     }
   },
-  "main": "./build/fluxora.framework.react.js",
-  "types": "./build/fluxora.framework-react.d.ts",
+  "main": "./build/velnora.framework.react.js",
+  "types": "./build/velnora.framework-react.d.ts",
   "dependencies": {
-    "@fluxora/framework-loader": "workspace:^",
-    "@fluxora/runtime": "workspace:^",
-    "@fluxora/utils": "workspace:^",
+    "@velnora/framework-loader": "workspace:^",
+    "@velnora/runtime": "workspace:^",
+    "@velnora/utils": "workspace:^",
     "@vitejs/plugin-react-swc": "^3.9.0",
     "lodash.merge": "^4.6.2",
     "react": "^19.1.0",
@@ -29,10 +29,10 @@
     "react-error-boundary": "^5.0.0"
   },
   "devDependencies": {
-    "@fluxora/types": "workspace:^",
     "@types/lodash.merge": "^4",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "@velnora/types": "workspace:^",
     "vite": "^6.3.3"
   }
 }

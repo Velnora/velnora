@@ -1,10 +1,10 @@
 import type { FC } from "react";
 import { renderToPipeableStream } from "react-dom/server";
 
-import type { SSRRenderContext } from "@fluxora/framework-loader";
-import { appCtx } from "@fluxora/runtime";
-import type { WithDefault } from "@fluxora/types";
-import { capitalize } from "@fluxora/utils";
+import type { SSRRenderContext } from "@velnora/framework-loader";
+import { appCtx } from "@velnora/runtime";
+import type { WithDefault } from "@velnora/types";
+import { capitalize } from "@velnora/utils";
 
 export const render = async (ctx: SSRRenderContext) => {
   const templateEntry = ctx.template.getEntryPoint();

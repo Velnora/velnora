@@ -1,4 +1,4 @@
-import { BaseClass as RootBaseClass, decoratorSettings } from "@fluxora/utils";
+import { BaseClass as RootBaseClass, decoratorSettings } from "@velnora/utils";
 
 export class BaseClass<TParent> extends RootBaseClass {
   declare parent: TParent;

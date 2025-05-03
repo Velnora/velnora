@@ -1,6 +1,6 @@
 import { type FC } from "react";
 
-import { Button } from "@fluxora-examples/base-ui-kit";
+import { Button } from "@velnora-examples/base-ui-kit";
 
 // import { OrderController } from "../server/order.controller";
 import { Footer } from "./components/footer";

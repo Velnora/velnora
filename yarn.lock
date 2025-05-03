@@ -1395,296 +1395,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluxora-examples/base-order@workspace:examples/base/apps/order":
-  version: 0.0.0-use.local
-  resolution: "@fluxora-examples/base-order@workspace:examples/base/apps/order"
-  dependencies:
-    "@fluxora-examples/base-ui-kit": "workspace:^"
-    "@nestjs/common": "npm:^11.1.0"
-    react: "npm:^19.1.0"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora-examples/base-profile@workspace:examples/base/apps/profile":
-  version: 0.0.0-use.local
-  resolution: "@fluxora-examples/base-profile@workspace:examples/base/apps/profile"
-  dependencies:
-    "@hookform/resolvers": "npm:^5.0.1"
-    "@nestjs/common": "npm:^11.1.0"
-    react: "npm:^19.1.0"
-    react-hook-form: "npm:^7.56.1"
-    zod: "npm:^3.24.3"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora-examples/base-template@workspace:examples/base/template":
-  version: 0.0.0-use.local
-  resolution: "@fluxora-examples/base-template@workspace:examples/base/template"
-  dependencies:
-    react: "npm:^19.1.0"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora-examples/base-ui-kit@workspace:^, @fluxora-examples/base-ui-kit@workspace:examples/base/libs/ui-kit":
-  version: 0.0.0-use.local
-  resolution: "@fluxora-examples/base-ui-kit@workspace:examples/base/libs/ui-kit"
-  dependencies:
-    react: "npm:^19.1.0"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/adapter-express@workspace:libs/adapters/express":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/adapter-express@workspace:libs/adapters/express"
-  dependencies:
-    "@fluxora/adapter-loader": "workspace:^"
-    "@fluxora/utils": "workspace:^"
-    "@nestjs/core": "npm:^11.1.0"
-    "@nestjs/platform-express": "npm:^11.1.0"
-    "@types/express": "npm:^5.0.1"
-    express: "npm:^5.1.0"
-    rxjs: "npm:^7.8.2"
-    vite: "npm:^6.3.3"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/adapter-loader@workspace:^, @fluxora/adapter-loader@workspace:libs/loaders/adapter":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/adapter-loader@workspace:libs/loaders/adapter"
-  dependencies:
-    "@fluxora/logger": "workspace:^"
-    "@fluxora/types": "workspace:^"
-    "@fluxora/utils": "workspace:^"
-    "@nestjs/core": "npm:^11.1.0"
-    reflect-metadata: "npm:^0.2.2"
-    vite: "npm:^6.3.3"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/cli-helper@workspace:^, @fluxora/cli-helper@workspace:libs/helpers/cli-helper":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/cli-helper@workspace:libs/helpers/cli-helper"
-  dependencies:
-    "@fluxora/logger": "workspace:^"
-    "@fluxora/types": "workspace:^"
-    "@types/yargs": "npm:^17.0.33"
-    type-fest: "npm:^4.40.0"
-    yargs: "npm:^17.7.2"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/cli@workspace:^, @fluxora/cli@workspace:libs/fluxora/cli":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/cli@workspace:libs/fluxora/cli"
-  dependencies:
-    "@fluxora/cli-helper": "workspace:^"
-    "@fluxora/dev": "workspace:^"
-    "@fluxora/logger": "workspace:^"
-  bin:
-    fluxora: bin/fluxora.js
-    fluxora-dev: bin/fluxora-dev.js
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/compiler@workspace:^, @fluxora/compiler@workspace:libs/fluxora/compiler":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/compiler@workspace:libs/fluxora/compiler"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/core@workspace:^, @fluxora/core@workspace:libs/fluxora/core":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/core@workspace:libs/fluxora/core"
-  dependencies:
-    "@fluxora/logger": "workspace:^"
-    "@fluxora/types": "workspace:^"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/dev@workspace:^, @fluxora/dev@workspace:libs/fluxora/dev":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/dev@workspace:libs/fluxora/dev"
-  dependencies:
-    "@fluxora/adapter-loader": "workspace:^"
-    "@fluxora/environment-loader": "workspace:^"
-    "@fluxora/framework-loader": "workspace:^"
-    "@fluxora/logger": "workspace:^"
-    "@fluxora/router": "workspace:^"
-    "@fluxora/runtime": "workspace:^"
-    "@fluxora/types": "workspace:^"
-    "@fluxora/utils": "workspace:^"
-    "@nestjs/common": "npm:^11.1.0"
-    "@nestjs/core": "npm:^11.1.0"
-    "@swc/core": "npm:^1.11.22"
-    "@swc/helpers": "npm:^0.5.17"
-    "@types/lodash.merge": "npm:^4"
-    esbuild: "npm:^0.25.3"
-    lodash.merge: "npm:^4.6.2"
-    magic-string: "npm:^0.30.17"
-    type-fest: "npm:^4.40.0"
-    vite: "npm:^6.3.3"
-    vite-plugin-inspect: "npm:^11.0.1"
-    vite-tsconfig-paths: "npm:^5.1.4"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/environment-loader@workspace:^, @fluxora/environment-loader@workspace:libs/loaders/environment":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/environment-loader@workspace:libs/loaders/environment"
-  dependencies:
-    "@fluxora/logger": "workspace:^"
-    "@fluxora/runtime": "workspace:^"
-    "@fluxora/types": "workspace:^"
-    "@fluxora/utils": "workspace:^"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/environment-node@workspace:libs/environments/node":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/environment-node@workspace:libs/environments/node"
-  dependencies:
-    "@fluxora/environment-loader": "workspace:^"
-    "@fluxora/utils": "workspace:^"
-    "@types/semver": "npm:^7.7.0"
-    semver: "npm:^7.7.1"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/example-base@workspace:examples/base":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/example-base@workspace:examples/base"
-  dependencies:
-    "@fluxora/framework-react": "workspace:^"
-    fluxora: "workspace:^"
-    reflect-metadata: "npm:^0.2.2"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/framework-loader@workspace:^, @fluxora/framework-loader@workspace:libs/loaders/framework":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/framework-loader@workspace:libs/loaders/framework"
-  dependencies:
-    "@fluxora/logger": "workspace:^"
-    "@fluxora/runtime": "workspace:^"
-    "@fluxora/types": "workspace:^"
-    "@fluxora/utils": "workspace:^"
-    reflect-metadata: "npm:^0.2.2"
-    type-fest: "npm:^4.40.0"
-    vite: "npm:^6.3.3"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/framework-react@workspace:^, @fluxora/framework-react@workspace:libs/frameworks/react":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/framework-react@workspace:libs/frameworks/react"
-  dependencies:
-    "@fluxora/framework-loader": "workspace:^"
-    "@fluxora/runtime": "workspace:^"
-    "@fluxora/types": "workspace:^"
-    "@fluxora/utils": "workspace:^"
-    "@types/lodash.merge": "npm:^4"
-    "@types/react": "npm:^19.1.2"
-    "@types/react-dom": "npm:^19.1.2"
-    "@vitejs/plugin-react-swc": "npm:^3.9.0"
-    lodash.merge: "npm:^4.6.2"
-    react: "npm:^19.1.0"
-    react-dom: "npm:^19.1.0"
-    react-error-boundary: "npm:^5.0.0"
-    vite: "npm:^6.3.3"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/generator@workspace:libs/fluxora/generator":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/generator@workspace:libs/fluxora/generator"
-  dependencies:
-    "@fluxora/logger": "workspace:^"
-    "@fluxora/types": "workspace:^"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/logger@workspace:^, @fluxora/logger@workspace:libs/helpers/logger":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/logger@workspace:libs/helpers/logger"
-  dependencies:
-    consola: "npm:^3.4.2"
-    picocolors: "npm:^1.1.1"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/monorepo@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/monorepo@workspace:."
-  dependencies:
-    "@nx/vite": "npm:^20.8.0"
-    "@swc-node/register": "npm:^1.10.10"
-    "@swc/core": "npm:^1.11.22"
-    "@swc/helpers": "npm:^0.5.17"
-    "@trivago/prettier-plugin-sort-imports": "npm:^5.2.2"
-    "@types/node": "npm:^22.14.1"
-    depcheck: "npm:^1.4.7"
-    magic-string: "npm:^0.30.17"
-    nx: "npm:^20.8.0"
-    prettier: "npm:^3.5.3"
-    prettier-plugin-packagejson: "npm:^2.5.10"
-    rollup: "npm:^4.40.0"
-    type-fest: "npm:^4.40.0"
-    vite: "npm:^6.3.3"
-    vite-node: "npm:^3.1.2"
-    vite-plugin-dts: "npm:^4.5.3"
-    vite-tsconfig-paths: "npm:^5.1.4"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/router@workspace:^, @fluxora/router@workspace:libs/fluxora/router":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/router@workspace:libs/fluxora/router"
-  dependencies:
-    "@fluxora/runtime": "workspace:^"
-    "@fluxora/types": "workspace:^"
-    "@fluxora/utils": "workspace:^"
-    "@types/lodash.omit": "npm:^4.5.9"
-    lodash.omit: "npm:^4.5.0"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/runtime@workspace:^, @fluxora/runtime@workspace:libs/fluxora/runtime":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/runtime@workspace:libs/fluxora/runtime"
-  dependencies:
-    "@fluxora/logger": "workspace:^"
-    "@fluxora/types": "workspace:^"
-    "@fluxora/utils": "workspace:^"
-    glob: "npm:^11.0.2"
-    reflect-metadata: "npm:^0.2.2"
-    vite: "npm:^6.3.3"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/types@workspace:^, @fluxora/types@workspace:libs/fluxora/types":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/types@workspace:libs/fluxora/types"
-  dependencies:
-    "@nestjs/core": "npm:^11.1.0"
-    type-fest: "npm:^4.40.0"
-    vite: "npm:^6.3.3"
-  languageName: unknown
-  linkType: soft
-
-"@fluxora/utils@workspace:^, @fluxora/utils@workspace:libs/fluxora/utils":
-  version: 0.0.0-use.local
-  resolution: "@fluxora/utils@workspace:libs/fluxora/utils"
-  dependencies:
-    "@fluxora/logger": "workspace:^"
-    "@fluxora/types": "workspace:^"
-    "@nestjs/common": "npm:^11.1.0"
-    glob: "npm:^11.0.2"
-    type-fest: "npm:^4.40.0"
-    vite: "npm:^6.3.3"
-    vite-tsconfig-paths: "npm:^5.1.4"
-  languageName: unknown
-  linkType: soft
-
 "@hookform/resolvers@npm:^5.0.1":
   version: 5.0.1
   resolution: "@hookform/resolvers@npm:5.0.1"
@@ -3011,6 +2721,287 @@ __metadata:
   checksum: 10c0/d16937d7ac30dff697801c3d6f235be2166df42e4a88bf730fa6dc09201de3727c0a9500c59a672122313341de5f24e45ee0ff579c08ce91928e519090b7906b
   languageName: node
   linkType: hard
+
+"@velnora-examples/base-order@workspace:examples/base/apps/order":
+  version: 0.0.0-use.local
+  resolution: "@velnora-examples/base-order@workspace:examples/base/apps/order"
+  dependencies:
+    "@nestjs/common": "npm:^11.1.0"
+    "@velnora-examples/base-ui-kit": "workspace:^"
+    react: "npm:^19.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@velnora-examples/base-profile@workspace:examples/base/apps/profile":
+  version: 0.0.0-use.local
+  resolution: "@velnora-examples/base-profile@workspace:examples/base/apps/profile"
+  dependencies:
+    "@hookform/resolvers": "npm:^5.0.1"
+    "@nestjs/common": "npm:^11.1.0"
+    react: "npm:^19.1.0"
+    react-hook-form: "npm:^7.56.1"
+    zod: "npm:^3.24.3"
+  languageName: unknown
+  linkType: soft
+
+"@velnora-examples/base-template@workspace:examples/base/template":
+  version: 0.0.0-use.local
+  resolution: "@velnora-examples/base-template@workspace:examples/base/template"
+  dependencies:
+    react: "npm:^19.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@velnora-examples/base-ui-kit@workspace:^, @velnora-examples/base-ui-kit@workspace:examples/base/libs/ui-kit":
+  version: 0.0.0-use.local
+  resolution: "@velnora-examples/base-ui-kit@workspace:examples/base/libs/ui-kit"
+  dependencies:
+    react: "npm:^19.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/adapter-express@workspace:libs/adapters/express":
+  version: 0.0.0-use.local
+  resolution: "@velnora/adapter-express@workspace:libs/adapters/express"
+  dependencies:
+    "@nestjs/core": "npm:^11.1.0"
+    "@nestjs/platform-express": "npm:^11.1.0"
+    "@types/express": "npm:^5.0.1"
+    "@velnora/adapter-loader": "workspace:^"
+    "@velnora/utils": "workspace:^"
+    express: "npm:^5.1.0"
+    rxjs: "npm:^7.8.2"
+    vite: "npm:^6.3.3"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/adapter-loader@workspace:^, @velnora/adapter-loader@workspace:libs/loaders/adapter":
+  version: 0.0.0-use.local
+  resolution: "@velnora/adapter-loader@workspace:libs/loaders/adapter"
+  dependencies:
+    "@nestjs/core": "npm:^11.1.0"
+    "@velnora/logger": "workspace:^"
+    "@velnora/types": "workspace:^"
+    "@velnora/utils": "workspace:^"
+    reflect-metadata: "npm:^0.2.2"
+    vite: "npm:^6.3.3"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/cli-helper@workspace:^, @velnora/cli-helper@workspace:libs/helpers/cli-helper":
+  version: 0.0.0-use.local
+  resolution: "@velnora/cli-helper@workspace:libs/helpers/cli-helper"
+  dependencies:
+    "@types/yargs": "npm:^17.0.33"
+    "@velnora/logger": "workspace:^"
+    "@velnora/types": "workspace:^"
+    type-fest: "npm:^4.40.0"
+    yargs: "npm:^17.7.2"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/cli@workspace:^, @velnora/cli@workspace:libs/velnora/cli":
+  version: 0.0.0-use.local
+  resolution: "@velnora/cli@workspace:libs/velnora/cli"
+  dependencies:
+    "@velnora/cli-helper": "workspace:^"
+    "@velnora/dev": "workspace:^"
+    "@velnora/logger": "workspace:^"
+  bin:
+    velnora: bin/velnora.js
+    velnora-dev: bin/velnora-dev.js
+  languageName: unknown
+  linkType: soft
+
+"@velnora/compiler@workspace:^, @velnora/compiler@workspace:libs/velnora/compiler":
+  version: 0.0.0-use.local
+  resolution: "@velnora/compiler@workspace:libs/velnora/compiler"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/core@workspace:^, @velnora/core@workspace:libs/velnora/core":
+  version: 0.0.0-use.local
+  resolution: "@velnora/core@workspace:libs/velnora/core"
+  dependencies:
+    "@velnora/logger": "workspace:^"
+    "@velnora/types": "workspace:^"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/dev@workspace:^, @velnora/dev@workspace:libs/velnora/dev":
+  version: 0.0.0-use.local
+  resolution: "@velnora/dev@workspace:libs/velnora/dev"
+  dependencies:
+    "@nestjs/common": "npm:^11.1.0"
+    "@nestjs/core": "npm:^11.1.0"
+    "@swc/core": "npm:^1.11.22"
+    "@swc/helpers": "npm:^0.5.17"
+    "@types/lodash.merge": "npm:^4"
+    "@velnora/adapter-loader": "workspace:^"
+    "@velnora/environment-loader": "workspace:^"
+    "@velnora/framework-loader": "workspace:^"
+    "@velnora/logger": "workspace:^"
+    "@velnora/router": "workspace:^"
+    "@velnora/runtime": "workspace:^"
+    "@velnora/types": "workspace:^"
+    "@velnora/utils": "workspace:^"
+    esbuild: "npm:^0.25.3"
+    lodash.merge: "npm:^4.6.2"
+    magic-string: "npm:^0.30.17"
+    type-fest: "npm:^4.40.0"
+    vite: "npm:^6.3.3"
+    vite-plugin-inspect: "npm:^11.0.1"
+    vite-tsconfig-paths: "npm:^5.1.4"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/environment-loader@workspace:^, @velnora/environment-loader@workspace:libs/loaders/environment":
+  version: 0.0.0-use.local
+  resolution: "@velnora/environment-loader@workspace:libs/loaders/environment"
+  dependencies:
+    "@velnora/logger": "workspace:^"
+    "@velnora/runtime": "workspace:^"
+    "@velnora/types": "workspace:^"
+    "@velnora/utils": "workspace:^"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/environment-node@workspace:libs/environments/node":
+  version: 0.0.0-use.local
+  resolution: "@velnora/environment-node@workspace:libs/environments/node"
+  dependencies:
+    "@types/semver": "npm:^7.7.0"
+    "@velnora/environment-loader": "workspace:^"
+    "@velnora/utils": "workspace:^"
+    semver: "npm:^7.7.1"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/example-base@workspace:examples/base":
+  version: 0.0.0-use.local
+  resolution: "@velnora/example-base@workspace:examples/base"
+  dependencies:
+    "@velnora/framework-react": "workspace:^"
+    reflect-metadata: "npm:^0.2.2"
+    velnora: "workspace:^"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/framework-loader@workspace:^, @velnora/framework-loader@workspace:libs/loaders/framework":
+  version: 0.0.0-use.local
+  resolution: "@velnora/framework-loader@workspace:libs/loaders/framework"
+  dependencies:
+    "@velnora/logger": "workspace:^"
+    "@velnora/runtime": "workspace:^"
+    "@velnora/types": "workspace:^"
+    "@velnora/utils": "workspace:^"
+    reflect-metadata: "npm:^0.2.2"
+    type-fest: "npm:^4.40.0"
+    vite: "npm:^6.3.3"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/framework-react@workspace:^, @velnora/framework-react@workspace:libs/frameworks/react":
+  version: 0.0.0-use.local
+  resolution: "@velnora/framework-react@workspace:libs/frameworks/react"
+  dependencies:
+    "@types/lodash.merge": "npm:^4"
+    "@types/react": "npm:^19.1.2"
+    "@types/react-dom": "npm:^19.1.2"
+    "@velnora/framework-loader": "workspace:^"
+    "@velnora/runtime": "workspace:^"
+    "@velnora/types": "workspace:^"
+    "@velnora/utils": "workspace:^"
+    "@vitejs/plugin-react-swc": "npm:^3.9.0"
+    lodash.merge: "npm:^4.6.2"
+    react: "npm:^19.1.0"
+    react-dom: "npm:^19.1.0"
+    react-error-boundary: "npm:^5.0.0"
+    vite: "npm:^6.3.3"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/logger@workspace:^, @velnora/logger@workspace:libs/helpers/logger":
+  version: 0.0.0-use.local
+  resolution: "@velnora/logger@workspace:libs/helpers/logger"
+  dependencies:
+    consola: "npm:^3.4.2"
+    picocolors: "npm:^1.1.1"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/monorepo@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@velnora/monorepo@workspace:."
+  dependencies:
+    "@nx/vite": "npm:^20.8.0"
+    "@swc-node/register": "npm:^1.10.10"
+    "@swc/core": "npm:^1.11.22"
+    "@swc/helpers": "npm:^0.5.17"
+    "@trivago/prettier-plugin-sort-imports": "npm:^5.2.2"
+    "@types/node": "npm:^22.14.1"
+    depcheck: "npm:^1.4.7"
+    magic-string: "npm:^0.30.17"
+    nx: "npm:^20.8.0"
+    prettier: "npm:^3.5.3"
+    prettier-plugin-packagejson: "npm:^2.5.10"
+    rollup: "npm:^4.40.0"
+    type-fest: "npm:^4.40.0"
+    vite: "npm:^6.3.3"
+    vite-node: "npm:^3.1.2"
+    vite-plugin-dts: "npm:^4.5.3"
+    vite-tsconfig-paths: "npm:^5.1.4"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/router@workspace:^, @velnora/router@workspace:libs/velnora/router":
+  version: 0.0.0-use.local
+  resolution: "@velnora/router@workspace:libs/velnora/router"
+  dependencies:
+    "@types/lodash.omit": "npm:^4.5.9"
+    "@velnora/runtime": "workspace:^"
+    "@velnora/types": "workspace:^"
+    "@velnora/utils": "workspace:^"
+    lodash.omit: "npm:^4.5.0"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/runtime@workspace:^, @velnora/runtime@workspace:libs/velnora/runtime":
+  version: 0.0.0-use.local
+  resolution: "@velnora/runtime@workspace:libs/velnora/runtime"
+  dependencies:
+    "@velnora/logger": "workspace:^"
+    "@velnora/types": "workspace:^"
+    "@velnora/utils": "workspace:^"
+    glob: "npm:^11.0.2"
+    reflect-metadata: "npm:^0.2.2"
+    vite: "npm:^6.3.3"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/types@workspace:^, @velnora/types@workspace:libs/velnora/types":
+  version: 0.0.0-use.local
+  resolution: "@velnora/types@workspace:libs/velnora/types"
+  dependencies:
+    "@nestjs/core": "npm:^11.1.0"
+    type-fest: "npm:^4.40.0"
+    vite: "npm:^6.3.3"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/utils@workspace:^, @velnora/utils@workspace:libs/velnora/utils":
+  version: 0.0.0-use.local
+  resolution: "@velnora/utils@workspace:libs/velnora/utils"
+  dependencies:
+    "@nestjs/common": "npm:^11.1.0"
+    "@velnora/logger": "workspace:^"
+    "@velnora/types": "workspace:^"
+    glob: "npm:^11.0.2"
+    type-fest: "npm:^4.40.0"
+    vite: "npm:^6.3.3"
+    vite-tsconfig-paths: "npm:^5.1.4"
+  languageName: unknown
+  linkType: soft
 
 "@vitejs/plugin-react-swc@npm:^3.9.0":
   version: 3.9.0
@@ -4596,35 +4587,6 @@ __metadata:
   checksum: 10c0/f178b13482f0cd80c7fede05f4d10585b1f2fdebf26e12edc138e32d3150c6ea6482b7f12813a1091143bad52bb6d3596bca51a162257a21163c0ff438baa5fe
   languageName: node
   linkType: hard
-
-"fluxora@workspace:^, fluxora@workspace:libs/fluxora":
-  version: 0.0.0-use.local
-  resolution: "fluxora@workspace:libs/fluxora"
-  dependencies:
-    "@fluxora/cli": "workspace:^"
-    "@fluxora/compiler": "workspace:^"
-    "@fluxora/core": "workspace:^"
-    "@fluxora/dev": "workspace:^"
-    "@fluxora/router": "workspace:^"
-    "@fluxora/runtime": "workspace:^"
-    "@fluxora/types": "workspace:^"
-    "@fluxora/utils": "workspace:^"
-  peerDependencies:
-    "@fluxora/adapter-express": "workspace:^"
-    "@fluxora/environment-node": "workspace:^"
-    "@fluxora/framework-react": "workspace:^"
-  peerDependenciesMeta:
-    "@fluxora/adapter-express":
-      optional: true
-    "@fluxora/environment-node":
-      optional: true
-    "@fluxora/framework-react":
-      optional: true
-  bin:
-    fluxora: ./bin/fluxora.js
-    fluxora-dev: ./bin/fluxora-dev.js
-  languageName: unknown
-  linkType: soft
 
 "follow-redirects@npm:^1.15.6":
   version: 1.15.9
@@ -7524,6 +7486,35 @@ __metadata:
   checksum: 10c0/f15d588d79f3675135ba783c91a4083dcd290a2a5be9fcb6514220a1634e23df116847b1cc51f66bfb0644cf9353b2abb7815ae499bab06e46dd33c1a6bf1f4f
   languageName: node
   linkType: hard
+
+"velnora@workspace:^, velnora@workspace:libs/velnora":
+  version: 0.0.0-use.local
+  resolution: "velnora@workspace:libs/velnora"
+  dependencies:
+    "@velnora/cli": "workspace:^"
+    "@velnora/compiler": "workspace:^"
+    "@velnora/core": "workspace:^"
+    "@velnora/dev": "workspace:^"
+    "@velnora/router": "workspace:^"
+    "@velnora/runtime": "workspace:^"
+    "@velnora/types": "workspace:^"
+    "@velnora/utils": "workspace:^"
+  peerDependencies:
+    "@velnora/adapter-express": "workspace:^"
+    "@velnora/environment-node": "workspace:^"
+    "@velnora/framework-react": "workspace:^"
+  peerDependenciesMeta:
+    "@velnora/adapter-express":
+      optional: true
+    "@velnora/environment-node":
+      optional: true
+    "@velnora/framework-react":
+      optional: true
+  bin:
+    velnora: ./bin/velnora.js
+    velnora-dev: ./bin/velnora-dev.js
+  languageName: unknown
+  linkType: soft
 
 "vite-dev-rpc@npm:^1.0.7":
   version: 1.0.7

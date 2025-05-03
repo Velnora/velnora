@@ -2,7 +2,7 @@ import { type IncomingMessage, type ServerResponse, createServer as createNodeSe
 
 import { satisfies } from "semver";
 
-import { defineEnvironment } from "@fluxora/utils/node";
+import { defineEnvironment } from "@velnora/utils/node";
 
 export default defineEnvironment({
   isValidEnvironment(runtime) {

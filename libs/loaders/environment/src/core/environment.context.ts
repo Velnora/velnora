@@ -1,17 +1,17 @@
-import type { RegisteredApp } from "@fluxora/runtime";
-import type { FluxoraEnvironment } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
+import type { RegisteredApp } from "@velnora/runtime";
+import type { VelnoraEnvironment } from "@velnora/types";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@velnora/utils";
 
 import { BaseClass } from "./base-class";
 
 @ClassRawValues()
 @ClassExtensions()
-export class EnvironmentContext extends BaseClass implements FluxoraEnvironment {
+export class EnvironmentContext extends BaseClass implements VelnoraEnvironment {
   @ClassGetterSetter()
-  declare isValidEnvironment: FluxoraEnvironment["isValidEnvironment"];
+  declare isValidEnvironment: VelnoraEnvironment["isValidEnvironment"];
 
   @ClassGetterSetter()
-  declare createServer: FluxoraEnvironment["createServer"];
+  declare createServer: VelnoraEnvironment["createServer"];
 
   checkEnvironment(app: RegisteredApp) {
     if (!this.isValidEnvironment(app.config.environment)) {

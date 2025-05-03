@@ -1,15 +1,15 @@
 {
-  "name": "@fluxora/framework-nestjs-client",
+  "name": "@velnora/framework-nestjs-client",
   "version": "0.0.0-dev.0",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./build/fluxora.nestjs.d.ts",
-      "import": "./build/fluxora.nestjs.js"
+      "types": "./build/velnora.nestjs.d.ts",
+      "import": "./build/velnora.nestjs.js"
     }
   },
-  "main": "build/fluxora.nestjs.js",
-  "types": "build/fluxora.nestjs.d.ts",
+  "main": "build/velnora.nestjs.js",
+  "types": "build/velnora.nestjs.d.ts",
   "dependencies": {
     "@nestjs/common": "^11.0.16",
     "@nestjs/core": "^11.0.16"

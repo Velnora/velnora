@@ -1,5 +1,5 @@
 {
-  "name": "@fluxora/example-base",
+  "name": "@velnora/example-base",
   "type": "module",
   "workspaces": [
     "apps/*",
@@ -7,13 +7,13 @@
     "template"
   ],
   "scripts": {
-    "build": "fluxora-dev build",
-    "dev": "fluxora-dev dev",
-    "nx:dev": "fluxora dev"
+    "build": "velnora-dev build",
+    "dev": "velnora-dev dev",
+    "nx:dev": "velnora dev"
   },
   "dependencies": {
-    "@fluxora/framework-react": "workspace:^",
-    "fluxora": "workspace:^",
-    "reflect-metadata": "^0.2.2"
+    "@velnora/framework-react": "workspace:^",
+    "reflect-metadata": "^0.2.2",
+    "velnora": "workspace:^"
   }
 }

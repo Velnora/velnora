@@ -1,5 +1,5 @@
 {
-  "name": "@fluxora-examples/base-ui-kit",
+  "name": "@velnora-examples/base-ui-kit",
   "type": "module",
   "dependencies": {
     "react": "^19.1.0"

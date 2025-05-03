@@ -1,11 +1,11 @@
-import { defineFluxoraConfig } from "../../../scripts/define-fluxora-config";
+import { defineRootConfig } from "../../../scripts/define-root-config";
 
-export default defineFluxoraConfig("framework.react", {
+export default defineRootConfig("framework.react", {
   build: {
     lib: {
       entry: {
-        "fluxora.framework.react-client": "src/client/main.ts",
-        "fluxora.framework.react-ssr": "src/ssr/main.ts"
+        "velnora.framework.react-client": "src/client/main.ts",
+        "velnora.framework.react-ssr": "src/ssr/main.ts"
       }
     }
   }

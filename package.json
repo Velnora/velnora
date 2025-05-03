@@ -1,13 +1,13 @@
 {
-  "name": "@fluxora/monorepo",
+  "name": "@velnora/monorepo",
   "type": "module",
   "workspaces": [
     "examples/*",
     "modules/*",
     "libs/adapters/*",
     "libs/environments/*",
-    "libs/fluxora",
-    "libs/fluxora/*",
+    "libs/velnora",
+    "libs/velnora/*",
     "libs/frameworks/*",
     "libs/helpers/*",
     "libs/loaders/*"

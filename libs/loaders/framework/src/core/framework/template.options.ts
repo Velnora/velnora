@@ -1,12 +1,12 @@
 import { type ViteDevServer, isRunnableDevEnvironment } from "vite";
 
-import { appCtx } from "@fluxora/runtime";
+import { appCtx } from "@velnora/runtime";
 import type {
   TemplateOptions as ITemplateOptions,
   TemplateRenderContext as ITemplateRenderContext,
   RegisteredTemplate
-} from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
+} from "@velnora/types";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@velnora/utils";
 
 import type { NonFunction } from "../../types/non-function";
 import { BaseClass } from "../base-class";

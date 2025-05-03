@@ -20,7 +20,7 @@ export class Commands {
     const commandArgs = args.map(arg => arg.replace(/(?<!-)-\w/g, m => m.slice(1).toUpperCase()));
 
     await argv
-      .scriptName("fluxora")
+      .scriptName("velnora")
       .usage("$0 <command> [args]")
       .help()
       .alias("help", "h")

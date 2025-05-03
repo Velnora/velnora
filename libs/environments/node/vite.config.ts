@@ -1,5 +1,5 @@
-import { defineFluxoraConfig } from "../../../scripts/define-fluxora-config";
+import { defineRootConfig } from "../../../scripts/define-root-config";
 
-export default defineFluxoraConfig("environment-node", {
-  build: { lib: { entry: { "fluxora.environment-node.runner": "src/runner/main.ts" } } }
+export default defineRootConfig("environment-node", {
+  build: { lib: { entry: { "velnora.environment-node.runner": "src/runner/main.ts" } } }
 });

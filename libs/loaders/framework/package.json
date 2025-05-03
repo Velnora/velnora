@@ -1,24 +1,24 @@
 {
-  "name": "@fluxora/framework-loader",
+  "name": "@velnora/framework-loader",
   "version": "0.0.0-dev.0",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./build/fluxora.framework-loader.d.ts",
-      "import": "./build/fluxora.framework-loader.js"
+      "types": "./build/velnora.framework-loader.d.ts",
+      "import": "./build/velnora.framework-loader.js"
     }
   },
-  "main": "./build/fluxora.framework-loader.js",
-  "types": "./build/fluxora.framework-loader.d.ts",
+  "main": "./build/velnora.framework-loader.js",
+  "types": "./build/velnora.framework-loader.d.ts",
   "dependencies": {
-    "@fluxora/logger": "workspace:^",
-    "@fluxora/runtime": "workspace:^",
-    "@fluxora/utils": "workspace:^",
+    "@velnora/logger": "workspace:^",
+    "@velnora/runtime": "workspace:^",
+    "@velnora/utils": "workspace:^",
     "reflect-metadata": "^0.2.2",
     "type-fest": "^4.40.0"
   },
   "devDependencies": {
-    "@fluxora/types": "workspace:^",
+    "@velnora/types": "workspace:^",
     "vite": "^6.3.3"
   }
 }

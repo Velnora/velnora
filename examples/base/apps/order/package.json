@@ -1,9 +1,9 @@
 {
-  "name": "@fluxora-examples/base-order",
+  "name": "@velnora-examples/base-order",
   "type": "module",
   "dependencies": {
-    "@fluxora-examples/base-ui-kit": "workspace:^",
     "@nestjs/common": "^11.1.0",
+    "@velnora-examples/base-ui-kit": "workspace:^",
     "react": "^19.1.0"
   }
 }

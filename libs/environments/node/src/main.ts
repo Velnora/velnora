@@ -1,5 +1,5 @@
-import { environmentRegistry } from "@fluxora/environment-loader";
+import { environmentRegistry } from "@velnora/environment-loader";
 
 import environment from "./environment";
 
-environmentRegistry.register("@fluxora/environment-node", environment);
+environmentRegistry.register("@velnora/environment-node", environment);

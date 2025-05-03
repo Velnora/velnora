@@ -1,7 +1,7 @@
 import merge from "lodash.merge";
 
-import { defineFramework, frameworkRegistry } from "@fluxora/framework-loader";
-import { appCtx } from "@fluxora/runtime";
+import { defineFramework, frameworkRegistry } from "@velnora/framework-loader";
+import { appCtx } from "@velnora/runtime";
 import react from "@vitejs/plugin-react-swc";
 
 const rawConfig = appCtx.raw();
@@ -25,4 +25,4 @@ const framework = await defineFramework({
     })
   ]
 });
-frameworkRegistry.register("@fluxora/framework-react", framework);
+frameworkRegistry.register("@velnora/framework-react", framework);

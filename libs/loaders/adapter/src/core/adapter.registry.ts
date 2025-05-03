@@ -1,13 +1,13 @@
-import type { FluxoraAdapter, RegisteredModule } from "@fluxora/types";
-import { ClassExtensions, ClassRawValues, singleton } from "@fluxora/utils";
-import { Registry } from "@fluxora/utils/node";
+import type { RegisteredModule, VelnoraAdapter } from "@velnora/types";
+import { ClassExtensions, ClassRawValues, singleton } from "@velnora/utils";
+import { Registry } from "@velnora/utils/node";
 
 import { logger } from "../utils/logger";
 import { AdapterContext } from "./adapter.context";
 
 @ClassRawValues()
 @ClassExtensions()
-export class AdapterRegistry extends Registry<FluxoraAdapter, AdapterContext> {
+export class AdapterRegistry extends Registry<VelnoraAdapter, AdapterContext> {
   constructor() {
     super("adapter", AdapterContext, logger);
   }
