@@ -18,7 +18,7 @@
     "@nestjs/common": "^11.1.0",
     "@velnora/logger": "workspace:^",
     "glob": "^11.0.2",
-    "vite": "^6.3.3",
+    "vite": "^6.3.4",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {

@@ -21,7 +21,7 @@
     "@velnora/utils": "workspace:^",
     "express": "^5.1.0",
     "rxjs": "^7.8.2",
-    "vite": "^6.3.3"
+    "vite": "^6.3.4"
   },
   "devDependencies": {
     "@types/express": "^5.0.1"

@@ -19,6 +19,6 @@
   },
   "devDependencies": {
     "@velnora/types": "workspace:^",
-    "vite": "^6.3.3"
+    "vite": "^6.3.4"
   }
 }
