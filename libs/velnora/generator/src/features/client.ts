@@ -13,7 +13,7 @@ export default (() => {
   logFileSuccess(fs.dot.relative(fs.client.app.page.$raw));
 
   await fs.client.routes.write(
-    `import { defineRoutes } from "fluxora/router";
+    `import { defineRoutes } from "velnora/router";
 
 export const routes = defineRoutes([{ path: "/", component: () => import("./app/page") }]);`
   );

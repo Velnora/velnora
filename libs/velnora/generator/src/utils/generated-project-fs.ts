@@ -1,7 +1,7 @@
 import { resolve } from "node:path";
 
-import { appCtx } from "@fluxora/runtime";
-import { pathConstructor } from "@fluxora/utils/node";
+import { appCtx } from "@velnora/runtime";
+import { pathConstructor } from "@velnora/utils/node";
 
 import type { AppCommandOptions } from "../../../cli/src/commands/generate/app";
 

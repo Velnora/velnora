@@ -2,8 +2,7 @@
 <project version="4">
   <component name="NxAngularConfigService" workspaceLocation="file://$PROJECT_DIR$/nx.json">
     <projects>
-      <project name="@velnora/example-base" file="file://$PROJECT_DIR$/examples/base/project.json" />
-      <project name="velnora" file="file://$PROJECT_DIR$/libs/velnora/project.json" />
+      <project name="@fluxora/example-base" file="file://$PROJECT_DIR$/examples/base/project.json" />
     </projects>
   </component>
 </project>

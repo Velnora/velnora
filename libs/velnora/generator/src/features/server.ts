@@ -1,4 +1,4 @@
-import { capitalize } from "@fluxora/utils";
+import { capitalize } from "@velnora/utils";
 
 import type { AppCommandOptions } from "../../../cli/src/commands/generate/app";
 import type { GeneratedProjectFs } from "../utils/generated-project-fs";
