@@ -2771,7 +2771,7 @@ __metadata:
     "@velnora/utils": "workspace:^"
     express: "npm:^5.1.0"
     rxjs: "npm:^7.8.2"
-    vite: "npm:^6.3.3"
+    vite: "npm:^6.3.4"
   languageName: unknown
   linkType: soft
 
@@ -2784,7 +2784,7 @@ __metadata:
     "@velnora/types": "workspace:^"
     "@velnora/utils": "workspace:^"
     reflect-metadata: "npm:^0.2.2"
-    vite: "npm:^6.3.3"
+    vite: "npm:^6.3.4"
   languageName: unknown
   linkType: soft
 
@@ -2849,7 +2849,7 @@ __metadata:
     lodash.merge: "npm:^4.6.2"
     magic-string: "npm:^0.30.17"
     type-fest: "npm:^4.40.0"
-    vite: "npm:^6.3.3"
+    vite: "npm:^6.3.4"
     vite-plugin-inspect: "npm:^11.0.1"
     vite-tsconfig-paths: "npm:^5.1.4"
   languageName: unknown
@@ -2897,7 +2897,7 @@ __metadata:
     "@velnora/utils": "workspace:^"
     reflect-metadata: "npm:^0.2.2"
     type-fest: "npm:^4.40.0"
-    vite: "npm:^6.3.3"
+    vite: "npm:^6.3.4"
   languageName: unknown
   linkType: soft
 
@@ -2917,7 +2917,7 @@ __metadata:
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     react-error-boundary: "npm:^5.0.0"
-    vite: "npm:^6.3.3"
+    vite: "npm:^6.3.4"
   languageName: unknown
   linkType: soft
 
@@ -2947,7 +2947,7 @@ __metadata:
     prettier-plugin-packagejson: "npm:^2.5.10"
     rollup: "npm:^4.40.0"
     type-fest: "npm:^4.40.0"
-    vite: "npm:^6.3.3"
+    vite: "npm:^6.3.4"
     vite-node: "npm:^3.1.2"
     vite-plugin-dts: "npm:^4.5.3"
     vite-tsconfig-paths: "npm:^5.1.4"
@@ -2975,7 +2975,7 @@ __metadata:
     "@velnora/utils": "workspace:^"
     glob: "npm:^11.0.2"
     reflect-metadata: "npm:^0.2.2"
-    vite: "npm:^6.3.3"
+    vite: "npm:^6.3.4"
   languageName: unknown
   linkType: soft
 
@@ -2985,7 +2985,7 @@ __metadata:
   dependencies:
     "@nestjs/core": "npm:^11.1.0"
     type-fest: "npm:^4.40.0"
-    vite: "npm:^6.3.3"
+    vite: "npm:^6.3.4"
   languageName: unknown
   linkType: soft
 
@@ -2998,7 +2998,7 @@ __metadata:
     "@velnora/types": "workspace:^"
     glob: "npm:^11.0.2"
     type-fest: "npm:^4.40.0"
-    vite: "npm:^6.3.3"
+    vite: "npm:^6.3.4"
     vite-tsconfig-paths: "npm:^5.1.4"
   languageName: unknown
   linkType: soft
@@ -7613,7 +7613,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.0.0 || ^6.0.0, vite@npm:^6.3.3":
+"vite@npm:^5.0.0 || ^6.0.0":
   version: 6.3.3
   resolution: "vite@npm:6.3.3"
   dependencies:
@@ -7665,6 +7665,61 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: 10c0/7ea27d2c80a9e0b7ccf6cbd6c251455501286568160e8b632984e5332440f21a6d05f9236408212ba7653f7d2d4790f848956d8a620bbf4dd2ecb792a2fe1ab1
+  languageName: node
+  linkType: hard
+
+"vite@npm:^6.3.4":
+  version: 6.3.4
+  resolution: "vite@npm:6.3.4"
+  dependencies:
+    esbuild: "npm:^0.25.0"
+    fdir: "npm:^6.4.4"
+    fsevents: "npm:~2.3.3"
+    picomatch: "npm:^4.0.2"
+    postcss: "npm:^8.5.3"
+    rollup: "npm:^4.34.9"
+    tinyglobby: "npm:^0.2.13"
+  peerDependencies:
+    "@types/node": ^18.0.0 || ^20.0.0 || >=22.0.0
+    jiti: ">=1.21.0"
+    less: "*"
+    lightningcss: ^1.21.0
+    sass: "*"
+    sass-embedded: "*"
+    stylus: "*"
+    sugarss: "*"
+    terser: ^5.16.0
+    tsx: ^4.8.1
+    yaml: ^2.4.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+    jiti:
+      optional: true
+    less:
+      optional: true
+    lightningcss:
+      optional: true
+    sass:
+      optional: true
+    sass-embedded:
+      optional: true
+    stylus:
+      optional: true
+    sugarss:
+      optional: true
+    terser:
+      optional: true
+    tsx:
+      optional: true
+    yaml:
+      optional: true
+  bin:
+    vite: bin/vite.js
+  checksum: 10c0/f1534a3f42d14b30e11c58e5e451903d965d5f5ba18d8c81f9df208589e3d2c65535abaa3268d3963573174b8e056ea7bc445f567622c65fcdf98eb4acc1bf4e
   languageName: node
   linkType: hard
 
