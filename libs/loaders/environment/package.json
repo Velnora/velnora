@@ -1,21 +1,21 @@
 {
-  "name": "@fluxora/environment-loader",
+  "name": "@velnora/environment-loader",
   "version": "0.0.0-dev.0",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./build/fluxora.environment-loader.d.ts",
-      "import": "./build/fluxora.environment-loader.js"
+      "types": "./build/velnora.environment-loader.d.ts",
+      "import": "./build/velnora.environment-loader.js"
     }
   },
-  "main": "./build/fluxora.environment-loader.js",
-  "types": "./build/fluxora.environment-loader.d.ts",
-  "devDependencies": {
-    "@fluxora/runtime": "workspace:^",
-    "@fluxora/types": "workspace:^"
-  },
+  "main": "./build/velnora.environment-loader.js",
+  "types": "./build/velnora.environment-loader.d.ts",
   "dependencies": {
-    "@fluxora/logger": "workspace:^",
-    "@fluxora/utils": "workspace:^"
+    "@velnora/logger": "workspace:^",
+    "@velnora/utils": "workspace:^"
+  },
+  "devDependencies": {
+    "@velnora/runtime": "workspace:^",
+    "@velnora/types": "workspace:^"
   }
 }

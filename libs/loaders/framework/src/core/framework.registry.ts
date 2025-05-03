@@ -1,7 +1,7 @@
-import { RegisteredApp, appCtx } from "@fluxora/runtime";
-import type { FluxoraFramework, SSRRenderContext as ISSRRenderContext, RegisteredModule } from "@fluxora/types";
-import { ClassExtensions, ClassRawValues, singleton } from "@fluxora/utils";
-import { Registry } from "@fluxora/utils/node";
+import { RegisteredApp, appCtx } from "@velnora/runtime";
+import type { SSRRenderContext as ISSRRenderContext, RegisteredModule, VelnoraFramework } from "@velnora/types";
+import { ClassExtensions, ClassRawValues, singleton } from "@velnora/utils";
+import { Registry } from "@velnora/utils/node";
 
 import { logger } from "../utils/logger";
 import { FrameworkContext } from "./framework.context";
@@ -9,7 +9,7 @@ import { SSRRenderContext } from "./ssr-render.context";
 
 @ClassRawValues()
 @ClassExtensions()
-export class FrameworkRegistry extends Registry<FluxoraFramework, FrameworkContext> {
+export class FrameworkRegistry extends Registry<VelnoraFramework, FrameworkContext> {
   constructor() {
     super("framework", FrameworkContext, logger, true);
   }
@@ -27,7 +27,7 @@ export class FrameworkRegistry extends Registry<FluxoraFramework, FrameworkConte
     const resolvedName = this.resolveName(name);
     const ssrRenderer = await appCtx.vite
       .getSsr(app.name)
-      .runner.import<typeof import("@fluxora/framework-react/ssr")>(`${resolvedName}/ssr`);
+      .runner.import<typeof import("@velnora/framework-react/ssr")>(`${resolvedName}/ssr`);
 
     return (ssrRenderContext: SSRRenderContext) => {
       return ssrRenderer.render(ssrRenderContext);

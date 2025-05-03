@@ -1,3 +1,3 @@
-import { createLogger } from "@fluxora/logger";
+import { createLogger } from "@velnora/logger";
 
-export const logger = createLogger({ name: "fluxora/environment-loader" });
+export const logger = createLogger({ name: "velnora/environment-loader" });

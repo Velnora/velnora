@@ -1,15 +1,15 @@
 {
-  "name": "@fluxora/logger",
+  "name": "@velnora/logger",
   "version": "0.0.0-dev.0",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./build/fluxora.logger.d.ts",
-      "import": "./build/fluxora.logger.js"
+      "types": "./build/velnora.logger.d.ts",
+      "import": "./build/velnora.logger.js"
     }
   },
-  "main": "./build/fluxora.logger.js",
-  "types": "./build/fluxora.logger.d.ts",
+  "main": "./build/velnora.logger.js",
+  "types": "./build/velnora.logger.d.ts",
   "dependencies": {
     "consola": "^3.4.2",
     "picocolors": "^1.1.1"

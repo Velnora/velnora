@@ -1,6 +1,6 @@
-import { RegisteredApp, RegisteredTemplate } from "@fluxora/runtime";
-import type { SSRRenderContext as ISSRRenderContext, TypedRoute } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
+import { RegisteredApp, RegisteredTemplate } from "@velnora/runtime";
+import type { SSRRenderContext as ISSRRenderContext, TypedRoute } from "@velnora/types";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@velnora/utils";
 
 import { BaseClass } from "./base-class";
 

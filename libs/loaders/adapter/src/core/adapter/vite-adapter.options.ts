@@ -1,7 +1,7 @@
 import type { PluginOption, ServerOptions } from "vite";
 
-import type { ViteAdapterOptions as IViteAdapterOptions } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
+import type { ViteAdapterOptions as IViteAdapterOptions } from "@velnora/types";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@velnora/utils";
 
 import type { AdapterRegistry } from "../adapter.registry";
 import { BaseClass } from "../base-class";

@@ -1,9 +1,9 @@
 import type { DevEnvironment, RunnableDevEnvironment, ViteDevServer } from "vite";
 
-import { RegisteredTemplate } from "@fluxora/runtime";
-import type { TemplateRenderContext as ITemplateRenderContext } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
-import { CLIENT_ENTRY_FILE_EXTENSIONS, findFile } from "@fluxora/utils/node";
+import { RegisteredTemplate } from "@velnora/runtime";
+import type { TemplateRenderContext as ITemplateRenderContext } from "@velnora/types";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@velnora/utils";
+import { CLIENT_ENTRY_FILE_EXTENSIONS, findFile } from "@velnora/utils/node";
 
 import { BaseClass } from "../../base-class";
 import type { TemplateOptions } from "../template.options";

@@ -1,0 +1,26 @@
+{
+  "name": "@velnora/router",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/velnora.router.d.ts",
+      "import": "./build/velnora.router.js"
+    },
+    "./node": {
+      "types": "./build/velnora.router-node.d.ts",
+      "import": "./build/velnora.router-node.js"
+    }
+  },
+  "main": "./build/velnora.router.js",
+  "types": "./build/velnora.router.d.ts",
+  "dependencies": {
+    "@velnora/runtime": "workspace:^",
+    "@velnora/utils": "workspace:^",
+    "lodash.omit": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/lodash.omit": "^4.5.9",
+    "@velnora/types": "workspace:^"
+  }
+}

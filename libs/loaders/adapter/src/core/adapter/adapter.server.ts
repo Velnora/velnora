@@ -1,5 +1,5 @@
-import type { AdapterServer as IAdapterServer } from "@fluxora/types";
-import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@fluxora/utils";
+import type { AdapterServer as IAdapterServer } from "@velnora/types";
+import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@velnora/utils";
 
 import type { AdapterContext } from "../adapter.context";
 import { BaseClass } from "../base-class";

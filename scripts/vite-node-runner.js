@@ -7,11 +7,11 @@ export const PROJECT_CWD = process.env.PROJECT_CWD || process.cwd();
 const internalServer = await createServer({ server: { hmr: false }, logLevel: "silent" });
 const internalSsrEnv = internalServer.environments.ssr;
 if (!isRunnableDevEnvironment(internalSsrEnv)) throw new Error("SSR environment is not runnable");
-const config = await internalSsrEnv.runner.import(resolve(PROJECT_CWD, "scripts/define-fluxora-config.ts"));
+const config = await internalSsrEnv.runner.import(resolve(PROJECT_CWD, "scripts/define-root-config.ts"));
 
-const inlineConfig = config.defineFluxoraConfig.dev({
+const inlineConfig = config.defineRootConfig.dev({
   define: { __DEV__: true },
-  resolve: { alias: { "../build/fluxora.cli.js": resolve(PROJECT_CWD, "libs/fluxora/cli/src/main.ts") } },
+  resolve: { alias: { "../build/velnora.cli.js": resolve(PROJECT_CWD, "libs/velnora/cli/src/main.ts") } },
   server: { middlewareMode: true, hmr: false, ws: false },
   clearScreen: false,
   logLevel: "silent"

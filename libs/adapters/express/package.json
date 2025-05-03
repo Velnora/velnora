@@ -1,27 +1,27 @@
 {
-  "name": "@fluxora/adapter-express",
+  "name": "@velnora/adapter-express",
   "version": "0.0.0-dev.0",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./build/fluxora.adapters.express.d.ts",
-      "import": "./build/fluxora.adapters.express.js"
+      "types": "./build/velnora.adapters.express.d.ts",
+      "import": "./build/velnora.adapters.express.js"
     },
     "./adapter": {
-      "types": "./build/fluxora.adapters.express-adapter.d.ts",
-      "import": "./build/fluxora.adapters.express-adapter.js"
+      "types": "./build/velnora.adapters.express-adapter.d.ts",
+      "import": "./build/velnora.adapters.express-adapter.js"
     }
   },
-  "main": "./build/fluxora.adapters.express.js",
-  "types": "./build/fluxora.adapters.express.d.ts",
+  "main": "./build/velnora.adapters.express.js",
+  "types": "./build/velnora.adapters.express.d.ts",
   "dependencies": {
-    "@fluxora/adapter-loader": "workspace:^",
-    "@fluxora/utils": "workspace:^",
     "@nestjs/core": "^11.1.0",
     "@nestjs/platform-express": "^11.1.0",
+    "@velnora/adapter-loader": "workspace:^",
+    "@velnora/utils": "workspace:^",
     "express": "^5.1.0",
     "rxjs": "^7.8.2",
-    "vite": "^6.3.3"
+    "vite": "^6.3.4"
   },
   "devDependencies": {
     "@types/express": "^5.0.1"

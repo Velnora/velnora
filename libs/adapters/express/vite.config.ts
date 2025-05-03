@@ -1,8 +1,8 @@
-import { defineFluxoraConfig } from "../../../scripts/define-fluxora-config";
+import { defineRootConfig } from "../../../scripts/define-root-config";
 
-export default defineFluxoraConfig("adapters.express", {
+export default defineRootConfig("adapters.express", {
   build: {
-    lib: { entry: { "fluxora.adapters.express-adapter": "src/adapter/main.ts" } },
+    lib: { entry: { "velnora.adapters.express-adapter": "src/adapter/main.ts" } },
     rollupOptions: { external: [/^\/__virtual__\//] }
   }
 });

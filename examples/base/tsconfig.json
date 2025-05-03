@@ -6,8 +6,8 @@
     "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "paths": {
-      "@fluxora-examples/base-ui-kit": ["libs/ui-kit/src/main.tsx"]
+      "@velnora-examples/base-ui-kit": ["libs/ui-kit/src/main.tsx"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "fluxora-env.d.ts"]
+  "include": ["**/*.ts", "**/*.tsx", "velnora-env.d.ts"]
 }

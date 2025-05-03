@@ -4,7 +4,7 @@ export const App: FC<PropsWithChildren> = ({ children }) => {
   return (
     <html>
       <head>
-        <title>Fluxora</title>
+        <title>velnora</title>
       </head>
 
       <body>{children}</body>

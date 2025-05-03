@@ -1,3 +1,3 @@
-import { defineFluxoraConfig } from "../../../scripts/define-fluxora-config";
+import { defineRootConfig } from "../../../scripts/define-root-config";
 
-export default defineFluxoraConfig("framework-loader");
+export default defineRootConfig("framework-loader");

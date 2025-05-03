@@ -1,7 +1,7 @@
-import { defineFluxoraConfig } from "../../scripts/define-fluxora-config";
+import { defineRootConfig } from "../../scripts/define-root-config";
 
-export default defineFluxoraConfig("nestjs", {
+export default defineRootConfig("nestjs", {
   build: {
-    lib: { entry: { "fluxora.nestjs.common": "src/common/main.ts" }, formats: ["es"] }
+    lib: { entry: { "velnora.nestjs.common": "src/common/main.ts" }, formats: ["es"] }
   }
 });
