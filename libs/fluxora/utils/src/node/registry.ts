@@ -2,10 +2,10 @@ import { Logger } from "@fluxora/logger";
 import type { RegisteredModule } from "@fluxora/types";
 import type { Type } from "@nestjs/common";
 
-import { ClassGetterSetter, capitalize } from "../client";
+import { BaseClass, ClassGetterSetter, capitalize } from "../client";
 import { serverEnv } from "./utils";
 
-export abstract class Registry<TRegistryItem, TContainerClass> {
+export abstract class Registry<TRegistryItem, TContainerClass> extends BaseClass {
   @ClassGetterSetter()
   declare protected readonly registered: Map<string, TRegistryItem>;
 
@@ -26,6 +26,7 @@ export abstract class Registry<TRegistryItem, TContainerClass> {
     logger: Logger,
     singleton: boolean = false
   ) {
+    super();
     Object.defineProperties(this, {
       moduleName: { value: moduleName, writable: false, enumerable: false, configurable: false },
       ContainerClass: { value: ContainerClass, writable: false, enumerable: false, configurable: false },

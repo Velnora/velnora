@@ -4,6 +4,10 @@ import type { ToString } from "./to-string";
 
 export type ExtendableFn<TExtension = unknown> = (key: string) => TExtension;
 
+export interface RawString<T extends string> {
+  readonly $raw: T;
+}
+
 export type ExtendFnReturnType<
   TKey extends string,
   TKeys extends readonly string[],
@@ -11,7 +15,8 @@ export type ExtendFnReturnType<
   TExtension extends object,
   TExtraReturn = {}
 > = Prettify<
-  { readonly $raw: MergeStrings<[TKey, ...TKeys], TDelimiter> } & ToString<MergeStrings<[TKey, ...TKeys], TDelimiter>> &
+  RawString<MergeStrings<[TKey, ...TKeys], TDelimiter>> &
+    ToString<MergeStrings<[TKey, ...TKeys], TDelimiter>> &
     TExtension &
     TExtraReturn
 >;
@@ -30,7 +35,7 @@ export type ExtendFn<
           cb: ExtensionFn<MergeStrings<[TKey, ...TKeys], TDelimiter>, TDelimiter, TConstructorExtensions>
         ) => TExtension)?
       ]
-) => ExtendFnReturnType<TKey, TKeys, TDelimiter, TExtension, TExtraReturn>;
+) => Prettify<ExtendFnReturnType<TKey, TKeys, TDelimiter, TExtension, TExtraReturn>>;
 
 type UpdateExtensions<
   TKey extends string,
@@ -49,11 +54,11 @@ export type ExtensionFn<
   TKey extends string,
   TDelimiter extends string,
   TConstructorExtensions extends Record<string, ExtendableFn>
-> = UpdateExtensions<TKey, TDelimiter, TConstructorExtensions> & {
+> = {
   <TKeys extends readonly string[]>(...paths: TKeys): MergeStrings<[TKey, ...TKeys], TDelimiter>;
 
   e: ExtendFn<TKey, TDelimiter, TConstructorExtensions>;
   f<TArgs extends readonly string[]>(): <TExtension extends object>(
     efn: (cb: ExtensionFn<MergeStrings<[TKey, ...TArgs], TDelimiter>, TDelimiter, TConstructorExtensions>) => TExtension
   ) => (...args: TArgs) => ExtendFnReturnType<TKey, TArgs, TDelimiter, TExtension>;
-};
+} & UpdateExtensions<TKey, TDelimiter, TConstructorExtensions>;

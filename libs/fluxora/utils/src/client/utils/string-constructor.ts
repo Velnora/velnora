@@ -1,4 +1,4 @@
-import type { ExtendFn, ExtendableFn, ExtensionFn, Prettify } from "@fluxora/types";
+import type { ExtendFn, ExtendableFn, ExtensionFn, Prettify, RawString, ToString } from "@fluxora/types";
 
 export const stringConstructor = <
   TBaseKey extends string,
@@ -13,9 +13,8 @@ export const stringConstructor = <
   cb: (baseString: string, ...strings: string[]) => string = (baseString: string, ...strings: string[]) =>
     [baseString, ...strings].join(delimiter)
 ): Prettify<
-  { $raw: TBaseKey } & {
-    [key in keyof TConstructorExtensions]: ReturnType<TConstructorExtensions[key]>;
-  } & TExtension & { toString: () => TBaseKey }
+  RawString<TBaseKey> &
+    ToString<TBaseKey> & { [key in keyof TConstructorExtensions]: ReturnType<TConstructorExtensions[key]> } & TExtension
 > => {
   const efn = (<TKeys extends readonly string[]>(...keys: TKeys) => cb(baseKey, ...keys)) as ExtensionFn<
     TBaseKey,
@@ -57,21 +56,36 @@ export const stringConstructor = <
   }
 
   return Object.assign<
-    { $raw: TBaseKey },
+    RawString<TBaseKey>,
+    ToString<TBaseKey>,
     { [key in keyof TConstructorExtensions]: ReturnType<TConstructorExtensions[key]> },
-    TExtension,
-    { toString: () => TBaseKey }
-  >({ $raw: baseKey }, sceReturnResult, extension(efn), { toString: () => baseKey });
+    TExtension
+  >({ $raw: baseKey }, { toString: () => baseKey }, sceReturnResult, extension(efn));
 };
 
-stringConstructor.new =
-  <TDelimiter extends string, TConstructorExtensions extends Record<string, ExtendableFn>>(
-    delimiter: TDelimiter,
-    stringConstructorExtensions?: TConstructorExtensions,
-    cb?: (baseString: string, ...strings: string[]) => string
-  ) =>
-  <TBaseKey extends string, TExtension extends object>(
-    baseKey: TBaseKey,
-    extension: (cb: ExtensionFn<TBaseKey, TDelimiter, TConstructorExtensions>) => TExtension
-  ) =>
-    stringConstructor(baseKey, delimiter, extension, stringConstructorExtensions, cb);
+stringConstructor.new = <TDelimiter extends string, TConstructorExtensions extends Record<string, ExtendableFn>>(
+  delimiter: TDelimiter,
+  stringConstructorExtensions?: TConstructorExtensions,
+  cb?: (baseString: string, ...strings: string[]) => string
+) =>
+  Object.assign(
+    <TBaseKey extends string, TExtension extends object>(
+      baseKey: TBaseKey,
+      extension: (cb: ExtensionFn<TBaseKey, TDelimiter, TConstructorExtensions>) => TExtension
+    ) => stringConstructor(baseKey, delimiter, extension, stringConstructorExtensions, cb),
+    {
+      new<TNewConstructorExtensions extends Record<string, ExtendableFn>>(
+        moreExtensions?: TNewConstructorExtensions,
+        newCb?: (baseString: string, ...strings: string[]) => string
+      ) {
+        return stringConstructor.new(
+          delimiter,
+          { ...stringConstructorExtensions, ...moreExtensions } as TConstructorExtensions & TNewConstructorExtensions,
+          (baseString, ...strings) =>
+            newCb?.(cb?.(baseString, ...strings) || baseString, ...strings) ||
+            cb?.(baseString, ...strings) ||
+            baseString
+        );
+      }
+    }
+  );
