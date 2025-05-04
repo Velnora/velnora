@@ -10,6 +10,7 @@
     "build": "velnora-dev build",
     "dev": "velnora-dev dev",
     "generate:app": "rm -rf apps/landing && velnora-dev generate app landing",
+    "generate:lib": "rm -rf libs/core && velnora-dev generate lib core",
     "nx:dev": "velnora dev"
   },
   "dependencies": {

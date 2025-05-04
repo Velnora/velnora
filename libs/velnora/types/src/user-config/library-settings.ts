@@ -6,5 +6,5 @@ export interface LibrarySettings extends ProjectSettings, Velnora.LibrarySetting
    * Specify the directory where the projects will be created.
    * @default "libs"
    */
-  dir: string;
+  root: string;
 }

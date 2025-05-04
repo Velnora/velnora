@@ -1,53 +1,55 @@
 import { capitalize } from "@velnora/utils";
 
 import type { AppCommandOptions } from "../../../cli/src/commands/generate/app";
-import type { GeneratedProjectFs } from "../utils/generated-project-fs";
+import type { GeneratedProjectFs } from "../utils/generate-project-fs";
 import { logFileSuccess } from "../utils/log-file-success";
 
 export async function applyServerFiles(fs: GeneratedProjectFs, options: AppCommandOptions) {
-  await fs.server.controller.write(
+  const appProjectFs = fs.apps.app(options);
+
+  await appProjectFs.server.controller.write(
     `import { Controller, Get } from "@nestjs/common";
 
-import { ${capitalize(options.name)}Service } from "./${options.name}.service";
+  import { ${capitalize(options.name)}Service } from "./${options.name}.service";
 
-@Controller("${options.name}")
-export class ${capitalize(options.name)}Controller {
-  constructor(private readonly ${options.name}Service: ${capitalize(options.name)}Service) {}
-  
-  @Get()
-  getHello(): string {
-    return this.${options.name}Service.getHello();
+  @Controller("${options.name}")
+  export class ${capitalize(options.name)}Controller {
+    constructor(private readonly ${options.name}Service: ${capitalize(options.name)}Service) {}
+
+    @Get()
+    getHello(): string {
+      return this.${options.name}Service.getHello();
+    }
   }
-}
-`
+  `
   );
-  logFileSuccess(fs.dot.relative(fs.server.controller.$raw));
+  logFileSuccess(fs.apps.relative(appProjectFs.server.controller.$raw));
 
-  await fs.server.service.write(
+  await appProjectFs.server.service.write(
     `import { Injectable } from "@nestjs/common";
 
-@Injectable()
-export class ${capitalize(options.name)}Service {
-  getHello(): string {
-    return "${options.name} service!";
+  @Injectable()
+  export class ${capitalize(options.name)}Service {
+    getHello(): string {
+      return "${options.name} service!";
+    }
   }
-}
-`
+  `
   );
-  logFileSuccess(fs.dot.relative(fs.server.service.$raw));
+  logFileSuccess(fs.apps.relative(appProjectFs.server.service.$raw));
 
-  await fs.server.module.write(
+  await appProjectFs.server.module.write(
     `import { Module } from "@nestjs/common";
 
-import { ${capitalize(options.name)}Controller } from "./${options.name}.controller";
-import { ${capitalize(options.name)}Service } from "./${options.name}.service";
+  import { ${capitalize(options.name)}Controller } from "./${options.name}.controller";
+  import { ${capitalize(options.name)}Service } from "./${options.name}.service";
 
-@Module({
-  controllers: [${capitalize(options.name)}Controller],
-  providers: [${capitalize(options.name)}Service],
-})
-export class ${capitalize(options.name)}Module {}
-`
+  @Module({
+    controllers: [${capitalize(options.name)}Controller],
+    providers: [${capitalize(options.name)}Service],
+  })
+  export class ${capitalize(options.name)}Module {}
+  `
   );
-  logFileSuccess(fs.dot.relative(fs.server.module.$raw));
+  logFileSuccess(fs.apps.relative(appProjectFs.server.module.$raw));
 }

@@ -6,11 +6,11 @@ import { AppType, type RegisteredModuleBase } from "@velnora/types";
 import { appCtx } from "../app-ctx";
 
 export const discoverLibs = async (): Promise<RegisteredModuleBase[]> => {
-  const libs = await readdir(appCtx.projectStructure.libs.dir);
+  const libs = await readdir(appCtx.projectStructure.libs.root);
   return libs.map(lib => ({
     type: AppType.LIBRARY,
     name: lib,
-    root: resolve(appCtx.projectStructure.libs.dir, lib),
+    root: resolve(appCtx.projectStructure.libs.root, lib),
     config: {}
   }));
 };
