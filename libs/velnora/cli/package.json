@@ -17,6 +17,7 @@
   "dependencies": {
     "@velnora/cli-helper": "workspace:^",
     "@velnora/dev": "workspace:^",
+    "@velnora/generator": "workspace:^",
     "@velnora/logger": "workspace:^"
   }
 }

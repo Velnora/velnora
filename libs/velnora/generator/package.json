@@ -13,10 +13,11 @@
   "dependencies": {
     "@velnora/logger": "workspace:^",
     "@velnora/runtime": "workspace:^",
-    "@velnora/utils": "workspace:^"
+    "@velnora/utils": "workspace:^",
+    "picocolors": "^1.1.1",
+    "prettier": "^3.5.3"
   },
   "devDependencies": {
-    "@velnora/types": "workspace:^",
     "type-fest": "^4.40.1"
   }
 }

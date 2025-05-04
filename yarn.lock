@@ -2806,6 +2806,7 @@ __metadata:
   dependencies:
     "@velnora/cli-helper": "workspace:^"
     "@velnora/dev": "workspace:^"
+    "@velnora/generator": "workspace:^"
     "@velnora/logger": "workspace:^"
   bin:
     velnora: bin/velnora.js
@@ -2845,7 +2846,6 @@ __metadata:
     "@velnora/runtime": "workspace:^"
     "@velnora/types": "workspace:^"
     "@velnora/utils": "workspace:^"
-    esbuild: "npm:^0.25.3"
     lodash.merge: "npm:^4.6.2"
     magic-string: "npm:^0.30.17"
     type-fest: "npm:^4.40.1"
@@ -2921,14 +2921,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@velnora/generator@workspace:libs/velnora/generator":
+"@velnora/generator@workspace:^, @velnora/generator@workspace:libs/velnora/generator":
   version: 0.0.0-use.local
   resolution: "@velnora/generator@workspace:libs/velnora/generator"
   dependencies:
     "@velnora/logger": "workspace:^"
     "@velnora/runtime": "workspace:^"
-    "@velnora/types": "workspace:^"
     "@velnora/utils": "workspace:^"
+    picocolors: "npm:^1.1.1"
+    prettier: "npm:^3.5.3"
     type-fest: "npm:^4.40.1"
   languageName: unknown
   linkType: soft
@@ -3006,9 +3007,12 @@ __metadata:
   resolution: "@velnora/utils@workspace:libs/velnora/utils"
   dependencies:
     "@nestjs/common": "npm:^11.1.0"
+    "@types/lodash.merge": "npm:^4.6.9"
     "@velnora/logger": "workspace:^"
     "@velnora/types": "workspace:^"
     glob: "npm:^11.0.2"
+    lodash.merge: "npm:^4.6.2"
+    prettier: "npm:^3.5.3"
     type-fest: "npm:^4.40.1"
     vite: "npm:^6.3.4"
     vite-tsconfig-paths: "npm:^5.1.4"
@@ -4274,7 +4278,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.25.0, esbuild@npm:^0.25.3":
+"esbuild@npm:^0.25.0":
   version: 0.25.3
   resolution: "esbuild@npm:0.25.3"
   dependencies:
@@ -5343,12 +5347,6 @@ __metadata:
   checksum: 10c0/73075db44a692bf6c34a649f3b4b3aea4993b84f6b754cbf7a8577e7c7db44c0bad87752bd23b0ce533f49de2244ce2ce03b7b1b667a85ae170a94782cc50f9b
   languageName: node
   linkType: hard
-
-"landing@workspace:examples/base/apps/landing":
-  version: 0.0.0-use.local
-  resolution: "landing@workspace:examples/base/apps/landing"
-  languageName: unknown
-  linkType: soft
 
 "lines-and-columns@npm:2.0.3":
   version: 2.0.3

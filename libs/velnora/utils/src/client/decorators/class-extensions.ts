@@ -6,8 +6,6 @@ import { isClass } from "../utils";
 import { logger } from "../utils/logger";
 import { decoratorSettings } from "./decorator.settings";
 
-const globalInstance = new BaseClass();
-
 export const ClassExtensions = (): ClassDecorator => {
   return Target => {
     const OldTarget = Target as unknown as Type<BaseClass>;
@@ -16,7 +14,8 @@ export const ClassExtensions = (): ClassDecorator => {
         super(...args);
 
         if (!("__getSuperPrototype" in this)) {
-          console.warn(`Class "${Target.name}" recommended to be extended from BaseClass`);
+          logger.error(`Class "${Target.name}" must be extended from BaseClass. Otherwise, it won't work as expected.`);
+          process.exit(1);
         }
 
         const keysSet = (Reflect.getMetadata(CLASS_PROPS_SET, this) ?? new Set()) as Set<string>;
@@ -73,7 +72,7 @@ export const ClassExtensions = (): ClassDecorator => {
       override checks() {
         super.checks();
 
-        const proto = (this.__getSuperPrototype || globalInstance.__getSuperPrototype)(CLASS_PROPS_SET);
+        const proto = this.__getSuperPrototype(CLASS_PROPS_SET);
         Array.from((Reflect.getOwnMetadata(CLASS_PROPS_SET, proto) ?? new Set()) as Set<string>)
           .map(key => [key, Reflect.getMetadata("design:type", this, key)])
           .map(([key, Class]) => {

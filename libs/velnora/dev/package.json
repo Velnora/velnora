@@ -21,7 +21,6 @@
     "@velnora/router": "workspace:^",
     "@velnora/runtime": "workspace:^",
     "@velnora/utils": "workspace:^",
-    "esbuild": "^0.25.3",
     "lodash.merge": "^4.6.2",
     "magic-string": "^0.30.17",
     "vite": "^6.3.4",
