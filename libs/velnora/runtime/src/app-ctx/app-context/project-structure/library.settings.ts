@@ -1,4 +1,4 @@
-import { resolve } from "node:path";
+import { relative, resolve } from "node:path";
 
 import type { LibrarySettings as ILibrarySettings, RegisteredLib as IRegisteredLib } from "@velnora/types";
 import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@velnora/utils";
@@ -10,13 +10,17 @@ import { RegisteredLib } from "./registered-lib";
 @ClassExtensions()
 export class LibrarySettings extends ProjectSettings implements ILibrarySettings {
   @ClassGetterSetter("libs", resolve)
-  declare dir: string;
+  declare root: string;
 
   @ClassGetterSetter()
   declare libs: Map<string, RegisteredLib>;
 
   @ClassGetterSetter()
   declare registeredLib: RegisteredLib;
+
+  get rawRoot() {
+    return relative(process.cwd(), this.root);
+  }
 
   *[Symbol.iterator]() {
     yield* this.libs.values();

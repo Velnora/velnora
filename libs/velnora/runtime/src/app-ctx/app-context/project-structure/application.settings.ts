@@ -1,4 +1,4 @@
-import { resolve } from "node:path";
+import { relative, resolve } from "node:path";
 
 import type { ApplicationSettings as IApplicationSettings, RegisteredApp as IRegisteredApp } from "@velnora/types";
 import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@velnora/utils";
@@ -20,6 +20,10 @@ export class ApplicationSettings extends ProjectSettings implements IApplication
 
   @ClassGetterSetter()
   declare registeredApp: RegisteredApp;
+
+  get rawRoot() {
+    return relative(process.cwd(), this.root);
+  }
 
   register(app: IRegisteredApp) {
     if (this.apps.has(app.name)) {

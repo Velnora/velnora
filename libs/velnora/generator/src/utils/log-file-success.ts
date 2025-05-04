@@ -3,11 +3,18 @@ import pc from "picocolors";
 import { logger } from "./logger";
 
 export const logFileSuccess = (filePath: string) => {
-  const [appName, module, ...paths] = filePath.split("/");
+  const [section, appName, module, ...paths] = filePath.split("/");
   const names = [
+    section,
     appName,
-    module === "client" ? pc.blue(module) : module === "server" ? pc.red(module) : pc.cyan(module),
-    paths.length ? pc.cyan(paths.join("/")) : null
+    module === "client"
+      ? pc.blue(module)
+      : module === "server"
+        ? pc.red(module)
+        : module === "src"
+          ? pc.cyan(`${module}/${paths.join("/")}`)
+          : pc.cyan(module),
+    paths.length && module !== "src" ? pc.cyan(paths.join("/")) : null
   ].filter(Boolean);
   logger.success(pc.gray(names.join("/")), pc.magenta("created"));
 };
