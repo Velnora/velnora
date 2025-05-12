@@ -9,7 +9,7 @@ import { generateProjectFs } from "../utils/generate-project-fs";
 import { logger } from "../utils/logger";
 
 export const generateLib: GenerateCommand<LibCommandOptions> = async options => {
-  const name = options.pkgName?.replace(/[A-Z]/g, s => `-${s.toLowerCase()}`) || options.name;
+  const name = options.pkgName || options.name;
   logger.info(`Preparing to generate library ${name}...`);
 
   await appCtx.resolveConfig();
