@@ -4,9 +4,11 @@ import type { ToString } from "./to-string";
 
 export type ExtendableFn<TExtension = unknown> = (key: string) => TExtension;
 
-export interface RawString<T extends string> {
+export interface RawString<T extends string> extends ToString<T> {
   readonly $raw: T;
 }
+
+export type WithStringConstructor<TObject = {}> = RawString<string> & TObject;
 
 export type ExtendFnReturnType<
   TKey extends string,
@@ -14,12 +16,7 @@ export type ExtendFnReturnType<
   TDelimiter extends string,
   TExtension extends object,
   TExtraReturn = {}
-> = Prettify<
-  RawString<MergeStrings<[TKey, ...TKeys], TDelimiter>> &
-    ToString<MergeStrings<[TKey, ...TKeys], TDelimiter>> &
-    TExtension &
-    TExtraReturn
->;
+> = Prettify<RawString<MergeStrings<[TKey, ...TKeys], TDelimiter>> & TExtension & TExtraReturn>;
 
 export type ExtendFn<
   TKey extends string,

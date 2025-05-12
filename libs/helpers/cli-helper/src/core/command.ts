@@ -20,7 +20,7 @@ export class Command<TOptions extends Record<string, Type> = {}> {
     private command: string,
     private readonly description?: string
   ) {
-    logger.debug(`Created command: ${command} - ${description}`);
+    logger.debug(`Registering command: ${command} - ${description}`);
   }
 
   positional<TProperty extends string, TAliasName extends string = TProperty>(
@@ -33,7 +33,7 @@ export class Command<TOptions extends Record<string, Type> = {}> {
       Record<TProperty | TAliasName | CamelCase<TProperty> | CamelCase<TAliasName>, Type<"string", never>>
     >
   > {
-    logger.debug(`Adding positional argument: ${property} - Options:`, options);
+    logger.debug(`Registering positional argument: ${property} - Options:`, options);
     const { default: defaultValue, required = true } = options || {};
     if (this.positionalMap.has(property)) {
       logger.warn(`Positional argument ${property} already exists. Overwriting.`);
@@ -50,7 +50,10 @@ export class Command<TOptions extends Record<string, Type> = {}> {
     TUnionType extends string = string
   >(
     name: TName,
-    type: TType | Option<TType, TAliasName> | (Option<"union", TAliasName> & { values: TUnionType[] })
+    type:
+      | TType
+      | Option<TType, TAliasName, keyof TOptions>
+      | (Option<"union", TAliasName, keyof TOptions> & { values: TUnionType[] })
   ): Command<
     MergeObjects<
       TOptions,
@@ -58,8 +61,8 @@ export class Command<TOptions extends Record<string, Type> = {}> {
     >
   > {
     const resolvedValue = (typeof type === "string" ? { type } : type) as
-      | Option<TType, TAliasName>
-      | (Option<"union", TAliasName> & { values: TUnionType[] });
+      | Option<TType, TAliasName, keyof TOptions>
+      | (Option<"union", TAliasName, keyof TOptions> & { values: TUnionType[] });
     const defaultValue = resolvedValue.default || null;
 
     // @ts-ignore
@@ -68,14 +71,15 @@ export class Command<TOptions extends Record<string, Type> = {}> {
       default: defaultValue,
       values: "values" in resolvedValue ? resolvedValue.values : [],
       description: resolvedValue.description,
-      alias: resolvedValue.alias
-    } as Option<TType, TUnionType>;
-    logger.debug(`Added option: ${name} - Type: ${resolvedValue.type}, Default: ${defaultValue}`);
+      alias: resolvedValue.alias,
+      requires: resolvedValue.requires
+    } as Option<TType, TUnionType, keyof TOptions>;
+    logger.debug(`Registered option: ${name} - Type: ${resolvedValue.type}, Default: ${defaultValue}`);
     return this as any;
   }
 
   children(...commands: CommandsType) {
-    logger.debug(`Adding child commands to: ${this.command}`);
+    logger.debug(`Registering children commands to: ${this.command}`);
     this.childCommands.push(...commands);
     return this;
   }
@@ -85,8 +89,7 @@ export class Command<TOptions extends Record<string, Type> = {}> {
       [K in keyof TOptions]: InferType<TOptions[K]["type"], TOptions[K]["values"]>;
     }) => Promisable<void>
   ): CommandReturnType<{ [K in keyof TOptions]: TOptions[K] }> {
-    logger.debug(`Setting execute handler for command: ${this.command}`);
-    const self = this;
+    logger.debug(`Setting up execute handler for command: ${this.command}`);
     return {
       command: this.command,
       description: this.description ?? null,
@@ -94,7 +97,6 @@ export class Command<TOptions extends Record<string, Type> = {}> {
       positionalOptions: Array.from(this.positionalArguments).map(arg => this.positionalMap.get(arg)!),
       childCommands: this.childCommands,
       async execute(args) {
-        logger.debug(`Executing command: ${self.command} with args:`, args);
         await executorFn?.(args as any);
       }
     };

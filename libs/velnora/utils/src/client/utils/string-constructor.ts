@@ -57,10 +57,9 @@ export const stringConstructor = <
 
   return Object.assign<
     RawString<TBaseKey>,
-    ToString<TBaseKey>,
     { [key in keyof TConstructorExtensions]: ReturnType<TConstructorExtensions[key]> },
     TExtension
-  >({ $raw: baseKey }, { toString: () => baseKey }, sceReturnResult, extension(efn));
+  >({ $raw: baseKey, toString: () => baseKey }, sceReturnResult, extension(efn));
 };
 
 stringConstructor.new = <TDelimiter extends string, TConstructorExtensions extends Record<string, ExtendableFn>>(

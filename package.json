@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "check:libs:deps": "scripts/check-libs-deps.sh",
+    "new:project": "rm -rf examples/project && velnora-dev generate project examples/project",
     "nx:graph": "nx graph --open false"
   },
   "dependencies": {
@@ -32,10 +33,11 @@
     "prettier-plugin-packagejson": "^2.5.10",
     "rollup": "^4.40.1",
     "type-fest": "^4.40.1",
+    "velnora": "workspace:^",
     "vite": "^6.3.4",
     "vite-node": "^3.1.2",
     "vite-plugin-dts": "^4.5.3",
     "vite-tsconfig-paths": "^5.1.4"
   },
-  "packageManager": "yarn@4.8.1"
+  "packageManager": "yarn@4.9.1"
 }

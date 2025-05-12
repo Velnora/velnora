@@ -2960,6 +2960,7 @@ __metadata:
     prettier-plugin-packagejson: "npm:^2.5.10"
     rollup: "npm:^4.40.1"
     type-fest: "npm:^4.40.1"
+    velnora: "workspace:^"
     vite: "npm:^6.3.4"
     vite-node: "npm:^3.1.2"
     vite-plugin-dts: "npm:^4.5.3"
@@ -5732,6 +5733,14 @@ __metadata:
   checksum: 10c0/69e738218a13d6365caf930e0ab4e2b848b84eec261597df9788cefb9930f3e40667be9cb58a4718834ba5f97a6efeef31d3b5a95f4388143fd4e0d0deff72ff
   languageName: node
   linkType: hard
+
+"monorepo@workspace:examples/project":
+  version: 0.0.0-use.local
+  resolution: "monorepo@workspace:examples/project"
+  dependencies:
+    reflect-metadata: "npm:^0.2.2"
+  languageName: unknown
+  linkType: soft
 
 "mrmime@npm:^2.0.0":
   version: 2.0.1
