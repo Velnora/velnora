@@ -1,12 +1,11 @@
-import pc from "picocolors";
 import { PackageJson, TsConfigJson } from "type-fest";
 
 import { appCtx } from "@velnora/runtime";
 
 import type { LibCommandOptions } from "../../../cli/src/commands/generate/lib";
 import type { GenerateCommand } from "../types/generate-command";
+import { FileLogger } from "../utils/file-logger";
 import { generateProjectFs } from "../utils/generate-project-fs";
-import { logFileSuccess } from "../utils/log-file-success";
 import { logger } from "../utils/logger";
 
 export const generateLib: GenerateCommand<LibCommandOptions> = async options => {
@@ -15,23 +14,24 @@ export const generateLib: GenerateCommand<LibCommandOptions> = async options => 
 
   await appCtx.resolveConfig();
 
-  const rootFs = generateProjectFs();
-  const libProjectFs = rootFs.libs.lib(options);
+  const fs = generateProjectFs();
+  const libFs = fs.libs.lib(options.name, options.jsx);
+  const fileLogger = new FileLogger(fs.dot.dirname);
 
-  await libProjectFs.src.main.write(`export default {};`);
-  logFileSuccess(rootFs.libs.relative(libProjectFs.src.main.$raw));
+  await libFs.src.main.write(`export default {};`);
+  fileLogger.created(libFs.src.main);
 
-  await libProjectFs.packageJson.extendJson<PackageJson>({ name, version: "0.0.0-dev.0" });
-  logFileSuccess(rootFs.libs.relative(libProjectFs.packageJson.$raw));
+  await libFs.packageJson.extendJson<PackageJson>({ name, version: "0.0.0-dev.0" });
+  fileLogger.created(libFs.packageJson);
 
-  await libProjectFs.tsconfig.extendJson<TsConfigJson>({
-    extends: libProjectFs.tsconfig.relative(rootFs.tsconfig.$raw),
+  await libFs.tsconfig.extendJson<TsConfigJson>({
+    extends: libFs.tsconfig.relative(fs.tsconfig.$raw),
     include: ["src/**/*.ts", "src/**/*.tsx"]
   });
-  logFileSuccess(rootFs.libs.relative(libProjectFs.tsconfig.$raw));
+  fileLogger.created(libFs.tsconfig);
 
-  await rootFs.tsconfig.extendJson<TsConfigJson>({
-    compilerOptions: { paths: { [name]: [rootFs.libs.relative(libProjectFs.src.main.$raw)] } }
+  await fs.tsconfig.extendJson<TsConfigJson>({
+    compilerOptions: { paths: { [name]: [fs.libs.relative(libFs.src.main.$raw)] } }
   });
-  logger.success(`${pc.cyan(rootFs.libs.relative(rootFs.tsconfig.$raw))} ${pc.yellow("updated")}`);
+  fileLogger.updated(fs.tsconfig);
 };

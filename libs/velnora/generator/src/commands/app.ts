@@ -1,37 +1,22 @@
-import { PackageJson, TsConfigJson } from "type-fest";
-
 import { appCtx } from "@velnora/runtime";
 
 import type { AppCommandOptions } from "../../../cli/src/commands/generate/app";
-import { applyClientFiles } from "../features/client";
-import { applyServerFiles } from "../features/server";
+import { generateAppFiles } from "../core/generate-app-files";
 import type { GenerateCommand } from "../types/generate-command";
+import { FileLogger } from "../utils/file-logger";
 import { generateProjectFs } from "../utils/generate-project-fs";
-import { logFileSuccess } from "../utils/log-file-success";
 import { logger } from "../utils/logger";
 
 export const generateApp: GenerateCommand<AppCommandOptions> = async options => {
-  const name = options.pkgName || options.name;
-  logger.info(`Preparing to generate app ${name}...`);
-
+  const pkgName = options.pkgName || options.name;
+  logger.info(`Preparing to generate app ${pkgName}...`);
   await appCtx.resolveConfig();
 
-  const rootFs = generateProjectFs();
-  const appProjectFs = rootFs.apps.app(options);
+  const fs = generateProjectFs();
+  const fileLogger = new FileLogger(fs.dot.dirname);
 
-  if (options.type === "client" || !options.type) {
-    await applyClientFiles(rootFs, options);
-  }
-
-  if (options.type === "server" || !options.type) {
-    await applyServerFiles(rootFs, options);
-  }
-
-  await appProjectFs.packageJson.extendJson<PackageJson>({ name, version: "0.0.0-dev.0" });
-  logFileSuccess(rootFs.dot.relative(appProjectFs.packageJson.$raw));
-
-  await appProjectFs.tsconfig.extendJson<TsConfigJson>({
-    extends: appProjectFs.tsconfig.relative(rootFs.tsconfig.$raw)
+  await generateAppFiles(fs, fileLogger, {
+    type: options.type,
+    app: { name: options.name, pkgName }
   });
-  logFileSuccess(rootFs.dot.relative(appProjectFs.tsconfig.$raw));
 };

@@ -1,15 +1,12 @@
 import { appCtx } from "@velnora/runtime";
 import { pathConstructor } from "@velnora/utils/node";
 
-import type { AppCommandOptions } from "../../../cli/src/commands/generate/app";
-import type { LibCommandOptions } from "../../../cli/src/commands/generate/lib";
-
-export const generateProjectFs = () => {
-  return pathConstructor(process.cwd(), c => ({
+export const generateProjectFs = (root = process.cwd()) => {
+  return pathConstructor(root, c => ({
     dot: c.fs("."),
     apps: c.fs(appCtx.projectStructure.apps.rawRoot, c => ({
-      app(options: AppCommandOptions) {
-        return c.fs(options.name, c => ({
+      app(name: string) {
+        return c.fs(name, c => ({
           client: c.e("client", c => ({
             app: c.e("app", c => ({
               page: c.fs("page.tsx")
@@ -17,9 +14,9 @@ export const generateProjectFs = () => {
             routes: c.fs("routes.ts")
           })),
           server: c.e("server", c => ({
-            controller: c.fs(`${options.name}.controller.ts`),
-            service: c.fs(`${options.name}.service.ts`),
-            module: c.fs(`${options.name}.module.ts`)
+            controller: c.fs(`${name}.controller.ts`),
+            service: c.fs(`${name}.service.ts`),
+            module: c.fs(`${name}.module.ts`)
           })),
           packageJson: c.fs("package.json"),
           tsconfig: c.fs("tsconfig.json")
@@ -27,17 +24,27 @@ export const generateProjectFs = () => {
       }
     })),
     libs: c.fs(appCtx.projectStructure.libs.rawRoot, c => ({
-      lib(options: LibCommandOptions) {
-        return c.fs(options.name, c => ({
+      lib(name: string, jsx = false) {
+        return c.fs(name, c => ({
           src: c.e("src", c => ({
-            main: c.fs(`main.ts${options.jsx ? "x" : ""}`)
+            main: c.fs(`main.ts${jsx ? "x" : ""}`)
           })),
           packageJson: c.fs("package.json"),
           tsconfig: c.fs("tsconfig.json")
         }));
       }
     })),
-    tsconfig: c.fs("tsconfig.json")
+    template: c.fs(appCtx.projectStructure.template.rawRoot, c => ({
+      src: c.e("src", c => ({
+        main: c.fs("main.ts")
+      }))
+    })),
+    prettier: c.fs(".prettierrc"),
+    env: c.fs(".env"),
+    packageJson: c.fs("package.json"),
+    tsconfig: c.fs("tsconfig.json"),
+    velnoraConfig: c.fs("velnora.config.ts"),
+    velnoraEnv: c.fs("velnora-env.d.ts")
   }));
 };
 

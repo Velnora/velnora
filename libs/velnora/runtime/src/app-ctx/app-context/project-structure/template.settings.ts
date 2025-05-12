@@ -1,4 +1,4 @@
-import { resolve } from "node:path";
+import { relative, resolve } from "node:path";
 
 import type { RegisteredTemplate as IRegisteredTemplate, TemplateSettings as ITemplateSettings } from "@velnora/types";
 import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@velnora/utils";
@@ -10,13 +10,17 @@ import { RegisteredTemplate } from "./registered-template";
 @ClassExtensions()
 export class TemplateSettings extends ProjectSettings implements ITemplateSettings {
   @ClassGetterSetter("template", resolve)
-  declare dir: string;
+  declare root: string;
 
   @ClassGetterSetter()
   declare templates: Map<string, RegisteredTemplate>;
 
   @ClassGetterSetter()
   declare registeredTemplate: RegisteredTemplate;
+
+  get rawRoot() {
+    return relative(process.cwd(), this.root);
+  }
 
   *[Symbol.iterator]() {
     yield* this.templates.values();

@@ -6,5 +6,5 @@ export interface TemplateSettings extends ProjectSettings, Velnora.TemplateSetti
    * Template path where the template files are located.
    * @default "template"
    */
-  dir: string;
+  root: string;
 }

@@ -9,6 +9,8 @@ import { format } from "prettier";
 import { type JsonMergeInput, isMergeCallback } from "./is-merge-callback";
 import { fileToParser, prettierConfig } from "./prettier";
 
+const fileContentCache = new Map<string, string>();
+
 export const fileActions = (path: string) => {
   return {
     // region File actions
@@ -20,8 +22,12 @@ export const fileActions = (path: string) => {
     async createDir() {
       await mkdir(path, { recursive: true });
     },
-    read(format: BufferEncoding = "utf-8") {
-      return readFile(path, format);
+    async read() {
+      if (!fileContentCache.has(path)) {
+        const content = await readFile(path, "utf-8");
+        fileContentCache.set(path, content);
+      }
+      return fileContentCache.get(path)!;
     },
     async readJson<TJson extends object>() {
       const raw = await this.read();
@@ -29,8 +35,10 @@ export const fileActions = (path: string) => {
       return JSON.parse(raw) as TJson;
     },
     async write(content: string) {
-      await this.create();
-      await writeFile(path, await this.format(content));
+      !(await this.exists()) && (await this.create());
+      const formattedContent = await this.format(content);
+      fileContentCache.set(path, formattedContent);
+      await writeFile(path, formattedContent);
     },
     async writeJson<TJson extends object>(content: TJson) {
       await this.write(JSON.stringify(content, null, 2));
@@ -92,3 +100,5 @@ export const fileActions = (path: string) => {
     // endregion
   };
 };
+
+export type FileActions = ReturnType<typeof fileActions>;
