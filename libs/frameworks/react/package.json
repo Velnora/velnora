@@ -19,7 +19,6 @@
   "main": "./build/velnora.framework.react.js",
   "types": "./build/velnora.framework-react.d.ts",
   "dependencies": {
-    "@velnora/framework-loader": "workspace:^",
     "@velnora/runtime": "workspace:^",
     "@velnora/utils": "workspace:^",
     "@vitejs/plugin-react-swc": "^3.9.0",

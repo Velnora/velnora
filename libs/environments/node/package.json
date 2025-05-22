@@ -15,7 +15,6 @@
   "main": "./build/velnora.environment-node.js",
   "types": "./build/velnora.environment-node.d.ts",
   "dependencies": {
-    "@velnora/environment-loader": "workspace:^",
     "@velnora/utils": "workspace:^",
     "semver": "^7.7.1"
   },

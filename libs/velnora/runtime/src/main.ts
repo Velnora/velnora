@@ -1,4 +1,5 @@
 import "reflect-metadata";
 
-export * from "./app-ctx";
+export * from "./core";
+
 export * from "./types/registered-module";
