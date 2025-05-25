@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { renderToPipeableStream } from "react-dom/server";
 
-import type { SSRRenderContext } from "@velnora/framework-loader";
+import type { SSRRenderContext } from "@velnora/runtime";
 import { appCtx } from "@velnora/runtime";
 import type { WithDefault } from "@velnora/types";
 import { capitalize } from "@velnora/utils";

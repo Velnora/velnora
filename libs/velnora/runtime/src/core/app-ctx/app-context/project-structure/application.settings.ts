@@ -1,6 +1,7 @@
 import { readdir } from "node:fs/promises";
 import { relative, resolve } from "node:path";
 
+import { Emojis } from "@velnora/logger";
 import {
   AppType,
   type ApplicationSettings as IApplicationSettings,
@@ -77,7 +78,7 @@ export class ApplicationSettings extends ProjectSettings implements IApplication
       ? `Host app "${this.hostAppName}" not found, using "${hostApp.name}" as host app.`
       : `No host app defined, using "${hostApp.name}" as host app.`;
 
-    logger.warn(message);
+    logger.warn(Emojis.warn, message);
     this.hostAppName = hostApp.name;
     return hostApp;
   }

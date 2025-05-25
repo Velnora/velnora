@@ -22,7 +22,7 @@ export const generateAppFiles = async (fs: GeneratedProjectFs, fileLogger: FileL
   }
 
   await appFs.tsconfig.extendJson<TsConfigJson>({
-    extends: fs.tsconfig.relative(fs.tsconfig.$raw)
+    extends: appFs.tsconfig.relative(fs.tsconfig.$raw)
   });
   fileLogger.created(appFs.tsconfig);
 

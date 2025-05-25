@@ -16,6 +16,9 @@ export const VIRTUAL_ENTRIES = {
   },
   APP_CLIENT_JSON(appName: string) {
     return `/@app:${appName}/client.json`;
+  },
+  APP_SERVER_ENTRY(appName: string) {
+    return `/@app:${appName}/entry-server.ts`;
   }
 } as const;
 
@@ -34,6 +37,9 @@ export const CHECK_VIRTUAL_ENTRIES: Record<keyof typeof VIRTUAL_ENTRIES, (appNam
   },
   APP_CLIENT_JSON(appName) {
     return /^\/@app:(.*)\/client\.json$/.test(appName);
+  },
+  APP_SERVER_ENTRY(appName) {
+    return /^\/@app:(.*)\/entry-server\.ts$/.test(appName);
   }
 };
 

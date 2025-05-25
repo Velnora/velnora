@@ -2,10 +2,11 @@ import { createServer, isRunnableDevEnvironment } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 import { PROJECT_CWD } from "../const";
+import { swcPlugin } from "../plugins";
 
 export const internalViteInstance = await createServer({
   root: PROJECT_CWD,
-  plugins: [tsconfigPaths({ root: PROJECT_CWD, loose: true })],
+  plugins: [tsconfigPaths({ root: PROJECT_CWD, loose: true }), swcPlugin()],
   resolve: { preserveSymlinks: false },
   server: { ws: false, hmr: false, middlewareMode: true },
   appType: "custom",

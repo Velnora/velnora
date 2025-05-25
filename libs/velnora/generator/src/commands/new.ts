@@ -2,9 +2,11 @@ import { resolve } from "node:path";
 
 import { PackageJson, TsConfigJson } from "type-fest";
 
+import { Emojis } from "@velnora/logger";
 import { appCtx } from "@velnora/runtime";
 
 import type { GenerateProjectCommandOptions } from "../../../cli/src/commands/generate/project";
+import { version as velnoraVersion } from "../../../package.json";
 import { generateAppFiles } from "../core/generate-app-files";
 import { generatePrettierConfiguration } from "../core/generate-prettier-configuration";
 import { FileLogger } from "../utils/file-logger";
@@ -12,10 +14,12 @@ import { generateProjectFs } from "../utils/generate-project-fs";
 import { getLatestVersion } from "../utils/get-latest-version";
 import { logger } from "../utils/logger";
 
+declare const __DEV__: boolean;
+
 export const newProject = async (options: GenerateProjectCommandOptions) => {
   const root = resolve(options.name);
-  logger.info("Creating new Velnora project.");
-  logger.debug("root:", root);
+  logger.info(Emojis.info, "Creating new Velnora project.");
+  logger.debug(Emojis.debug, "root:", root);
 
   await appCtx.resolveConfig();
 
@@ -43,7 +47,10 @@ export const newProject = async (options: GenerateProjectCommandOptions) => {
     type: "module",
     workspaces: ["apps/*", "libs/*", "template"],
     scripts: { build: "dev build", dev: "dev dev" },
-    dependencies: { "reflect-metadata": await getLatestVersion("reflect-metadata") }
+    dependencies: {
+      "reflect-metadata": await getLatestVersion("reflect-metadata"),
+      "velnora": __DEV__ ? "workspace:^" : velnoraVersion
+    }
   });
   fileLogger.created(fs.packageJson);
 

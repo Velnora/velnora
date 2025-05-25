@@ -3,6 +3,7 @@ import pc from "picocolors";
 
 import { envLogLevel } from "../const";
 import { type CreateLoggerOptions, LogFormats } from "../types";
+import type { InternalLogObject } from "../types/internal-log-object";
 import { colorize } from "../utils/colorize";
 import { colors } from "../utils/colors";
 import { formatTimestamp } from "../utils/format-timestamp";
@@ -16,8 +17,9 @@ export const baseReporter = ({
   const transformData = transformers?.data || (logs => logs);
 
   return {
-    log(logObject) {
-      if (logObject.level > envLogLevel) return;
+    log(logObjectRaw) {
+      if (logObjectRaw.level > envLogLevel) return;
+      const logObject = logObjectRaw as InternalLogObject;
 
       if (format === LogFormats.JSON) {
         console.log(
@@ -38,7 +40,8 @@ export const baseReporter = ({
         tag: name,
         timestamp: formatTimestamp(logObject.date),
         type: logObject.type,
-        level: logObject.level
+        level: logObject.level,
+        emoji: logObject.emoji
       };
 
       let messagePrefix = format as string;

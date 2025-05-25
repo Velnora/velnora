@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 
 import pc from "picocolors";
 
+import { Emojis } from "@velnora/logger";
 import { appCtx } from "@velnora/runtime";
 import type { WithStringConstructor } from "@velnora/types";
 
@@ -29,18 +30,18 @@ export class FileLogger {
   created(file: WithStringConstructor) {
     const coloredPath = this.formatColoredPath(file.$raw);
     this.fileExistsMap.set(file.$raw, true);
-    logger.success(coloredPath, pc.greenBright("created"));
+    logger.success(Emojis.success, coloredPath, pc.greenBright("created"));
   }
 
   updated(file: WithStringConstructor) {
     const coloredPath = this.formatColoredPath(file.$raw);
-    logger.success(coloredPath, pc.yellow("updated"));
+    logger.success(Emojis.update, coloredPath, pc.yellow("updated"));
   }
 
   removed(file: WithStringConstructor) {
     const coloredPath = this.formatColoredPath(file.$raw);
     this.fileExistsMap.set(file.$raw, false);
-    logger.success(coloredPath, pc.redBright("removed"));
+    logger.success(Emojis.delete, coloredPath, pc.redBright("removed"));
   }
 
   private formatColoredPath(raw: string): string | null {

@@ -11,26 +11,12 @@
   "main": "./build/velnora.dev.js",
   "types": "./build/velnora.dev.d.ts",
   "dependencies": {
-    "@nestjs/common": "^11.1.0",
-    "@nestjs/core": "^11.1.0",
-    "@swc/helpers": "^0.5.17",
-    "@velnora/adapter-loader": "workspace:^",
-    "@velnora/environment-loader": "workspace:^",
-    "@velnora/framework-loader": "workspace:^",
     "@velnora/logger": "workspace:^",
-    "@velnora/router": "workspace:^",
     "@velnora/runtime": "workspace:^",
-    "@velnora/utils": "workspace:^",
-    "lodash.merge": "^4.6.2",
-    "magic-string": "^0.30.17",
-    "vite": "^6.3.4",
-    "vite-plugin-inspect": "^11.0.1",
-    "vite-tsconfig-paths": "^5.1.4"
+    "hookable": "^5.5.3"
   },
   "devDependencies": {
-    "@swc/core": "^1.11.24",
-    "@types/lodash.merge": "^4.6.9",
     "@velnora/types": "workspace:^",
-    "type-fest": "^4.40.1"
+    "type-fest": "^4.41.0"
   }
 }

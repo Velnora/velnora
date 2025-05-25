@@ -5,7 +5,7 @@ import { type UserConfig, defineConfig, mergeConfig } from "vite";
 import dtsPlugin from "vite-plugin-dts";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-import { swcPlugin } from "../libs/velnora/dev/src/plugins/swc.plugin";
+import { swcPlugin } from "../libs/velnora/utils/src/node/plugins/swc.plugin";
 
 const PROJECT_CWD = process.env.PROJECT_CWD || process.cwd();
 

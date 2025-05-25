@@ -15,28 +15,29 @@
   "scripts": {
     "check:libs:deps": "scripts/check-libs-deps.sh",
     "new:project": "rm -rf examples/project && velnora-dev generate project examples/project",
+    "nx:build": "nx run velnora:build",
     "nx:graph": "nx graph --open false"
   },
   "dependencies": {
-    "@swc/core": "^1.11.24",
+    "@swc/core": "^1.11.29",
     "magic-string": "^0.30.17"
   },
   "devDependencies": {
-    "@nx/vite": "^20.8.1",
+    "@nx/vite": "^21.1.1",
     "@swc-node/register": "^1.10.10",
     "@swc/helpers": "^0.5.17",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "@types/node": "^22.15.3",
+    "@types/node": "^22.15.21",
     "depcheck": "^1.4.7",
-    "nx": "^20.8.1",
+    "nx": "^21.1.1",
     "prettier": "^3.5.3",
-    "prettier-plugin-packagejson": "^2.5.10",
-    "rollup": "^4.40.1",
-    "type-fest": "^4.40.1",
+    "prettier-plugin-packagejson": "^2.5.14",
+    "rollup": "^4.41.0",
+    "type-fest": "^4.41.0",
     "velnora": "workspace:^",
-    "vite": "^6.3.4",
-    "vite-node": "^3.1.2",
-    "vite-plugin-dts": "^4.5.3",
+    "vite": "^6.3.5",
+    "vite-node": "^3.1.4",
+    "vite-plugin-dts": "^4.5.4",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "packageManager": "yarn@4.9.1"

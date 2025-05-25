@@ -1,9 +1,9 @@
 import { type Plugin } from "vite";
 
-import { frameworkRegistry } from "@velnora/framework-loader";
-import { RegisteredApp, appCtx } from "@velnora/runtime";
 import { CHECK_VIRTUAL_ENTRIES, VIRTUAL_ENTRIES, capitalize } from "@velnora/utils";
 import { CLIENT_ENTRY_FILE_EXTENSIONS, findFile } from "@velnora/utils/node";
+
+import { RegisteredApp, appCtx, frameworkRegistry } from "../core";
 
 export const velnoraAppPlugin = (app: RegisteredApp): Plugin => {
   return {
@@ -16,7 +16,8 @@ export const velnoraAppPlugin = (app: RegisteredApp): Plugin => {
         CHECK_VIRTUAL_ENTRIES.APP_TEMPLATE(id) ||
         CHECK_VIRTUAL_ENTRIES.APP_CLIENT_ROUTES(id) ||
         CHECK_VIRTUAL_ENTRIES.APP_CLIENT_SCRIPT(id) ||
-        CHECK_VIRTUAL_ENTRIES.APP_CLIENT_JSON(id)
+        CHECK_VIRTUAL_ENTRIES.APP_CLIENT_JSON(id) ||
+        CHECK_VIRTUAL_ENTRIES.APP_SERVER_ENTRY(id)
       ) {
         return id;
       }
@@ -85,12 +86,40 @@ export default Template;
 export default () => {
   throw new Error("No routes or entry-client files found for \"${app.name}\" app");
 }
-`;
+`.trimStart();
       }
 
       if (CHECK_VIRTUAL_ENTRIES.APP_CLIENT_JSON(id)) {
         const object = app.raw();
         return JSON.stringify(object);
+      }
+
+      if (CHECK_VIRTUAL_ENTRIES.APP_SERVER_ENTRY(id)) {
+        const serverFile = findFile(app.root, `server/${app.name}.module`, CLIENT_ENTRY_FILE_EXTENSIONS);
+        const utilsNode = await this.resolve("@velnora/utils/node");
+        if (!utilsNode) {
+          this.error(`@velnora/utils is not installed`);
+          return;
+        }
+
+        if (serverFile) {
+          return `
+import * as server__import from "${serverFile}";
+import { prepareNestApplication, useVelnora } from "${utilsNode.id}";
+
+const velnora = useVelnora();
+const Module = server__import["${capitalize(app.name)}Module"] || server__import.default;
+const app = await prepareNestApplication(Module, "${app.name}");
+
+import.meta.hot?.accept(async () => {
+  await velnora.hooks.callHook("velnora:app-server:nestjs:reinit", "${app.name}");
+});
+
+export default app;
+`.trimStart();
+        }
+
+        return `export default undefined;`;
       }
     }
   };

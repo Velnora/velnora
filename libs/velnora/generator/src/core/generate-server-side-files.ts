@@ -1,7 +1,10 @@
+import { PackageJson } from "type-fest";
+
 import { capitalize } from "@velnora/utils";
 
 import type { FileLogger } from "../utils/file-logger";
 import type { GeneratedProjectFs } from "../utils/generate-project-fs";
+import { getLatestVersion } from "../utils/get-latest-version";
 import type { GenerateAppOptions } from "./generate-app-files";
 
 export const generateServerSideFiles = async (
@@ -9,7 +12,8 @@ export const generateServerSideFiles = async (
   fileLogger: FileLogger,
   options: GenerateAppOptions
 ) => {
-  const serverFs = fs.apps.app(options.app.name).server;
+  const appFs = fs.apps.app(options.app.name);
+  const serverFs = appFs.server;
 
   await serverFs.module.write(
     `import { Module } from "@nestjs/common";
@@ -56,4 +60,10 @@ export const generateServerSideFiles = async (
   `
   );
   fileLogger.created(serverFs.service);
+
+  await appFs.packageJson.extendJson<PackageJson>({
+    dependencies: {
+      "@nestjs/common": await getLatestVersion("@nestjs/common")
+    }
+  });
 };

@@ -1,9 +1,11 @@
 import type { Type } from "@nestjs/common";
-import { Logger } from "@velnora/logger";
+import { Emojis, Logger } from "@velnora/logger";
 import type { RegisteredModule } from "@velnora/types";
 
 import { BaseClass, ClassGetterSetter, capitalize } from "../client";
 import { serverEnv } from "./utils";
+
+declare const __DEV__: boolean;
 
 export abstract class Registry<TRegistryItem, TContainerClass> extends BaseClass {
   @ClassGetterSetter()
@@ -41,7 +43,8 @@ export abstract class Registry<TRegistryItem, TContainerClass> extends BaseClass
     }
     const moduleName = module || `@velnora/${this.moduleName}-${name}`;
     this.moduleNameMap.set(name, moduleName);
-    await serverEnv.runner.import(moduleName);
+    const { default: registeredItem } = await (__DEV__ ? serverEnv.runner.import(moduleName) : import(moduleName));
+    this.register(moduleName, await registeredItem);
   }
 
   register(name: string, item: TRegistryItem) {
@@ -49,7 +52,7 @@ export abstract class Registry<TRegistryItem, TContainerClass> extends BaseClass
       throw new Error(`${capitalize(this.moduleName)} "${name}" is already registered.`);
     }
 
-    this.logger.info(`Registering ${this.moduleName} "${name}".`);
+    this.logger.info(Emojis.register, `Registering ${this.moduleName} "${name}".`);
     this.registered.set(name, item);
   }
 

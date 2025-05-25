@@ -1,3 +1,4 @@
+import { Emojis } from "@velnora/logger";
 import { appCtx } from "@velnora/runtime";
 
 import type { AppCommandOptions } from "../../../cli/src/commands/generate/app";
@@ -9,7 +10,7 @@ import { logger } from "../utils/logger";
 
 export const generateApp: GenerateCommand<AppCommandOptions> = async options => {
   const pkgName = options.pkgName || options.name;
-  logger.info(`Preparing to generate app ${pkgName}...`);
+  logger.info(Emojis.prepare, `Preparing to generate app ${pkgName}...`);
   await appCtx.resolveConfig();
 
   const fs = generateProjectFs();

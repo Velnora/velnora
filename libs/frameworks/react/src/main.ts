@@ -1,12 +1,12 @@
 import merge from "lodash.merge";
 
-import { defineFramework, frameworkRegistry } from "@velnora/framework-loader";
 import { appCtx } from "@velnora/runtime";
+import { defineFramework } from "@velnora/utils/node";
 import react from "@vitejs/plugin-react-swc";
 
 const rawConfig = appCtx.raw();
 
-const framework = await defineFramework({
+export default defineFramework({
   plugins: [
     react({
       ...(rawConfig.react || {}),
@@ -25,4 +25,3 @@ const framework = await defineFramework({
     })
   ]
 });
-frameworkRegistry.register("@velnora/framework-react", framework);

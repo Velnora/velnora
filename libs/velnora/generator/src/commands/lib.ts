@@ -1,5 +1,6 @@
 import { PackageJson, TsConfigJson } from "type-fest";
 
+import { Emojis } from "@velnora/logger";
 import { appCtx } from "@velnora/runtime";
 
 import type { LibCommandOptions } from "../../../cli/src/commands/generate/lib";
@@ -10,7 +11,7 @@ import { logger } from "../utils/logger";
 
 export const generateLib: GenerateCommand<LibCommandOptions> = async options => {
   const name = options.pkgName || options.name;
-  logger.info(`Preparing to generate library ${name}...`);
+  logger.info(Emojis.prepare, `Preparing to generate library ${name}...`);
 
   await appCtx.resolveConfig();
 

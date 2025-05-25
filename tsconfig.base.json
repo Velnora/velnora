@@ -34,10 +34,6 @@
       "@velnora/utils": ["libs/velnora/utils/src/main.ts"],
       "@velnora/utils/node": ["libs/velnora/utils/src/node/main.ts"],
 
-      "@velnora/adapter-loader": ["libs/loaders/adapter/src/main.ts"],
-      "@velnora/environment-loader": ["libs/loaders/environment/src/main.ts"],
-      "@velnora/framework-loader": ["libs/loaders/framework/src/main.ts"],
-
       "@velnora/adapter-express": ["libs/adapters/express/src/main.ts"],
       "@velnora/adapter-express/adapter": ["libs/adapters/express/src/adapter/main.ts"],
 

@@ -21,4 +21,4 @@ class DecoratorSettings {
   }
 }
 
-export const decoratorSettings = singleton("__VELNORA_DECORATOR_SETTINGS__", () => new DecoratorSettings());
+export const decoratorSettings = singleton(DecoratorSettings);

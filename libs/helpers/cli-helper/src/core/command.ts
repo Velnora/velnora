@@ -1,5 +1,7 @@
 import type { CamelCase, Promisable } from "type-fest";
 
+import { Emojis } from "@velnora/logger";
+
 import type { CommandOptions } from "../types/command-option";
 import type { CommandReturnType } from "../types/command-return-type";
 import type { CommandsType } from "../types/commands-type";
@@ -20,7 +22,7 @@ export class Command<TOptions extends Record<string, Type> = {}> {
     private command: string,
     private readonly description?: string
   ) {
-    logger.debug(`Registering command: ${command} - ${description}`);
+    logger.debug(Emojis.register, `Registering command: ${command} - ${description}`);
   }
 
   positional<TProperty extends string, TAliasName extends string = TProperty>(
@@ -33,10 +35,10 @@ export class Command<TOptions extends Record<string, Type> = {}> {
       Record<TProperty | TAliasName | CamelCase<TProperty> | CamelCase<TAliasName>, Type<"string", never>>
     >
   > {
-    logger.debug(`Registering positional argument: ${property} - Options:`, options);
+    logger.debug(Emojis.register, `Registering positional argument: ${property} - Options:`, options);
     const { default: defaultValue, required = true } = options || {};
     if (this.positionalMap.has(property)) {
-      logger.warn(`Positional argument ${property} already exists. Overwriting.`);
+      logger.warn(Emojis.warn, `Positional argument ${property} already exists. Overwriting.`);
     }
     this.positionalMap.set(property, { name: property, description, default: defaultValue ?? undefined, required });
     this.positionalArguments.add(property);
@@ -74,12 +76,12 @@ export class Command<TOptions extends Record<string, Type> = {}> {
       alias: resolvedValue.alias,
       requires: resolvedValue.requires
     } as Option<TType, TUnionType, keyof TOptions>;
-    logger.debug(`Registered option: ${name} - Type: ${resolvedValue.type}, Default: ${defaultValue}`);
+    logger.debug(Emojis.register, `Registered option: ${name} - Type: ${resolvedValue.type}, Default: ${defaultValue}`);
     return this as any;
   }
 
   children(...commands: CommandsType) {
-    logger.debug(`Registering children commands to: ${this.command}`);
+    logger.debug(Emojis.register, `Registering children commands to: ${this.command}`);
     this.childCommands.push(...commands);
     return this;
   }
@@ -89,7 +91,7 @@ export class Command<TOptions extends Record<string, Type> = {}> {
       [K in keyof TOptions]: InferType<TOptions[K]["type"], TOptions[K]["values"]>;
     }) => Promisable<void>
   ): CommandReturnType<{ [K in keyof TOptions]: TOptions[K] }> {
-    logger.debug(`Setting up execute handler for command: ${this.command}`);
+    logger.debug(Emojis.config, `Setting up execute handler for command: ${this.command}`);
     return {
       command: this.command,
       description: this.description ?? null,

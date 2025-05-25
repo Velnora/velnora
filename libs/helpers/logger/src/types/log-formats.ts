@@ -1,4 +1,4 @@
 export enum LogFormats {
-  Default = "[{tag} {timestamp}] [{type}]",
+  Default = "{timestamp} [{tag}] {emoji} {name} [{type}]",
   JSON = "json"
 }
