@@ -1,0 +1,32 @@
+{
+  "name": "@velnora/logger-engine-tui",
+  "main": "build/index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build:rust": "napi build --platform --release && bun build.js"
+  },
+  "dependencies": {
+    "@napi-rs/cli": "^2.18.4",
+    "esbuild": "^0.25.5"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.15"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "napi": {
+    "name": "velnora-logger-engine-tui",
+    "triples": {
+      "additional": [
+        "aarch64-apple-darwin",
+        "aarch64-linux-android",
+        "aarch64-unknown-linux-gnu",
+        "aarch64-unknown-linux-musl",
+        "aarch64-pc-windows-msvc",
+        "armv7-unknown-linux-gnueabihf",
+        "armv7-unknown-linux-musleabihf"
+      ]
+    }
+  }
+}

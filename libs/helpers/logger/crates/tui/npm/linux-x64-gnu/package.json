@@ -1,0 +1,21 @@
+{
+  "name": "@velnora/logger-engine-tui-linux-x64-gnu",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "@velnora/logger-engine-tui.linux-x64-gnu.node",
+  "files": [
+    "velnora-logger-engine-tui.linux-x64-gnu.node"
+  ],
+  "engines": {
+    "node": ">= 10"
+  },
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "libc": [
+    "glibc"
+  ]
+}

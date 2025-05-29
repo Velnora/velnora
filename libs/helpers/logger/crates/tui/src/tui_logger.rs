@@ -1,35 +1,42 @@
-use crossterm::{event, event::{DisableMouseCapture, EnableMouseCapture}, execute, terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen}};
+use core::{impl_logger_helpers, LogLevel, LogSink};
+use crossterm::event::{Event, KeyCode};
+use crossterm::{
+    event,
+    event::{DisableMouseCapture, EnableMouseCapture},
+    execute,
+    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
+};
 use ratatui::backend::CrosstermBackend;
 use ratatui::style::{Modifier, Style};
 use ratatui::text::{Line, Span};
 use ratatui::widgets::{List, ListItem, ListState, Paragraph, Tabs};
 use ratatui::{
-    layout::{Constraint, Direction, Layout, Rect},
-    widgets::{Block, Borders},
-    Frame, Terminal,
+    layout::{Constraint, Direction, Layout, Rect}, widgets::{Block, Borders},
+    Frame,
+    Terminal,
 };
 use std::collections::HashMap;
 use std::io::stdout;
 use std::io::Result;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
-use crossterm::event::{Event, KeyCode};
 use tokio::sync::mpsc::{unbounded_channel, UnboundedReceiver, UnboundedSender};
 use tokio::time::{sleep, Duration};
 
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 struct Item {
     name: String,
     section: Option<String>,
 }
 
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct TuiLogger {
     state: Arc<Mutex<LoggerState>>,
     sender: UnboundedSender<LogMessage>,
     should_stop: Arc<AtomicBool>,
 }
 
+#[derive(Debug, Clone)]
 struct LoggerState {
     tabs: Vec<String>,
     items: HashMap<String, Vec<Item>>,
@@ -38,13 +45,12 @@ struct LoggerState {
     selected_item: usize,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct LogMessage {
     pub item: String,
     pub section: Option<String>,
     pub message: String,
 }
-
 
 impl TuiLogger {
     pub fn new() -> (Self, UnboundedReceiver<LogMessage>) {
@@ -90,7 +96,6 @@ impl TuiLogger {
         self
     }
 
-
     pub fn add_log(&mut self, item: &str, section: Option<&str>, message: &str) -> &mut Self {
         {
             let _ = self.sender.send(LogMessage {
@@ -102,7 +107,7 @@ impl TuiLogger {
         self
     }
 
-    pub async fn start(&mut self, mut receiver: UnboundedReceiver<LogMessage>) -> Result<()>{
+    pub async fn start(&mut self, mut receiver: UnboundedReceiver<LogMessage>) -> Result<()> {
         enable_raw_mode()?;
         let mut stdout = stdout();
         execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
@@ -139,7 +144,11 @@ impl TuiLogger {
         }
 
         disable_raw_mode()?;
-        execute!(terminal.backend_mut(), LeaveAlternateScreen, DisableMouseCapture)?;
+        execute!(
+            terminal.backend_mut(),
+            LeaveAlternateScreen,
+            DisableMouseCapture
+        )?;
         terminal.show_cursor()?;
 
         Ok(())
@@ -162,7 +171,6 @@ impl TuiLogger {
         }
     }
 
-
     fn render(&self, f: &mut Frame, state: &LoggerState) {
         let size = f.area();
         let direction = if size.width > 120 {
@@ -180,7 +188,7 @@ impl TuiLogger {
         self.render_logger_pane(f, chunks[1], state);
     }
 
-    fn render_info_pane(&self, f: &mut Frame, area: Rect, mut state: &LoggerState) {
+    fn render_info_pane(&self, f: &mut Frame, area: Rect, state: &LoggerState) {
         let vertical_chunks = Layout::default()
             .direction(Direction::Vertical)
             .constraints([
@@ -191,9 +199,10 @@ impl TuiLogger {
             .split(area);
 
         // Header
-        let header = Paragraph::new(Line::from(vec![
-            Span::styled("Velnora", Style::default().add_modifier(Modifier::BOLD)),
-        ]));
+        let header = Paragraph::new(Line::from(vec![Span::styled(
+            "Velnora",
+            Style::default().add_modifier(Modifier::BOLD),
+        )]));
         f.render_widget(header, vertical_chunks[0]);
 
         // Tabs
@@ -208,14 +217,14 @@ impl TuiLogger {
 
         f.render_widget(tabs, vertical_chunks[1]);
 
-        let current_tab_name = state.tabs.get(state.selected_tab)
+        let current_tab_name = state
+            .tabs
+            .get(state.selected_tab)
             .cloned()
             .unwrap_or_else(|| "".to_string()); // Now a real String
 
         let empty_vec = vec![];
-        let current_items = state.items
-            .get(&current_tab_name)
-            .unwrap_or(&empty_vec);
+        let current_items = state.items.get(&current_tab_name).unwrap_or(&empty_vec);
 
         // List of items
         let list_items: Vec<ListItem> = current_items
@@ -241,7 +250,11 @@ impl TuiLogger {
     fn get_list_state(&self, state: &LoggerState) -> ListState {
         let mut stateful = ListState::default();
 
-        let tab_name = state.tabs.get(state.selected_tab).map(String::as_str).unwrap_or("");
+        let tab_name = state
+            .tabs
+            .get(state.selected_tab)
+            .map(String::as_str)
+            .unwrap_or("");
         let empty_vec = vec![];
         let items = state.items.get(tab_name).unwrap_or(&empty_vec);
 
@@ -301,19 +314,20 @@ impl TuiLogger {
     }
 
     fn render_logger_pane(&self, f: &mut Frame, area: Rect, state: &LoggerState) {
-        let current_tab_name = state.tabs.get(state.selected_tab)
+        let current_tab_name = state
+            .tabs
+            .get(state.selected_tab)
             .cloned()
             .unwrap_or_else(|| "".to_string()); // Now a real String
 
         let empty_vec = vec![];
-        let current_items = state.items
-            .get(&current_tab_name)
-            .unwrap_or(&empty_vec);
+        let current_items = state.items.get(&current_tab_name).unwrap_or(&empty_vec);
 
         let item = current_items.get(state.selected_item);
 
         let key = item.map(|i| (i.name.clone(), i.section.clone()));
-        let log_lines = key.clone()
+        let log_lines = key
+            .clone()
             .and_then(|k| state.logs.get(&k))
             .cloned()
             .unwrap_or_default();
@@ -330,10 +344,22 @@ impl TuiLogger {
             })
             .unwrap_or_else(|| "Logs".to_string());
 
-        let list = List::new(list_items)
-            .block(Block::default().title(title).borders(Borders::ALL));
+        let list = List::new(list_items).block(Block::default().title(title).borders(Borders::ALL));
 
         f.render_widget(list, area);
     }
-
 }
+
+impl LogSink for TuiLogger {
+    fn log(&mut self, module: &str, _level: LogLevel, section: Option<&str>, messages: &[impl ToString]) {
+        let msg = messages
+            .iter()
+            .map(ToString::to_string)
+            .collect::<Vec<_>>()
+            .join(" ");
+
+        self.add_log(module, section, &msg);
+    }
+}
+
+impl_logger_helpers!(TuiLogger);

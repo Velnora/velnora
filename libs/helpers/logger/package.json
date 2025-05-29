@@ -3,11 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "type": "module",
-  "workspaces": [
-    "crates/engine"
-  ],
   "dependencies": {
-    "@velnora/logger-engine": "workspace:^"
+    "@velnora/logger-engine-tui": "workspace:^"
   },
   "devDependencies": {
     "@napi-rs/cli": "^2.18.4",
