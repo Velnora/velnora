@@ -1,4 +1,4 @@
-use core::{LogEvent, LogLevel, LogSink};
+use velnora_logger_core::{LogEvent, LogLevel, LogSink};
 use std::collections::HashMap;
 
 pub struct GroupLogger {

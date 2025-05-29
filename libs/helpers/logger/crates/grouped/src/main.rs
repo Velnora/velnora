@@ -1,6 +1,6 @@
 use std::thread::sleep;
 use std::time::Duration;
-use core::LogSink;
+use velnora_logger_core::LogSink;
 use grouped::GroupLogger;
 
 fn main() {

@@ -4,7 +4,7 @@ name = "example"
 version = "0.0.0"
 
 [lib]
-crate-type = ["rlib", "cdylib"]
+crate-type = ["cdylib"]
 
 [dependencies]
 # Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
