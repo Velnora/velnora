@@ -5,13 +5,13 @@ edition = "2024"
 
 [lib]
 name = "velnora_logger_tui"
-crate-type = ["rlib", "cdylib"]
+crate-type = ["cdylib"]
 
 [build-dependencies]
 napi-build = "2.0.1"
 
 [dependencies]
-core = { path = "../core" }
+velnora_logger_core = { path = "../core" }
 crossterm = "0.29.0"
 napi = { version = "2.16.17", features = ["tokio_rt"] }
 napi-derive = "2.16.13"

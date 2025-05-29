@@ -1,4 +1,3 @@
-use core::{impl_logger_helpers, LogLevel, LogSink};
 use crossterm::event::{Event, KeyCode};
 use crossterm::{
     event,
@@ -22,6 +21,7 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 use tokio::sync::mpsc::{unbounded_channel, UnboundedReceiver, UnboundedSender};
 use tokio::time::{sleep, Duration};
+use velnora_logger_core::{impl_logger_helpers, LogLevel, LogSink};
 
 #[derive(Debug, Clone)]
 struct Item {

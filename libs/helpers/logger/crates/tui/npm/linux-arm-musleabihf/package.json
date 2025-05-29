@@ -2,7 +2,7 @@
   "name": "@velnora/logger-engine-tui-linux-arm-musleabihf",
   "version": "0.0.0",
   "license": "MIT",
-  "main": "@velnora/logger-engine-tui.linux-arm-musleabihf.node",
+  "main": "velnora-logger-engine-tui.linux-arm-musleabihf.node",
   "files": [
     "velnora-logger-engine-tui.linux-arm-musleabihf.node"
   ],

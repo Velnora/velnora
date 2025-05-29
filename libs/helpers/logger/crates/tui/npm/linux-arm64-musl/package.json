@@ -2,7 +2,7 @@
   "name": "@velnora/logger-engine-tui-linux-arm64-musl",
   "version": "0.0.0",
   "license": "MIT",
-  "main": "@velnora/logger-engine-tui.linux-arm64-musl.node",
+  "main": "velnora-logger-engine-tui.linux-arm64-musl.node",
   "files": [
     "velnora-logger-engine-tui.linux-arm64-musl.node"
   ],

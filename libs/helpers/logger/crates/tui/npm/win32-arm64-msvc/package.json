@@ -2,7 +2,7 @@
   "name": "@velnora/logger-engine-tui-win32-arm64-msvc",
   "version": "0.0.0",
   "license": "MIT",
-  "main": "@velnora/logger-engine-tui.win32-arm64-msvc.node",
+  "main": "velnora-logger-engine-tui.win32-arm64-msvc.node",
   "files": [
     "velnora-logger-engine-tui.win32-arm64-msvc.node"
   ],
