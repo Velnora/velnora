@@ -1,25 +1,25 @@
 use crate::LogLevel;
 
 pub trait LogSink {
-    fn log(&mut self, module: &str, level: LogLevel, section: Option<&str>, messages: &[impl ToString]);
+    fn log(&mut self, module: &str, level: LogLevel, section: Option<&str>, messages: Vec<&str>);
 
-    fn debug(&mut self, module: &str, section: Option<&str>, messages: &[impl ToString]) {
+    fn debug(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
         self.log(module, LogLevel::Debug, section, messages);
     }
 
-    fn info(&mut self, module: &str, section: Option<&str>, messages: &[impl ToString]) {
+    fn info(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
         self.log(module, LogLevel::Info, section, messages);
     }
 
-    fn warn(&mut self, module: &str, section: Option<&str>, messages: &[impl ToString]) {
+    fn warn(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
         self.log(module, LogLevel::Warn, section, messages);
     }
 
-    fn error(&mut self, module: &str, section: Option<&str>, messages: &[impl ToString]) {
+    fn error(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
         self.log(module, LogLevel::Error, section, messages);
     }
 
-    fn fatal(&mut self, module: &str, section: Option<&str>, messages: &[impl ToString]) {
+    fn fatal(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
         self.log(module, LogLevel::Fatal, section, messages);
     }
 }
@@ -40,7 +40,7 @@ mod tests {
     }
 
     impl LogSink for TestLogger {
-        fn log(&mut self, module: &str, level: LogLevel, _section: Option<&str>, messages: &[impl ToString]) {
+        fn log(&mut self, module: &str, level: LogLevel, _section: Option<&str>, messages: Vec<&str>) {
             let joined = messages.iter().map(|m| m.to_string()).collect::<Vec<_>>().join(" ");
             self.last = Some((module.to_string(), level, joined));
         }
@@ -49,7 +49,7 @@ mod tests {
     #[test]
     fn info_method_routes_to_log() {
         let mut logger = TestLogger::new();
-        logger.info("vite", None,&["started", "dev"]);
+        logger.info("vite", None,vec!["started", "dev"]);
 
         let (module, level, msg) = logger.last.unwrap();
         assert_eq!(module, "vite");
@@ -60,7 +60,7 @@ mod tests {
     #[test]
     fn fatal_method_routes_to_log() {
         let mut logger = TestLogger::new();
-        logger.fatal("vite", None, &["shutdown"]);
+        logger.fatal("vite", None, vec!["shutdown"]);
 
         let (_, level, msg) = logger.last.unwrap();
         assert_eq!(level, LogLevel::Fatal);

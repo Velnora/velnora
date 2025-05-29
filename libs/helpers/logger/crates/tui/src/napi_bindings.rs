@@ -38,38 +38,38 @@ impl TuiLogger {
     }
 
     #[napi]
-    pub unsafe fn add_item(&mut self, tab: String, item: String, section: Option<String>) -> Result<Self, napi::Error> {
+    pub unsafe fn add_item(&mut self, tab: String, item: String, section: Option<&str>) -> Result<Self, napi::Error> {
         self.inner.add_item(&tab, &item, section.as_deref());
         Ok(self.clone())
     }
 
     #[napi]
-    pub unsafe fn debug(&mut self, item: String, section: Option<String>, messages: Vec<String>) -> Result<Self, napi::Error> {
-        self.inner.debug(&item, section.as_deref(), &messages);
+    pub unsafe fn debug(&mut self, item: String, section: Option<&str>, messages: Vec<&str>) -> Result<Self, napi::Error> {
+        self.inner.debug(&item, section.as_deref(), messages);
         Ok(self.clone())
     }
 
     #[napi]
-    pub unsafe fn info(&mut self, item: String, section: Option<String>, messages: Vec<String>) -> Result<Self, napi::Error> {
-        self.inner.info(&item, section.as_deref(), &messages);
+    pub unsafe fn info(&mut self, item: String, section: Option<&str>, messages: Vec<&str>) -> Result<Self, napi::Error> {
+        self.inner.info(&item, section.as_deref(), messages);
         Ok(self.clone())
     }
 
     #[napi]
-    pub unsafe fn warn(&mut self, item: String, section: Option<String>, messages: Vec<String>) -> Result<Self, napi::Error> {
-        self.inner.warn(&item, section.as_deref(), &messages);
+    pub unsafe fn warn(&mut self, item: String, section: Option<&str>, messages: Vec<&str>) -> Result<Self, napi::Error> {
+        self.inner.warn(&item, section.as_deref(), messages);
         Ok(self.clone())
     }
 
     #[napi]
-    pub unsafe fn error(&mut self, item: String, section: Option<String>, messages: Vec<String>) -> Result<Self, napi::Error> {
-        self.inner.error(&item, section.as_deref(), &messages);
+    pub unsafe fn error(&mut self, item: String, section: Option<&str>, messages: Vec<&str>) -> Result<Self, napi::Error> {
+        self.inner.error(&item, section.as_deref(), messages);
         Ok(self.clone())
     }
 
     #[napi]
-    pub unsafe fn fatal(&mut self, item: String, section: Option<String>, messages: Vec<String>) -> Result<Self, napi::Error> {
-        self.inner.fatal(&item, section.as_deref(), &messages);
+    pub unsafe fn fatal(&mut self, item: String, section: Option<&str>, messages: Vec<&str>) -> Result<Self, napi::Error> {
+        self.inner.fatal(&item, section.as_deref(), messages);
         Ok(self.clone())
     }
 }

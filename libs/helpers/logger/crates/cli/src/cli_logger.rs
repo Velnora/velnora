@@ -1,4 +1,4 @@
-use core::{format_event, LogEvent, LogLevel, LogSink};
+use core::{format_event, LogEvent, LogLevel, LogSink, impl_logger_helpers};
 
 pub struct CliLogger;
 
@@ -9,7 +9,13 @@ impl CliLogger {
 }
 
 impl LogSink for CliLogger {
-    fn log(&mut self, module: &str, level: LogLevel, messages: &[impl ToString]) {
+    fn log(
+        &mut self,
+        module: &str,
+        level: LogLevel,
+        _section: Option<&str>,
+        messages: Vec<&str>,
+    ) {
         let msg = messages
             .iter()
             .map(|m| m.to_string())
@@ -19,6 +25,8 @@ impl LogSink for CliLogger {
         println!("{}", format_event(&event));
     }
 }
+
+impl_logger_helpers!(CliLogger);
 
 #[cfg(test)]
 mod tests {
@@ -34,19 +42,19 @@ mod tests {
     #[test]
     fn cli_logger_accepts_info_log() {
         let mut logger = CliLogger::new();
-        logger.info("vite", &["started", "on", "port", "5173"]);
+        logger.info("vite", None, vec!["started", "on", "port", "5173"]);
         // We can't assert stdout without capturing — this confirms no panic
     }
 
     #[test]
     fn cli_logger_accepts_fatal_log() {
         let mut logger = CliLogger::new();
-        logger.fatal("vite", &["shutdown", "due", "to", "crash"]);
+        logger.fatal("vite", None, vec!["shutdown", "due", "to", "crash"]);
     }
 
     #[test]
     fn cli_logger_accepts_multiword_log() {
         let mut logger = CliLogger::new();
-        logger.log("vite", LogLevel::Debug, &["hmr", "triggered", "update"]);
+        logger.log("vite", LogLevel::Debug, None, vec!["hmr", "triggered", "update"]);
     }
 }
