@@ -1,60 +1,69 @@
-use core::{format_event, LogEvent, LogLevel, LogSink, impl_logger_helpers};
+use napi_derive::napi;
+use velnora_logger_core::{format_event, impl_simple_logger_helpers, LogEvent, LogLevel, LogSinkBase};
 
-pub struct CliLogger;
+#[napi(object)]
+#[derive(Debug, Clone)]
+pub struct LoggerOptions {
+    pub name: String,
+}
+
+#[derive(Debug, Clone)]
+pub struct CliLogger {
+    options: LoggerOptions,
+}
 
 impl CliLogger {
-    pub fn new() -> Self {
-        Self
+    pub fn new(options: LoggerOptions) -> Self {
+        Self { options }
     }
 }
 
-impl LogSink for CliLogger {
-    fn log(
-        &mut self,
-        module: &str,
-        level: LogLevel,
-        _section: Option<&str>,
-        messages: Vec<&str>,
-    ) {
-        let msg = messages
-            .iter()
-            .map(|m| m.to_string())
-            .collect::<Vec<_>>()
-            .join(" ");
-        let event = LogEvent::new(module, level, msg);
+impl LogSinkBase for CliLogger {
+    fn log(&mut self, level: LogLevel, messages: Vec<&str>) {
+        let event = LogEvent::new(level, None, messages);
         println!("{}", format_event(&event));
     }
 }
 
-impl_logger_helpers!(CliLogger);
+impl_simple_logger_helpers!(CliLogger);
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use core::LogLevel;
-    use core::LogSink;
+    use velnora_logger_core::LogLevel;
 
     #[test]
     fn cli_logger_can_be_created() {
-        let _logger = CliLogger::new();
+        let _logger = CliLogger::new(LoggerOptions {
+            name: "test_logger".to_string(),
+        });
     }
 
     #[test]
     fn cli_logger_accepts_info_log() {
-        let mut logger = CliLogger::new();
-        logger.info("vite", None, vec!["started", "on", "port", "5173"]);
+        let mut logger = CliLogger::new(LoggerOptions {
+            name: "test_logger".to_string(),
+        });
+        logger.info(vec!["started", "on", "port", "5173"]);
         // We can't assert stdout without capturing — this confirms no panic
     }
 
     #[test]
     fn cli_logger_accepts_fatal_log() {
-        let mut logger = CliLogger::new();
-        logger.fatal("vite", None, vec!["shutdown", "due", "to", "crash"]);
+        let mut logger = CliLogger::new(LoggerOptions {
+            name: "test_logger".to_string(),
+        });
+        logger.fatal(vec!["shutdown", "due", "to", "crash"]);
     }
 
     #[test]
     fn cli_logger_accepts_multiword_log() {
-        let mut logger = CliLogger::new();
-        logger.log("vite", LogLevel::Debug, None, vec!["hmr", "triggered", "update"]);
+        let mut logger = CliLogger::new(LoggerOptions {
+            name: "test_logger".to_string(),
+        });
+        logger.log(
+            LogLevel::Debug,
+            vec!["hmr", "triggered", "update"],
+        );
     }
 }

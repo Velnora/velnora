@@ -1,0 +1,20 @@
+{
+  "name": "@velnora/logger-engine-cli-linux-x64-gnu",
+  "license": "MIT",
+  "main": "velnora-logger-engine-cli.linux-x64-gnu.node",
+  "files": [
+    "velnora-logger-engine-cli.linux-x64-gnu.node"
+  ],
+  "engines": {
+    "node": ">= 10"
+  },
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "libc": [
+    "glibc"
+  ]
+}

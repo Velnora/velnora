@@ -1,0 +1,17 @@
+{
+  "name": "@velnora/logger-engine-cli-linux-arm-gnueabihf",
+  "license": "MIT",
+  "main": "velnora-logger-engine-cli.linux-arm-gnueabihf.node",
+  "files": [
+    "velnora-logger-engine-cli.linux-arm-gnueabihf.node"
+  ],
+  "engines": {
+    "node": ">= 10"
+  },
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "arm"
+  ]
+}

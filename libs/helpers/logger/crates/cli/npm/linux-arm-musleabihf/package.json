@@ -1,0 +1,17 @@
+{
+  "name": "@velnora/logger-engine-cli-linux-arm-musleabihf",
+  "license": "MIT",
+  "main": "velnora-logger-engine-cli.linux-arm-musleabihf.node",
+  "files": [
+    "velnora-logger-engine-cli.linux-arm-musleabihf.node"
+  ],
+  "engines": {
+    "node": ">= 10"
+  },
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "arm"
+  ]
+}

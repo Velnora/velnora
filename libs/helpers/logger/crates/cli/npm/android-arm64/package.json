@@ -1,0 +1,17 @@
+{
+  "name": "@velnora/logger-engine-cli-android-arm64",
+  "license": "MIT",
+  "main": "velnora-logger-engine-cli.android-arm64.node",
+  "files": [
+    "velnora-logger-engine-cli.android-arm64.node"
+  ],
+  "engines": {
+    "node": ">= 10"
+  },
+  "os": [
+    "android"
+  ],
+  "cpu": [
+    "arm64"
+  ]
+}
