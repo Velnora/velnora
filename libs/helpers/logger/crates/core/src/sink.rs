@@ -1,26 +1,26 @@
 use crate::LogLevel;
 
 pub trait LogSink {
-    fn log(&mut self, module: &str, level: LogLevel, section: Option<&str>, messages: Vec<&str>);
+    fn log(&mut self, module: &str, section: Option<&str>, level: LogLevel, messages: Vec<&str>);
 
     fn debug(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
-        self.log(module, LogLevel::Debug, section, messages);
+        self.log(module, section, LogLevel::Debug, messages);
     }
 
     fn info(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
-        self.log(module, LogLevel::Info, section, messages);
+        self.log(module, section, LogLevel::Info, messages);
     }
 
     fn warn(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
-        self.log(module, LogLevel::Warn, section, messages);
+        self.log(module, section, LogLevel::Warn, messages);
     }
 
     fn error(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
-        self.log(module, LogLevel::Error, section, messages);
+        self.log(module, section, LogLevel::Error, messages);
     }
 
     fn fatal(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
-        self.log(module, LogLevel::Fatal, section, messages);
+        self.log(module, section, LogLevel::Fatal, messages);
     }
 }
 
@@ -40,7 +40,7 @@ mod tests {
     }
 
     impl LogSink for TestLogger {
-        fn log(&mut self, module: &str, level: LogLevel, _section: Option<&str>, messages: Vec<&str>) {
+        fn log(&mut self, module: &str, _section: Option<&str>, level: LogLevel, messages: Vec<&str>) {
             let joined = messages.iter().map(|m| m.to_string()).collect::<Vec<_>>().join(" ");
             self.last = Some((module.to_string(), level, joined));
         }
