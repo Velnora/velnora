@@ -351,7 +351,7 @@ impl TuiLogger {
 }
 
 impl LogSink for TuiLogger {
-    fn log(&mut self, module: &str, _level: LogLevel, section: Option<&str>, messages: Vec<&str>) {
+    fn log(&mut self, module: &str, section: Option<&str>, _level: LogLevel, messages: Vec<&str>) {
         let msg = messages
             .iter()
             .map(ToString::to_string)

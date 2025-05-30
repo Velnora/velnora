@@ -4,6 +4,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
+    "@velnora/logger-engine-cli": "workspace:^",
     "@velnora/logger-engine-tui": "workspace:^"
   },
   "devDependencies": {
