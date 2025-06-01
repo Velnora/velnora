@@ -21,7 +21,7 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 use tokio::sync::mpsc::{unbounded_channel, UnboundedReceiver, UnboundedSender};
 use tokio::time::{sleep, Duration};
-use velnora_logger_core::{impl_logger_helpers, LogLevel, LogSink};
+use velnora_logger_core::{impl_logger_helpers, KeybindingManager, LogLevel, LogSink};
 
 #[derive(Debug, Clone)]
 struct Item {
@@ -34,6 +34,7 @@ pub struct TuiLogger {
     state: Arc<Mutex<LoggerState>>,
     sender: UnboundedSender<LogMessage>,
     should_stop: Arc<AtomicBool>,
+    keybindings: KeybindingManager,
 }
 
 #[derive(Debug, Clone)]
@@ -69,6 +70,7 @@ impl TuiLogger {
                 state,
                 sender,
                 should_stop: Arc::new(AtomicBool::new(false)),
+                keybindings: KeybindingManager::new(),
             },
             receiver,
         )
@@ -353,10 +355,10 @@ impl TuiLogger {
 impl LogSink for TuiLogger {
     fn log(&mut self, module: &str, section: Option<&str>, _level: LogLevel, messages: Vec<&str>) {
         let msg = messages
-            .iter()
-            .map(ToString::to_string)
-            .collect::<Vec<_>>()
-            .join(" ");
+            .into_iter()
+            .map(|m| m.to_string())
+            .collect::<Vec<String>>()
+            .join("\n");
 
         self.add_log(module, section, &msg);
     }

@@ -20,7 +20,7 @@ impl CliLogger {
 
 impl LogSinkBase for CliLogger {
     fn log(&mut self, level: LogLevel, messages: Vec<&str>) {
-        let event = LogEvent::new(level, None, messages);
+        let event = LogEvent::new(level, None, None, messages);
         println!("{}", format_event(&event));
     }
 }

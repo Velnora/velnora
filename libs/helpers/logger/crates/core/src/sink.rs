@@ -1,27 +1,7 @@
-use crate::LogLevel;
+use crate::{LogLevel};
 
 pub trait LogSink {
     fn log(&mut self, module: &str, section: Option<&str>, level: LogLevel, messages: Vec<&str>);
-
-    fn debug(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
-        self.log(module, section, LogLevel::Debug, messages);
-    }
-
-    fn info(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
-        self.log(module, section, LogLevel::Info, messages);
-    }
-
-    fn warn(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
-        self.log(module, section, LogLevel::Warn, messages);
-    }
-
-    fn error(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
-        self.log(module, section, LogLevel::Error, messages);
-    }
-
-    fn fatal(&mut self, module: &str, section: Option<&str>, messages: Vec<&str>) {
-        self.log(module, section, LogLevel::Fatal, messages);
-    }
 }
 
 #[cfg(test)]
@@ -49,7 +29,7 @@ mod tests {
     #[test]
     fn info_method_routes_to_log() {
         let mut logger = TestLogger::new();
-        logger.info("vite", None,vec!["started", "dev"]);
+        logger.log("vite", None, LogLevel::Info,vec!["started", "dev"]);
 
         let (module, level, msg) = logger.last.unwrap();
         assert_eq!(module, "vite");
@@ -60,7 +40,7 @@ mod tests {
     #[test]
     fn fatal_method_routes_to_log() {
         let mut logger = TestLogger::new();
-        logger.fatal("vite", None, vec!["shutdown"]);
+        logger.log("vite", None,  LogLevel::Fatal, vec!["shutdown"]);
 
         let (_, level, msg) = logger.last.unwrap();
         assert_eq!(level, LogLevel::Fatal);

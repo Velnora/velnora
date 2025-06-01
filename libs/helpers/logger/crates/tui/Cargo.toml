@@ -13,7 +13,7 @@ napi-build = "2.0.1"
 [dependencies]
 velnora_logger_core = { path = "../core" }
 crossterm = "0.29.0"
-napi = { version = "2.16.17", features = ["tokio_rt"] }
+napi = { version = "2.16.17", features = ["tokio_rt", "napi6"] }
 napi-derive = "2.16.13"
 once_cell = "1.21.3"
 ratatui = "0.29.0"

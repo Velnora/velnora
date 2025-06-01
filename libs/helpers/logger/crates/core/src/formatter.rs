@@ -11,9 +11,16 @@ pub fn format_event(event: &LogEvent) -> String {
         LogLevel::Fatal => "[FATAL]",
     };
 
+    let origin = match (&event.section, &event.module) {
+        (Some(section), Some(module)) => format!("{}/{}", section, module),
+        (Some(section), None) => section.to_string(),
+        (None, Some(module)) => module.to_string(),
+        (None, None) => "Velnora".to_string(),
+    };
+
     format!(
-        "{} {} {:?}: {}",
-        timestamp, level, event.module, event.message
+        "{} {} {}: {}",
+        timestamp, level, origin, event.message
     )
 }
 
@@ -25,10 +32,11 @@ mod tests {
 
     #[test]
     fn format_event_output_contains_all_fields() {
-        let event = LogEvent::new(LogLevel::Info, Some("vite"), vec!["started"]);
+        let event = LogEvent::new(LogLevel::Info, Some("vite"), Some("client"), vec!["started"]);
         let output = format_event(&event);
 
         assert!(output.contains("vite"));
+        // assert!(output.contains("client"));
         assert!(output.contains("started"));
         assert!(output.contains("[INFO]"));
     }

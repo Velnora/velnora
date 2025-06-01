@@ -1,11 +1,12 @@
 import { spawn } from "node:child_process";
 
 const runCommand = (command, args = [], options = {}) => {
-  const { promise, resolve, reject } = Promise.withResolvers();
+  const { promise, resolve } = Promise.withResolvers();
   const child = spawn(command, args, { stdio: "inherit", shell: true, ...options });
 
   child.on("exit", code => {
-    code === 0 ? resolve() : reject(new Error(`${command} exited with code ${code}`));
+    if (code > 0) process.exit(code);
+    resolve();
   });
 
   return promise;

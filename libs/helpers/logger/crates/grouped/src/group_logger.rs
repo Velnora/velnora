@@ -1,4 +1,4 @@
-use velnora_logger_core::{LogEvent, LogLevel, LogSink};
+use velnora_logger_core::{LogEvent, LogLevel, LogSink, impl_logger_helpers};
 use std::collections::HashMap;
 
 pub struct GroupLogger {
@@ -30,26 +30,23 @@ impl GroupLogger {
 }
 
 impl LogSink for GroupLogger {
-    fn log(&mut self, module: &str, level: LogLevel, messages: &[impl ToString]) {
-        let msg = messages
-            .iter()
-            .map(|m| m.to_string())
-            .collect::<Vec<_>>()
-            .join(" ");
-        let event = LogEvent::new(module, level, msg);
-        self.logs.entry(module.to_string()).or_default().push(event);
+    fn log(&mut self, _module: &str, _section: Option<&str>, _level: LogLevel, _messages: Vec<&str>) {
+        // let event = LogEvent::new(level, Option::from(module), Option::from(section), messages);
+        // self.logs.entry(module.to_string()).or_default().push(event);
     }
 }
+
+impl_logger_helpers!(GroupLogger);
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use core::{LogLevel, LogSink};
+    use velnora_logger_core::{LogLevel};
 
     #[test]
     fn group_logger_stores_logs_correctly() {
         let mut logger = GroupLogger::new();
-        logger.info("vite", &["started"]);
+        logger.info("vite", None,vec!["started"]);
 
         let logs = logger.get_logs("vite").unwrap();
         assert_eq!(logs.len(), 1);
@@ -60,8 +57,8 @@ mod tests {
     #[test]
     fn group_logger_separates_by_module() {
         let mut logger = GroupLogger::new();
-        logger.info("vite", &["msg1"]);
-        logger.info("auth", &["msg2"]);
+        logger.info("vite", None, vec!["msg1"]);
+        logger.info("auth", None, vec!["msg2"]);
 
         assert_eq!(logger.get_logs("vite").unwrap().len(), 1);
         assert_eq!(logger.get_logs("auth").unwrap().len(), 1);
@@ -70,7 +67,7 @@ mod tests {
     #[test]
     fn group_logger_clear_works() {
         let mut logger = GroupLogger::new();
-        logger.info("vite", &["msg"]);
+        logger.info("vite", None,vec!["msg"]);
         logger.clear();
         assert!(logger.get_logs("vite").is_none());
     }

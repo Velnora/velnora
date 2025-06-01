@@ -6,7 +6,7 @@ static LOGGER_INSTANCE: OnceCell<TuiLogger> = OnceCell::new();
 
 #[derive(Debug, Clone)]
 #[napi]
-pub struct TuiLogger {
+pub struct TuiLogger { 
     inner: InnerTuiLogger
 }
 

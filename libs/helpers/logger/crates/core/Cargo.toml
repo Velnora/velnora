@@ -5,3 +5,5 @@ edition = "2024"
 
 [dependencies]
 chrono = "0.4.41"
+crossterm = "0.29.0"
+napi = { version = "2.16.17", features = ["napi6"] }
