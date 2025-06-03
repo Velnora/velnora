@@ -10,10 +10,14 @@
     "libs/velnora/*",
     "libs/frameworks/*",
     "libs/helpers/*",
+    "libs/helpers/logger/crates/*",
+    "libs/helpers/logger/crates/cli/npm/*",
+    "libs/helpers/logger/crates/tui/npm/*",
     "libs/loaders/*"
   ],
   "scripts": {
     "check:libs:deps": "scripts/check-libs-deps.sh",
+    "check:node": "yarn is-my-node-vulnerable",
     "new:project": "rm -rf examples/project && velnora-dev generate project examples/project",
     "nx:build": "nx run velnora:build",
     "nx:graph": "nx graph --open false"
@@ -29,6 +33,7 @@
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^22.15.21",
     "depcheck": "^1.4.7",
+    "is-my-node-vulnerable": "^1.6.1",
     "nx": "^21.1.1",
     "prettier": "^3.5.3",
     "prettier-plugin-packagejson": "^2.5.14",

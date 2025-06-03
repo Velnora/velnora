@@ -7,7 +7,7 @@
       "cache": true
     },
     "dev": {
-      "dependsOn": ["build", "vite:build"]
+      "dependsOn": ["^build:rust"]
     },
     "vite:dev": {
       "dependsOn": ["vite:build"]

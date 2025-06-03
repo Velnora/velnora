@@ -263,3 +263,5 @@ vite.config.*.timestamp*
 # App based
 libs/**/build
 examples/**/build
+
+/target
