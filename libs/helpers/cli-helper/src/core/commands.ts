@@ -1,19 +1,17 @@
 import yargs, { type Arguments, type Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import { Emojis } from "@velnora/logger";
-
 import type { CommandsType } from "../types/commands-type";
 import { logger } from "../utils/logger";
 import { Command } from "./command";
 
 export class Commands {
   constructor(private readonly commands: CommandsType) {
-    logger.debug(Emojis.ready, "Commands initialized.");
+    logger.debug("Commands initialized.");
   }
 
   async executeCommands(version: string, args = hideBin(process.argv)) {
-    logger.debug(Emojis.debug, "Executing commands with args:", { args });
+    logger.debug("Executing commands with args:", { args });
     const argv = yargs();
 
     const commandObjects = await Promise.all(this.commands);
@@ -58,7 +56,7 @@ export class Commands {
           for (const opt of positionalOptions) {
             const { name, description: optDescription, required, default: defaultValue } = opt;
             const isRequired = required ?? !!defaultValue;
-            logger.debug(Emojis.add, `Adding positional argument to command '${commandStr}': ${name} (${isRequired})`);
+            logger.debug(`Adding positional argument to command '${commandStr}': ${name} (${isRequired})`);
             yargs.positional(name, { type: "string", description: optDescription, default: defaultValue });
             if (isRequired) yargs.demandOption(name);
           }
@@ -69,7 +67,6 @@ export class Commands {
             const { type, description: optionDescription, default: defaultValue, alias, requires } = optionDetails;
 
             logger.debug(
-              Emojis.add,
               `Adding option to command "${commandNameForLogs}": ${optionName} (${type})${alias ? ` aliased to ${alias}` : ""}`
             );
 
@@ -125,7 +122,7 @@ export class Commands {
           yargs.version(false).strict().help().alias("help", "h");
         },
         async ({ _: _, $0: $0, ...args }: Arguments) => {
-          logger.debug(Emojis.debug, `Executing command "${commandNameForLogs}" with args:`, args);
+          logger.debug(`Executing command "${commandNameForLogs}" with args:`, args);
 
           try {
             await execute(args);

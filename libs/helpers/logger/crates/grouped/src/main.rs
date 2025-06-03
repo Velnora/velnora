@@ -1,15 +1,14 @@
 use std::thread::sleep;
 use std::time::Duration;
-use velnora_logger_core::LogSink;
 use grouped::GroupLogger;
 
 fn main() {
     let mut logger = GroupLogger::new();
-    logger.info("vite", &["started"]);
+    logger.info("vite", None, vec!["started"]);
     sleep(Duration::from_secs(1));
-    logger.info("server", &["listening on port 3000"]);
-    logger.info("vite", &["building"]);
+    logger.info("server", None, vec!["listening on port 3000"]);
+    logger.info("vite", None, vec!["building"]);
     sleep(Duration::from_secs(1));
-    logger.error("vite", &["failed to build"]);
+    logger.error("vite", None, vec!["failed to build"]);
 
 }

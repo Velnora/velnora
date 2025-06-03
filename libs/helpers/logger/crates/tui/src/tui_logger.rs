@@ -46,7 +46,6 @@ struct LoggerState {
     selected_item: usize,
 }
 
-#[derive(Debug, Clone)]
 pub struct LogMessage {
     pub item: String,
     pub section: Option<String>,

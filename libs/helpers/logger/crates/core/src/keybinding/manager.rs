@@ -1,7 +1,7 @@
+use crate::keybinding::callback::CloneFnMut;
 use crate::keybinding::keybinding::{Keybinding, KeybindingScope};
 use crossterm::event::KeyCode;
 use std::collections::HashMap;
-use crate::keybinding::callback::CloneFnMut;
 
 #[derive(Debug, Clone)]
 pub struct KeybindingManager {
@@ -10,9 +10,9 @@ pub struct KeybindingManager {
 
 impl KeybindingManager {
     pub fn new() -> Self {
-        Self {
-            bindings: HashMap::new(),
-        }
+        let bindings = HashMap::new();
+        let instance = Self { bindings };
+        instance
     }
 
     pub fn register(
