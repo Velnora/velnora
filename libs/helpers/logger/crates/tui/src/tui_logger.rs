@@ -207,9 +207,10 @@ impl TuiLogger {
         f.render_widget(header, vertical_chunks[0]);
 
         // Tabs
-        let titles: Vec<Span> = ["Applications", "Libraries"]
+        let titles: Vec<Span> = state
+            .tabs
             .iter()
-            .map(|t| Span::styled(*t, Style::default()))
+            .map(|t| Span::styled(t, Style::default()))
             .collect();
 
         let tabs = Tabs::new(titles)

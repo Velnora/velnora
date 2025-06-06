@@ -1,3 +1,7 @@
-import { createLogger } from "@velnora/logger";
+import { TuiLogger } from "@velnora/logger";
 
-export const logger = createLogger({ name: "velnora/dev" });
+const tui = await TuiLogger.instance();
+tui.addTab("velnora");
+tui.addItem("velnora", "Velnora");
+
+export const logger = tui.container("velnora", "Velnora");
