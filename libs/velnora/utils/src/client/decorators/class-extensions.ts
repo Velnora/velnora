@@ -1,5 +1,4 @@
 import type { Type } from "@nestjs/common";
-import { Emojis } from "@velnora/logger";
 
 import { CLASS_METHOD_DATA, CLASS_PROPS_SET } from "../../const";
 import { BaseClass } from "../modules";
@@ -15,10 +14,7 @@ export const ClassExtensions = (): ClassDecorator => {
         super(...args);
 
         if (!("__getSuperPrototype" in this)) {
-          logger.error(
-            Emojis.error,
-            `Class "${Target.name}" must be extended from BaseClass. Otherwise, it won't work as expected.`
-          );
+          logger.error(`Class "${Target.name}" must be extended from BaseClass. Otherwise, it won't work as expected.`);
           process.exit(1);
         }
 
@@ -52,11 +48,7 @@ export const ClassExtensions = (): ClassDecorator => {
               get() {
                 if (baseClassHandler && !this[`_${prop}`]) {
                   const value = baseClassHandler(this);
-                  logger.debug(
-                    Emojis.debug,
-                    `Creating new instance of ${Class.name} for ${this.constructor.name}.${prop}`,
-                    value
-                  );
+                  logger.debug(`Creating new instance of ${Class.name} for ${this.constructor.name}.${prop}`, value);
                   this[`_${prop}`] = value;
                 }
 
@@ -65,7 +57,7 @@ export const ClassExtensions = (): ClassDecorator => {
                 }
 
                 if (isClass(Class) && !this[`_${prop}`]) {
-                  logger.debug(Emojis.debug, "Creating new instance of class", Class.name);
+                  logger.debug("Creating new instance of class", Class.name);
                   this[`_${prop}`] = new Class();
                 }
 

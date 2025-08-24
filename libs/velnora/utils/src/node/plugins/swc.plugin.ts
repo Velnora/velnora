@@ -13,12 +13,19 @@ const swcConfigDefaults = {
     target: "esnext",
     parser: {
       syntax: "typescript",
+      tsx: true,
       decorators: true
     },
     transform: {
       legacyDecorator: true,
       decoratorMetadata: true,
-      useDefineForClassFields: false
+      useDefineForClassFields: false,
+      react: {
+        runtime: "automatic",
+        importSource: "react",
+        development: true,
+        throwIfNamespace: true
+      }
     },
     externalHelpers: true
   },

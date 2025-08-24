@@ -12,7 +12,8 @@
     "libs/helpers/*",
     "libs/helpers/logger/crates/*",
     "libs/helpers/logger/crates/cli/npm/*",
-    "libs/helpers/logger/crates/tui/npm/*",
+    "libs/helpers/tui/rust",
+    "libs/helpers/tui/rust/npm/*",
     "libs/loaders/*"
   ],
   "scripts": {

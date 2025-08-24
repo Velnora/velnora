@@ -2,6 +2,7 @@ import { Server } from "node:http";
 import { resolve } from "node:path";
 
 import { type InlineConfig, type ViteDevServer, createServer, isRunnableDevEnvironment } from "vite";
+import { Plugin } from "vite";
 import inspect from "vite-plugin-inspect";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -137,12 +138,12 @@ export class Entity extends BaseClass {
     this.environmentContext.checkEnvironment(this.app);
 
     this._vite = await createServer(await this.viteOptions());
+    appCtx.vite.servers.set(this.app.name, this._vite);
     this.adapterContext.server.use(this.vite.middlewares);
   }
 
   private async injectClient() {
     logger.debug(Emojis.debug, `Injecting client for app "${this.app.name}"...`);
-
     this.adapterContext.server.use(await adapterEntry(this));
   }
 
@@ -184,7 +185,35 @@ export class Entity extends BaseClass {
       process.env.NODE_ENV === "development" && inspect(),
       ...(appFrameworkPlugins || []),
       ...(templateFrameworkPlugins || []),
-      ...(adapterPlugins || [])
+      ...(adapterPlugins || []),
+
+      {
+        name: "dev-sourcemap-schemes",
+        enforce: "post",
+        apply: "serve",
+        async transform(code, id) {
+          if (!/\.(m?[tj]sx?|css|scss|sass|less|vue|svelte)$/.test(id)) return null;
+
+          const map = this.getCombinedSourcemap?.();
+          if (!map || !Array.isArray(map.sources)) return null;
+
+          console.log(map.sources);
+
+          const rewrite = (path: string) => {
+            console.log("path", path);
+            const normalized = path.replace(/^[a-z]+:\/\//i, "").replace(/^\//, "");
+            // Example split: vendor vs app
+            if (path.includes("/node_modules/")) return `vite:///${normalized}`;
+            return `velnora:///${normalized}`;
+          };
+
+          map.sources = map.sources.map(rewrite);
+          // Optional: set a sourceRoot (not required when using fully-qualified sources)
+          // map.sourceRoot = ''
+
+          return { code, map };
+        }
+      } as Plugin
     ]);
 
     return {

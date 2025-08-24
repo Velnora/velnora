@@ -23,8 +23,8 @@ export class FrameworkRegistry extends Registry<VelnoraFramework, FrameworkConte
     return context;
   }
 
-  async getSSRRenderer(app: RegisteredApp, name: string) {
-    const resolvedName = this.resolveName(name);
+  async getSSRRenderer(app: RegisteredApp) {
+    const resolvedName = this.resolveName(app.config.framework);
     const ssrRenderer = await appCtx.vite
       .getSsr(app.name)
       .runner.import<typeof import("@velnora/framework-react/ssr")>(`${resolvedName}/ssr`);
