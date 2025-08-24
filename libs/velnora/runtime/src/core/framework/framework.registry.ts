@@ -3,7 +3,7 @@ import { ClassExtensions, ClassRawValues, singleton } from "@velnora/utils";
 import { Registry } from "@velnora/utils/node";
 
 import { frameworkLogger } from "../../utils/logger/framework-logger";
-import { RegisteredApp, appCtx } from "../app-ctx";
+import { Entity } from "../entity-manager";
 import { FrameworkContext } from "./framework.context";
 import { SSRRenderContext } from "./ssr-render.context";
 
@@ -23,19 +23,20 @@ export class FrameworkRegistry extends Registry<VelnoraFramework, FrameworkConte
     return context;
   }
 
-  async getSSRRenderer(app: RegisteredApp) {
-    const resolvedName = this.resolveName(app.config.framework);
-    const ssrRenderer = await appCtx.vite
-      .getSsr(app.name)
-      .runner.import<typeof import("@velnora/framework-react/ssr")>(`${resolvedName}/ssr`);
+  async getSSRRenderer(entity: Entity) {
+    const resolvedName = this.resolveName(entity.app.config.framework);
+    const ssrRenderer = await entity.viteRunner.runner.import<typeof import("@velnora/framework-react/ssr")>(
+      `${resolvedName}/ssr`
+    );
 
     return (ssrRenderContext: SSRRenderContext) => {
       return ssrRenderer.render(ssrRenderContext);
     };
   }
 
-  getSSRRenderContext(ssrRenderContext: ISSRRenderContext) {
+  getSSRRenderContext(entity: Entity, ssrRenderContext: ISSRRenderContext) {
     const ctx = new SSRRenderContext();
+    Object.assign(ctx, { entity });
     Object.assign(ctx, ssrRenderContext);
     return ctx;
   }

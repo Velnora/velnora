@@ -1,15 +1,11 @@
 import { Connect } from "vite";
 
+import { resolveRoutes } from "@velnora/router/node";
 import { APP_CONTAINER, VIRTUAL_ENTRIES } from "@velnora/utils";
 
-import { Entity } from "../core";
+import { Entity, appCtx, frameworkRegistry } from "../core";
 import type { Inject } from "../types/inject";
 import { injectHtmlTags } from "./inject-html-tags";
-
-interface PipeableStream {
-  abort: (reason?: unknown) => void;
-  pipe: <Writable extends NodeJS.WritableStream>(destination: Writable) => Writable;
-}
 
 export const adapterEntry = async (entity: Entity): Promise<Connect.NextHandleFunction> => {
   return async (req, res) => {
@@ -29,21 +25,19 @@ export const adapterEntry = async (entity: Entity): Promise<Connect.NextHandleFu
     if (!entity.app.config.ssr) tags.push({ tag: "div", attrs: { id: APP_CONTAINER }, injectTo: "body" });
 
     try {
-      // const ssrRenderer = await frameworkRegistry.getSSRRenderer(entity.app);
-      // const appClientJson = await entity.viteRunner.runner.import(VIRTUAL_ENTRIES.APP_CLIENT_JSON(entity.app.name));
-      // const router = await resolveRoutes(appClientJson);
-      //
-      // const ctx = frameworkRegistry.getSSRRenderContext({
-      //   app: entity.app,
-      //   route: router.getWithFallback(entity.app.name, "/"),
-      //   template: appCtx.projectStructure.template.getModule(entity.app.config.template)
-      // });
-      // const htmlStream = await ssrRenderer(ctx);
+      const router = await resolveRoutes(entity);
+      const route = router.getWithFallback(url.pathname, "/");
 
-      const htmlStream = await entity.viteRunner.runner.import<PipeableStream>("");
+      const ctx = frameworkRegistry.getSSRRenderContext(entity, {
+        route,
+        template: appCtx.projectStructure.template.getModule(entity.app.config.template)
+      });
+      const renderer = await frameworkRegistry.getSSRRenderer(entity);
+      const htmlStream = await renderer(ctx);
       const transformStream = injectHtmlTags(tags);
       htmlStream.pipe(transformStream).pipe(res);
     } catch (e) {
+      console.log(e);
       res.writeHead(404, { "Content-Type": "text/html" });
       res.end("Not Found");
       return;

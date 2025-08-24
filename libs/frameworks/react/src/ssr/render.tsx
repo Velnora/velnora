@@ -2,21 +2,19 @@ import type { FC } from "react";
 import { renderToPipeableStream } from "react-dom/server";
 
 import type { SSRRenderContext } from "@velnora/runtime";
-import { appCtx } from "@velnora/runtime";
 import type { WithDefault } from "@velnora/types";
 import { capitalize } from "@velnora/utils";
 
 export const render = async (ctx: SSRRenderContext) => {
   const templateEntry = ctx.template.getEntryPoint();
-  const appModuleName = capitalize(ctx.app.name);
+  const appModuleName = capitalize(ctx.entity.app.name);
   const templateModuleName = capitalize(ctx.template.name);
-  const ssrRunner = appCtx.vite.getSsr(ctx.app.name);
 
   const [appModule, templateModule] = await Promise.all([
-    ctx.app.config.ssr
+    ctx.entity.app.config.ssr
       ? ctx.route.component<WithDefault<FC, Record<string, FC>>>()
       : Promise.resolve({ default: () => <></> } as WithDefault<FC, Record<string, FC>>),
-    templateEntry ? ssrRunner.runner.import(templateEntry) : Promise.resolve({})
+    templateEntry ? ctx.entity.viteRunner.runner.import(templateEntry) : Promise.resolve({})
   ]);
 
   const AppComponent = appModule[appModuleName] || appModule.default;

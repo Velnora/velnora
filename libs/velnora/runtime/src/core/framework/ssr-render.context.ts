@@ -1,14 +1,15 @@
-import type { SSRRenderContext as ISSRRenderContext, TypedRoute } from "@velnora/types";
+import type { TypedRoute } from "@velnora/types";
 import { ClassExtensions, ClassGetterSetter, ClassRawValues } from "@velnora/utils";
 
-import { RegisteredApp, RegisteredTemplate } from "../app-ctx";
+import { RegisteredTemplate } from "../app-ctx";
+import { Entity } from "../entity-manager";
 import { BaseClass } from "./base-class";
 
 @ClassRawValues()
 @ClassExtensions()
-export class SSRRenderContext extends BaseClass<void> implements ISSRRenderContext {
+export class SSRRenderContext extends BaseClass<void> {
   @ClassGetterSetter()
-  declare app: RegisteredApp;
+  declare entity: Entity;
 
   @ClassGetterSetter()
   declare template: RegisteredTemplate;
