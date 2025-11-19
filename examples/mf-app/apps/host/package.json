@@ -1,0 +1,13 @@
+{
+  "name": "@velnora/mf-app-host",
+  "dependencies": {
+    "@nestjs/common": "^11.1.9",
+    "@nestjs/core": "^11.1.9",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "velnora": "workspace:^"
+  },
+  "devDependencies": {
+    "depcheck": "^1.4.7"
+  }
+}

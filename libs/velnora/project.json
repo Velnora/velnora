@@ -1,1 +1,3 @@
-{ "targets": { "build": { "dependsOn": ["^vite:build"] } } }
+{
+  "tags": ["scope:velnora", "type:lib"]
+}

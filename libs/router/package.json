@@ -1,0 +1,37 @@
+{
+  "name": "@velnora/router",
+  "version": "0.0.0",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/velnora.router.d.ts",
+      "import": "./build/velnora.router.js"
+    }
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsup --config tsup.config.ts",
+    "jsdoc": "jsdoc2md -f ./src/**/*.ts",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "depcheck": "^1.4.7",
+    "eslint": "^9.39.1",
+    "tsup": "^8.5.1",
+    "type-fest": "^5.2.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.9"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

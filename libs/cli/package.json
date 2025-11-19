@@ -1,0 +1,32 @@
+{
+  "name": "@velnora/cli",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/velnora.cli.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "velnora": "./build/velnora.cli.js",
+    "velnora-dev": "./bin/velnora-dev.ts"
+  },
+  "scripts": {
+    "build": "tsup --config tsup.config.ts",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.build.json"
+  },
+  "devDependencies": {
+    "depcheck": "^1.4.7",
+    "eslint": "^9.39.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.9"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

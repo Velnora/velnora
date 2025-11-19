@@ -1,0 +1,35 @@
+{
+  "name": "@velnora/runtime-client",
+  "version": "0.0.0",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/velnora.runtime.client.d.ts",
+      "import": "./build/velnora.runtime.client.js"
+    }
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsup --config tsup.config.ts",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.build.json"
+  },
+  "devDependencies": {
+    "depcheck": "^1.4.7",
+    "eslint": "^9.39.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.9"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "type-fest": "^5.2.0"
+  }
+}

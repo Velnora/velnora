@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="mf-app &gt; dev (bun)" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/examples/mf-app/package.json" />
+    <command value="run" />
+    <scripts>
+      <script value="dev" />
+    </scripts>
+    <node-interpreter value="$USER_HOME$/.bun/bin/bun" />
+    <package-manager value="bun" />
+    <envs>
+      <env name="DEBUG" value="velnora" />
+    </envs>
+    <EXTENSION ID="com.intellij.javascript.debugger.execution.StartBrowserRunConfigurationExtension">
+      <browser with-js-debugger="true" />
+    </EXTENSION>
+    <method v="2" />
+  </configuration>
+</component>

@@ -1,50 +1,47 @@
 {
   "name": "@velnora/monorepo",
+  "private": true,
   "type": "module",
   "workspaces": [
+    "libs/*",
+    "libs/*/*",
     "examples/*",
-    "modules/*",
-    "libs/adapters/*",
-    "libs/environments/*",
-    "libs/velnora",
-    "libs/velnora/*",
-    "libs/frameworks/*",
-    "libs/helpers/*",
-    "libs/helpers/logger/crates/*",
-    "libs/helpers/logger/crates/cli/npm/*",
-    "libs/helpers/tui/rust",
-    "libs/helpers/tui/rust/npm/*",
-    "libs/loaders/*"
+    "docs"
   ],
   "scripts": {
+    "affected:build": "nx affected -t build",
+    "affected:lint": "nx affected -t lint",
+    "affected:test": "nx affected -t test",
+    "build": "nx run-many -t build",
     "check:libs:deps": "scripts/check-libs-deps.sh",
-    "check:node": "yarn is-my-node-vulnerable",
-    "new:project": "rm -rf examples/project && velnora-dev generate project examples/project",
-    "nx:build": "nx run velnora:build",
-    "nx:graph": "nx graph --open false"
-  },
-  "dependencies": {
-    "@swc/core": "^1.11.29",
-    "magic-string": "^0.30.17"
+    "dev": "nx run hello-mfe-shell:dev",
+    "lint": "nx run-many -t lint",
+    "lint:all": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "test": "nx run-many -t test",
+    "typecheck": "nx run-many -t typecheck"
   },
   "devDependencies": {
-    "@nx/vite": "^21.1.1",
-    "@swc-node/register": "^1.10.10",
-    "@swc/helpers": "^0.5.17",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "@types/node": "^22.15.21",
+    "@eslint/js": "^9.39.1",
+    "@nx/eslint-plugin": "^22.0.3",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.0",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/parser": "^8.46.4",
     "depcheck": "^1.4.7",
-    "is-my-node-vulnerable": "^1.6.1",
-    "nx": "^21.1.1",
-    "prettier": "^3.5.3",
-    "prettier-plugin-packagejson": "^2.5.14",
-    "rollup": "^4.41.0",
-    "type-fest": "^4.41.0",
-    "velnora": "workspace:^",
-    "vite": "^6.3.5",
-    "vite-node": "^3.1.4",
-    "vite-plugin-dts": "^4.5.4",
-    "vite-tsconfig-paths": "^5.1.4"
+    "eslint": "^9.39.1",
+    "nx": "^22.0.3",
+    "prettier": "^3.6.2",
+    "prettier-plugin-packagejson": "^2.5.19",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vite-node": "^5.1.0",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^4.0.9"
   },
-  "packageManager": "yarn@4.9.1"
+  "packageManager": "yarn@4.10.3",
+  "engines": {
+    "node": ">=22"
+  }
 }

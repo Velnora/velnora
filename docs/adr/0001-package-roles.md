@@ -1,0 +1,9 @@
+* `velnora` = CLI and config only.
+* `@velnora/core` = orchestrator (planner + lifecycle).
+* `@velnora/plugin-api` = interface/hook contracts (no impl).
+* `@velnora/vite-integrationSchema` = Vite composer (receives plugin factories from Core).
+* `@velnora/runtime-server` = server bootstrap assembler (via entrypoints).
+* `@velnora/runtime-client` = client bootstrap (reads client entrypoints).
+* `@velnora/schemas` = Zod schemas for config + manifests.
+* `@velnora/rpc` = dev channel (optional in M0).
+* `@velnora/tooling` = **build-only** internal configs; never used in runtime.

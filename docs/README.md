@@ -1,0 +1,4 @@
+- ADRs: ½ page is fine. Write them conversationally (“We decided to…”).
+- Specs: concrete but code-free. Use TypeScript snippets for type shapes.
+- Checklists: bullet points only.
+- Don’t document code — document contracts and rules.

@@ -1,31 +1,20 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/build"],
-      "cache": true
-    },
-    "dev": {
-      "dependsOn": ["^build:rust"]
-    },
-    "vite:dev": {
-      "dependsOn": ["vite:build"]
-    }
+    "build": { "cache": true, "dependsOn": ["^build"] },
+    "lint": { "cache": true },
+    "test": { "cache": true },
+    "typecheck": { "cache": true }
   },
-  "defaultBase": "master",
-  "plugins": [
-    {
-      "plugin": "@nx/vite/plugin",
-      "options": {
-        "devTargetName": "vite:dev",
-        "buildTargetName": "vite:build",
-        "testTargetName": "test",
-        "serveTargetName": "serve",
-        "previewTargetName": "preview",
-        "serveStaticTargetName": "serve-static",
-        "typecheckTargetName": "typecheck"
-      }
-    }
-  ]
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": ["{workspaceRoot}/tsconfig.base.json", "{workspaceRoot}/pnpm-lock.yaml"]
+  },
+  "// velnora-tag-conventions": {
+    "type": ["lib", "integration", "cli", "example", "service"],
+    "scope": ["core", "schemas", "rpc", "runtime", "plugin-api", "vite", "integrations", "velnora"],
+    "side": ["client", "server"],
+    "engine": ["react", "vue", "angular"],
+    "host": ["express", "bun"]
+  }
 }

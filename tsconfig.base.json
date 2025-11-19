@@ -1,52 +1,45 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2024",
+    "lib": ["ES2024", "DOM"],
     "module": "ESNext",
-    "jsx": "react-jsx",
     "moduleResolution": "Bundler",
-    "noEmit": true,
-    "downlevelIteration": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "useDefineForClassFields": true,
-    "importHelpers": true,
-    "esModuleInterop": true,
+    "jsx": "react-jsx",
+
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "noFallthroughCasesInSwitch": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
+
     "baseUrl": ".",
     "paths": {
-      "@velnora/cli": ["libs/velnora/cli/src/main.ts"],
-      "@velnora/compiler": ["libs/velnora/compiler/src/main.ts"],
-      "@velnora/core": ["libs/velnora/core/src/main.ts"],
-      "@velnora/daemon": ["libs/velnora/daemon/src/main.ts"],
-      "@velnora/daemon/runner": ["libs/velnora/daemon/src/runner.ts"],
-      "@velnora/dev": ["libs/velnora/dev/src/main.ts"],
-      "@velnora/generator": ["libs/velnora/generator/src/main.ts"],
-      "@velnora/router": ["libs/velnora/router/src/main.ts"],
-      "@velnora/router/node": ["libs/velnora/router/src/node/main.ts"],
-      "@velnora/runtime": ["libs/velnora/runtime/src/main.ts"],
-      "@velnora/types": ["libs/velnora/types/src/main.ts"],
-      "@velnora/utils": ["libs/velnora/utils/src/main.ts"],
-      "@velnora/utils/node": ["libs/velnora/utils/src/node/main.ts"],
+      "velnora": ["libs/velnora/src/main.ts"],
+      "velnora/app": ["libs/velnora/src/app.ts"],
 
-      "@velnora/adapter-express": ["libs/adapters/express/src/main.ts"],
-      "@velnora/adapter-express/adapter": ["libs/adapters/express/src/adapter/main.ts"],
+      "@velnora/tooling": ["libs/tooling/src/main.ts"],
+      "@velnora/tooling/*": ["libs/tooling/src/*"],
 
-      "@velnora/environment-node": ["libs/environments/node/src/main.ts"],
+      "@velnora/cli": ["libs/cli/src/main.ts"],
+      "@velnora/cli-helper": ["libs/helper/cli/src/main.ts"],
 
-      "@velnora/framework-react": ["libs/frameworks/react/src/main.ts"],
-      "@velnora/framework-react/client": ["libs/frameworks/react/src/client/main.ts"],
-      "@velnora/framework-react/ssr": ["libs/frameworks/react/src/ssr/main.ts"],
+      "@velnora/integrations-nest": ["libs/integrations/nest/src/main.ts"],
 
-      "@velnora/cli-helper": ["libs/helpers/cli-helper/src/main.ts"],
-      "@velnora/logger": ["libs/helpers/logger/src/main.ts"],
+      "@velnora/integrations-react": ["libs/integrations/react/src/main.ts"],
+      "velnora/react": ["libs/integrations/react/src/client/main.ts"],
+      "@velnora/integrations-react/client": ["libs/integrations/react/src/client/main.ts"],
+      "@velnora/integrations-react/server": ["libs/integrations/react/src/server/main.ts"],
 
-      "/__virtual__/*": ["libs/internal/src/*"]
+      "@velnora/core": ["libs/core/src/main.ts"],
+      "velnora/core": ["libs/core/src/main.ts"],
+
+      "@velnora/runtime-client": ["libs/runtime/client/src/main.ts"],
+      "@velnora/runtime-server": ["libs/runtime/server/src/main.ts"],
+
+      "@velnora/rpc": ["libs/rpc/src/main.ts"],
+      "@velnora/plugin-api": ["libs/plugin-api/src/main.ts"],
+      "@velnora/router": ["libs/router/src/main.ts"],
+      "@velnora/schemas": ["libs/schemas/src/main.ts"],
+      "@velnora/vite-integration": ["libs/vite/integration/src/main.ts"]
     }
   },
   "exclude": ["node_modules"]

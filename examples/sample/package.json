@@ -1,0 +1,12 @@
+{
+  "name": "@velnora/sample-app",
+  "scripts": {
+    "dev": "velnora-dev dev"
+  },
+  "dependencies": {
+    "velnora": "workspace:^"
+  },
+  "devDependencies": {
+    "depcheck": "^1.4.7"
+  }
+}

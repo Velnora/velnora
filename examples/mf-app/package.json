@@ -1,0 +1,15 @@
+{
+  "name": "@velnora/mf-app",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "velnora-dev dev"
+  },
+  "dependencies": {
+    "velnora": "workspace:^"
+  },
+  "devDependencies": {
+    "depcheck": "^1.4.7"
+  }
+}

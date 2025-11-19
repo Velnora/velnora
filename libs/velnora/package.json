@@ -1,94 +1,66 @@
 {
   "name": "velnora",
-  "version": "0.0.0-dev.0",
-  "private": true,
+  "version": "0.0.0",
+  "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {
-      "types": "./core.d.ts",
-      "import": "./core.js"
+      "types": "./build/velnora.d.ts",
+      "import": "./build/velnora.js"
     },
-    "./compiler": {
-      "types": "./compiler.d.ts",
-      "import": "./compiler.js"
+    "./app": {
+      "types": "./build/velnora.app.d.ts",
+      "import": "./build/velnora.app.js"
     },
     "./core": {
-      "types": "./core.d.ts",
-      "import": "./core.js"
+      "types": "./meta/core.d.ts",
+      "import": "./meta/core.js"
     },
-    "./dev": {
-      "types": "./dev.d.ts",
-      "import": "./dev.js"
+    "./react": {
+      "types": "./meta/react.d.ts",
+      "import": "./meta/react.js"
     },
-    "./router": {
-      "types": "./router.d.ts",
-      "import": "./router.js"
-    },
-    "./runtime": {
-      "types": "./runtime.d.ts",
-      "import": "./runtime.js"
-    },
-    "./types": {
-      "types": "./types.d.ts",
-      "import": "./types.js"
-    },
-    "./utils": {
-      "types": "./utils.d.ts",
-      "import": "./utils.js"
-    }
+    "./package.json": "./package.json"
   },
+  "main": "./build/velnora.js",
+  "types": "./build/velnora.d.ts",
   "bin": {
-    "velnora": "./bin/velnora.js",
-    "velnora-dev": "./bin/velnora-dev.js"
+    "velnora-dev": "./bin/velnora-dev.ts"
   },
   "files": [
-    "bin/velnora.js",
-    "./cli.js",
-    "./cli.d.ts",
-    "./compiler.js",
-    "./compiler.d.ts",
-    "./core.js",
-    "./core.d.ts",
-    "./dev.js",
-    "./dev.d.ts",
-    "./html.js",
-    "./html.d.ts",
-    "./router.js",
-    "./router.d.ts",
-    "./runtime.js",
-    "./runtime.d.ts",
-    "./types.js",
-    "./types.d.ts",
-    "./utils.js",
-    "./utils.d.ts"
+    "build"
   ],
   "scripts": {
-    "build": "exit 0;"
+    "build": "tsup --config tsup.config.ts",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "@velnora/cli": "workspace:^",
-    "@velnora/compiler": "workspace:^",
     "@velnora/core": "workspace:^",
-    "@velnora/dev": "workspace:^",
-    "@velnora/router": "workspace:^",
-    "@velnora/runtime": "workspace:^",
-    "@velnora/types": "workspace:^",
-    "@velnora/utils": "workspace:^"
+    "@velnora/plugin-api": "workspace:^",
+    "@velnora/rpc": "workspace:^",
+    "@velnora/runtime-client": "workspace:^",
+    "@velnora/runtime-server": "workspace:^",
+    "@velnora/schemas": "workspace:^",
+    "eslint": "^9.39.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.9"
+  },
+  "devDependencies": {
+    "depcheck": "^1.4.7",
+    "type-fest": "^5.2.0"
   },
   "peerDependencies": {
-    "@velnora/adapter-express": "workspace:^",
-    "@velnora/environment-node": "workspace:^",
-    "@velnora/framework-react": "workspace:^"
+    "@velnora/integrations-react": "*"
   },
   "peerDependenciesMeta": {
-    "@velnora/adapter-express": {
-      "optional": true
-    },
-    "@velnora/environment-node": {
-      "optional": true
-    },
-    "@velnora/framework-react": {
+    "@velnora/integrations-react": {
       "optional": true
     }
+  },
+  "engines": {
+    "node": ">=24"
   }
 }

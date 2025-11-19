@@ -1,0 +1,15 @@
+{
+  "name": "@velnora/tooling",
+  "version": "0.0.0",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "main": "./src/main.ts",
+  "types": "./src/main.ts",
+  "dependencies": {
+    "type-fest": "^5.2.0"
+  },
+  "devDependencies": {
+    "depcheck": "^1.4.7"
+  }
+}

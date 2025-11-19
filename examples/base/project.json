@@ -1,7 +1,0 @@
-{
-  "targets": {
-    "nx:dev": {
-      "dependsOn": ["build"]
-    }
-  }
-}
