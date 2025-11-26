@@ -19,16 +19,20 @@
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.build.json"
   },
+  "dependencies": {
+    "@nestjs/platform-express": "^11.1.9"
+  },
   "devDependencies": {
     "depcheck": "^1.4.7",
     "eslint": "^9.39.1",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.9"
+    "vitest": "^4.0.14"
   },
   "peerDependencies": {
     "@nestjs/common": "^11",
-    "@nestjs/core": "^11"
+    "@nestjs/core": "^11",
+    "rxjs": "^7"
   },
   "engines": {
     "node": ">=24"

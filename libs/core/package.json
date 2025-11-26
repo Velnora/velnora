@@ -28,13 +28,13 @@
   },
   "devDependencies": {
     "@types/debug": "^4.1.12",
-    "@types/lodash": "^4",
+    "@types/lodash": "^4.17.21",
     "depcheck": "^1.4.7",
     "eslint": "^9.39.1",
     "tsup": "^8.5.1",
     "type-fest": "^5.2.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.9"
+    "vitest": "^4.0.14"
   },
   "engines": {
     "node": ">=24"
