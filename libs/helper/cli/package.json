@@ -19,8 +19,8 @@
     "yargs": "^18.0.0"
   },
   "devDependencies": {
+    "@types/node": "^24.10.1",
     "@types/yargs": "^17.0.35",
-    "depcheck": "^1.4.7",
     "eslint": "^9.39.1",
     "tsup": "^8.5.1",
     "type-fest": "^5.2.0",

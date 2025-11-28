@@ -20,10 +20,8 @@
     "typecheck": "tsc -p tsconfig.build.json"
   },
   "devDependencies": {
-    "depcheck": "^1.4.7",
     "eslint": "^9.39.1",
     "tsup": "^8.5.1",
-    "type-fest": "^5.2.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.14"
   },

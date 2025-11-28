@@ -39,9 +39,6 @@
   "dependencies": {
     "@velnora/core": "workspace:^",
     "@velnora/plugin-api": "workspace:^",
-    "@velnora/rpc": "workspace:^",
-    "@velnora/runtime-client": "workspace:^",
-    "@velnora/runtime-server": "workspace:^",
     "@velnora/schemas": "workspace:^",
     "eslint": "^9.39.1",
     "tsup": "^8.5.1",
@@ -49,7 +46,6 @@
     "vitest": "^4.0.14"
   },
   "devDependencies": {
-    "depcheck": "^1.4.7",
     "type-fest": "^5.2.0"
   },
   "peerDependencies": {

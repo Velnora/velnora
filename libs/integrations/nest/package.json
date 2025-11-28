@@ -8,6 +8,10 @@
     ".": {
       "types": "./build/velnora.nest.d.ts",
       "import": "./build/velnora.nest.js"
+    },
+    "./server": {
+      "types": "./build/velnora.server.d.ts",
+      "import": "./build/velnora.server.js"
     }
   },
   "files": [
@@ -20,10 +24,11 @@
     "typecheck": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "@nestjs/platform-express": "^11.1.9"
+    "@nestjs/platform-express": "^11.1.9",
+    "@velnora/plugin-api": "workspace:^",
+    "@velnora/schemas": "workspace:^"
   },
   "devDependencies": {
-    "depcheck": "^1.4.7",
     "eslint": "^9.39.1",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
