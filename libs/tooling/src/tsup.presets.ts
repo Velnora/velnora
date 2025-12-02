@@ -42,7 +42,7 @@ const readPkg = (): PackageJson => {
   return JSON.parse(json) as PackageJson;
 };
 
-const makeBaseConfig = (o: BaseOpts): Omit<Options, "entry"> => {
+const defineBaseConfig = (o: BaseOpts): Omit<Options, "entry"> => {
   const pkg = readPkg();
   const externals = new Set([
     ...(o.external ?? []),
@@ -84,14 +84,14 @@ const makeBaseConfig = (o: BaseOpts): Omit<Options, "entry"> => {
 export const defineWebConfig = (opts: WebOpts) =>
   defineConfig({
     entry: opts.entries,
-    ...makeBaseConfig(opts),
+    ...defineBaseConfig(opts),
     target: opts.target ?? "es2024",
     ...(opts.extend ?? {})
   });
 
 /** Node preset (runtime-server, CLI, Node-only libs) */
 export const defineNodeConfig = (opts: NodeOpts) => {
-  const base = makeBaseConfig(opts);
+  const base = defineBaseConfig(opts);
   const pkg = readPkg();
   const hasBin =
     opts.bannerBin === true ||
