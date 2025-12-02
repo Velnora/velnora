@@ -75,7 +75,7 @@ export default [
             },
             {
               sourceTag: "scope:vite",
-              onlyDependOnLibsWithTags: ["scope:core", "scope:schemas", "scope:plugin-api", "scope:router"]
+              onlyDependOnLibsWithTags: ["scope:schemas", "scope:plugin-api", "scope:router"]
             },
             { sourceTag: "scope:rpc", onlyDependOnLibsWithTags: ["scope:core", "scope:plugin-api"] },
             { sourceTag: "scope:plugin-api", onlyDependOnLibsWithTags: ["scope:schemas"] },
@@ -157,6 +157,7 @@ export default [
     rules: {
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+      "@typescript-eslint/no-namespace": "off",
       "no-console": "off"
     }
   }
