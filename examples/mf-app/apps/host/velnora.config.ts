@@ -1,3 +1,3 @@
 import { defineConfig } from "velnora/app";
 
-export default defineConfig();
+export default defineConfig({ integrations: { react: { mode: "ssr" } } });
