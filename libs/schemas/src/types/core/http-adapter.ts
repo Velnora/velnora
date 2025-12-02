@@ -12,6 +12,7 @@ export interface HttpAdapter extends EventEmitter {
 
   use(...handlers: [RequestHandler, ...RequestHandler[]]): void;
 
+  handleRequest(path: RegExp, ...handlers: RequestHandler[]): void;
   handleRequest<TPath extends string>(path: TPath, ...handlers: RequestHandler<ExtractParamsObject<TPath>>[]): void;
 
   listen(): Promise<void>;

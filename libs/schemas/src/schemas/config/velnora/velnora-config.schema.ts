@@ -1,3 +1,5 @@
+import { resolve } from "node:path";
+
 import { z } from "zod";
 
 import { nullishObject } from "../../../utils/nullish-object";
@@ -13,7 +15,14 @@ export const velnoraConfigSchema = z.object({
   server: z.preprocess(nullishObject, serverSchema),
   workspace: z.preprocess(nullishObject, workspaceSchema),
   integrations: z.array(integrationSchema).default([]),
-  experiments: z.preprocess(nullishObject, experimentsSchema)
+  experiments: z.preprocess(nullishObject, experimentsSchema),
+
+  cacheDir: z
+    .string()
+    .optional()
+    .default(".velnora")
+    .transform(p => resolve(p))
+    .transform(p => p.replace(new RegExp(`^${resolve(process.cwd())}`), ""))
 });
 
 export const defaultVelnoraConfig = velnoraConfigSchema.parse({});
@@ -26,4 +35,6 @@ export interface VelnoraConfig {
   workspace: Workspace;
   integrations: Array<Integration>;
   experiments: Experiments;
+
+  cacheDir: string;
 }

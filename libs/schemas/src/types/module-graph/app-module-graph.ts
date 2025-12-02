@@ -8,6 +8,7 @@ export interface AppModuleGraph {
   edges: Map<string, Set<string>>;
 
   addModule(root: string, packageJson: PackageJson): this;
+  perNode(callback: (moduleName: string, meta: Node) => Promise<void>): Promise<this>;
   perNode(callback: (moduleName: string, meta: Node) => void): this;
 
   addDependency(fromModule: string, toModule: string): this;

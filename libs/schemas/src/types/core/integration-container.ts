@@ -1,8 +1,8 @@
 import type { Package } from "../package";
 
 export interface IntegrationContainer {
-  configure(entry: Package): void;
-  scaffold(entry: Package): void;
-  build(entry: Package): void;
-  runtime(entry: Package): void;
+  configure(entry: Package): Promise<void>;
+  scaffold(entry: Package): Promise<void>;
+  build(entry: Package): Promise<void>;
+  runtime(entry: Package): Promise<void>;
 }

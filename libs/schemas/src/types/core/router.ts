@@ -1,5 +1,12 @@
-import type { NextFunction, Request, Response } from "express";
+import type { Package } from "../package";
+import type { ParsedUrl } from "../parsed-url";
+import type { Route, Routing } from "../router";
 
 export interface Router {
-  handleRequest(this: Router, request: Request, res: Response, next: NextFunction): Promise<void>;
+  list: readonly Route[];
+
+  parse(url: string): ParsedUrl;
+  getById(id: string): Route | undefined;
+  withApp(this: Router, app: Package): Routing;
+  inject(): Promise<void>;
 }

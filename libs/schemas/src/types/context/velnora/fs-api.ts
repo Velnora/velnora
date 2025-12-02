@@ -11,10 +11,10 @@ export interface FsApi {
   write(contents: string, path?: string, options?: FsOptions): void;
   readDir(path?: string): string[];
 
-  file(path: string): string;
+  resolve(path: string): string;
 
   pushd(path: string): void;
-  popd(path: string): void;
+  popd(): void;
 
   glob(pattern: string, path?: string, options?: Omit<GlobOptionsWithFileTypesFalse, "cwd">): string[];
 }
