@@ -10,6 +10,7 @@
     "velnora": "workspace:^"
   },
   "devDependencies": {
-    "depcheck": "^1.4.7"
+    "@velnora/integrations-nest": "workspace:^",
+    "@velnora/integrations-react": "workspace:^"
   }
 }
