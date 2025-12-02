@@ -1,5 +1,9 @@
 import { defineIntegration } from "@velnora/plugin-api";
 
+import pkg from "../package.json";
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
 export const nest = defineIntegration(() => {
   return {
     name: "@velnora/integration-nest",
@@ -8,7 +12,7 @@ export const nest = defineIntegration(() => {
 
     apply(ctx) {
       return (
-        (ctx.fs.exists("server/app.module.{js,ts}") || ctx.fs.exists(`server/${ctx.app.name}.module.{js,ts}`)) &&
+        ctx.fs.exists(`server/{app,${ctx.app.name}}.module.{js,ts}`) &&
         ctx.pkg.ensurePackage("@nestjs/common", "^11") &&
         ctx.pkg.ensurePackage("@nestjs/core", "^11")
       );
@@ -17,23 +21,55 @@ export const nest = defineIntegration(() => {
     configure(ctx) {
       ctx.fs.pushd("server");
 
-      const virtualId = ctx.vite.virtual(
-        "entry/server",
+      const entryFiles = ctx.fs.glob(`{app,${ctx.app.name}}.module.{js,ts}`);
+      if (entryFiles.length === 0) {
+        ctx.logger.error("Could not find entry file for React app. Skipping React (client) integration.");
+        ctx.fs.popd();
+        return;
+      }
+
+      if (entryFiles.length > 1) {
+        ctx.logger.warn("Multiple entry files found for React app. Using the first one found.");
+      }
+
+      const modulePath = ctx.fs.resolve(entryFiles[0]!);
+      const appModuleVirtualId = ctx.vite.virtual(
+        "entry/app-module",
         `
-import "reflect-metadata";
-console.log(123);
+import * as __module from "${modulePath}";
+import { getModule } from "@velnora/devkit";
+
+const AppModule = getModule(__module, ["${capitalize(ctx.app.name)}Module", "AppModule", "default"]);
+if (!AppModule) {
+  throw new Error("A Nest module with names [\\"${capitalize(ctx.app.name)}Module\\", \\"AppModule\\", \\"default\\"] wasn't exported from \\"${modulePath}\\"");
+}
+export default AppModule;
+`
+      );
+
+      const entryVirtual = ctx.vite.entryServer(
+        `
+import AppModule from "${appModuleVirtualId}";
+import { setupServer } from "${pkg.name}/server";
+export default setupServer(AppModule);
 `
       );
 
       // const environment = ctx.runtimes.get(ctx.app).createEnvironment(ctx.app);
-      ctx.vite.addEnvironment("server", {
-        build: { ssr: true, lib: { entry: { main: virtualId }, formats: ["es"] } },
+      const envId = ctx.vite.addEnvironment("server", {
+        build: { ssr: true, lib: { entry: { main: entryVirtual }, formats: ["es"] } },
         define: { __NESTJS_PLATFORM_SERVER__: true },
         resolve: { conditions: ["node", "module", "development"] },
         consumer: "server"
       });
 
       // ctx.backends.use(ctx.app, runtime);
+
+      ctx.router.registerBackend({
+        environment: envId,
+        entry: entryVirtual,
+        runtime: ""
+      });
     },
 
     scaffold(ctx) {
