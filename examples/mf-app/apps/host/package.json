@@ -5,9 +5,8 @@
     "@nestjs/core": "^11.1.9",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
     "velnora": "workspace:^"
-  },
-  "devDependencies": {
-    "depcheck": "^1.4.7"
   }
 }
