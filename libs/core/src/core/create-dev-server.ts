@@ -15,12 +15,17 @@ export const createDevServer = async (options: DevCommandOptions) => {
   const parsedConfig = await velnoraConfigSchema.parseAsync(config);
   const mergedConfig = mergeConfig(options, parsedConfig);
 
-  const velnora = await createServer(mergedConfig);
+  const velnora = createServer(mergedConfig);
   await parseInfra(velnora.graph);
-  velnora.graph.perNode((_, node) => velnora.integrationContainer.configure(node.package));
+  await Promise.all(
+    Array.from(velnora.graph.nodes).map(async node => {
+      const meta = velnora.graph.nodeMeta.get(node)!;
+      await meta.package.fetchConfig();
+    })
+  );
+  await velnora.graph.perNode((_, node) => velnora.integrationContainer.configure(node.package));
 
-  // velnora.handleRequest(velnora.router.handleRequest.bind(velnora.router));
-
+  await velnora.injectModules();
   await velnora.listen();
   const endTime = performance.now();
   velnora.printUrls(endTime - startTime);
