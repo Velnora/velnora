@@ -43,7 +43,7 @@ const debugPlugin: Plugin = {
 
   resolveId: {
     order: "pre",
-    handler(id, importer, opts) {
+    handler(id, importer) {
       this.debug(`[resolver] ${id} <- ${importer} consumer=${this.environment.config.consumer}`);
     }
   }
