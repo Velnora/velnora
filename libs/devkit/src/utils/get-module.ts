@@ -1,0 +1,7 @@
+export const getModule = (module: Record<string, unknown>, names: string[]) => {
+  for (const name of names) {
+    if (module && typeof module === "object" && name in module) {
+      return module[name];
+    }
+  }
+};
