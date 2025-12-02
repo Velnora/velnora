@@ -27,12 +27,10 @@ depCheckScript=$(yarn bin depcheck)
 #     → Ignores "order" in missing dependencies
 #
 IGNORE_LIST=$(cat <<EOF
-@velnora/example-base deps:reflect-metadata,@velnora/framework-react
-@velnora-examples/base-* missingDeps:velnora
-@velnora-examples/base-profile missingDeps:order
-@velnora/adapter-express deps:rxjs
-EOF
-)
+@velnora/mf-app-host deps:@nestjs/core,react-dom
+@velnora/vite-integration deps:rolldown-vite
+* missingDeps:@velnora/tooling,@velnora/cli
+EOF)
 
 get_ignore_packages() {
   local workspace=$1
