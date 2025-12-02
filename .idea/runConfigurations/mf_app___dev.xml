@@ -6,9 +6,11 @@
       <script value="dev" />
     </scripts>
     <node-interpreter value="project" />
+    <node-options value="--unhandled-rejections=strict --trace-uncaught" />
     <envs>
-      <env name="DEBUG" value="velnora:*" />
+      <env name="DEBUG" value="velnora:" />
       <env name="DEBUG_DEPTH" value="99" />
+      <env name="NODE_ENV" value="development" />
     </envs>
     <EXTENSION ID="com.intellij.javascript.debugger.execution.StartBrowserRunConfigurationExtension">
       <browser with-js-debugger="true" />

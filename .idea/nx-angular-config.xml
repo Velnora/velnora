@@ -5,6 +5,7 @@
       <project name="@velnora/cli" file="file://$PROJECT_DIR$/libs/cli/project.json" />
       <project name="@velnora/cli-helper" file="file://$PROJECT_DIR$/libs/helper/cli/project.json" />
       <project name="@velnora/core" file="file://$PROJECT_DIR$/libs/core/project.json" />
+      <project name="@velnora/devkit" file="file://$PROJECT_DIR$/libs/devkit/project.json" />
       <project name="@velnora/integrations-nest" file="file://$PROJECT_DIR$/libs/integrations/nest/project.json" />
       <project name="@velnora/integrations-react" file="file://$PROJECT_DIR$/libs/integrations/react/project.json" />
       <project name="@velnora/mf-app" file="file://$PROJECT_DIR$/examples/mf-app/project.json" />
