@@ -1,5 +1,6 @@
+import type { Promisable } from "type-fest";
+
 import type {
-  AppModuleGraph,
   IntegrationContainer as BaseIntegrationContainer,
   Integration,
   Package,
@@ -21,36 +22,39 @@ export class IntegrationContainer implements BaseIntegrationContainer {
 
   configure(entry: Package) {
     this.debug("running configure stage for package: %O", { name: entry.name });
-    this.runHook("configure", entry);
+    return this.runHook("configure", entry);
   }
 
   scaffold(entry: Package) {
     this.debug("running scaffold stage for package: %O", { name: entry.name });
-    this.runHook("scaffold", entry);
+    return this.runHook("scaffold", entry);
   }
 
   build(entry: Package) {
     this.debug("running build stage for package: %O", { name: entry.name });
-    this.runHook("build", entry);
+    return this.runHook("build", entry);
   }
 
   runtime(entry: Package) {
     this.debug("running runtime stage for package: %O", { name: entry.name });
-    this.runHook("runtime", entry);
+    return this.runHook("runtime", entry);
   }
 
-  private runHook<THookName extends Stage>(hookName: THookName, entry: Package) {
+  private async runHook<THookName extends Stage>(hookName: THookName, entry: Package) {
     this.debug("resolving integrations for hook: %O", { hookName, packageName: entry.name });
     const integrations = this.getIntegrationsFor(entry);
 
-    for (const integration of integrations) {
+    const hookedPromises = integrations.map(async integration => {
       const hook = integration[hookName];
       if (hook) {
-        const ctx = this.appContext.getOrCreateContext(entry);
+        const ctx = this.appContext.getOrCreateVelnoraContext(entry, integration);
         this.debug("invoking integration hook: %O", { hookName, packageName: entry.name });
-        hook(ctx);
+        await hook(ctx);
       }
-    }
+    });
+
+    const hookResults = await Promise.allSettled(hookedPromises);
+    this.debug("completed integration hook: %O", { hookName, packageName: entry.name, results: hookResults });
   }
 
   private getIntegrationsFor(entry: Package): Integration[] {
@@ -61,9 +65,8 @@ export class IntegrationContainer implements BaseIntegrationContainer {
     }
 
     const allIntegrations = this.config.integrations || [];
-    const ctx = this.appContext.getOrCreateContext(entry);
     const applicableIntegrations = allIntegrations.filter(integration =>
-      integration.apply ? integration.apply(ctx) : true
+      integration.apply ? integration.apply(this.appContext.getOrCreateVelnoraContext(entry, integration)) : true
     );
 
     this.debug("resolved applicable integrations for package: %O", {

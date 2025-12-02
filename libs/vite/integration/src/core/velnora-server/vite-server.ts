@@ -1,14 +1,15 @@
-import type { PackageJson } from "type-fest";
+import type { LiteralUnion, PackageJson } from "type-fest";
 import type { ViteDevServer } from "vite";
 import type * as vite from "vite";
 
 import type { HttpAdapter, VelnoraConfig } from "@velnora/schemas";
+import type { ViteServer as VelnoraViteServer } from "@velnora/schemas";
 
 import { debug } from "../../utils/debug";
 import { devRunner } from "../../utils/vite";
 import type { ViteContainer } from "./vite-container";
 
-export class ViteServer {
+export class ViteServer implements VelnoraViteServer {
   private readonly debug = debug.extend("vite-server");
 
   declare private viteInstance: typeof vite;
@@ -20,8 +21,16 @@ export class ViteServer {
     private readonly server: HttpAdapter
   ) {}
 
-  get isInitialized() {
-    return !!this.viteInstance;
+  environment(envName: LiteralUnion<"client" | "ssr", string>) {
+    return this.viteDevServer.environments[envName]!;
+  }
+
+  runnableDevEnv(env: string) {
+    const devEnv = this.environment(env);
+    if (!this.viteInstance.isRunnableDevEnvironment(devEnv)) {
+      throw new Error("Vite dev environment 'ssr' is not runnable");
+    }
+    return devEnv;
   }
 
   async init() {
@@ -29,7 +38,7 @@ export class ViteServer {
 
     this.debug("init-vite starting Vite dev server initialization");
 
-    const vitePkgName = this.config.experiments?.rolldown ? "vite-rolldown" : "vite";
+    const vitePkgName = this.config.experiments?.rolldown ? "rolldown-vite" : "vite";
     const vitePkgJson = await devRunner.import<PackageJson>(`${vitePkgName}/package.json`);
     this.debug("init-vite using Vite package: %O", { name: vitePkgName, version: vitePkgJson.version });
 
@@ -50,5 +59,13 @@ export class ViteServer {
       return this.viteDevServer.close();
     });
     this.debug("init-vite attached Vite close handler to Node server");
+  }
+
+  transformIndexHtml(path: string, html = "") {
+    return this.viteDevServer.transformIndexHtml(path, html);
+  }
+
+  transformIndexStream(path: string) {
+    return new ReadableStream({});
   }
 }

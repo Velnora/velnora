@@ -1,7 +1,7 @@
 // in core:
 import { resolve } from "node:path";
 
-import type { Package, VelnoraAppConfig } from "@velnora/schemas";
+import { type Package, type VelnoraAppConfig, velnoraAppConfigSchema } from "@velnora/schemas";
 
 import { loadConfigFile } from "../../utils";
 
@@ -12,7 +12,8 @@ export class AppConfigManager {
     if (this.cache.has(pkg)) return this.cache.get(pkg)!;
 
     const config = await loadConfigFile<VelnoraAppConfig>(resolve(pkg.root, "velnora.config"));
-    this.cache.set(pkg, config);
+    const result = velnoraAppConfigSchema.parse(config);
+    this.cache.set(pkg, result);
     return config;
   }
 }

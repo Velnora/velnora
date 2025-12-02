@@ -1,6 +1,6 @@
-import type { PackageJson } from "type-fest";
+import type { PackageJson, Promisable } from "type-fest";
 
-import type { Node, AppModuleGraph as VelnoraAppModuleGraph } from "@velnora/schemas";
+import type { Node, AppModuleGraph as VelnoraAppModuleGraph, VelnoraConfig } from "@velnora/schemas";
 
 import { debug } from "../../utils/debug";
 import { Package } from "../package";
@@ -14,8 +14,10 @@ export class AppModuleGraph implements VelnoraAppModuleGraph {
 
   private readonly appConfigManager = new AppConfigManager();
 
+  constructor(private readonly config: VelnoraConfig) {}
+
   addModule(root: string, packageJson: PackageJson) {
-    const pkg = new Package(root, packageJson, this.appConfigManager);
+    const pkg = new Package(root, packageJson, this.appConfigManager, this.config);
     const moduleName = pkg.id;
     this.debug("add-module adding module: %O", { moduleName });
 
@@ -64,11 +66,15 @@ export class AppModuleGraph implements VelnoraAppModuleGraph {
     return this;
   }
 
-  perNode(callback: (moduleName: string, meta: Node) => void) {
+  perNode(callback: (moduleName: string, meta: Node) => void): this;
+  perNode(callback: (moduleName: string, meta: Node) => Promise<void>): Promise<this>;
+  perNode(callback: (moduleName: string, meta: Node) => Promisable<void>) {
     this.debug("per-node iterating over modules: %O", {
       totalNodes: this.nodes.size,
       totalMeta: this.nodeMeta.size
     });
+    let isPromise = false;
+    const promises: Promise<void>[] = [];
 
     for (const moduleName of this.nodes) {
       const meta = this.nodeMeta.get(moduleName);
@@ -79,12 +85,16 @@ export class AppModuleGraph implements VelnoraAppModuleGraph {
       }
 
       this.debug("per-node invoking callback: %O", { moduleName });
-      callback(moduleName, meta);
+      const result = callback(moduleName, meta);
+      isPromise = isPromise || result instanceof Promise;
+      if (isPromise) {
+        promises.push(Promise.resolve(result));
+      }
       this.debug("per-node callback finished: %O", { moduleName });
     }
 
     this.debug("per-node iteration complete");
-    return this;
+    return isPromise ? Promise.all(promises).then(() => this) : this;
   }
 
   getDependencies(moduleName: string) {

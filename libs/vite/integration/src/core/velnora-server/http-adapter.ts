@@ -2,14 +2,15 @@ import { EventEmitter } from "node:events";
 import { createServer as createHttpServer } from "node:http";
 import type { Server as HttpServer } from "node:http";
 
-import express, { type RequestHandler } from "express";
+import type { NextFunction, Request, RequestHandler, Response } from "express";
+import express from "express";
 
 import type { ExtractParamsObject, VelnoraConfig, HttpAdapter as VelnoraHttpAdapter } from "@velnora/schemas";
 
 import { debug } from "../../utils/debug";
 
 export class HttpAdapter extends EventEmitter implements VelnoraHttpAdapter {
-  private readonly debug = debug.extend("http-adapter");
+  private readonly debug = debug.extend("http");
   readonly app = express();
 
   declare private server: HttpServer;
@@ -40,11 +41,13 @@ export class HttpAdapter extends EventEmitter implements VelnoraHttpAdapter {
   }
 
   handleRequest<TPossiblePath extends string>(
-    path: string,
+    path: TPossiblePath,
     ...handlers: RequestHandler<ExtractParamsObject<TPossiblePath>>[]
-  ) {
+  ): void;
+  handleRequest(path: RegExp, ...handlers: RequestHandler[]): void;
+  handleRequest(path: string | RegExp, ...handlers: RequestHandler[]) {
     this.app.use(path, ...handlers);
-    this.debug("handle-request registered route handler: %O", { route: path });
+    this.debug("handle-request registered route handler: %O", { route: path, handlersCount: handlers.length });
   }
 
   async listen() {

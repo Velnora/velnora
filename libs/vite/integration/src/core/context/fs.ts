@@ -1,18 +1,18 @@
 import { readFileSync } from "fs";
 import { readdirSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { extname, resolve } from "node:path";
 
 import { type GlobOptionsWithFileTypesFalse, glob } from "glob";
 
 import type { FsApi, FsOptions, Package } from "@velnora/schemas";
 
 export class Fs implements FsApi {
-  private lockedPaths = new Set<string>();
+  private lockedPaths: string[] = [];
 
   constructor(private readonly pkg: Package) {}
 
   private get root() {
-    return this.lockedPaths.size > 0 ? resolve(this.pkg.root, ...Array.from(this.lockedPaths)) : this.pkg.root;
+    return this.lockedPaths.length > 0 ? resolve(this.pkg.root, ...Array.from(this.lockedPaths)) : this.pkg.root;
   }
 
   exists(path?: string) {
@@ -39,14 +39,14 @@ export class Fs implements FsApi {
   }
 
   pushd(path: string) {
-    this.lockedPaths.add(path);
+    this.lockedPaths.push(path);
   }
 
   popd() {
-    this.lockedPaths.delete(Array.from(this.lockedPaths).pop()!);
+    this.lockedPaths.pop();
   }
 
-  file(path: string) {
+  resolve(path: string) {
     return path ? resolve(this.root, path) : this.root;
   }
 

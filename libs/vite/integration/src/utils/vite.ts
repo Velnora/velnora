@@ -11,7 +11,6 @@ if ((project = findTsconfigProject())) {
 
 export const vite = await createServer({
   plugins: [tsconfigPaths({ projects })],
-  css: { transformer: "postcss" },
   server: { middlewareMode: true, hmr: false, ws: false },
   configFile: false,
   appType: "custom",

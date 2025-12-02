@@ -1,43 +1,68 @@
 import { merge } from "lodash";
 import { type UserConfig, mergeConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 
-import type { Package } from "@velnora/schemas";
+import type { Router } from "@velnora/router";
+import type { Package, VelnoraConfig, ViteContainer as VelnoraViteContainer } from "@velnora/schemas";
 
 import { devSourceMapPlugin } from "../../plugins/dev-source-map.plugin";
+import { htmlPlugin } from "../../plugins/html";
 import { virtualModulePlugin } from "../../plugins/virtual-module.plugin";
 import { debug } from "../../utils/debug";
+import { findTsconfigProject } from "../../utils/find-tsconfig-project";
 import { Vite } from "./vite";
 
-export class ViteContainer {
+const projects: string[] = [];
+let project: string;
+if ((project = findTsconfigProject())) {
+  projects.push(project);
+}
+
+export class ViteContainer implements VelnoraViteContainer {
   private readonly debug = debug.extend("vite-container");
   isUsed = false;
 
   private readonly _virtualModules = new Map<string, string>();
-  private readonly _virtualModulesMap = new Map<Package, string>();
   private _userConfig: UserConfig = {
     root: process.cwd(),
-    plugins: [devSourceMapPlugin()],
+    build: {
+      sourcemap: true
+    },
     server: { middlewareMode: true },
+    plugins: [
+      tsconfigPaths({
+        // ToDo: replace with [allowImportersRe](https://github.com/aleclarson/vite-tsconfig-paths/pull/193) when merged
+        projects,
+        loose: true
+      })
+    ],
     logLevel: "error",
-    appType: "custom"
+    // ToDo: Make custom logger instance mapped to debug
+    appType: "custom",
+    clearScreen: false
   };
 
-  constructor(initialConfig: UserConfig = {}) {
+  constructor(
+    private readonly config: VelnoraConfig,
+    router: Router,
+    initialConfig: UserConfig = {}
+  ) {
     this.debug("initializing Vite API user config: %O", {
       hasInitialConfig: Object.keys(initialConfig).length > 0
     });
 
     this._userConfig = merge(this._userConfig, initialConfig);
 
+    this.userConfig.plugins?.push(
+      devSourceMapPlugin(config),
+      htmlPlugin(router),
+      virtualModulePlugin(this.config, this.virtualModules)
+    );
     this.debug("merged initial user config into base config");
   }
 
   get virtualModules() {
     return this._virtualModules;
-  }
-
-  get virtualModulesMap() {
-    return this._virtualModulesMap;
   }
 
   get userConfig() {
@@ -57,7 +82,7 @@ export class ViteContainer {
   }
 
   withApp(pkg: Package) {
-    return new Vite(pkg, this);
+    return new Vite(pkg, this, this.config);
   }
 
   build() {
@@ -70,9 +95,6 @@ export class ViteContainer {
       existingPlugins: this.userConfig.plugins?.length ?? 0,
       virtualModules: this.virtualModules.size
     });
-
-    this.userConfig.plugins ||= [];
-    this.userConfig.plugins.push(virtualModulePlugin(this.virtualModules));
 
     this.isUsed = true;
     this.debug("Vite configuration marked as used");
