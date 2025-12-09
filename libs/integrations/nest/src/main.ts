@@ -7,8 +7,6 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 export const nest = defineIntegration(() => {
   return {
     name: "@velnora/integration-nest",
-    supportsHost: "nest",
-    priority: { build: 40, runtime: 10 },
 
     apply(ctx) {
       return (
@@ -57,8 +55,6 @@ export default setupServer(AppModule);
         define: { __NESTJS_PLATFORM_SERVER__: true },
         resolve: { conditions: ["node", "module", "development"] }
       });
-
-      // ctx.backends.use(ctx.app, runtime);
 
       ctx.router.registerBackend({
         environment: envId,

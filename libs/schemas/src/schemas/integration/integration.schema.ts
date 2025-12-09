@@ -1,19 +1,13 @@
 import type { Promisable } from "type-fest";
+import type { UserConfig } from "vite";
 import { z } from "zod";
 
 import type { VelnoraContext } from "../../types";
-import { type PriorityObject, priorityObjectSchema } from "./priority-object.schema";
 
-const hosts = z.enum(["vite", "nest"]);
 export const integrationSchema = z.object({
   name: z.string(),
   version: z.string().optional(),
-  supportsHost: hosts.or(z.array(hosts)).optional(),
-  priority: z
-    .number()
-    .transform(priority => ({ configure: priority, scaffold: priority, build: priority, runtime: priority }))
-    .or(priorityObjectSchema)
-    .optional(),
+  vite: z.custom<Integration["vite"]>().optional(),
 
   apply: z.custom<Integration["apply"]>(),
   configure: z.custom<Integration["configure"]>(),
@@ -66,30 +60,13 @@ export interface Integration {
   version?: string;
 
   /**
-   * Defines which host or framework the integration supports.
+   * Additional Vite configuration contributed by the integration.
    *
-   * Typically used to validate compatibility (e.g., only attach
-   * integrations that match the active host environment).
-   *
-   * @example "vite-client" // Only compatible when running under a Vite host
+   * Merged into the application's global Vite config during setup,
+   * allowing the integration to extend the dev server and build pipeline
+   * (e.g., plugins, aliases, transforms).
    */
-  supportsHost?:
-    | z.infer<typeof integrationSchema.shape.supportsHost>
-    | z.infer<typeof integrationSchema.shape.supportsHost>[];
-
-  /**
-   * Optional priority descriptor that controls execution order
-   * among multiple integrations in the same lifecycle phase.
-   *
-   * Higher priority integrations run earlier during configuration or build.
-   * Useful when an integration depends on another being initialized first.
-   *
-   * @example
-   * ```ts
-   * priority: { configure: 10, build: 1 }
-   * ```
-   */
-  priority?: PriorityObject;
+  vite?: Pick<UserConfig, "plugins">;
 
   /**
    * Lifecycle filter: Determines whether this integration should run
