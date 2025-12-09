@@ -11,13 +11,13 @@ export class Routing implements VelnoraRouting {
   ) {}
 
   registerFrontend(route: Omit<FrontendRoute, "id" | "app" | "path" | "side">) {
-    const prefix = this.pkg.clientPath;
+    const prefix = this.pkg.clientUrl;
     this.router.register({ id: randomUUID(), side: "frontend", path: prefix, app: this.pkg, ...route });
     return this;
   }
 
   registerBackend(route: Omit<BackendRoute, "id" | "app" | "path" | "side">) {
-    const prefix = this.pkg.serverPath;
+    const prefix = this.pkg.serverUrl;
     this.router.register({ id: randomUUID(), side: "backend", path: prefix, app: this.pkg, ...route });
     return this;
   }

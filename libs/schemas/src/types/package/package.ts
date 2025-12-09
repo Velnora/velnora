@@ -11,8 +11,8 @@ export interface Package {
   readonly kind: PackageKind;
   readonly config: VelnoraAppConfig;
   readonly version: Version;
-  readonly clientPath: string;
-  readonly serverPath: string;
+  readonly clientUrl: string;
+  readonly serverUrl: string;
   readonly isHostApplication: boolean;
 
   fetchConfig(): Promise<VelnoraAppConfig>;

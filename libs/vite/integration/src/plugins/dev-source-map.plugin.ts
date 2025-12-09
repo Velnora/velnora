@@ -31,6 +31,10 @@ export const devSourceMapPlugin = (velnoraConfig: VelnoraConfig): Plugin => {
           return `vite://cache/${path.slice(config.cacheDir.length + 1)}`;
         }
 
+        if (path.startsWith(velnoraConfig.root)) {
+          return `velnora://${path.slice(velnoraConfig.root.length + 1)}`;
+        }
+
         // const cacheDirName = velnoraConfig.cacheDir.slice(process.cwd().length + 1);
         // if (path.startsWith(`velnora://apps/${cacheDirName}`)) {
         //   return `velnora://cache/${path.slice(`velnora://apps/${cacheDirName}`.length + 1)}`;

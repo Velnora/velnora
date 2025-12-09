@@ -3,7 +3,7 @@ import { basename, resolve } from "node:path";
 
 import { glob } from "glob";
 import { parse } from "semver";
-import type { PackageJson } from "type-fest";
+import type { Jsonify, PackageJson } from "type-fest";
 
 import {
   PackageKind,
@@ -47,12 +47,12 @@ export class Package implements VelnoraPackage {
     };
   }
 
-  get clientPath() {
-    return this.config.clientPath || (this.isHostApplication ? "/" : `/${this.name}`);
+  get clientUrl() {
+    return this.config.client?.url || (this.isHostApplication ? "/" : `/${this.name}`);
   }
 
-  get serverPath() {
-    const routePath = this.config.serverPath;
+  get serverUrl() {
+    const routePath = this.config.server?.url;
     return typeof routePath === "string" ? routePath : routePath?.(this.version.major) || `/api/${this.name}/v1`;
   }
 
@@ -91,5 +91,20 @@ export class Package implements VelnoraPackage {
 
   get isHostApplication() {
     return this.name === this.rootConfig.hostApp;
+  }
+
+  toJSON(): Jsonify<Omit<VelnoraPackage, "packageJson">> & { packageJson: PackageJson } {
+    return {
+      id: this.id,
+      name: this.name,
+      version: this.version,
+      kind: this.kind,
+      clientUrl: this.clientUrl,
+      serverUrl: this.serverUrl,
+      root: this.root,
+      packageJson: this.packageJson,
+      config: this.config,
+      isHostApplication: this.isHostApplication
+    };
   }
 }

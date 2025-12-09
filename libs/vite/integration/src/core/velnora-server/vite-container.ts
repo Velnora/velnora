@@ -52,12 +52,10 @@ export class ViteContainer implements VelnoraViteContainer {
 
     this.updateConfig(initialConfig);
     this.config.integrations.forEach(integration => integration.vite && this.updateConfig(integration.vite));
+    this.updateConfig({
+      plugins: [devSourceMapPlugin(config), htmlPlugin(router), virtualModulePlugin(this.config, this.virtualModules)]
+    });
 
-    this.userConfig.plugins?.push(
-      devSourceMapPlugin(config),
-      htmlPlugin(router),
-      virtualModulePlugin(this.config, this.virtualModules)
-    );
     this.debug("merged initial user config into base config");
   }
 

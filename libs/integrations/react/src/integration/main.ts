@@ -1,16 +1,18 @@
 import { defineIntegration } from "@velnora/plugin-api";
 import viteReact from "@vitejs/plugin-react";
 
-import pkg from "../../package.json";
-import { velnoraReactPlugin } from "./plugins/velnora-react.plugin";
+import { setupCsr } from "./core/setup-csr";
 
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+// import { setupRsc } from "./core/setup-rsc";
+// import { setupSsr } from "./core/setup-ssr";
+
+type ReactMode = "csr" | "ssr" | "rsc";
 
 declare global {
   namespace Velnora {
     interface AppConfigExtensions {
       react?: {
-        mode?: "csr" | "ssr" | "rsc";
+        mode?: ReactMode;
       };
     }
   }
@@ -19,105 +21,41 @@ declare global {
 export const react = defineIntegration(() => {
   return {
     name: "@velnora/integration-react",
-    supportsHost: "vite",
+
+    vite: {
+      plugins: [viteReact({ jsxRuntime: "automatic" })]
+    },
 
     apply(ctx) {
       return (
-        (ctx.fs.exists("client/app.{js,ts,jsx,tsx}") || ctx.fs.exists("client/app/page.{js,ts,jsx,tsx}")) &&
+        (ctx.fs.exists("client/app.{js,ts,jsx,tsx}") || ctx.fs.exists("client/app/**/page.{js,ts,jsx,tsx}")) &&
         ctx.pkg.ensurePackage("react", "18 || 19") &&
         ctx.pkg.ensurePackage("react-dom", "18 || 19")
       );
     },
 
-    async configure(ctx) {
+    configure(ctx) {
       ctx.fs.pushd("client");
 
-      if (ctx.pkg.ensurePackage("@vitejs/plugin-react")) {
-        ctx.logger.error(
-          "For running React apps, @vitejs/plugin-react is required. Please install it and try again. Otherwise, React integration will be skipped."
-        );
-        ctx.fs.popd();
-        return;
+      const mode: ReactMode | null =
+        ctx.app.config.integrations.react?.mode ||
+        (ctx.fs.exists("app.{js,ts,jsx,tsx}") ? "csr" : ctx.fs.exists("app/**/page.{js,ts,jsx,tsx}") ? "ssr" : null);
+
+      switch (mode) {
+        case "csr":
+          setupCsr(ctx);
+          break;
+        // case "ssr":
+        //   setupSsr(ctx);
+        //   break;
+        // case "rsc":
+        //   await setupRsc(ctx);
+        //   break;
+        default:
+          ctx.logger.error(
+            `Could not determine React mode automatically and no mode was specified in configuration. Skipping React integration.`
+          );
       }
-
-      await ctx.vite.use(viteReact({ jsxRuntime: "automatic" }));
-      await ctx.vite.use(velnoraReactPlugin());
-
-      let clientEntryFile: string | null = null;
-      const serverEntryFile: string | null = null;
-
-      if (ctx.fs.exists("app.{js,ts,jsx,tsx}")) {
-        const entryFiles = ctx.fs.glob("app.{js,ts,jsx,tsx}");
-        if (entryFiles.length === 0) {
-          ctx.logger.error("Could not find entry file for React app. Skipping React (client) integration.");
-          ctx.fs.popd();
-          return;
-        }
-
-        if (entryFiles.length > 1) {
-          ctx.logger.warn("Multiple entry files found for React app. Using the first one found.");
-        }
-
-        const modulePath = ctx.fs.resolve(entryFiles[0]!);
-        const appFile = ctx.vite.virtual(
-          "client/app",
-          `
-import * as __module from "${modulePath}";
-import { getModule } from "@velnora/devkit";
-
-const App = getModule(__module, ["${capitalize(ctx.app.name)}", "App", "default"]);
-if (!App) {
-  throw new Error("A React module with names [\\"${capitalize(ctx.app.name)}\\", \\"App\\", \\"default\\"] wasn't exported from \\"${modulePath}\\"");
-}
-export default App;
-`
-        );
-
-        clientEntryFile = ctx.vite.entryClient(`
-import App from "${appFile}";
-import { mount } from "${pkg.name}/client";
-
-mount(App, "#root");
-`);
-      }
-
-      if (clientEntryFile) {
-        const clientEnvId = ctx.vite.addEnvironment("client", {});
-
-        const indexFile = ctx.fs.resolve("index.html");
-
-        ctx.router.registerFrontend({
-          environment: clientEnvId,
-          entry: clientEntryFile,
-          indexHtmlFile: ctx.fs.exists(indexFile) ? indexFile : undefined
-        });
-      } else {
-        ctx.logger.warn("Could not find entry file for React app. Skipping React (client) integration.");
-      }
-
-      if (serverEntryFile) {
-        const serverEnvId = ctx.vite.addEnvironment("server", {});
-
-        ctx.router.registerBackend({
-          entry: serverEntryFile,
-          environment: serverEnvId,
-          runtime: "host"
-        });
-      } else {
-        ctx.logger.warn("Could not find entry file for React app. Skipping React (server) integration.");
-      }
-
-      // if (ctx.fs.exists("apps")) {
-      // } else {
-      // ctx.router.addRoute("*", `virtual://${ctx.app.id}/entry/client`);
-      // ctx.vite.virtual(`virtual://${ctx.app.id}/entry/client`, ctx.fs.file("app.tsx"));
-      // }
-
-      // ctx.pkg.addRuntime({ "react": "^18.3.1", "react-dom": "^18.3.1" });
-      // ctx.pkg.addDev({ "@vitejs/plugin-react": "^4.3.0" });
-      //
-      // ctx.vite.define({ "~app": "/apps/web/src" });
-      // ctx.registry.routes.add({ path: basePath, component: "~app/App" });
     },
 
     scaffold(ctx) {

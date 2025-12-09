@@ -24,13 +24,20 @@ export const initialHtmlPlugin = (router: Router): Plugin => {
       return env.config.consumer === "client";
     },
 
-    transformIndexHtml(_html, ctx) {
-      const parsedUrl = router.parse(ctx.path);
-      const id = parsedUrl.query.get("id");
-      if (!id) return defaultHtml;
-      const route = router.getById(id);
-      if (!route || route.side !== "frontend" || !route.indexHtmlFile) return defaultHtml;
-      return readFile(route.indexHtmlFile, "utf-8");
+    transformIndexHtml: {
+      order: "pre",
+      handler(html, ctx) {
+        const url = router.parse(ctx.path);
+        if (url.query.has("ssr")) return html;
+
+        const parsedUrl = router.parse(ctx.path);
+        const id = parsedUrl.query.get("id");
+        if (!id) return defaultHtml;
+        const route = router.getById(id);
+        if (!route || route.side !== "frontend" || route.renderMode !== "csr" || !route.indexHtmlFile)
+          return defaultHtml;
+        return readFile(route.indexHtmlFile, "utf-8");
+      }
     }
   };
 };
