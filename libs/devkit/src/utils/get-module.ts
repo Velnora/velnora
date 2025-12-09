@@ -4,4 +4,6 @@ export const getModule = (module: Record<string, unknown>, names: string[]) => {
       return module[name];
     }
   }
+
+  throw new Error(`None of the specified module names were found: [${names.map(m => `"${m}"`).join(", ")}]`);
 };

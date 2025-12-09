@@ -34,16 +34,12 @@ export const nest = defineIntegration(() => {
 
       const modulePath = ctx.fs.resolve(entryFiles[0]!);
       const appModuleVirtualId = ctx.vite.virtual(
-        "entry/app-module",
+        "nest/app-module",
         `
-import * as __module from "${modulePath}";
 import { getModule } from "@velnora/devkit";
+import * as __module from "${modulePath}";
 
-const AppModule = getModule(__module, ["${capitalize(ctx.app.name)}Module", "AppModule", "default"]);
-if (!AppModule) {
-  throw new Error("A Nest module with names [\\"${capitalize(ctx.app.name)}Module\\", \\"AppModule\\", \\"default\\"] wasn't exported from \\"${modulePath}\\"");
-}
-export default AppModule;
+export default getModule(__module, ["${capitalize(ctx.app.name)}Module", "AppModule", "default"]);
 `
       );
 
@@ -59,8 +55,7 @@ export default setupServer(AppModule);
       const envId = ctx.vite.addEnvironment("server", {
         build: { ssr: true, lib: { entry: { main: entryVirtual }, formats: ["es"] } },
         define: { __NESTJS_PLATFORM_SERVER__: true },
-        resolve: { conditions: ["node", "module", "development"] },
-        consumer: "server"
+        resolve: { conditions: ["node", "module", "development"] }
       });
 
       // ctx.backends.use(ctx.app, runtime);
