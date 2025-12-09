@@ -107,7 +107,13 @@ export default [
             // 8) Velnora main facade → may depend on runtime (client) and plugin-api, never server-side libs
             {
               sourceTag: "scope:velnora",
-              onlyDependOnLibsWithTags: ["scope:plugin-api", "scope:runtime", "scope:integrations", "scope:schemas"],
+              onlyDependOnLibsWithTags: [
+                "scope:plugin-api",
+                "scope:runtime",
+                "scope:integrations",
+                "scope:schemas",
+                "scope:router"
+              ],
               notDependOnLibsWithTags: ["side:server"]
             },
 

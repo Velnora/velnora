@@ -20,6 +20,10 @@
       "types": "./meta/react.d.ts",
       "import": "./meta/react.js"
     },
+    "./router": {
+      "types": "./meta/router.d.ts",
+      "import": "./meta/router.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./build/velnora.js",
