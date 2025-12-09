@@ -11,7 +11,7 @@ export class Fs implements FsApi {
 
   constructor(private readonly pkg: Package) {}
 
-  private get root() {
+  get root() {
     return this.lockedPaths.length > 0 ? resolve(this.pkg.root, ...Array.from(this.lockedPaths)) : this.pkg.root;
   }
 
@@ -46,8 +46,8 @@ export class Fs implements FsApi {
     this.lockedPaths.pop();
   }
 
-  resolve(path: string) {
-    return path ? resolve(this.root, path) : this.root;
+  resolve(...paths: string[]) {
+    return paths.length ? resolve(this.root, ...paths) : this.root;
   }
 
   glob(pattern: string, path?: string, options?: Omit<GlobOptionsWithFileTypesFalse, "cwd">) {

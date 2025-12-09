@@ -6,12 +6,14 @@ export interface FsOptions {
 }
 
 export interface FsApi {
+  readonly root: string;
+
   exists(path?: string): boolean;
   read(path?: string, options?: FsOptions): string;
   write(contents: string, path?: string, options?: FsOptions): void;
   readDir(path?: string): string[];
 
-  resolve(path: string): string;
+  resolve(...paths: string[]): string;
 
   pushd(path: string): void;
   popd(): void;
