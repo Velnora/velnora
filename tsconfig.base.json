@@ -38,9 +38,6 @@
       "@velnora/core": ["libs/core/src/main.ts"],
       "velnora/core": ["libs/core/src/main.ts"],
 
-      "@velnora/runtime-client": ["libs/runtime/client/src/main.ts"],
-      "@velnora/runtime-server": ["libs/runtime/server/src/main.ts"],
-
       "@velnora/devkit": ["libs/devkit/src/main.ts"],
       "@velnora/rpc": ["libs/rpc/src/main.ts"],
       "@velnora/plugin-api": ["libs/plugin-api/src/main.ts"],
