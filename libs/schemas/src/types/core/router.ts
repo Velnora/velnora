@@ -3,8 +3,6 @@ import type { ParsedUrl } from "../parsed-url";
 import type { Route, Routing } from "../router";
 
 export interface Router {
-  list: readonly Route[];
-
   parse(url: string): ParsedUrl;
   getById(id: string): Route | undefined;
   withApp(this: Router, app: Package): Routing;
