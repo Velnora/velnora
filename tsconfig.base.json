@@ -38,10 +38,10 @@
       "@velnora/core": ["libs/core/src/main.ts"],
       "velnora/core": ["libs/core/src/main.ts"],
 
+      "@velnora/router": ["libs/router/src/router/main.ts"],
       "@velnora/devkit": ["libs/devkit/src/main.ts"],
       "@velnora/rpc": ["libs/rpc/src/main.ts"],
       "@velnora/plugin-api": ["libs/plugin-api/src/main.ts"],
-      "@velnora/router": ["libs/router/src/main.ts"],
       "@velnora/schemas": ["libs/schemas/src/main.ts"],
       "@velnora/vite-integration": ["libs/vite/integration/src/main.ts"]
     }
