@@ -30,7 +30,7 @@
       "@velnora/integrations-nest": ["libs/integrations/nest/src/main.ts"],
       "@velnora/integrations-nest/server": ["libs/integrations/nest/src/server.ts"],
 
-      "@velnora/integrations-react": ["libs/integrations/react/src/main.ts"],
+      "@velnora/integrations-react": ["libs/integrations/react/src/integration/main.ts"],
       "velnora/react": ["libs/integrations/react/src/client/main.ts"],
       "@velnora/integrations-react/client": ["libs/integrations/react/src/client/main.ts"],
       "@velnora/integrations-react/server": ["libs/integrations/react/src/server/main.ts"],

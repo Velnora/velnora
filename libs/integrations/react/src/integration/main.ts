@@ -1,7 +1,7 @@
 import { defineIntegration } from "@velnora/plugin-api";
 import viteReact from "@vitejs/plugin-react";
 
-import pkg from "../package.json";
+import pkg from "../../package.json";
 import { velnoraReactPlugin } from "./plugins/velnora-react.plugin";
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
