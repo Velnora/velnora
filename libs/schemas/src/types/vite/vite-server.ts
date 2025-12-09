@@ -1,7 +1,9 @@
-import type { LiteralUnion, Promisable } from "type-fest";
+import type { LiteralUnion } from "type-fest";
 import type { RunnableDevEnvironment, ViteDevServer } from "vite";
 
 export interface ViteServer {
+  readonly devServer: ViteDevServer;
+
   /**
    * Get a Vite environment (client, ssr, or custom)
    */
@@ -23,9 +25,4 @@ export interface ViteServer {
    * Transform index.html at given path
    */
   transformIndexHtml(path: string, html?: string): Promise<string>;
-
-  /**
-   * Transform index stream at given path
-   */
-  transformIndexStream(path: string): Promisable<ReadableStream>;
 }

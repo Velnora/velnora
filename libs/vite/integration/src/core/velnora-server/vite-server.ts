@@ -21,6 +21,10 @@ export class ViteServer implements VelnoraViteServer {
     private readonly server: HttpAdapter
   ) {}
 
+  get devServer() {
+    return this.viteDevServer;
+  }
+
   environment(envName: LiteralUnion<"client" | "ssr", string>) {
     return this.viteDevServer.environments[envName]!;
   }
@@ -63,9 +67,5 @@ export class ViteServer implements VelnoraViteServer {
 
   transformIndexHtml(path: string, html = "") {
     return this.viteDevServer.transformIndexHtml(path, html);
-  }
-
-  transformIndexStream(path: string) {
-    return new ReadableStream({});
   }
 }

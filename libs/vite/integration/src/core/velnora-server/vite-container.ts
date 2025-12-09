@@ -20,14 +20,14 @@ if ((project = findTsconfigProject())) {
 
 export class ViteContainer implements VelnoraViteContainer {
   private readonly debug = debug.extend("vite-container");
-  isUsed = false;
-
   private readonly _virtualModules = new Map<string, string>();
+  private readonly _idVirtualNameMapping = new Map<string, string>();
+  private _isUsed = false;
+
   private _userConfig: UserConfig = {
     root: process.cwd(),
-    build: {
-      sourcemap: true
-    },
+    clearScreen: false,
+    build: { sourcemap: true },
     server: { middlewareMode: true },
     plugins: [
       tsconfigPaths({
@@ -37,9 +37,8 @@ export class ViteContainer implements VelnoraViteContainer {
       })
     ],
     logLevel: "error",
-    // ToDo: Make custom logger instance mapped to debug
-    appType: "custom",
-    clearScreen: false
+    // ToDo: Make custom logger instance mapped to velnora logger instance
+    appType: "custom"
   };
 
   constructor(
@@ -51,7 +50,8 @@ export class ViteContainer implements VelnoraViteContainer {
       hasInitialConfig: Object.keys(initialConfig).length > 0
     });
 
-    this._userConfig = merge(this._userConfig, initialConfig);
+    this.updateConfig(initialConfig);
+    this.config.integrations.forEach(integration => integration.vite && this.updateConfig(integration.vite));
 
     this.userConfig.plugins?.push(
       devSourceMapPlugin(config),
@@ -59,6 +59,14 @@ export class ViteContainer implements VelnoraViteContainer {
       virtualModulePlugin(this.config, this.virtualModules)
     );
     this.debug("merged initial user config into base config");
+  }
+
+  get idVirtualNameMapping() {
+    return this._idVirtualNameMapping;
+  }
+
+  get isUsed() {
+    return this._isUsed;
   }
 
   get virtualModules() {
@@ -96,7 +104,7 @@ export class ViteContainer implements VelnoraViteContainer {
       virtualModules: this.virtualModules.size
     });
 
-    this.isUsed = true;
+    this._isUsed = true;
     this.debug("Vite configuration marked as used");
 
     return this.userConfig;
