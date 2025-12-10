@@ -156,7 +156,10 @@ export class Router implements VelnoraRouter {
           const body = result.body;
           if (typeof body === "string" || Buffer.isBuffer(body) || body instanceof Uint8Array) {
             res.end(
-              await this.velnora.viteServer.transformIndexHtml(`/index.html?ssr&id=${route.id}`, body.toString())
+              await this.velnora.viteServer.transformIndexHtml(
+                `/index.html?ssr-mode=${route.ssr.mode}&id=${route.id}`,
+                body.toString()
+              )
             );
             return;
           }
