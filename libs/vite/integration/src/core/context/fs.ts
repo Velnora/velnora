@@ -50,8 +50,7 @@ export class Fs implements FsApi {
     return paths.length ? resolve(this.root, ...paths) : this.root;
   }
 
-  glob(pattern: string, path?: string, options?: Omit<GlobOptionsWithFileTypesFalse, "cwd">) {
-    const resolvedPath = path ? resolve(this.root, path) : this.root;
-    return glob.sync(pattern, { ...options, cwd: resolvedPath });
+  glob(pattern: string, options?: Omit<GlobOptionsWithFileTypesFalse, "cwd">) {
+    return glob.sync(pattern, { ...options, cwd: this.root });
   }
 }

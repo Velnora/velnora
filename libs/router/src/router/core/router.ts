@@ -2,8 +2,10 @@ import type { Request, Response } from "express";
 
 import type {
   FrontendSSrRoute,
+  Logger,
   Package,
   Route,
+  ServerHandler,
   ServerSetupFn,
   Velnora,
   Router as VelnoraRouter,
@@ -25,10 +27,13 @@ export class Router implements VelnoraRouter {
 
   private readonly routingTable: RoutingTable = { backend: [], csr: [], ssr: [] };
 
-  private constructor(private readonly velnora: Velnora) {}
+  private constructor(
+    private readonly velnora: Velnora,
+    private readonly logger: Logger
+  ) {}
 
-  static create(velnora: Velnora) {
-    return new Router(velnora);
+  static create(velnora: Velnora, logger: Logger) {
+    return new Router(velnora, logger);
   }
 
   register(route: Route) {
@@ -57,40 +62,54 @@ export class Router implements VelnoraRouter {
     return new Routing(this, app);
   }
 
-  async inject() {
-    await this.injectBackend();
-    await this.injectSSR();
+  inject() {
+    this.injectBackend();
+    this.injectSSR();
     this.injectCSR();
   }
 
-  private async injectBackend() {
+  private injectBackend() {
+    const setupRoutes = new Map<Route, ServerHandler>();
+
     for (const route of this.routingTable.backend) {
       const devEnv = this.velnora.viteServer.runnableDevEnv(route.environment);
-      const appServer = await devEnv.runner.import<WithDefault<Promise<ReturnType<ServerSetupFn<unknown>>>>>(
-        route.entry
-      );
 
-      if (!appServer || !appServer.default) {
-        this.debug("injectModules skipping route injection, no default export found: %O", route);
-        this.velnora.logger.warn(
-          `Warning: Skipping backend route module injection, no default export found: ${route.entry}`
-        );
-        return;
-      }
+      this.velnora.http.handleRequest(route.path, async (req, res, next) => {
+        const isInitialized = setupRoutes.has(route);
 
-      this.velnora.logger.log(`Injecting backend route module: ${route.entry}`);
-      const handler = await appServer.default;
-      const ctx = this.velnora.appContext.getOrCreateBackendHttpRouteContext(route);
-      const serverHandler = await handler(ctx);
-      this.debug("running backend route handler for route: %O", route.path);
-      this.velnora.http.handleRequest(route.path, serverHandler.handler);
+        if (!isInitialized) {
+          this.debug("Initializing backend route module for route: %O", route);
+          this.logger.log(`Initializing backend route module: ${route.entry}`);
+          const appServer = await devEnv.runner.import<WithDefault<Promise<ReturnType<ServerSetupFn<unknown>>>>>(
+            route.entry
+          );
+
+          if (!appServer || !appServer.default) {
+            this.debug("injectModules skipping route injection, no default export found: %O", route);
+            this.velnora.logger.warn(
+              `Warning: Skipping backend route module injection, no default export found: ${route.entry}`
+            );
+            return next();
+          }
+
+          this.velnora.logger.log(`Injecting backend route module: ${route.entry}`);
+          const handler = await appServer.default;
+          const ctx = this.velnora.appContext.getOrCreateBackendHttpRouteContext(route);
+          const serverHandler = await handler(ctx);
+          setupRoutes.set(route, serverHandler);
+        }
+
+        const serverHandler = setupRoutes.get(route)!;
+        this.debug("running backend route handler for route: %O", route.path);
+        await serverHandler.handler(req, res, next);
+      });
     }
   }
 
   private injectCSR() {
     for (const route of this.routingTable.csr) {
       const getArgs = route.indexHtmlFile ? `?id=${route.id}` : null;
-      this.velnora.http.handleRequest(new RegExp(`^${route.path}$`), async (req, res, next) => {
+      this.velnora.http.handleRequest(route.path, async (_req, res, next) => {
         try {
           const html = await this.velnora.viteServer.transformIndexHtml(`/index.html${getArgs ? getArgs : ""}`);
           res.end(html);
@@ -101,20 +120,29 @@ export class Router implements VelnoraRouter {
     }
   }
 
-  private async injectSSR() {
-    for (const route of this.routingTable.ssr) {
-      const env = this.velnora.viteServer.runnableDevEnv(route.ssr.environment);
-      const mod = await env.runner.import<Record<string, RenderFn>>(route.ssr.entry);
-      const render = mod[route.ssr.exportName ?? "default"];
-      if (!render) {
-        this.debug("injectModules skipping route injection, no render export found: %O", route);
-        this.velnora.logger.warn(
-          `Warning: Skipping frontend route module injection, no render function export found in ${route.ssr.entry}`
-        );
-        return;
-      }
+  private injectSSR() {
+    const setupRoutes = new Map<Route, RenderFn>();
 
+    for (const route of this.routingTable.ssr) {
       this.velnora.http.handleRequest(route.path, async (req, res, next) => {
+        const isInitialized = setupRoutes.has(route);
+
+        if (!isInitialized) {
+          const env = this.velnora.viteServer.runnableDevEnv(route.ssr.environment);
+          const mod = await env.runner.import<Record<string, RenderFn>>(route.ssr.entry);
+          const render = mod[route.ssr.exportName ?? "default"];
+          if (!render) {
+            this.debug("injectModules skipping route injection, no render export found: %O", route);
+            this.velnora.logger.warn(
+              `Warning: Skipping frontend route module injection, no render function export found in ${route.ssr.entry}`
+            );
+            return;
+          }
+          this.velnora.logger.log(`Injecting SSR route module: ${route.ssr.entry}`);
+          setupRoutes.set(route, render);
+        }
+
+        const render = setupRoutes.get(route)!;
         try {
           const result = await render(this.buildContext(req, res, route));
 

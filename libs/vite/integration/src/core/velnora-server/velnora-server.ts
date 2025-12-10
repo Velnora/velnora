@@ -46,7 +46,7 @@ export class VelnoraServer implements Velnora {
 
     this._http = HttpAdapter.create(config);
     this._appContext = new AppContext(this);
-    this._router = Router.create(this);
+    this._router = Router.create(this, this.logger.extend({ logger: "velnora:router" }));
     this._vite = new ViteContainer(config, this._router, {
       server: { watch: config.server?.watch ? config.server.watch : undefined }
     });
@@ -104,7 +104,7 @@ export class VelnoraServer implements Velnora {
 
   async injectModules() {
     await this._viteServer.init();
-    await this.router.inject();
+    this.router.inject();
   }
 
   async listen() {

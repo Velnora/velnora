@@ -18,5 +18,5 @@ export interface FsApi {
   pushd(path: string): void;
   popd(): void;
 
-  glob(pattern: string, path?: string, options?: Omit<GlobOptionsWithFileTypesFalse, "cwd">): string[];
+  glob(pattern: string, options?: Omit<GlobOptionsWithFileTypesFalse, "cwd">): string[];
 }
