@@ -8,6 +8,10 @@
     ".": {
       "types": "./build/velnora.devkit.d.ts",
       "import": "./build/velnora.devkit.js"
+    },
+    "./vite": {
+      "types": "./build/velnora.devkit.vite.d.ts",
+      "import": "./build/velnora.devkit.vite.js"
     }
   },
   "files": [

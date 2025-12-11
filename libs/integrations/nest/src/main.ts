@@ -1,3 +1,4 @@
+import { getModuleString } from "@velnora/devkit/vite";
 import { defineIntegration } from "@velnora/plugin-api";
 
 import pkg from "../package.json";
@@ -33,12 +34,7 @@ export const nest = defineIntegration(() => {
       const modulePath = ctx.fs.resolve(entryFiles[0]!);
       const appModuleVirtualId = ctx.vite.virtual(
         "nest/app-module",
-        `
-import { getModule } from "@velnora/devkit";
-import * as __module from "${modulePath}";
-
-export default getModule(__module, ["${capitalize(ctx.app.name)}Module", "AppModule", "default"]);
-`
+        getModuleString(modulePath, [`${capitalize(ctx.app.name)}Module`, "AppModule"])
       );
 
       const entryVirtual = ctx.vite.entryServer(
