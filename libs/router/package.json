@@ -8,6 +8,14 @@
     ".": {
       "types": "./build/velnora.router.d.ts",
       "import": "./build/velnora.router.js"
+    },
+    "./client": {
+      "types": "./build/client/velnora.router.client.d.ts",
+      "import": "./build/client/velnora.router.client.js"
+    },
+    "./server": {
+      "types": "./build/server/velnora.router.server.d.ts",
+      "import": "./build/server/velnora.router.server.js"
     }
   },
   "files": [
