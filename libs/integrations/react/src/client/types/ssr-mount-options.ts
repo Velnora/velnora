@@ -1,5 +1,6 @@
-import type { FrontendSSrRoute } from "@velnora/schemas";
+import type { FrontendSsrRoute } from "@velnora/schemas";
 
 export interface SsrMountOptions {
-  mode: FrontendSSrRoute["renderMode"];
+  mode: FrontendSsrRoute["renderMode"];
+  selector?: string;
 }
