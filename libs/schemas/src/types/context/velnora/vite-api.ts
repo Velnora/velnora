@@ -16,4 +16,8 @@ export interface ViteApi {
   entryServer(code?: string, options?: VirtualOptions): string;
 
   addEnvironment(side: LiteralUnion<"client" | "server" | "ssr", string>, environment?: EnvironmentOptions): string;
+
+  addClientEnvironment(environment?: EnvironmentOptions): string;
+  addServerEnvironment(environment?: EnvironmentOptions): string;
+  addSsrEnvironment(environment?: EnvironmentOptions): string;
 }

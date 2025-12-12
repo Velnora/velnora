@@ -82,6 +82,10 @@ export class Vite implements ViteApi {
     this.vite.updateConfig({
       environments: {
         [envName]: merge<EnvironmentOptions, EnvironmentOptions>(environment, {
+          define: {
+            "import.meta.env.CLIENT": JSON.stringify(side === "client"),
+            "import.meta.env.SERVER": JSON.stringify(side === "server" || side === "ssr")
+          },
           consumer:
             environment.consumer ??
             (side === "server" || side === "ssr" ? "server" : side === "client" ? "client" : undefined)
@@ -93,6 +97,18 @@ export class Vite implements ViteApi {
     this.virtual("app-config", `export const appConfig = ${JSON.stringify(this.pkg)};`);
 
     return envName;
+  }
+
+  addClientEnvironment(environment?: EnvironmentOptions) {
+    return this.addEnvironment("client", environment);
+  }
+
+  addServerEnvironment(environment?: EnvironmentOptions) {
+    return this.addEnvironment("server", environment);
+  }
+
+  addSsrEnvironment(environment?: EnvironmentOptions) {
+    return this.addEnvironment("ssr", environment);
   }
 
   private ensureNotUsed() {

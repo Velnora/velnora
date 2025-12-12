@@ -46,7 +46,7 @@ export default setupServer(AppModule);
       );
 
       // const environment = ctx.runtimes.get(ctx.app).createEnvironment(ctx.app);
-      const envId = ctx.vite.addEnvironment("server", {
+      const envId = ctx.vite.addServerEnvironment({
         build: { ssr: true, lib: { entry: { main: entryVirtual }, formats: ["es"] } },
         define: { __NESTJS_PLATFORM_SERVER__: true },
         resolve: { conditions: ["node", "module", "development"] }
