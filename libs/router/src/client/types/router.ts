@@ -1,0 +1,9 @@
+import type { PathObject } from "./path-object";
+import type { PublicRouter } from "./public-router";
+
+export interface Router extends PublicRouter {
+  readonly pathObject: PathObject;
+
+  getPublicInterface(): PublicRouter;
+  subscribe(callback: (path: PathObject, previousPath?: PathObject | null) => void): () => void;
+}
