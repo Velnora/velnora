@@ -2,7 +2,7 @@ import { EventEmitter } from "node:events";
 import { createServer as createHttpServer } from "node:http";
 import type { Server as HttpServer } from "node:http";
 
-import type { NextFunction, Request, RequestHandler, Response } from "express";
+import type { RequestHandler } from "express";
 import express from "express";
 
 import type { ExtractParamsObject, VelnoraConfig, HttpAdapter as VelnoraHttpAdapter } from "@velnora/schemas";

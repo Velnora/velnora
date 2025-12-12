@@ -20,10 +20,20 @@ export const htmlPlugin = (router: Router): Plugin => {
       order: "pre",
       async handler(pageHtml, ctx) {
         const url = router.parse(ctx.path);
-        if (url.query.has("ssr-mode") && url.query.get("ssr-mode") === ssrTargetMode.APP_DIR) return;
-
         const parsedUrl = router.parse(ctx.path);
         const id = parsedUrl.query.get("id");
+
+        if (url.query.has("ssr-mode") && url.query.get("ssr-mode") === ssrTargetMode.APP_DIR) {
+          if (!id) return pageHtml;
+          const route = router.getById(id);
+          if (!route) return pageHtml;
+
+          return {
+            html: pageHtml,
+            tags: [{ tag: "script", attrs: { type: "module", src: route.entry }, injectTo: "body" }]
+          };
+        }
+
         const tags: HtmlTagDescriptor[] = [{ tag: "div", attrs: { id: "root" }, injectTo: "body", children: pageHtml }];
 
         let html: string;

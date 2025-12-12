@@ -29,6 +29,10 @@ export class ViteContainer implements VelnoraViteContainer {
     clearScreen: false,
     build: { sourcemap: true },
     server: { middlewareMode: true },
+    define: {
+      "import.meta.env.CLIENT": "typeof window !== 'undefined'",
+      "import.meta.env.SERVER": "typeof window === 'undefined'"
+    },
     plugins: [
       tsconfigPaths({
         // ToDo: replace with [allowImportersRe](https://github.com/aleclarson/vite-tsconfig-paths/pull/193) when merged
