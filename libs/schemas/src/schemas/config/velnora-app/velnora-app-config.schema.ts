@@ -1,6 +1,8 @@
 import { z } from "zod";
 
 import { PackageKind } from "../../../types";
+import type { Client } from "./client.schema";
+import type { Server } from "./server.schema";
 
 export const velnoraAppConfigSchema = z.object({
   kind: z.enum(Object.values(PackageKind).filter(v => v !== PackageKind.Unknown)).optional(),
@@ -12,8 +14,9 @@ export const velnoraAppConfigSchema = z.object({
 export interface VelnoraAppConfig {
   kind?: PackageKind;
   runtime?: string;
-  clientPath?: string;
-  serverPath?: string | ((majorVersion: number) => string);
+
+  client: Client;
+  server: Server;
 
   integrations: Velnora.AppConfigExtensions;
 }
