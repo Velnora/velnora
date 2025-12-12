@@ -1,5 +1,5 @@
-export const getModuleString = (modulePath: string, names: string[]) => {
-  const exportedNames = Array.from(new Set([...names, "default"]));
+export const getModuleString = (modulePath: string, ...names: (string | string[])[]) => {
+  const exportedNames = Array.from(new Set([...names.flat(), "default"]));
 
   return `
 import { getModule } from "@velnora/devkit";
