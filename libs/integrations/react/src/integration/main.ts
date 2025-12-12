@@ -2,9 +2,8 @@ import { defineIntegration } from "@velnora/plugin-api";
 import viteReact from "@vitejs/plugin-react";
 
 import { setupCsr } from "./core/setup-csr";
-
-// import { setupRsc } from "./core/setup-rsc";
-// import { setupSsr } from "./core/setup-ssr";
+import { setupRsc } from "./core/setup-rsc";
+import { setupSsr } from "./core/setup-ssr";
 
 type ReactMode = "csr" | "ssr" | "rsc";
 
@@ -45,15 +44,15 @@ export const react = defineIntegration(() => {
         case "csr":
           setupCsr(ctx);
           break;
-        // case "ssr":
-        //   setupSsr(ctx);
-        //   break;
-        // case "rsc":
-        //   await setupRsc(ctx);
-        //   break;
+        case "ssr":
+          setupSsr(ctx);
+          break;
+        case "rsc":
+          setupRsc(ctx);
+          break;
         default:
           ctx.logger.error(
-            `Could not determine React mode automatically and no mode was specified in configuration. Skipping React integration.`
+            `Could not determine React mode "${mode}" for app "${ctx.app.packageJson.name}" and no mode was specified in configuration. Skipping React integration.`
           );
       }
     },
