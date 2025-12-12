@@ -3,9 +3,9 @@ import type { Stream } from "node:stream";
 
 import type { ParsedQs } from "qs";
 import type { Promisable } from "type-fest";
-import type { Environment, RunnableDevEnvironment } from "vite";
+import type { Environment, RunnableDevEnvironment, ViteDevServer } from "vite";
 
-import type { FrontendSSrRoute, Logger, Package, ViteApi } from "@velnora/schemas";
+import type { FrontendSsrRoute, Logger, Package, VelnoraConfig, ViteApi } from "@velnora/schemas";
 
 export interface SsrRequestContext {
   req: IncomingMessage;
@@ -16,16 +16,20 @@ export interface SsrRequestContext {
   query: ParsedQs;
 
   // Environments
-  route: FrontendSSrRoute;
+  route: FrontendSsrRoute;
   clientEnv: Environment;
   serverEnv: RunnableDevEnvironment;
+  viteDevServer: ViteDevServer;
 
   // App/runtime
   app: Package;
+  config: VelnoraConfig;
   vite: ViteApi;
 
   // Logging
   logger: Logger;
+
+  transformRouteIndexHtml(route: FrontendSsrRoute, html: string): Promisable<string>;
 
   // For microfrontends / RSC later
   loadChunk(id: string): Promisable<unknown>;

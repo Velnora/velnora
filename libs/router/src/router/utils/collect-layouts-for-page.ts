@@ -22,6 +22,5 @@ export const collectLayoutsForPage = (pagePath: string, fs: FsApi, extensions: s
     currentDir = parentDir;
   }
 
-  layouts.reverse();
   return layouts;
 };
