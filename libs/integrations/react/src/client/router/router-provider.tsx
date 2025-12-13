@@ -1,20 +1,18 @@
 import type { JSX, PropsWithChildren } from "react";
 import { type ComponentType, type FC, useEffect, useMemo, useState } from "react";
-import type { PathObject, Router } from "velnora/router";
+import type { ClientRoute, PathObject, Router } from "velnora/router";
 
-import type { ReactRouteDescriptor } from "@velnora/router/src/client/types/base-route-descriptor";
-import type { ClientRoute } from "@velnora/router/src/client/types/client-route";
 import type { WithDefault } from "@velnora/schemas";
 
+import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";
 import { routerContext } from "./router-context";
 
 export interface RouterProviderProps {
   router: Router;
   routes: ClientRoute[];
-  appPage: ReactRouteDescriptor;
 }
 
-export const RouterProvider: FC<PropsWithChildren<RouterProviderProps>> = ({ children, router, routes, appPage }) => {
+export const RouterProvider: FC<PropsWithChildren<RouterProviderProps>> = ({ children, router, routes }) => {
   const [location, setLocation] = useState<PathObject>({ path: router.path });
   const [currentDescriptor, setCurrentDescriptor] = useState<ReactRouteDescriptor | null>(null);
 
@@ -98,5 +96,5 @@ export const RouterProvider: FC<PropsWithChildren<RouterProviderProps>> = ({ chi
     return tree;
   }, [layoutComponents, location.path, currentDescriptor]);
 
-  return <routerContext.Provider value={{ router, path: location }}>{tree}</routerContext.Provider>;
+  return <routerContext.Provider value={{ router }}>{tree}</routerContext.Provider>;
 };

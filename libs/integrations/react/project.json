@@ -1,3 +1,5 @@
 {
-  "tags": ["type:integration", "scope:integrations", "engine:react"]
+  "tags": ["type:integration", "scope:integrations:react", "engine:react"],
+  "dependencies": ["scope:schemas"],
+  "ignoredDependencies": ["scope:integration"]
 }

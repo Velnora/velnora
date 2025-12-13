@@ -9,6 +9,7 @@
   "dependencies": {
     "@nx/devkit": "22.2.3",
     "@types/node": "^24.10.1",
+    "glob": "^13.0.0",
     "tsup": "^8.5.1",
     "type-fest": "^5.2.0"
   },

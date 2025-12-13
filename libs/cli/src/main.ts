@@ -12,6 +12,7 @@ const _devCommand = program
   .option("--mode <development|production>", { description: "Set the mode", default: "development" })
   .option("--root <string>", { description: "Root directory of the project", default: "." })
   .action(async opts => {
+    // eslint-disable-next-line @nx/enforce-module-boundaries
     const { createDevServer } = await import("@velnora/core");
     await createDevServer(opts);
   });
@@ -21,6 +22,7 @@ const _previewCommand = program
   .command("preview")
   .option("--port <number>, -p", { description: "Port to run the preview server on", default: 5000 })
   .action(async opts => {
+    // eslint-disable-next-line @nx/enforce-module-boundaries
     const { createPreviewServer } = await import("@velnora/core");
     await createPreviewServer(opts);
   });

@@ -1,3 +1,4 @@
 {
-  "tags": ["type:lib", "scope:router"]
+  "tags": ["type:lib", "scope:router"],
+  "dependencies": ["scope:schemas"]
 }

@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 import { readdirSync, writeFileSync } from "node:fs";
-import { extname, resolve } from "node:path";
+import { resolve } from "node:path";
 
 import { type GlobOptionsWithFileTypesFalse, glob } from "glob";
 

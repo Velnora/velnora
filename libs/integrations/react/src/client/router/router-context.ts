@@ -1,6 +1,5 @@
 import { createContext } from "react";
-
-import type { Router } from "@velnora/router/client";
+import type { Router } from "velnora/router";
 
 interface RouterContext {
   router: Router;

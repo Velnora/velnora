@@ -3,6 +3,10 @@ import * as tsEslint from "typescript-eslint";
 import js from "@eslint/js";
 import nxPlugin from "@nx/eslint-plugin";
 
+import { collectPackageDependencyTags } from "./scripts/collect-package-dependency-tags.mjs";
+
+const projectScopes = await collectPackageDependencyTags(process.cwd());
+
 export default [
   // Global ignores
   {
@@ -48,7 +52,7 @@ export default [
           depConstraints: [
             // 1) Restrict usage of tooling to only development code
             {
-              sourceTag: "dev:internal",
+              sourceTag: "scope:internal",
               notDependOnLibsWithTags: ["*"] // No production code can depend on tooling
             },
 
@@ -58,70 +62,17 @@ export default [
             // 3) Examples can only depend on libs/integrations/cli
             { sourceTag: "type:example", onlyDependOnLibsWithTags: ["type:lib", "type:integration", "type:cli"] },
 
-            // 4) Layering by scope
-            {
-              sourceTag: "scope:integrations",
-              onlyDependOnLibsWithTags: [
-                "scope:runtime",
-                "scope:core",
-                "scope:schemas",
-                "scope:plugin-api",
-                "scope:router"
-              ]
-            },
-            {
-              sourceTag: "scope:runtime",
-              onlyDependOnLibsWithTags: ["scope:core", "scope:schemas", "scope:plugin-api"]
-            },
-            {
-              sourceTag: "scope:vite",
-              onlyDependOnLibsWithTags: ["scope:schemas", "scope:plugin-api", "scope:router"]
-            },
-            { sourceTag: "scope:rpc", onlyDependOnLibsWithTags: ["scope:core", "scope:plugin-api"] },
-            { sourceTag: "scope:plugin-api", onlyDependOnLibsWithTags: ["scope:schemas"] },
-            { sourceTag: "scope:schemas", onlyDependOnLibsWithTags: [] },
-            { sourceTag: "scope:core", onlyDependOnLibsWithTags: ["scope:schemas", "scope:vite"] },
-
-            // 5) Sides: client must not pull server bits
+            // 4) Sides: client must not pull server bits
             { sourceTag: "side:client", notDependOnLibsWithTags: ["side:server"] },
 
-            // 6) Engines stay isolated
-            { sourceTag: "engine:react", notDependOnLibsWithTags: ["engine:vue", "engine:angular"] },
-            { sourceTag: "engine:vue", notDependOnLibsWithTags: ["engine:react", "engine:angular"] },
-            { sourceTag: "engine:angular", notDependOnLibsWithTags: ["engine:react", "engine:vue"] },
-
-            // 7) CLI can’t pull browser/integration code
-            {
-              sourceTag: "type:cli",
-              onlyDependOnLibsWithTags: [
-                "scope:core",
-                "scope:schemas",
-                "scope:runtime",
-                "scope:rpc",
-                "scope:plugin-api",
-                "scope:cli-helper"
-              ],
-              notDependOnLibsWithTags: ["side:client", "scope:integrations"]
-            },
-
-            // 8) Velnora main facade → may depend on runtime (client) and plugin-api, never server-side libs
-            {
-              sourceTag: "scope:velnora",
-              onlyDependOnLibsWithTags: [
-                "scope:plugin-api",
-                "scope:runtime",
-                "scope:integrations",
-                "scope:schemas",
-                "scope:router"
-              ],
-              notDependOnLibsWithTags: ["side:server"]
-            },
-
-            // 9) Examples of using specific frameworks must only depend on the matching engine
+            // 5) Framework specific libs can only depend on matching framework engine
             {
               sourceTag: "framework:react",
               onlyDependOnLibsWithTags: ["scope:velnora", "engine:react"]
-            }
+            },
+
+            // 6) project.json-defined scopes
+            ...projectScopes
           ]
         }
       ],

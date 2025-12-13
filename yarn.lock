@@ -3901,6 +3901,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^25.0.1":
+  version: 25.0.1
+  resolution: "@types/node@npm:25.0.1"
+  dependencies:
+    undici-types: "npm:~7.16.0"
+  checksum: 10c0/1d5ca9f240d0cf8e43d5281c0e6ee96fb22d37dc2e5ef52c6ca71de47957a6128e124990cedf5b14c03d0250737bd78ad370d93bcf1729a75ca4e54384fdd51a
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.2
   resolution: "@types/parse-json@npm:4.0.2"
@@ -4278,7 +4287,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@velnora/cli-helper@workspace:libs/helper/cli"
   dependencies:
-    "@types/node": "npm:^24.10.1"
+    "@types/node": "npm:^25.0.1"
     "@types/yargs": "npm:^17.0.35"
     eslint: "npm:^9.39.1"
     tsup: "npm:^8.5.1"
@@ -4371,7 +4380,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@velnora/internal@workspace:libs/internal"
   dependencies:
-    tslib: "npm:^2.3.0"
+    "@nx/devkit": "npm:22.2.3"
+    "@types/node": "npm:^24.10.1"
+    glob: "npm:^13.0.0"
+    tsup: "npm:^8.5.1"
+    type-fest: "npm:^5.2.0"
   languageName: unknown
   linkType: soft
 
@@ -4489,6 +4502,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@velnora/runtime-client@workspace:libs/runtime/client":
+  version: 0.0.0-use.local
+  resolution: "@velnora/runtime-client@workspace:libs/runtime/client"
+  dependencies:
+    "@types/debug": "npm:^4.1.12"
+    debug: "npm:^4.4.3"
+    tsup: "npm:^8.5.1"
+  languageName: unknown
+  linkType: soft
+
+"@velnora/runtime-server@workspace:libs/runtime/server":
+  version: 0.0.0-use.local
+  resolution: "@velnora/runtime-server@workspace:libs/runtime/server"
+  dependencies:
+    "@types/debug": "npm:^4.1.12"
+    debug: "npm:^4.4.3"
+    tsup: "npm:^8.5.1"
+  languageName: unknown
+  linkType: soft
+
 "@velnora/sample-app@workspace:examples/sample":
   version: 0.0.0-use.local
   resolution: "@velnora/sample-app@workspace:examples/sample"
@@ -4512,16 +4545,6 @@ __metadata:
     vite: "npm:^7.2.6"
     vitest: "npm:^4.0.14"
     zod: "npm:^4.1.13"
-  languageName: unknown
-  linkType: soft
-
-"@velnora/internal@workspace:libs/tooling":
-  version: 0.0.0-use.local
-  resolution: "@velnora/internal@workspace:libs/tooling"
-  dependencies:
-    "@types/node": "npm:^24.10.1"
-    tsup: "npm:^8.5.1"
-    type-fest: "npm:^5.2.0"
   languageName: unknown
   linkType: soft
 

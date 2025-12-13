@@ -1,3 +1,4 @@
 {
-  "tags": ["type:lib","scope:plugin-api"]
+  "tags": ["type:lib", "scope:plugin-api"],
+  "dependencies": ["scope:schemas"]
 }
