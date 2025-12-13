@@ -39,6 +39,8 @@
       "velnora/core": ["libs/core/src/main.ts"],
 
       "@velnora/runtime-client": ["./libs/runtime/client/src/main.ts"],
+      "@velnora/runtime-server": ["./libs/runtime/server/src/main.ts"],
+
       "@velnora/router": ["libs/router/src/router/main.ts"],
       "@velnora/router/client": ["libs/router/src/client/main.ts"],
       "velnora/router": ["libs/router/src/client/main.ts"],

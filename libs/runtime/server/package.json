@@ -1,0 +1,32 @@
+{
+  "name": "@velnora/runtime-server",
+  "version": "0.0.0",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/velnora.runtime-server.d.ts",
+      "import": "./build/velnora.runtime-server.js"
+    }
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsup --config tsup.config.ts.template",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "debug": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "tsup": "^8.5.1"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}
