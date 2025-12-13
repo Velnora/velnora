@@ -3,4 +3,5 @@ export interface PackageGeneratorSchema {
   directory: string;
   target?: "node" | "web";
   scope: string;
+  tags: string | string[];
 }

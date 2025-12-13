@@ -9,10 +9,12 @@ import type { PackageGeneratorSchema } from "./schema";
 export default async function generator(tree: Tree, schema: PackageGeneratorSchema) {
   const pkg = names(schema.name);
 
+  const tags = ["type:lib", `scope:${schema.scope}`, ...([schema.tags].flat() || [])];
+
   generateFiles(tree, joinPathFragments(__dirname, "files"), schema.directory, {
     name: pkg.name,
     target: capitalize(schema.target || "node"),
-    scope: schema.scope
+    tags
   });
 
   writeJson(tree, joinPathFragments(schema.directory, "tsconfig.json"), {

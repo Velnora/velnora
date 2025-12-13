@@ -34,6 +34,19 @@
         "message": "Scope",
         "type": "input"
       }
+    },
+    "tags": {
+      "description": "Additional Nx tags (comma-separated or repeated)",
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "Comma-separated tags"
+        },
+        {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      ]
     }
   },
   "required": ["name", "directory", "scope"],
