@@ -1,6 +1,8 @@
 import { relative } from "node:path";
 
-import { type Tree, writeJson } from "@nx/devkit";
+import type { TsConfigJson } from "type-fest";
+
+import { type Tree, updateJson, writeJson } from "@nx/devkit";
 import { formatFiles, generateFiles, joinPathFragments, names } from "@nx/devkit";
 import { capitalize } from "@nx/devkit/src/utils/string-utils";
 
@@ -17,8 +19,15 @@ export default async function generator(tree: Tree, schema: PackageGeneratorSche
     tags
   });
 
-  writeJson(tree, joinPathFragments(schema.directory, "tsconfig.json"), {
+  writeJson<TsConfigJson>(tree, joinPathFragments(schema.directory, "tsconfig.json"), {
     extends: relative(schema.directory, "tsconfig.base.json").replaceAll("\\", "/")
+  });
+
+  updateJson<TsConfigJson>(tree, "tsconfig.base.json", json => {
+    json.compilerOptions ||= {};
+    json.compilerOptions.paths ||= {};
+    json.compilerOptions.paths[`@velnora/${pkg.name}`] = [`./${joinPathFragments(schema.directory, "src/main.ts")}`];
+    return json;
   });
 
   await formatFiles(tree);
