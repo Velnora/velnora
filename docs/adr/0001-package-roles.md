@@ -6,4 +6,4 @@
 * `@velnora/runtime-client` = client bootstrap (reads client entrypoints).
 * `@velnora/schemas` = Zod schemas for config + manifests.
 * `@velnora/rpc` = dev channel (optional in M0).
-* `@velnora/tooling` = **build-only** internal configs; never used in runtime.
+* `@velnora/internal` = **build-only** internal configs; never used in runtime.

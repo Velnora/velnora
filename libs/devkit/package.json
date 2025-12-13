@@ -19,7 +19,6 @@
   ],
   "scripts": {
     "build": "tsup --config tsup.config.ts",
-    "jsdoc": "jsdoc2md -f ./src/**/*.ts",
     "lint": "eslint .",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.build.json"

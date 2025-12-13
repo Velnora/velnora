@@ -1,0 +1,5 @@
+import { define<%= target %>Config } from "@velnora/internal";
+
+export default define<%= target %>Config({
+  entries: { "velnora.<%= name %>": "src/main.ts" }
+});

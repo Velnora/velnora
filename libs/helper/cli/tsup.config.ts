@@ -1,4 +1,4 @@
-import { defineNodeConfig } from "@velnora/tooling";
+import { defineNodeConfig } from "@velnora/internal";
 
 export default defineNodeConfig({
   entries: { "velnora.cli-helper": "src/main.ts" },

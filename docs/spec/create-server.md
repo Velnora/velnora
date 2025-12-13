@@ -101,7 +101,7 @@ createDevServer(opts)
 
     * Zod schemas for config, manifests, entrypoints
 
-> **`@velnora/tooling`**: build-only package config (tsup/esbuild); **never** imported here.
+> **`@velnora/internal`**: build-only package config (tsup/esbuild); **never** imported here.
 
 ---
 
@@ -204,7 +204,7 @@ createDevServer(opts)
 
     * For each `appSchema`: either SSR handler (server) or CSR root (client), with paths.
 * No user `main.ts` for Nest; bootstrap is generated under `.velnora/generated/…`.
-* No usage of `@velnora/tooling` at runtime anywhere.
+* No usage of `@velnora/internal` at runtime anywhere.
 
 ---
 

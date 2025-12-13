@@ -1,20 +1,20 @@
 {
-  "name": "@velnora/core",
+  "name": "@velnora/<%= name %>",
   "version": "0.0.0",
   "private": true,
   "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {
-      "types": "./build/velnora.core.d.ts",
-      "import": "./build/velnora.core.js"
+      "types": "./build/velnora.<%= name %>.d.ts",
+      "import": "./build/velnora.<%= name %>.js"
     }
   },
   "files": [
     "build"
   ],
   "scripts": {
-    "build": "tsup --config tsup.config.ts",
+    "build": "tsup --config tsup.config.ts.template",
     "lint": "eslint .",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.build.json"

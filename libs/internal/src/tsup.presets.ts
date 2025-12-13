@@ -35,7 +35,7 @@ interface NodeOpts extends BaseOpts {
 }
 
 /** @velnora/foo or velnora/foo -> velnora.foo */
-export const pkgNameToBase = (name: string): string => name.replace(/^@?velnora\//, "velnora.").replace(/\//g, ".");
+export const pkgNameToBase = (name: string) => name.replace(/^@?velnora\//, "velnora.").replace(/\//g, ".");
 
 const readPkg = (): PackageJson => {
   const json = readFileSync(join(process.cwd(), "package.json"), "utf-8");

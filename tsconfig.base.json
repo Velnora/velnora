@@ -21,8 +21,8 @@
       "velnora": ["libs/velnora/src/main.ts"],
       "velnora/app": ["libs/velnora/src/app.ts"],
 
-      "@velnora/tooling": ["libs/tooling/src/main.ts"],
-      "@velnora/tooling/*": ["libs/tooling/src/*"],
+      "@velnora/internal": ["libs/internal/src/main.ts"],
+      "@velnora/internal/*": ["libs/internal/src/*"],
 
       "@velnora/cli": ["libs/cli/src/main.ts"],
       "@velnora/cli-helper": ["libs/helper/cli/src/main.ts"],

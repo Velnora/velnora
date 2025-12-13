@@ -4,5 +4,5 @@
 * ✅ EntryPoint registry can enforce “one `http:ssr` per appSchema”.
 * ✅ Vite composer sorts plugins by `order` and prints the pipeline.
 * ✅ Server assembler (Nest integrationSchema) lists which apps have SSR handlers and which middlewares would attach.
-* ✅ No `@velnora/tooling` usage in any runtime package.
+* ✅ No `@velnora/internal` usage in any runtime package.
 * ✅ All docs exist and match what Core intends to implement.

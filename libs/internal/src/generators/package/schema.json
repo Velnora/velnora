@@ -1,0 +1,41 @@
+{
+  "cli": "nx",
+  "title": "Package",
+  "description": "Create a new Velnora internal package",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Package name (without @velnora/ prefix)",
+      "x-prompt": {
+        "message": "Package name",
+        "type": "input"
+      }
+    },
+    "directory": {
+      "type": "string",
+      "description": "Target directory (relative to workspace root)",
+      "x-prompt": {
+        "message": "Directory",
+        "type": "input"
+      }
+    },
+    "target": {
+      "type": "string",
+      "enum": ["node", "web"],
+      "default": "node",
+      "description": "Package runtime target"
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Package scope",
+      "x-prompt": {
+        "message": "Scope",
+        "type": "input"
+      }
+    }
+  },
+  "required": ["name", "directory", "scope"],
+  "additionalProperties": false
+}

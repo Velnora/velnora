@@ -29,7 +29,7 @@ depCheckScript=$(yarn bin depcheck)
 IGNORE_LIST=$(cat <<EOF
 @velnora/mf-app-host deps:@nestjs/core,react-dom
 @velnora/vite-integration deps:rolldown-vite
-* missingDeps:@velnora/tooling,@velnora/cli
+* missingDeps:@velnora/internal,@velnora/cli
 EOF)
 
 get_ignore_packages() {
