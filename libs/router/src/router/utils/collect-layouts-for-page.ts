@@ -1,6 +1,6 @@
 import { dirname } from "node:path";
 
-import type { FsApi } from "@velnora/schemas";
+import type { FsApi } from "@velnora/types";
 
 import { LAYOUT_GLOB } from "../const";
 
@@ -13,7 +13,9 @@ export const collectLayoutsForPage = (pagePath: string, fs: FsApi, extensions: s
 
     if (matches.length > 0) {
       const layoutPath = fs.resolve(matches[0]!);
-      layouts.push(layoutPath);
+      if (fs.exists(layoutPath)) {
+        layouts.push(layoutPath);
+      }
     }
 
     if (currentDir === fs.resolve("app")) break;

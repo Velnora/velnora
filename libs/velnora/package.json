@@ -43,7 +43,8 @@
   "dependencies": {
     "@velnora/core": "workspace:^",
     "@velnora/plugin-api": "workspace:^",
-    "@velnora/schemas": "workspace:^",
+    "@velnora/router": "workspace:^",
+    "@velnora/types": "workspace:^",
     "eslint": "^9.39.1",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",

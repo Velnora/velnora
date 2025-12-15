@@ -1,4 +1,4 @@
-import type { Package } from "@velnora/schemas";
+import type { Package } from "@velnora/types";
 
 import type { PathObject, PublicRouter } from "../types";
 import type { Router as VelnoraRouter } from "../types/router";

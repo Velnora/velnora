@@ -9,9 +9,9 @@
       "types": "./build/velnora.devkit.d.ts",
       "import": "./build/velnora.devkit.js"
     },
-    "./vite": {
-      "types": "./build/velnora.devkit.vite.d.ts",
-      "import": "./build/velnora.devkit.vite.js"
+    "./node": {
+      "types": "./build/velnora.devkit.node.d.ts",
+      "import": "./build/velnora.devkit.node.js"
     }
   },
   "files": [
@@ -25,5 +25,23 @@
   },
   "engines": {
     "node": ">=24"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "@types/node": "^25.0.2",
+    "@types/semver": "^7.7.1",
+    "@velnora/types": "workspace:^",
+    "debug": "^4.4.3",
+    "semver": "^7.7.3",
+    "type-fest": "^5.3.1"
+  },
+  "dependencies": {
+    "@types/express": "^5.0.6",
+    "@velnora/contracts": "workspace:^",
+    "@velnora/vite-integration": "workspace:^",
+    "glob": "^13.0.0",
+    "uuid": "^13.0.0",
+    "yaml": "^2.8.2",
+    "zod": "^4.2.0"
   }
 }

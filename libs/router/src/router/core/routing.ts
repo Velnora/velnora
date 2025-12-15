@@ -1,12 +1,6 @@
 import { randomUUID } from "node:crypto";
 
-import type {
-  BackendRoute,
-  FrontendRoute,
-  FrontendSsrRoute,
-  Package,
-  Routing as VelnoraRouting
-} from "@velnora/schemas";
+import type { BackendRoute, FrontendRoute, FrontendSsrRoute, Package, Routing as VelnoraRouting } from "@velnora/types";
 
 import type { Router } from "./router";
 

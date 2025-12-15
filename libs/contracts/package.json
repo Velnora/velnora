@@ -1,0 +1,35 @@
+{
+  "name": "@velnora/contracts",
+  "version": "0.0.0",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/velnora.contracts.d.ts",
+      "import": "./build/velnora.contracts.js"
+    }
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsup --config tsup.config.ts.template",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "debug": "^4.4.3",
+    "zod": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "@velnora/types": "workspace:^",
+    "tsup": "^8.5.1",
+    "vite": "^7.3.0"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

@@ -1,4 +1,4 @@
-import type { ServerSetupFactory, ServerSetupFn } from "@velnora/schemas";
+import type { ServerSetupFactory, ServerSetupFn } from "@velnora/types";
 
 export const defineServerSetup =
   <TModule>(fn: ServerSetupFactory<TModule>): ServerSetupFn<TModule> =>

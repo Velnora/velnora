@@ -1,4 +1,6 @@
-import { type VelnoraContext, ssrTargetMode } from "@velnora/schemas";
+import type { ClientRoute } from "velnora/router";
+
+import { type VelnoraContext, ssrTargetMode } from "@velnora/types";
 
 import pkg from "../../../package.json";
 import { prepareSingleFileSetup } from "../helper/prepare-single-file-setup";
@@ -7,9 +9,17 @@ export const setupSingleFileSsr = (ctx: VelnoraContext) => {
   prepareSingleFileSetup(ctx);
   const indexFile = ctx.fs.resolve("index.html");
 
+  const clientRoute: ClientRoute = {
+    path: "/",
+    route: {
+      module: ctx.vite.virtual("react/app-component"),
+      layouts: []
+    }
+  };
+
   ctx.vite.entryServer(`
 import { createReactSsrHandler } from "${pkg.name}/server";
-export default createReactSsrHandler({ mode: "${ssrTargetMode.SINGLE_FILE}", routes: ["${ctx.vite.virtual("react/app-component")}"] });
+export default createReactSsrHandler({ mode: "${ssrTargetMode.SINGLE_FILE}", routes: [${JSON.stringify(clientRoute)}] });
 `);
 
   const clientEnvId = ctx.vite.addClientEnvironment();

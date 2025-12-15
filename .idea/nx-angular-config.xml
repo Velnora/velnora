@@ -4,6 +4,7 @@
     <projects>
       <project name="@velnora/cli" file="file://$PROJECT_DIR$/libs/cli/project.json" />
       <project name="@velnora/cli-helper" file="file://$PROJECT_DIR$/libs/helper/cli/project.json" />
+      <project name="@velnora/contracts" file="file://$PROJECT_DIR$/libs/contracts/project.json" />
       <project name="@velnora/core" file="file://$PROJECT_DIR$/libs/core/project.json" />
       <project name="@velnora/devkit" file="file://$PROJECT_DIR$/libs/devkit/project.json" />
       <project name="@velnora/integrations-nest" file="file://$PROJECT_DIR$/libs/integrations/nest/project.json" />
@@ -13,8 +14,10 @@
       <project name="@velnora/plugin-api" file="file://$PROJECT_DIR$/libs/plugin-api/project.json" />
       <project name="@velnora/router" file="file://$PROJECT_DIR$/libs/router/project.json" />
       <project name="@velnora/rpc" file="file://$PROJECT_DIR$/libs/rpc/project.json" />
+      <project name="@velnora/runtime-client" file="file://$PROJECT_DIR$/libs/runtime/client/project.json" />
+      <project name="@velnora/runtime-server" file="file://$PROJECT_DIR$/libs/runtime/server/project.json" />
       <project name="@velnora/sample-app" file="file://$PROJECT_DIR$/examples/sample/project.json" />
-      <project name="@velnora/schemas" file="file://$PROJECT_DIR$/libs/schemas/project.json" />
+      <project name="@velnora/types" file="file://$PROJECT_DIR$/libs/types/project.json" />
       <project name="@velnora/vite-integration" file="file://$PROJECT_DIR$/libs/vite/integration/project.json" />
       <project name="velnora" file="file://$PROJECT_DIR$/libs/velnora/project.json" />
     </projects>

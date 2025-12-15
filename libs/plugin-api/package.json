@@ -20,7 +20,7 @@
     "typecheck": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "@velnora/schemas": "workspace:^"
+    "@velnora/types": "workspace:^"
   },
   "devDependencies": {
     "eslint": "^9.39.1",

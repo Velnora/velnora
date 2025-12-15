@@ -1,5 +1,5 @@
-import { getModuleString } from "@velnora/devkit/vite";
-import type { VelnoraContext } from "@velnora/schemas";
+import { getModuleString } from "@velnora/devkit/node";
+import type { VelnoraContext } from "@velnora/types";
 
 import pkg from "../../../package.json";
 import { capitalize } from "../utils/capitalize";
@@ -26,7 +26,7 @@ export const prepareSingleFileSetup = (ctx: VelnoraContext) => {
 
   const singleFileAppResolver = ctx.vite.virtual(
     "react/app",
-    getModuleString(entrypoint, [`${capitalize(ctx.app.name)}App`, capitalize(ctx.app.name), "App"])
+    getModuleString(entrypoint, [`${capitalize(ctx.app.basename)}App`, capitalize(ctx.app.basename), "App"])
   );
 
   const reactComponent = ctx.vite.virtual(

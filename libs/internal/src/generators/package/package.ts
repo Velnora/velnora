@@ -11,7 +11,7 @@ import type { PackageGeneratorSchema } from "./schema";
 export default async function generator(tree: Tree, schema: PackageGeneratorSchema) {
   const pkg = names(schema.name);
 
-  const tags = ["type:lib", `scope:${schema.scope}`, ...([schema.tags].flat() || [])];
+  const tags = ["type:lib", `scope:${schema.scope}`, ...(Array.isArray(schema.tags) ? schema.tags : [schema.tags])];
 
   generateFiles(tree, joinPathFragments(__dirname, "files"), schema.directory, {
     name: pkg.name,

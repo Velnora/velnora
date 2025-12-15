@@ -1,5 +1,5 @@
 import type { LoggerService } from "@nestjs/common";
-import type { Logger as VelnoraLogger } from "@velnora/schemas";
+import type { Logger as VelnoraLogger } from "@velnora/types";
 
 export const createLogger = (logger: VelnoraLogger) => {
   class CustomLogger implements LoggerService {

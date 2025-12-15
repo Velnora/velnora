@@ -1,1 +1,1 @@
-const variable = "runtime-client";
+export {};

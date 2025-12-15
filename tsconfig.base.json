@@ -47,12 +47,13 @@
       "@velnora/router/server": ["libs/router/src/server/main.ts"],
 
       "@velnora/devkit": ["libs/devkit/src/client/main.ts"],
-      "@velnora/devkit/vite": ["libs/devkit/src/vite/main.ts"],
+      "@velnora/devkit/node": ["libs/devkit/src/node/main.ts"],
 
       "@velnora/rpc": ["libs/rpc/src/main.ts"],
       "@velnora/plugin-api": ["libs/plugin-api/src/main.ts"],
-      "@velnora/schemas": ["libs/schemas/src/main.ts"],
-      "@velnora/vite-integration": ["libs/vite/integration/src/main.ts"]
+      "@velnora/types": ["libs/types/src/main.ts"],
+      "@velnora/vite-integration": ["libs/vite/integration/src/main.ts"],
+      "@velnora/contracts": ["./libs/contracts/src/main.ts"]
     }
   },
   "exclude": ["node_modules"]

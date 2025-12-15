@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 
-import type { WithDefault } from "@velnora/schemas";
+import type { WithDefault } from "@velnora/types";
 
 import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";
 

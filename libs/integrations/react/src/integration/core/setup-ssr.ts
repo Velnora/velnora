@@ -1,4 +1,4 @@
-import type { VelnoraContext } from "@velnora/schemas";
+import type { VelnoraContext } from "@velnora/types";
 
 import { setupAppSsr } from "./setup-app-ssr";
 import { setupSingleFileSsr } from "./setup-single-file-ssr";

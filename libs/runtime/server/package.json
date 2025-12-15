@@ -20,10 +20,21 @@
     "typecheck": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "debug": "^4.4.3"
+    "@velnora/contracts": "workspace:^",
+    "@velnora/core": "workspace:^",
+    "@velnora/devkit": "workspace:^",
+    "@velnora/router": "workspace:^",
+    "@velnora/vite-integration": "workspace:^",
+    "debug": "^4.4.3",
+    "express": "^5.2.1",
+    "hookable": "^5.5.3",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/debug": "^4.1.12",
+    "@types/express": "^5.0.6",
+    "@types/lodash": "^4.17.21",
+    "@velnora/types": "workspace:^",
     "tsup": "^8.5.1"
   },
   "engines": {

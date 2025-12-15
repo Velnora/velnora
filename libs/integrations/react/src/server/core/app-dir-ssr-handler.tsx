@@ -5,8 +5,8 @@ import { JSDOM } from "jsdom";
 import { type BootstrapScriptDescriptor, renderToPipeableStream } from "react-dom/server";
 import type { ClientRoute } from "velnora/router";
 
-import type { RenderFn } from "@velnora/router";
 import { createRouter } from "@velnora/router/server";
+import type { RenderFn } from "@velnora/types";
 
 import { Router } from "../../client/components/router";
 import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";
@@ -52,10 +52,8 @@ export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): R
         if (script.attributes.type === "module" && script.attributes.src) {
           acc.moduleScripts.push({ src: script.attributes.src, ...baseDescriptor });
         } else if (script.attributes.type === "module" && !script.attributes.src && script.content) {
-          const virtualSrc = ctx.vite.virtual(
-            specialName(crypto.createHash("sha256").update(script.content).digest("hex").slice(0, 6)),
-            script.content
-          );
+          const name = specialName(crypto.createHash("sha256").update(script.content).digest("hex").slice(0, 6));
+          const virtualSrc = ctx.vite.virtual(name, script.content, { global: name === "react/refresh" });
 
           acc.contentScripts.push({ ...baseDescriptor, src: virtualSrc });
         } else if (!script.attributes.type && script.attributes.src) {

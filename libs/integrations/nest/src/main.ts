@@ -1,4 +1,4 @@
-import { getModuleString } from "@velnora/devkit/vite";
+import { getModuleString } from "@velnora/devkit/node";
 import { defineIntegration } from "@velnora/plugin-api";
 
 import pkg from "../package.json";
@@ -11,7 +11,7 @@ export const nest = defineIntegration(() => {
 
     apply(ctx) {
       return (
-        ctx.fs.exists(`server/{app,${ctx.app.name}}.module.{js,ts}`) &&
+        ctx.fs.exists(`server/{app,${ctx.app.basename}}.module.{js,ts}`) &&
         ctx.pkg.ensurePackage("@nestjs/common", "^11") &&
         ctx.pkg.ensurePackage("@nestjs/core", "^11")
       );
@@ -20,7 +20,7 @@ export const nest = defineIntegration(() => {
     configure(ctx) {
       ctx.fs.pushd("server");
 
-      const entryFiles = ctx.fs.glob(`{app,${ctx.app.name}}.module.{js,ts}`);
+      const entryFiles = ctx.fs.glob(`{app,${ctx.app.basename}}.module.{js,ts}`);
       if (entryFiles.length === 0) {
         ctx.logger.error("Could not find entry file for React app. Skipping React (client) integration.");
         ctx.fs.popd();
@@ -34,7 +34,7 @@ export const nest = defineIntegration(() => {
       const modulePath = ctx.fs.resolve(entryFiles[0]!);
       const appModuleVirtualId = ctx.vite.virtual(
         "nest/app-module",
-        getModuleString(modulePath, [`${capitalize(ctx.app.name)}Module`, "AppModule"])
+        getModuleString(modulePath, [`${capitalize(ctx.app.basename)}Module`, "AppModule"])
       );
 
       const entryVirtual = ctx.vite.entryServer(

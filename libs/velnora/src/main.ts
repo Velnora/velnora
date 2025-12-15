@@ -1,6 +1,6 @@
 import type { PartialDeep } from "type-fest";
 
-import type { VelnoraConfig } from "@velnora/schemas";
+import type { VelnoraConfig } from "@velnora/types";
 
 export type { BaseMountOptions } from "@velnora/plugin-api";
 

@@ -2,7 +2,7 @@ import type { Type } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter } from "@nestjs/platform-express";
 import { defineServerSetup } from "@velnora/plugin-api";
-import type { BackendHandler } from "@velnora/schemas";
+import type { BackendHandler } from "@velnora/types";
 
 import { createLogger } from "./utils/create-logger";
 

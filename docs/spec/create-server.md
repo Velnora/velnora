@@ -42,7 +42,7 @@ Spin up a **framework-agnostic appSchema host** in development (and, analogously
 ```
 createDevServer(opts)
   1) Resolve runtime options (opts ⟵ config.dev ⟵ defaults)
-  2) Load & validate user config (@velnora/schemas)
+  2) Load & validate user config (@velnora/types)
   3) Discover integrations (resolve packages, read their manifests)
   4) Plan:
      a. Build capability graph (provides/requires)
@@ -97,7 +97,7 @@ createDevServer(opts)
 * **`@velnora/rpc`**
 
     * Dev channels (HMR/overlay/status) as needed
-* **`@velnora/schemas`**
+* **`@velnora/types`**
 
     * Zod schemas for config, manifests, entrypoints
 
@@ -222,7 +222,7 @@ createDevServer(opts)
 ```
 velnora dev
   → @velnora/core.createDevServer
-    → load config (@velnora/schemas)
+    → load config (@velnora/types)
     → resolve integrations
     → plan capabilities (toposort)
     → run hooks: configure → scaffold → build → runtime

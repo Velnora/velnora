@@ -2,8 +2,7 @@ import { readFile } from "node:fs/promises";
 
 import type { HtmlTagDescriptor, Plugin } from "vite";
 
-import type { Router } from "@velnora/router";
-import { ssrTargetMode } from "@velnora/schemas";
+import { type Router, ssrTargetMode } from "@velnora/types";
 
 import { defaultHtml } from "./default-html";
 

@@ -4,6 +4,6 @@
 * `@velnora/vite-integrationSchema` = Vite composer (receives plugin factories from Core).
 * `@velnora/runtime-server` = server bootstrap assembler (via entrypoints).
 * `@velnora/runtime-client` = client bootstrap (reads client entrypoints).
-* `@velnora/schemas` = Zod schemas for config + manifests.
+* `@velnora/types` = Zod schemas for config + manifests.
 * `@velnora/rpc` = dev channel (optional in M0).
 * `@velnora/internal` = **build-only** internal configs; never used in runtime.

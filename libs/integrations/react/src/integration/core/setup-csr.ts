@@ -1,4 +1,4 @@
-import type { VelnoraContext } from "@velnora/schemas";
+import type { VelnoraContext } from "@velnora/types";
 
 import { prepareSingleFileSetup } from "../helper/prepare-single-file-setup";
 

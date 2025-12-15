@@ -1,8 +1,8 @@
 import type { ClientRoute } from "velnora/router";
 
-import { getModuleString } from "@velnora/devkit/vite";
+import { getModuleString } from "@velnora/devkit/node";
 import { collectLayoutsForPage, fileToRoutePath } from "@velnora/router";
-import { type VelnoraContext, ssrTargetMode } from "@velnora/schemas";
+import { type VelnoraContext, ssrTargetMode } from "@velnora/types";
 
 import pkg from "../../../package.json";
 import { capitalize } from "../utils/capitalize";
@@ -20,10 +20,10 @@ export const setupAppSsr = (ctx: VelnoraContext) => {
     const layouts = collectLayoutsForPage(file, ctx.fs, ["js", "ts", "jsx", "tsx"]);
 
     const pageSections = file.split("/").slice(1, -1);
-    const pageName = pageSections.length === 0 ? [] : [capitalize(pageSections[pageSections.length - 1]!)];
+    const pageName = pageSections.length === 0 ? [] : [capitalize(pageSections.at(-1)!)];
 
     const module = ctx.vite.virtual(
-      `react/page${path === "/" ? "/index" : path}`,
+      `react/page${path === "/" ? "" : path}/page`,
       getModuleString(ctx.fs.resolve(file), pageName, "Page")
     );
 
@@ -51,8 +51,7 @@ import { hydrateSsrApp } from "${pkg.name}/client";
 
 const router = createRouter(appConfig);
 hydrateSsrApp({ router, routes });
-`,
-    { extension: "tsx" }
+`
   );
 
   ctx.vite.entrySsr(`

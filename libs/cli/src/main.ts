@@ -13,8 +13,9 @@ const _devCommand = program
   .option("--root <string>", { description: "Root directory of the project", default: "." })
   .action(async opts => {
     // eslint-disable-next-line @nx/enforce-module-boundaries
-    const { createDevServer } = await import("@velnora/core");
-    await createDevServer(opts);
+    const { createDevServer } = await import("@velnora/runtime-server");
+    const velnora = await createDevServer(opts);
+    await velnora.listen();
   });
 export type DevCommandOptions = inferCommandType<typeof _devCommand>;
 
@@ -23,7 +24,7 @@ const _previewCommand = program
   .option("--port <number>, -p", { description: "Port to run the preview server on", default: 5000 })
   .action(async opts => {
     // eslint-disable-next-line @nx/enforce-module-boundaries
-    const { createPreviewServer } = await import("@velnora/core");
+    const { createPreviewServer } = await import("@velnora/runtime-server");
     await createPreviewServer(opts);
   });
 export type PreviewCommandOptions = inferCommandType<typeof _previewCommand>;

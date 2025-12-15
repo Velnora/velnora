@@ -1,3 +1,3 @@
-import type { VelnoraContext } from "@velnora/schemas";
+import type { VelnoraContext } from "@velnora/types";
 
 export const setupRsc = (ctx: VelnoraContext) => {};

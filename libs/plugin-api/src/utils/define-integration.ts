@@ -1,6 +1,6 @@
 import type { Promisable } from "type-fest";
 
-import type { Integration } from "@velnora/schemas";
+import type { Integration } from "@velnora/types";
 
 export function defineIntegration(integration: () => Integration): () => Integration;
 export function defineIntegration<TOptions>(

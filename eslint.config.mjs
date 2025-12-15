@@ -43,17 +43,17 @@ const projectScopes = [
   },
   {
     sourceTag: "scope:devkit",
-    onlyDependOnLibsWithTags: ["scope:types"],
+    onlyDependOnLibsWithTags: ["scope:types", "scope:contracts", "scope:vite"],
     notDependOnLibsWithTags: []
   },
   {
     sourceTag: "scope:core",
-    onlyDependOnLibsWithTags: ["scope:types", "scope:vite"],
+    onlyDependOnLibsWithTags: ["scope:types"],
     notDependOnLibsWithTags: []
   },
   {
     sourceTag: "scope:contracts",
-    onlyDependOnLibsWithTags: [],
+    onlyDependOnLibsWithTags: ["scope:types"],
     notDependOnLibsWithTags: []
   },
   {
