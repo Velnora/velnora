@@ -1,3 +1,4 @@
+import { defineConfig } from "eslint/config";
 import * as tsEslint from "typescript-eslint";
 
 import js from "@eslint/js";
@@ -99,7 +100,7 @@ const projectScopes = [
   }
 ];
 
-export default [
+export default defineConfig(
   // Global ignores
   {
     name: "root-ignores",
@@ -210,4 +211,4 @@ export default [
       "no-console": "off"
     }
   }
-];
+);
