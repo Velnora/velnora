@@ -1,4 +1,3 @@
 {
-  "tags": ["type:lib", "scope:vite"],
-  "dependencies": ["scope:schemas", "scope:plugin-api", "scope:router"]
+  "tags": ["type:lib", "scope:vite"]
 }

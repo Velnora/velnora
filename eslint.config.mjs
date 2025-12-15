@@ -3,9 +3,101 @@ import * as tsEslint from "typescript-eslint";
 import js from "@eslint/js";
 import nxPlugin from "@nx/eslint-plugin";
 
-import { collectPackageDependencyTags } from "./scripts/collect-package-dependency-tags.mjs";
-
-const projectScopes = await collectPackageDependencyTags(process.cwd());
+const projectScopes = [
+  {
+    sourceTag: "scope:velnora",
+    onlyDependOnLibsWithTags: [
+      "scope:plugin-api",
+      "scope:runtime",
+      "scope:integrations",
+      "scope:types",
+      "scope:router"
+    ],
+    notDependOnLibsWithTags: ["side:server"]
+  },
+  {
+    sourceTag: "scope:types",
+    onlyDependOnLibsWithTags: [],
+    notDependOnLibsWithTags: []
+  },
+  {
+    sourceTag: "scope:rpc",
+    onlyDependOnLibsWithTags: [],
+    notDependOnLibsWithTags: []
+  },
+  {
+    sourceTag: "scope:router",
+    onlyDependOnLibsWithTags: ["scope:types"],
+    notDependOnLibsWithTags: []
+  },
+  {
+    sourceTag: "scope:plugin-api",
+    onlyDependOnLibsWithTags: ["scope:types"],
+    notDependOnLibsWithTags: []
+  },
+  {
+    sourceTag: "scope:internal",
+    onlyDependOnLibsWithTags: [],
+    notDependOnLibsWithTags: []
+  },
+  {
+    sourceTag: "scope:devkit",
+    onlyDependOnLibsWithTags: ["scope:types"],
+    notDependOnLibsWithTags: []
+  },
+  {
+    sourceTag: "scope:core",
+    onlyDependOnLibsWithTags: ["scope:types", "scope:vite"],
+    notDependOnLibsWithTags: []
+  },
+  {
+    sourceTag: "scope:contracts",
+    onlyDependOnLibsWithTags: [],
+    notDependOnLibsWithTags: []
+  },
+  {
+    sourceTag: "scope:cli",
+    onlyDependOnLibsWithTags: [
+      "scope:core",
+      "scope:types",
+      "scope:runtime",
+      "scope:rpc",
+      "scope:plugin-api",
+      "scope:cli-helper"
+    ],
+    notDependOnLibsWithTags: ["side:client", "scope:integrations"]
+  },
+  {
+    sourceTag: "scope:vite",
+    onlyDependOnLibsWithTags: ["scope:types", "scope:plugin-api", "scope:router"],
+    notDependOnLibsWithTags: []
+  },
+  {
+    sourceTag: "scope:runtime",
+    onlyDependOnLibsWithTags: [],
+    notDependOnLibsWithTags: []
+  },
+  {
+    sourceTag: "scope:runtime",
+    onlyDependOnLibsWithTags: [],
+    notDependOnLibsWithTags: []
+  },
+  {
+    sourceTag: "scope:integrations",
+    onlyDependOnLibsWithTags: ["scope:types"],
+    notDependOnLibsWithTags: ["scope:integration"]
+  },
+  {
+    sourceTag: "scope:integrations",
+    onlyDependOnLibsWithTags: ["scope:schema", "scope:plugin-api", "scope:devkit"],
+    notDependOnLibsWithTags: ["scope:integration"]
+  },
+  {
+    sourceTag: "scope:cli-helper",
+    onlyDependOnLibsWithTags: [],
+    notDependOnLibsWithTags: []
+  }
+];
 
 export default [
   // Global ignores

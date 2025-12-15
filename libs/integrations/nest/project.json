@@ -1,5 +1,3 @@
 {
-  "tags": ["type:integration", "scope:integrations:nest", "engine:nest"],
-  "dependencies": ["scope:schema", "scope:plugin-api", "scope:devkit"],
-  "ignoredDependencies": ["scope:integration"]
+  "tags": ["type:integration", "scope:integrations:nest", "engine:nest"]
 }

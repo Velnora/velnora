@@ -1,5 +1,3 @@
 {
-  "tags": ["type:cli", "scope:cli"],
-  "dependencies": ["scope:core", "scope:schemas", "scope:runtime", "scope:rpc", "scope:plugin-api", "scope:cli-helper"],
-  "ignoredDependencies": ["side:client", "scope:integrations"]
+  "tags": ["type:cli", "scope:cli"]
 }

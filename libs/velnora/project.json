@@ -1,5 +1,3 @@
 {
-  "tags": ["scope:velnora", "type:lib"],
-  "dependencies": ["scope:plugin-api", "scope:runtime", "scope:integrations", "scope:schemas", "scope:router"],
-  "ignoredDependencies": ["side:server"]
+  "tags": ["scope:velnora", "type:lib"]
 }
