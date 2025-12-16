@@ -23,7 +23,7 @@ export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): R
     if (!route) {
       // ToDo: Implement registering a 404 page route
       ctx.logger.warn(`No matching page found for path: ${ctx.path}`);
-      return { status: 404, body: "Not Found" };
+      return { status: 404 };
     }
 
     ctx.logger.log(`Rendering page for path: ${ctx.path} from module: ${route.module}`);
@@ -33,7 +33,7 @@ export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): R
     const { default: Page } = await ctx.serverEnv.runner.import<WithDefault<FC>>(route.module);
     if (!Page) {
       ctx.logger.error(`No default export found in page module: ${route.module}`);
-      return { status: 404, body: "Not Found" };
+      return { status: 404 };
     }
 
     const layouts = await getLayouts(route);

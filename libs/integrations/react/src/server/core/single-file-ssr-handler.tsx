@@ -11,7 +11,7 @@ export const singleFileSsrHandler = (route: ClientRoute<ReactRouteDescriptor>): 
     const { default: app } = await ctx.serverEnv.runner.import<WithDefault<JSX.Element>>(route.route.module);
     if (!app) {
       ctx.logger.error(`No default export found in entry file: ${route.route.module}`);
-      return { status: 500, body: "Internal Server Error" };
+      return { status: 404 };
     }
     const html = renderToString(app);
 

@@ -57,6 +57,8 @@ export class Injector {
     for (const route of routes) {
       this.injectRoute(route);
     }
+
+    this.injectExtensions();
   }
 
   private injectRoute(route: Route) {
@@ -103,14 +105,18 @@ export class Injector {
 
   private injectCSR(route: FrontendRoute) {
     const getArgs = route.indexHtmlFile ? `?id=${route.id}` : null;
-    this.http.handleRequest(route.path, async (_req, res, next) => {
-      try {
-        const html = await this.viteServer.transformIndexHtml(`/index.html${getArgs ? getArgs : ""}`);
-        res.end(html);
-      } catch (err) {
-        next(err);
+
+    this.http.handleRequest(
+      this.config.apps.csrAppRedirectToIndexHtml ? route.path : new RegExp(`^${route.path}$`),
+      async (_req, res, next) => {
+        try {
+          const html = await this.viteServer.transformIndexHtml(`/index.html${getArgs ? getArgs : ""}`);
+          res.end(html);
+        } catch (err) {
+          next(err);
+        }
       }
-    });
+    );
   }
 
   private injectSSR(route: FrontendSsrRoute) {
@@ -129,6 +135,12 @@ export class Injector {
 
       try {
         const result = await render(this.buildContext(req, res, route));
+
+        if (result.status && result.status >= 400) {
+          this.logger.log(`SSR route returned status ${result.status} for path: ${req.url}`);
+          next();
+          return;
+        }
 
         if (result.status) res.status(result.status);
         if (result.headers) {
@@ -167,6 +179,12 @@ export class Injector {
       } catch (err) {
         next(err);
       }
+    });
+  }
+
+  private injectExtensions() {
+    this.http.use((req, res) => {
+      res.setHeader("Content-Type", "text/html").end("404 Not Found");
     });
   }
 

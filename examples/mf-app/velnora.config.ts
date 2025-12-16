@@ -5,5 +5,8 @@ import { react } from "@velnora/integrations-react";
 
 export default defineConfig({
   integrations: [react(), nest()],
+  apps: {
+    csrAppRedirectToIndexHtml: false
+  },
   experiments: { rolldown: true }
 });

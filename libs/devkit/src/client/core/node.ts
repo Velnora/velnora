@@ -58,7 +58,7 @@ export class Node implements Package {
   }
 
   get isHostApplication() {
-    return [this.packageJson.name, this.basename].includes(this.rootConfig.hostApp);
+    return [this.packageJson.name, this.basename].includes(this.rootConfig.apps.hostApp);
   }
 
   get clientUrl() {

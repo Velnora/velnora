@@ -1,4 +1,5 @@
 import type { Integration } from "../../integration";
+import type { Apps } from "./apps";
 import type { Experiments } from "./experiments";
 import type { Server } from "./server";
 import type { Workspace } from "./workspace";
@@ -6,7 +7,7 @@ import type { Workspace } from "./workspace";
 export interface VelnoraConfig {
   mode: string;
   root: string;
-  hostApp: string;
+  apps: Apps;
   server: Server;
   workspace: Workspace;
   integrations: Array<Integration>;
