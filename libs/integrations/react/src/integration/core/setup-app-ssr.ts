@@ -46,23 +46,19 @@ export const setupAppSsr = (ctx: VelnoraContext) => {
   ctx.vite.entryClient(
     `
 import { createRouter } from "velnora/router";
+import { getMetadata, hydrateSsrApp } from "velnora/react";
+
 import { appConfig } from "${ctx.vite.virtualAppConfig}";
 import routes from "${clientRoutesVid}";
-import { hydrateSsrApp } from "${pkg.name}/client"; 
-import { getMetadata } from "velnora/react";
 
 const router = createRouter(appConfig);
-const route = routes.find(r => r.path === router.path) || null;
+const route = routes.find(r => r.path === router.path);
 if (!route) {
   throw new Error(\`No route found for path: \${router.path}\`);
 }
 
 getMetadata(route.route)
-  .then(({ Page, layouts }) => {
-    if (!Page) {
-      throw new Error(\`No default export found in page module: \${route.route.module}\`);
-    }
-    
+  .then(({ Page, layouts }) => {    
     let page = <Page />;
     
     layouts.forEach((Layout, idx) => {
