@@ -10,11 +10,9 @@
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "sharedGlobals": ["{workspaceRoot}/tsconfig.base.json", "{workspaceRoot}/pnpm-lock.yaml"]
   },
-  "// velnora-tag-conventions": {
-    "type": ["lib", "integration", "cli", "example", "service"],
-    "scope": ["core", "schemas", "rpc", "runtime", "plugin-api", "vite", "integrations", "velnora"],
-    "side": ["client", "server"],
-    "engine": ["react", "vue", "angular"],
-    "host": ["express", "bun"]
+  "release": {
+    "version": {
+      "preserveLocalDependencyProtocols": false
+    }
   }
 }
