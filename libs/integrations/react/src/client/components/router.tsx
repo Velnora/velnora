@@ -1,5 +1,6 @@
 import type { FC, PropsWithChildren } from "react";
-import type { Router as VelnoraRouter } from "velnora/router";
+
+import type { Router as VelnoraRouter } from "@velnora/router/client";
 
 import { routerContext } from "../router/router-context";
 

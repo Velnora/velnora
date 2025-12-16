@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
 
-import type { DevCommandOptions } from "@velnora/cli";
+import type { DevCommandOptions } from "@velnora/commands";
 import { velnoraConfigSchema } from "@velnora/contracts";
 import { loadConfigFile } from "@velnora/devkit/node";
 import type { VelnoraConfig } from "@velnora/types";

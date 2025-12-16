@@ -1,2 +1,2 @@
 export { Command } from "./core/command";
-export { inferCommandType } from "./types/infer-command-type";
+export type { inferCommandType } from "./types/infer-command-type";

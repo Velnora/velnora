@@ -14,7 +14,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
 
-    "types": ["vite/client"],
+    "types": ["vite/client", "@types/node"],
 
     "baseUrl": ".",
     "paths": {
@@ -26,6 +26,7 @@
 
       "@velnora/cli": ["libs/cli/src/main.ts"],
       "@velnora/cli-helper": ["libs/helper/cli/src/main.ts"],
+      "@velnora/commands": ["./libs/helper/commands/src/main.ts"],
 
       "@velnora/integrations-nest": ["libs/integrations/nest/src/main.ts"],
       "@velnora/integrations-nest/server": ["libs/integrations/nest/src/server.ts"],

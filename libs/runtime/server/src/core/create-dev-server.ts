@@ -1,6 +1,6 @@
 import { createHooks } from "hookable";
 
-import type { DevCommandOptions } from "@velnora/cli";
+import type { DevCommandOptions } from "@velnora/commands";
 import { createLogger } from "@velnora/core";
 import { Injector, ModuleGraph } from "@velnora/devkit/node";
 import { Router } from "@velnora/router";

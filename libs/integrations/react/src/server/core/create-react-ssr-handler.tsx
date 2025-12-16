@@ -1,5 +1,4 @@
-import type { ClientRoute } from "velnora/router";
-
+import type { ClientRoute } from "@velnora/router/client";
 import { type RenderFn, type SsrTarget, ssrTargetMode } from "@velnora/types";
 
 import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";

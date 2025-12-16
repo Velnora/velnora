@@ -3923,15 +3923,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^25.0.1":
-  version: 25.0.1
-  resolution: "@types/node@npm:25.0.1"
-  dependencies:
-    undici-types: "npm:~7.16.0"
-  checksum: 10c0/1d5ca9f240d0cf8e43d5281c0e6ee96fb22d37dc2e5ef52c6ca71de47957a6128e124990cedf5b14c03d0250737bd78ad370d93bcf1729a75ca4e54384fdd51a
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:^25.0.2":
   version: 25.0.2
   resolution: "@types/node@npm:25.0.2"
@@ -4314,11 +4305,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@velnora/<%= name %>@workspace:libs/internal/src/generators/package/files":
+  version: 0.0.0-use.local
+  resolution: "@velnora/<%= name %>@workspace:libs/internal/src/generators/package/files"
+  dependencies:
+    "@types/debug": "npm:^4.1.12"
+    debug: "npm:^4.4.3"
+    tsup: "npm:^8.5.1"
+  languageName: unknown
+  linkType: soft
+
 "@velnora/cli-helper@workspace:^, @velnora/cli-helper@workspace:libs/helper/cli":
   version: 0.0.0-use.local
   resolution: "@velnora/cli-helper@workspace:libs/helper/cli"
   dependencies:
-    "@types/node": "npm:^25.0.1"
+    "@types/node": "npm:^25.0.2"
     "@types/yargs": "npm:^17.0.35"
     eslint: "npm:^9.39.1"
     tsup: "npm:^8.5.1"
@@ -4334,6 +4335,7 @@ __metadata:
   resolution: "@velnora/cli@workspace:libs/cli"
   dependencies:
     "@velnora/cli-helper": "workspace:^"
+    "@velnora/commands": "workspace:^"
     "@velnora/runtime-server": "workspace:^"
     eslint: "npm:^9.39.1"
     tsup: "npm:^8.5.1"
@@ -4342,6 +4344,17 @@ __metadata:
   bin:
     velnora: ./build/velnora.cli.js
     velnora-dev: ./bin/velnora-dev.ts
+  languageName: unknown
+  linkType: soft
+
+"@velnora/commands@workspace:^, @velnora/commands@workspace:libs/helper/commands":
+  version: 0.0.0-use.local
+  resolution: "@velnora/commands@workspace:libs/helper/commands"
+  dependencies:
+    "@types/debug": "npm:^4.1.12"
+    "@velnora/cli-helper": "workspace:^"
+    debug: "npm:^4.4.3"
+    tsup: "npm:^8.5.1"
   languageName: unknown
   linkType: soft
 
@@ -4388,6 +4401,7 @@ __metadata:
     debug: "npm:^4.4.3"
     glob: "npm:^13.0.0"
     semver: "npm:^7.7.3"
+    tsup: "npm:^8.5.1"
     type-fest: "npm:^5.3.1"
     uuid: "npm:^13.0.0"
     yaml: "npm:^2.8.2"
@@ -4428,7 +4442,6 @@ __metadata:
     jsdom: "npm:^27.3.0"
     tsup: "npm:^8.5.1"
     typescript: "npm:^5.9.3"
-    velnora: "workspace:^"
     vitest: "npm:^4.0.14"
   peerDependencies:
     react: ^18 || ^19

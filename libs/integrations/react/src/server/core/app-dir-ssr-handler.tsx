@@ -4,8 +4,8 @@ import { Transform } from "node:stream";
 import { JSDOM } from "jsdom";
 import type { FC } from "react";
 import { type BootstrapScriptDescriptor, renderToPipeableStream } from "react-dom/server";
-import type { ClientRoute } from "velnora/router";
 
+import type { ClientRoute } from "@velnora/router/client";
 import { createRouter } from "@velnora/router/server";
 import type { RenderFn, WithDefault } from "@velnora/types";
 

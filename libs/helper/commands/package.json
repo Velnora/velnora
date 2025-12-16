@@ -1,14 +1,18 @@
 {
-  "name": "@velnora/cli-helper",
+  "name": "@velnora/commands",
   "version": "0.0.0",
   "private": true,
+  "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {
-      "types": "./build/velnora.cli-helper.d.ts",
-      "import": "./build/velnora.cli-helper.js"
+      "types": "./build/velnora.commands.d.ts",
+      "import": "./build/velnora.commands.js"
     }
   },
+  "files": [
+    "build"
+  ],
   "scripts": {
     "build": "tsup --config tsup.config.ts",
     "lint": "eslint .",
@@ -16,16 +20,12 @@
     "typecheck": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "yargs": "^18.0.0"
+    "debug": "^4.4.3"
   },
   "devDependencies": {
-    "@types/node": "^25.0.2",
-    "@types/yargs": "^17.0.35",
-    "eslint": "^9.39.1",
-    "tsup": "^8.5.1",
-    "type-fest": "^5.2.0",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.14"
+    "@types/debug": "^4.1.12",
+    "@velnora/cli-helper": "workspace:^",
+    "tsup": "^8.5.1"
   },
   "engines": {
     "node": ">=24"

@@ -2,7 +2,7 @@ import { resolve } from "node:path";
 
 import _ from "lodash";
 
-import type { DevCommandOptions } from "@velnora/cli";
+import type { DevCommandOptions } from "@velnora/commands";
 import type { VelnoraConfig } from "@velnora/types";
 
 export const mergeConfig = (options: DevCommandOptions, config: VelnoraConfig): VelnoraConfig => {

@@ -32,8 +32,7 @@
     "@velnora/plugin-api": "workspace:^",
     "@velnora/router": "workspace:^",
     "@vitejs/plugin-react": "^5.1.1",
-    "jsdom": "^27.3.0",
-    "velnora": "workspace:^"
+    "jsdom": "^27.3.0"
   },
   "devDependencies": {
     "@types/jsdom": "^27.0.0",

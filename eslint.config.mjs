@@ -1,8 +1,20 @@
 import { defineConfig } from "eslint/config";
 import * as tsEslint from "typescript-eslint";
 
+
+
 import js from "@eslint/js";
 import nxPlugin from "@nx/eslint-plugin";
+
+
+
+
+
+
+
+
+
+
 
 const projectScopes = [
   {
@@ -58,15 +70,13 @@ const projectScopes = [
   },
   {
     sourceTag: "scope:cli",
-    onlyDependOnLibsWithTags: [
-      "scope:core",
-      "scope:types",
-      "scope:runtime",
-      "scope:rpc",
-      "scope:plugin-api",
-      "scope:cli-helper"
-    ],
+    onlyDependOnLibsWithTags: ["scope:commands", "scope:runtime:server"],
     notDependOnLibsWithTags: ["side:client", "scope:integrations"]
+  },
+  {
+    sourceTag: "scope:commands",
+    onlyDependOnLibsWithTags: ["scope:cli-helper", "scope:runtime:server"],
+    notDependOnLibsWithTags: []
   },
   {
     sourceTag: "scope:vite",
@@ -172,28 +182,6 @@ export default defineConfig(
 
       // Make sure we’re using the TS extension rule, not the core one
       "no-restricted-imports": "off",
-
-      // ❌ value imports from @velnora/cli; ✅ type-only imports
-      "@typescript-eslint/no-restricted-imports": [
-        "error",
-        {
-          paths: [
-            {
-              name: "@velnora/cli",
-              allowTypeImports: true,
-              message:
-                "@velnora/core may only import types from @velnora/cli. Use `import type { ... } from '@velnora/cli`."
-            }
-          ],
-          patterns: [
-            {
-              group: ["@velnora/cli/*"],
-              allowTypeImports: true,
-              message: "@velnora/core may only import types from @velnora/cli/*."
-            }
-          ]
-        }
-      ],
 
       // Enforce writing `import type` for types
       "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-imports" }]

@@ -1,3 +1,3 @@
-import type { PreviewCommandOptions } from "@velnora/cli";
+import type { PreviewCommandOptions } from "@velnora/commands";
 
-export const createPreviewServer = async (options: PreviewCommandOptions) => {};
+export const createPreviewServer = async (_options: PreviewCommandOptions) => {};
