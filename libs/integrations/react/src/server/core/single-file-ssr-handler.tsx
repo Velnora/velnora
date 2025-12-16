@@ -7,7 +7,6 @@ import type { RenderFn, WithDefault } from "@velnora/types";
 import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";
 
 export const singleFileSsrHandler = (route: ClientRoute<ReactRouteDescriptor>): RenderFn => {
-  console.log(route);
   return async ctx => {
     const { default: app } = await ctx.serverEnv.runner.import<WithDefault<JSX.Element>>(route.route.module);
     if (!app) {

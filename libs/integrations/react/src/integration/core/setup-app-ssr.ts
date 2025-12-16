@@ -15,7 +15,7 @@ export const setupAppSsr = (ctx: VelnoraContext) => {
     return;
   }
 
-  const routes = pageFiles.map<ClientRoute>(file => {
+  const routes = pageFiles.map(file => {
     const path = fileToRoutePath(file);
     const layouts = collectLayoutsForPage(file, ctx.fs, ["js", "ts", "jsx", "tsx"]);
 
@@ -34,7 +34,7 @@ export const setupAppSsr = (ctx: VelnoraContext) => {
       )
     );
 
-    return { path, route: { module, layouts: layoutModules } };
+    return { path, route: { module, layouts: layoutModules } } satisfies ClientRoute;
   });
 
   const clientRoutesVid = ctx.vite.virtual(`react/routes`, `export default ${JSON.stringify(routes)};`);

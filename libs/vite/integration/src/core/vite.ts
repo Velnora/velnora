@@ -95,7 +95,15 @@ export class Vite implements ViteApi {
     });
 
     this.debug("environment for package %s: %O", this.pkg.name, this.vite.userConfig.environments?.[envName]);
-    this.virtual("app-config", `export const appConfig = ${JSON.stringify(this.pkg)};`);
+    this.virtual(
+      "app-config",
+      `
+import { Node } from "@velnora/devkit";
+    
+const appConfigJSON = ${JSON.stringify(this.pkg)};
+export const appConfig = Node.fromJSON(appConfigJSON);
+`
+    );
 
     return envName;
   }

@@ -99,6 +99,6 @@ export class Router implements VelnoraRouter {
   }
 
   private getPathObject(path: string): PathObject {
-    return { path };
+    return { path: path.replace(new RegExp(`^${this.app.clientUrl}`), "") };
   }
 }
