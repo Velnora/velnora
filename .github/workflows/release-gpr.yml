@@ -40,9 +40,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Publish all workspaces EXCEPT examples/**
       - name: Publish workspaces (exclude examples)
         run: |
           yarn workspaces foreach -A -v --no-private \
             --exclude 'examples/**' \
-            exec npm publish --access restricted --registry https://npm.pkg.github.com
+            exec yarn npm publish --registry https://npm.pkg.github.com
