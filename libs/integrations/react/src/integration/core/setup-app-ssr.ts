@@ -57,19 +57,20 @@ if (!route) {
   throw new Error(\`No route found for path: \${router.path}\`);
 }
 
-const { Page, layouts } = await getMetadata(route.route);
-
-if (!Page) {
-  throw new Error(\`No default export found in page module: \${route.route.module}\`);
-}
-
-let page = <Page />;
-
-layouts.forEach((Layout, idx) => {
-  page = <Layout key={route.route.layouts[idx]}>{page}</Layout>;
-});
-
-hydrateSsrApp(page, router, routes);
+getMetadata(route.route)
+  .then(({ Page, layouts }) => {
+    if (!Page) {
+      throw new Error(\`No default export found in page module: \${route.route.module}\`);
+    }
+    
+    let page = <Page />;
+    
+    layouts.forEach((Layout, idx) => {
+      page = <Layout key={route.route.layouts[idx]}>{page}</Layout>;
+    });
+    
+    hydrateSsrApp(page, router, routes);
+  });
 `,
     { extension: "tsx" }
   );
