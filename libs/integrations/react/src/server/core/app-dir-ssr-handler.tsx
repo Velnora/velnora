@@ -9,6 +9,7 @@ import { createRouter } from "@velnora/router/server";
 import type { RenderFn } from "@velnora/types";
 
 import { Router } from "../../client/components/router";
+import { RouterServer } from "../../client/components/router.server";
 import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";
 import { specialName } from "../utils/special-name";
 
@@ -27,7 +28,12 @@ export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): R
     ctx.logger.log(`Rendering page for path: ${ctx.path} from module: ${route.module}`);
 
     const router = createRouter(ctx);
-    const page = <Router router={router} routes={routes} />;
+
+    const page = (
+      <Router router={router}>
+        <RouterServer pathRouteMap={pathRouteMap} />
+      </Router>
+    );
 
     const viteSpecificScripts = await ctx.transformRouteIndexHtml(ctx.route, "");
     const dom = new JSDOM(viteSpecificScripts);
@@ -94,7 +100,8 @@ export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): R
       onError(error) {
         ctx.logger.error(`Error during SSR rendering for path: ${ctx.path}`);
         ctx.logger.error(error);
-      }
+      },
+      identifierPrefix: "_velnora_react_"
     });
 
     const connect = import.meta.env.DEV ? `connect-src 'self' ws: wss: http: https:` : `connect-src 'self'`;
@@ -118,6 +125,3 @@ export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): R
     };
   };
 };
-
-//
-//     return { body: htmlTransform, status: 200, headers: { "Content-Type": "text/html" } };

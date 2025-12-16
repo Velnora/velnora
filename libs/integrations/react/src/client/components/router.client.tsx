@@ -1,15 +1,13 @@
-import { type ComponentType, type FC, type PropsWithChildren, useEffect, useMemo, useState } from "react";
+import { type ComponentType, type FC, type PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
 import type { PathObject } from "velnora/router";
 
 import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";
+import { routerContext } from "../router/router-context";
 import { getLayouts } from "../utils/get-layouts";
 import { getPage } from "../utils/get-page";
-import type { RouterProps } from "./router";
 
-export const RouterClient: FC<RouterProps & { pathRouteMap: Map<string, ReactRouteDescriptor> }> = ({
-  router,
-  pathRouteMap
-}) => {
+export const RouterClient: FC<{ pathRouteMap: Map<string, ReactRouteDescriptor> }> = ({ pathRouteMap }) => {
+  const { router } = useContext(routerContext);
   const [Page, setPage] = useState<ComponentType | null>(null);
   const [path, setPath] = useState<PathObject>(router.pathObject);
   const [layouts, setLayouts] = useState<ComponentType<PropsWithChildren>[]>([]);
@@ -37,11 +35,13 @@ export const RouterClient: FC<RouterProps & { pathRouteMap: Map<string, ReactRou
     void getLayouts(route).then(layouts => setLayouts(layouts));
   }, [route]);
 
-  let page = Page ? <Page /> : null;
+  return useMemo(() => {
+    let page = Page ? <Page /> : null;
 
-  layouts.forEach((Layout, idx) => {
-    page = <Layout key={route?.layouts[idx]}>{page}</Layout>;
-  });
+    layouts.forEach((Layout, idx) => {
+      page = <Layout key={route?.layouts[idx]}>{page}</Layout>;
+    });
 
-  return page;
+    return page;
+  }, [Page, route]);
 };

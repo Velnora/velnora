@@ -20,7 +20,7 @@ export class Router implements VelnoraRouter {
     this.routes.push(route);
     this.cache.set(route.id, route);
     this.debug("registered route: %O", { route });
-    this.logger.log(`Registered route: ${route.path}`);
+    this.logger.log(`Registered route for app: ${route.app.name}`);
     return this;
   }
 

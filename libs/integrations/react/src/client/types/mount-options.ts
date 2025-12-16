@@ -1,4 +1,6 @@
-import type { CsrMountOptions } from "./csr-mount-options";
-import type { SsrMountOptions } from "./ssr-mount-options";
+import type { FrontendRoute, FrontendSsrRoute } from "@velnora/types";
 
-export type MountOptions = CsrMountOptions | SsrMountOptions;
+export interface MountOptions {
+  mode: (FrontendRoute | FrontendSsrRoute)["renderMode"];
+  selector?: string | Element | Document;
+}

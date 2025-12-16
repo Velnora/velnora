@@ -45,7 +45,7 @@ export class Router implements VelnoraRouter {
     if (typeof window === "undefined") return;
     const currentState = window.history.state as { __index?: number } | null;
 
-    const url = `${this.app.clientUrl}${path}`.replace(/\/\/+/g, "/");
+    const url = `${this.app.clientUrl}${path}`.replace(/\/\/+/g, "/").replace(/\/+$/, "") || "/";
     window.history.pushState({ ...currentState, __index: this.index }, "", url);
     this.notify();
     this.index++;

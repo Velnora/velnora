@@ -1,14 +1,12 @@
-import { type FC, Suspense } from "react";
+import { type FC, Suspense, useContext } from "react";
 
 import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";
+import { routerContext } from "../router/router-context";
 import { getLayouts } from "../utils/get-layouts";
 import { getPage } from "../utils/get-page";
-import type { RouterProps } from "./router";
 
-export const RouterServer: FC<RouterProps & { pathRouteMap: Map<string, ReactRouteDescriptor> }> = async ({
-  router,
-  pathRouteMap
-}) => {
+export const RouterServer: FC<{ pathRouteMap: Map<string, ReactRouteDescriptor> }> = async ({ pathRouteMap }) => {
+  const { router } = useContext(routerContext);
   const route = pathRouteMap.get(router.pathObject.path);
 
   if (!route) {

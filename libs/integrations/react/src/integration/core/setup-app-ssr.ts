@@ -50,7 +50,7 @@ import routes from "${clientRoutesVid}";
 import { hydrateSsrApp } from "${pkg.name}/client";
 
 const router = createRouter(appConfig);
-hydrateSsrApp({ router, routes });
+hydrateSsrApp(router, routes);
 `
   );
 
