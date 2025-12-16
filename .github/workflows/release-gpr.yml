@@ -44,4 +44,4 @@ jobs:
         run: |
           yarn workspaces foreach -A -v --no-private \
             --exclude 'examples/**' \
-            exec yarn npm publish --registry https://npm.pkg.github.com
+            exec npm publish --registry https://npm.pkg.github.com
