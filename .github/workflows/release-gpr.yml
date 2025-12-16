@@ -1,4 +1,4 @@
-name: Release (master -> dev channel on GitHub Packages)
+name: Publish (GitHub Packages)
 
 on:
   push:
@@ -6,21 +6,16 @@ on:
       - master
 
 permissions:
-  contents: write
+  contents: read
   packages: write
 
 jobs:
-  release:
-    # Prevent infinite loop when the workflow itself pushes a release commit
-    if: ${{ github.actor != 'github-actions[bot]' && !contains(github.event.head_commit.message, 'chore(release)') }}
-
+  publish:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -34,32 +29,19 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Configure GitHub Packages auth (no package.json changes)
+      # Scope registry/auth ONLY in CI (no package.json changes)
+      - name: Configure GitHub Packages auth
         run: |
           cat > ~/.npmrc <<'EOF'
           @velnora:registry=https://npm.pkg.github.com
           //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+          always-auth=true
           EOF
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Canary/dev-style versioning on every push
-      # - Creates a prerelease version (e.g. 0.1.0-dev.1)
-      # - Commits + tags it
-      # - Pushes back to master
-      - name: Nx Release - version (dev prerelease)
+      # Publish each non-private workspace package using npm (NOT yarn npm publish)
+      - name: Publish workspaces
         run: |
-          yarn nx release version \
-            --specifier=prerelease \
-            --preid=dev \
-            --git-push \
-            --git-commit-message="chore(release): dev [skip ci]"
-
-      # Publish the just-versioned packages to GitHub Packages
-      - name: Nx Release - publish
-        run: yarn nx release publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Optional: if you want installs like `@velnora/pkg@dev`
-          # Nx calls npm under the hood; npm respects NPM_CONFIG_TAG.
-          NPM_CONFIG_TAG: dev
+          yarn workspaces foreach -A -v --no-private exec \
+            npm publish --access restricted --registry https://npm.pkg.github.com
