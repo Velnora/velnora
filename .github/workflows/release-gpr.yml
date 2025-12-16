@@ -49,7 +49,7 @@ jobs:
       # - Pushes back to master
       - name: Nx Release - version (dev prerelease)
         run: |
-          npx nx release version \
+          yarn nx release version \
             --specifier=prerelease \
             --preid=dev \
             --git-push \
@@ -57,7 +57,7 @@ jobs:
 
       # Publish the just-versioned packages to GitHub Packages
       - name: Nx Release - publish
-        run: npx nx release publish
+        run: yarn nx release publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Optional: if you want installs like `@velnora/pkg@dev`
