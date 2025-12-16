@@ -23,13 +23,13 @@ jobs:
           node-version: 20
           cache: yarn
 
-      - name: Install
+      - name: Install dependencies
         run: yarn install --immutable
 
       - name: Build
         run: yarn build
 
-      # Scope registry/auth ONLY in CI (no package.json changes)
+      # Configure registry ONLY in CI
       - name: Configure GitHub Packages auth
         run: |
           cat > ~/.npmrc <<'EOF'
@@ -40,8 +40,9 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Publish each non-private workspace package using npm (NOT yarn npm publish)
-      - name: Publish workspaces
+      # Publish all workspaces EXCEPT examples/**
+      - name: Publish workspaces (exclude examples)
         run: |
-          yarn workspaces foreach -A -v --no-private exec \
-            npm publish --access restricted --registry https://npm.pkg.github.com
+          yarn workspaces foreach -A -v --no-private \
+            --exclude 'examples/**' \
+            exec npm publish --access restricted --registry https://npm.pkg.github.com
