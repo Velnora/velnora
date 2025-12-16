@@ -14,7 +14,7 @@
     "build"
   ],
   "scripts": {
-    "build": "tsup --config tsup.config.ts.template",
+    "build": "tsup --config tsup.config.ts",
     "lint": "eslint .",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.build.json"
