@@ -42,16 +42,36 @@ export const setupAppSsr = (ctx: VelnoraContext) => {
   const clientEnvId = ctx.vite.addClientEnvironment();
   const serverEnvId = ctx.vite.addSsrEnvironment();
 
+  // ToDo: Refactor ugly code to use a proper TSX file instead of inline string
   ctx.vite.entryClient(
     `
 import { createRouter } from "velnora/router";
 import { appConfig } from "${ctx.vite.virtualAppConfig}";
 import routes from "${clientRoutesVid}";
-import { hydrateSsrApp } from "${pkg.name}/client";
+import { hydrateSsrApp } from "${pkg.name}/client"; 
+import { getMetadata } from "velnora/react";
 
 const router = createRouter(appConfig);
-hydrateSsrApp(router, routes);
-`
+const route = routes.find(r => r.path === router.path) || null;
+if (!route) {
+  throw new Error(\`No route found for path: \${router.path}\`);
+}
+
+const { Page, layouts } = await getMetadata(route.route);
+
+if (!Page) {
+  throw new Error(\`No default export found in page module: \${route.route.module}\`);
+}
+
+let page = <Page />;
+
+layouts.forEach((Layout, idx) => {
+  page = <Layout key={route.route.layouts[idx]}>{page}</Layout>;
+});
+
+hydrateSsrApp(page, router, routes);
+`,
+    { extension: "tsx" }
   );
 
   ctx.vite.entrySsr(`

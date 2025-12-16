@@ -2,14 +2,15 @@ import * as crypto from "node:crypto";
 import { Transform } from "node:stream";
 
 import { JSDOM } from "jsdom";
+import type { FC } from "react";
 import { type BootstrapScriptDescriptor, renderToPipeableStream } from "react-dom/server";
 import type { ClientRoute } from "velnora/router";
 
 import { createRouter } from "@velnora/router/server";
-import type { RenderFn } from "@velnora/types";
+import type { RenderFn, WithDefault } from "@velnora/types";
 
 import { Router } from "../../client/components/router";
-import { RouterServer } from "../../client/components/router.server";
+import { getLayouts } from "../../client/utils/get-layouts";
 import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";
 import { specialName } from "../utils/special-name";
 
@@ -29,11 +30,16 @@ export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): R
 
     const router = createRouter(ctx);
 
-    const page = (
-      <Router router={router}>
-        <RouterServer pathRouteMap={pathRouteMap} />
-      </Router>
-    );
+    const { default: Page } = await ctx.serverEnv.runner.import<WithDefault<FC>>(route.module);
+    if (!Page) {
+      ctx.logger.error(`No default export found in page module: ${route.module}`);
+      return { status: 404, body: "Not Found" };
+    }
+
+    const layouts = await getLayouts(route);
+    let page = <Page />;
+    layouts.forEach((Layout, idx) => (page = <Layout key={route.layouts[idx]}>{page}</Layout>));
+    page = <Router router={router}>{page}</Router>;
 
     const viteSpecificScripts = await ctx.transformRouteIndexHtml(ctx.route, "");
     const dom = new JSDOM(viteSpecificScripts);
@@ -60,7 +66,6 @@ export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): R
         } else if (script.attributes.type === "module" && !script.attributes.src && script.content) {
           const name = specialName(crypto.createHash("sha256").update(script.content).digest("hex").slice(0, 6));
           const virtualSrc = ctx.vite.virtual(name, script.content, { global: name === "react/refresh" });
-
           acc.contentScripts.push({ ...baseDescriptor, src: virtualSrc });
         } else if (!script.attributes.type && script.attributes.src) {
           acc.scripts.push({ src: script.attributes.src, ...baseDescriptor });
@@ -90,6 +95,7 @@ export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): R
         callback(null, chunk);
       }
     });
+
     const stream = renderToPipeableStream(page, {
       nonce,
       bootstrapModules: [...contentScripts, ...moduleScripts],

@@ -6,11 +6,17 @@ import { routerContext } from "../router/router-context";
 import { getLayouts } from "../utils/get-layouts";
 import { getPage } from "../utils/get-page";
 
-export const RouterClient: FC<{ pathRouteMap: Map<string, ReactRouteDescriptor> }> = ({ pathRouteMap }) => {
+export const RouterClient: FC<PropsWithChildren<{ pathRouteMap: Map<string, ReactRouteDescriptor> }>> = ({
+  pathRouteMap,
+  children
+}) => {
   const { router } = useContext(routerContext);
-  const [Page, setPage] = useState<ComponentType | null>(null);
+  const [app, setApp] = useState<{ Page: ComponentType | null; layouts: ComponentType<PropsWithChildren>[] }>({
+    Page: null,
+    layouts: []
+  });
+
   const [path, setPath] = useState<PathObject>(router.pathObject);
-  const [layouts, setLayouts] = useState<ComponentType<PropsWithChildren>[]>([]);
   const route = useMemo(() => pathRouteMap.get(path.path), [path]);
 
   useEffect(() => router.subscribe(path => setPath(path)), []);
@@ -22,20 +28,29 @@ export const RouterClient: FC<{ pathRouteMap: Map<string, ReactRouteDescriptor> 
       return;
     }
 
-    void getPage(route).then(Page => setPage(() => Page || null));
-  }, [route]);
+    void Promise.allSettled([getPage(route), getLayouts(route)]).then(([pageResult, layoutsResult]) => {
+      if (pageResult.status === "rejected") {
+        console.error(`Error loading page module: ${route.module}`, pageResult.reason);
+        return;
+      }
 
-  useEffect(() => {
-    if (!route) {
-      // ToDo: Implement registering a 404 page route
-      // console.error(`No matching page found for path: ${router.path}`);
-      return;
-    }
+      if (layoutsResult.status === "rejected") {
+        console.error(`Error loading layouts for route: ${route.module}`, layoutsResult.reason);
+        return;
+      }
 
-    void getLayouts(route).then(layouts => setLayouts(layouts));
+      const Page = pageResult.value || null;
+      const layouts = layoutsResult.value;
+
+      setApp({ Page, layouts });
+    });
   }, [route]);
 
   return useMemo(() => {
+    const { Page, layouts } = app;
+
+    if (!Page) return <>{children}</>;
+
     let page = Page ? <Page /> : null;
 
     layouts.forEach((Layout, idx) => {
@@ -43,5 +58,5 @@ export const RouterClient: FC<{ pathRouteMap: Map<string, ReactRouteDescriptor> 
     });
 
     return page;
-  }, [Page, route]);
+  }, [app]);
 };

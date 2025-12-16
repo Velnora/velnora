@@ -17,7 +17,7 @@ export class Vite implements ViteApi {
   ) {}
 
   get virtualPrefix() {
-    return `/${this.config.cacheDir}/virtual/${this.pkg.name}`;
+    return this.getVirtualPrefix();
   }
 
   get virtualAppConfig() {
@@ -42,7 +42,7 @@ export class Vite implements ViteApi {
 
     const extension = options?.extension || "ts";
     this.debug("registering Vite virtual module: %O", { id });
-    const prefix = options?.global ? `/${this.config.cacheDir}` : this.virtualPrefix;
+    const prefix = this.getVirtualPrefix(options?.global || false);
     const virtualName = `${prefix}/${id}.${extension}`;
     if (_.isNil(code)) {
       throw new Error(`For first time registering virtual module, code must be provided: ${this.pkg.name}@${id}`);
@@ -125,5 +125,9 @@ export const appConfig = Node.fromJSON(appConfigJSON);
       this.debug("attempted to modify Vite config after build");
       throw new Error("Vite API already built configuration. Further modifications are not allowed.");
     }
+  }
+
+  private getVirtualPrefix(isGlobal?: boolean) {
+    return isGlobal ? `/${this.config.cacheDir}/virtual` : `/${this.config.cacheDir}/virtual/${this.pkg.name}`;
   }
 }

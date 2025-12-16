@@ -6,7 +6,9 @@ export default layout(({ children }) => {
       <head>
         <title>Landing Page</title>
       </head>
-      <body>{children}</body>
+      <body>
+        <section id="__velnora">{children}</section>
+      </body>
     </html>
   );
 });
