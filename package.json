@@ -12,7 +12,7 @@
     "affected:build": "nx affected -t build",
     "affected:lint": "nx affected -t lint",
     "affected:test": "nx affected -t test",
-    "build": "nx run-many -t build",
+    "build": "nx run velnora:build",
     "check:libs:deps": "scripts/check-libs-deps.sh",
     "dev": "nx run hello-mfe-shell:dev",
     "lint": "nx run-many -t lint",

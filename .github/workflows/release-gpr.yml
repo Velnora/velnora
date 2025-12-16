@@ -1,0 +1,65 @@
+name: Release (master -> dev channel on GitHub Packages)
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  release:
+    # Prevent infinite loop when the workflow itself pushes a release commit
+    if: ${{ github.actor != 'github-actions[bot]' && !contains(github.event.head_commit.message, 'chore(release)') }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Install
+        run: yarn install --immutable
+
+      - name: Build
+        run: yarn build
+
+      - name: Configure GitHub Packages auth (no package.json changes)
+        run: |
+          cat > ~/.npmrc <<'EOF'
+          @velnora:registry=https://npm.pkg.github.com
+          //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+          EOF
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Canary/dev-style versioning on every push
+      # - Creates a prerelease version (e.g. 0.1.0-dev.1)
+      # - Commits + tags it
+      # - Pushes back to master
+      - name: Nx Release - version (dev prerelease)
+        run: |
+          npx nx release version \
+            --specifier=prerelease \
+            --preid=dev \
+            --git-push \
+            --git-commit-message="chore(release): dev [skip ci]"
+
+      # Publish the just-versioned packages to GitHub Packages
+      - name: Nx Release - publish
+        run: npx nx release publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: if you want installs like `@velnora/pkg@dev`
+          # Nx calls npm under the hood; npm respects NPM_CONFIG_TAG.
+          NPM_CONFIG_TAG: dev
