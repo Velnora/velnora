@@ -8,8 +8,12 @@
   "dependencies": {
     "@nx/devkit": "22.2.3",
     "@types/node": "^24.10.1",
+    "debug": "^4.4.3",
     "tsup": "^8.5.1",
     "type-fest": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12"
   },
   "generators": "./generators.json"
 }

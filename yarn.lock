@@ -4606,7 +4606,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@velnora/cli@workspace:libs/cli"
   dependencies:
-    "@velnora/cli-helper": "workspace:^"
     "@velnora/commands": "workspace:^"
     "@velnora/runtime-server": "workspace:^"
     eslint: "npm:^9.39.1"
@@ -4620,9 +4619,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@velnora/commands@workspace:libs/helper/commands"
   dependencies:
-    "@types/debug": "npm:^4.1.12"
     "@velnora/cli-helper": "workspace:^"
-    debug: "npm:^4.4.3"
     tsup: "npm:^8.5.1"
   languageName: unknown
   linkType: soft
@@ -4662,6 +4659,7 @@ __metadata:
   dependencies:
     "@types/debug": "npm:^4.1.12"
     "@types/express": "npm:^5.0.6"
+    "@types/lodash": "npm:^4.17.21"
     "@types/node": "npm:^25.0.2"
     "@types/semver": "npm:^7.7.1"
     "@velnora/contracts": "workspace:^"
@@ -4669,6 +4667,7 @@ __metadata:
     "@velnora/vite-integration": "workspace:^"
     debug: "npm:^4.4.3"
     glob: "npm:^13.0.0"
+    lodash: "npm:^4.17.21"
     semver: "npm:^7.7.3"
     tsup: "npm:^8.5.1"
     type-fest: "npm:^5.3.1"
@@ -4723,7 +4722,9 @@ __metadata:
   resolution: "@velnora/internal@workspace:libs/internal"
   dependencies:
     "@nx/devkit": "npm:22.2.3"
+    "@types/debug": "npm:^4.1.12"
     "@types/node": "npm:^24.10.1"
+    debug: "npm:^4.4.3"
     tsup: "npm:^8.5.1"
     type-fest: "npm:^5.2.0"
   languageName: unknown
@@ -4861,6 +4862,7 @@ __metadata:
     "@types/debug": "npm:^4.1.12"
     "@types/express": "npm:^5.0.6"
     "@types/lodash": "npm:^4.17.21"
+    "@velnora/commands": "workspace:^"
     "@velnora/contracts": "workspace:^"
     "@velnora/core": "workspace:^"
     "@velnora/devkit": "workspace:^"

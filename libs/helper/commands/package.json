@@ -19,11 +19,7 @@
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.build.json"
   },
-  "dependencies": {
-    "debug": "^4.4.3"
-  },
   "devDependencies": {
-    "@types/debug": "^4.1.12",
     "@velnora/cli-helper": "workspace:^",
     "tsup": "^8.5.1"
   },

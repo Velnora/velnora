@@ -15,7 +15,7 @@
     "build": "nx run velnora:build",
     "changeset:publish": "changeset publish",
     "changeset:version": "changeset version",
-    "check:libs:deps": "scripts/check-libs-deps.sh",
+    "check:libs:deps": "./scripts/check-libs-deps.sh",
     "dev": "nx run hello-mfe-shell:dev",
     "lint": "nx run-many -t lint",
     "lint:all": "eslint . --ext .ts,.tsx,.js,.jsx",
