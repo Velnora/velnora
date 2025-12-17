@@ -4613,8 +4613,6 @@ __metadata:
     tsup: "npm:^8.5.1"
     typescript: "npm:^5.9.3"
     vitest: "npm:^4.0.14"
-  bin:
-    velnora-dev: ./bin/velnora-dev.ts
   languageName: unknown
   linkType: soft
 
