@@ -1,6 +1,5 @@
 {
   "name": "@velnora/internal",
-  "version": "0.0.0.dev.0",
   "private": true,
   "sideEffects": false,
   "type": "module",
