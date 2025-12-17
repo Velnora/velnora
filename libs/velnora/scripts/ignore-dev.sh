@@ -1,0 +1,1 @@
+cat package.json | jq 'del(.bin."velnora-dev")' > package.tmp.json && mv package.tmp.json package.json

@@ -39,6 +39,7 @@
   "scripts": {
     "build": "tsup --config tsup.config.ts",
     "lint": "eslint .",
+    "prepublishOnly": "./scripts/ignore-dev.sh",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.build.json"
   },
