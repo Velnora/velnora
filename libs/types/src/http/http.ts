@@ -11,6 +11,7 @@ export interface Http extends Middlewares, EventEmitter {
 
   listen(): Promise<void>;
   address(): ReturnType<Server["address"]>;
+  printUrls(): void;
   close(): void;
 
   getMiddlewares(): Middlewares;

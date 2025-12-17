@@ -67,6 +67,8 @@ export class Http extends Middlewares implements VelnoraHttp {
     return new Middlewares(this.app);
   }
 
+  printUrls() {}
+
   close() {
     this._debug("closing server");
     if (!this.server) throw new Error("Server is not running");

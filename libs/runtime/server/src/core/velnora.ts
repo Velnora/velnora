@@ -50,6 +50,10 @@ export class Velnora {
     await this.http.listen();
   }
 
+  printUrls() {
+    this.http.printUrls();
+  }
+
   close() {
     this.http.close();
   }
