@@ -2,9 +2,9 @@ import type { ArgumentsCamelCase } from "yargs";
 
 import type { ParsedSpec } from "./parsed-spec";
 
-export interface CommandDef {
+export interface CommandDef<TAccum extends object = object> {
   name: string; // "dev"
-  desc?: string;
+  describe?: string;
   options: ParsedSpec[]; // command-local options
-  handler?: (a: ArgumentsCamelCase<Record<string, unknown>>) => void | Promise<void>;
+  handler?: (a: ArgumentsCamelCase<TAccum>) => void | Promise<void>;
 }
