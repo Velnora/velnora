@@ -24,6 +24,10 @@ export class Velnora {
     return this._http;
   }
 
+  get middlewares() {
+    return this._http.getMiddlewares();
+  }
+
   static construct(
     config: VelnoraConfig,
     graph: ModuleGraph,

@@ -1,22 +1,20 @@
-import { EventEmitter } from "node:events";
 import { createServer as createHttpServer } from "node:http";
 import type { Server as HttpServer } from "node:http";
 
-import type { RequestHandler } from "express";
 import express from "express";
 
-import type { ExtractParamsObject, VelnoraConfig, Http as VelnoraHttp } from "@velnora/types";
+import type { VelnoraConfig, Http as VelnoraHttp } from "@velnora/types";
 
 import { debug } from "../utils/debug";
+import { Middlewares } from "./middlewares";
 
-export class Http extends EventEmitter implements VelnoraHttp {
-  private readonly debug = debug.extend("http");
-  readonly app = express();
+export class Http extends Middlewares implements VelnoraHttp {
+  private readonly _debug = debug.extend("http");
 
   declare private server: HttpServer;
 
   private constructor(private readonly config: VelnoraConfig) {
-    super();
+    super(express());
   }
 
   get isRunning() {
@@ -35,29 +33,11 @@ export class Http extends EventEmitter implements VelnoraHttp {
     return new Http(config);
   }
 
-  use(...handlers: [RequestHandler, ...RequestHandler[]]) {
-    this.app.use(...handlers);
-    this.debug("handle-request registered global handlers: %O", { count: handlers.length });
-  }
-
-  handleRequest<TPossiblePath extends string>(
-    path: TPossiblePath,
-    ...handlers: RequestHandler<ExtractParamsObject<TPossiblePath>>[]
-  ): void;
-  handleRequest(path: RegExp, ...handlers: RequestHandler[]): void;
-  handleRequest(path: string | RegExp, ...handlers: RequestHandler[]) {
-    this.app.use(path, ...handlers);
-    this.debug("handle-request registered route handler: %O", {
-      route: path,
-      handlersCount: handlers.length
-    });
-  }
-
   async listen() {
     const resolvers = Promise.withResolvers<void>();
 
     this.server = createHttpServer(this.app).listen(this.port, this.host, () => {
-      this.debug("listen server started listening: %O", { host: this.host, port: this.port });
+      this._debug("listen server started listening: %O", { host: this.host, port: this.port });
       resolvers.resolve();
     });
 
@@ -83,8 +63,12 @@ export class Http extends EventEmitter implements VelnoraHttp {
     return this.server.address();
   }
 
+  getMiddlewares() {
+    return new Middlewares(this.app);
+  }
+
   close() {
-    this.debug("closing server");
+    this._debug("closing server");
     if (!this.server) throw new Error("Server is not running");
     this.server.close();
   }
