@@ -1,5 +1,6 @@
 {
   "name": "@velnora/mf-app-host",
+  "private": true,
   "dependencies": {
     "@nestjs/common": "^11.1.9",
     "@nestjs/core": "^11.1.9",

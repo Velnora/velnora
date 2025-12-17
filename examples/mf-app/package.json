@@ -1,5 +1,6 @@
 {
   "name": "@velnora/mf-app",
+  "private": true,
   "workspaces": [
     "apps/*"
   ],

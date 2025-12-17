@@ -1,5 +1,6 @@
 {
   "name": "@velnora/mf-app-about",
+  "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
     "react": "^19.2.1",
