@@ -29,10 +29,12 @@
   "main": "./build/velnora.js",
   "types": "./build/velnora.d.ts",
   "bin": {
+    "velnora": "./bin/velnora.js",
     "velnora-dev": "./bin/velnora-dev.ts"
   },
   "files": [
-    "build"
+    "build",
+    "meta"
   ],
   "scripts": {
     "build": "tsup --config tsup.config.ts",
@@ -51,6 +53,7 @@
     "vitest": "^4.0.14"
   },
   "devDependencies": {
+    "@velnora/cli": "workspace:^",
     "type-fest": "^5.2.0"
   },
   "peerDependencies": {

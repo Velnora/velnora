@@ -4602,7 +4602,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@velnora/cli@workspace:libs/cli":
+"@velnora/cli@workspace:^, @velnora/cli@workspace:libs/cli":
   version: 0.0.0-use.local
   resolution: "@velnora/cli@workspace:libs/cli"
   dependencies:
@@ -4614,7 +4614,6 @@ __metadata:
     typescript: "npm:^5.9.3"
     vitest: "npm:^4.0.14"
   bin:
-    velnora: ./build/velnora.cli.js
     velnora-dev: ./bin/velnora-dev.ts
   languageName: unknown
   linkType: soft
@@ -12186,6 +12185,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "velnora@workspace:libs/velnora"
   dependencies:
+    "@velnora/cli": "workspace:^"
     "@velnora/core": "workspace:^"
     "@velnora/plugin-api": "workspace:^"
     "@velnora/router": "workspace:^"
@@ -12201,6 +12201,7 @@ __metadata:
     "@velnora/integrations-react":
       optional: true
   bin:
+    velnora: ./bin/velnora.js
     velnora-dev: ./bin/velnora-dev.ts
   languageName: unknown
   linkType: soft
