@@ -1,7 +1,6 @@
 {
   "name": "@velnora/internal",
   "private": true,
-  "sideEffects": false,
   "type": "module",
   "main": "./src/main.ts",
   "types": "./src/main.ts",
