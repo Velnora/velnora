@@ -12196,7 +12196,7 @@ __metadata:
     typescript: "npm:^5.9.3"
     vitest: "npm:^4.0.14"
   peerDependencies:
-    "@velnora/integrations-react": "*"
+    "@velnora/integrations-react": "workspace:*"
   peerDependenciesMeta:
     "@velnora/integrations-react":
       optional: true
