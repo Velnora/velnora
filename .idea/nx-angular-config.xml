@@ -1,26 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="NxAngularConfigService" workspaceLocation="file://$PROJECT_DIR$/nx.json">
-    <projects>
-      <project name="@velnora/cli" file="file://$PROJECT_DIR$/libs/cli/project.json" />
-      <project name="@velnora/cli-helper" file="file://$PROJECT_DIR$/libs/helper/cli/project.json" />
-      <project name="@velnora/commands" file="file://$PROJECT_DIR$/libs/helper/commands/project.json" />
-      <project name="@velnora/contracts" file="file://$PROJECT_DIR$/libs/contracts/project.json" />
-      <project name="@velnora/core" file="file://$PROJECT_DIR$/libs/core/project.json" />
-      <project name="@velnora/devkit" file="file://$PROJECT_DIR$/libs/devkit/project.json" />
-      <project name="@velnora/integrations-nest" file="file://$PROJECT_DIR$/libs/integrations/nest/project.json" />
-      <project name="@velnora/integrations-react" file="file://$PROJECT_DIR$/libs/integrations/react/project.json" />
-      <project name="@velnora/internal" file="file://$PROJECT_DIR$/libs/internal/project.json" />
-      <project name="@velnora/mf-app" file="file://$PROJECT_DIR$/examples/mf-app/project.json" />
-      <project name="@velnora/plugin-api" file="file://$PROJECT_DIR$/libs/plugin-api/project.json" />
-      <project name="@velnora/router" file="file://$PROJECT_DIR$/libs/router/project.json" />
-      <project name="@velnora/rpc" file="file://$PROJECT_DIR$/libs/rpc/project.json" />
-      <project name="@velnora/runtime-client" file="file://$PROJECT_DIR$/libs/runtime/client/project.json" />
-      <project name="@velnora/runtime-server" file="file://$PROJECT_DIR$/libs/runtime/server/project.json" />
-      <project name="@velnora/sample-app" file="file://$PROJECT_DIR$/examples/sample/project.json" />
-      <project name="@velnora/types" file="file://$PROJECT_DIR$/libs/types/project.json" />
-      <project name="@velnora/vite-integration" file="file://$PROJECT_DIR$/libs/vite/integration/project.json" />
-      <project name="velnora" file="file://$PROJECT_DIR$/libs/velnora/project.json" />
-    </projects>
-  </component>
+  <component name="NxAngularConfigService" workspaceLocation="file://$PROJECT_DIR$/nx.json" />
 </project>
