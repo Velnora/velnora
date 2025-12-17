@@ -10,7 +10,6 @@
     "@velnora/commands": "0.0.0",
     "@velnora/integrations-nest": "0.0.0",
     "@velnora/integrations-react": "0.0.0",
-    "@velnora/internal": "0.0.0",
     "@velnora/plugin-api": "0.0.0",
     "@velnora/router": "0.0.0",
     "@velnora/rpc": "0.0.0",
