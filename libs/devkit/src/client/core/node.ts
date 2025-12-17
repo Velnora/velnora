@@ -12,8 +12,8 @@ export class Node implements Package {
   declare protected _config: VelnoraAppConfig;
   declare private readonly _kind: PackageKind;
 
-  static fromJSON(json: ReturnType<ServerNode["toJSON"]>) {
-    const node = new Node(json.root, json.packageJson, json.config);
+  static fromJSON(json: ReturnType<ServerNode["toJSON"]>, config: VelnoraConfig) {
+    const node = new Node(json.root, json.packageJson, config);
     Object.assign(node, { _id: json.id, _config: json.appConfig, _kind: json.kind });
     return node;
   }

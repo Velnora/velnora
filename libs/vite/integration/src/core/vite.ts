@@ -20,6 +20,10 @@ export class Vite implements ViteApi {
     return this.getVirtualPrefix();
   }
 
+  get virtualConfig() {
+    return `${this.getVirtualPrefix(true)}/config.ts`;
+  }
+
   get virtualAppConfig() {
     return `${this.virtualPrefix}/app-config.ts`;
   }
@@ -99,9 +103,10 @@ export class Vite implements ViteApi {
       "app-config",
       `
 import { Node } from "@velnora/devkit";
+import config from "${this.virtualConfig}";
     
 const appConfigJSON = ${JSON.stringify(this.pkg)};
-export const appConfig = Node.fromJSON(appConfigJSON);
+export const appConfig = Node.fromJSON(appConfigJSON, config);
 `
     );
 

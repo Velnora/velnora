@@ -1,4 +1,4 @@
-import { existsSync, statSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { glob } from "glob";
@@ -6,7 +6,6 @@ import _ from "lodash";
 import type { PackageJson } from "type-fest";
 
 import { velnoraAppConfigSchema } from "@velnora/contracts";
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import { Node as NodeClient } from "@velnora/devkit";
 import { type Package, PackageKind, type VelnoraAppConfig, type VelnoraConfig } from "@velnora/types";
 
@@ -45,9 +44,7 @@ export class Node extends NodeClient implements Package {
     return PackageKind.Unknown;
   }
 
-  async fetchConfig() {
-    if (this._config) return this._config;
-    const config = await loadConfigFile<VelnoraAppConfig>(resolve(this.root, "velnora.config"));
+  loadConfig(config: VelnoraAppConfig) {
     const result = velnoraAppConfigSchema.safeParse(config);
     if (result.success) {
       this._config = result.data;
@@ -57,16 +54,19 @@ export class Node extends NodeClient implements Package {
     throw new VelnoraConfigError(this.name, result.error);
   }
 
+  async fetchConfig() {
+    if (this._config) return this._config;
+    const config = await loadConfigFile<VelnoraAppConfig>(resolve(this.root, "velnora.config"));
+    return this.loadConfig(config);
+  }
+
   toJSON() {
     return {
-      $v: 1,
       id: this.id,
       root: this.root,
       kind: this.kind,
       packageJson: this.packageJson,
-      config: _.omit(this.rootConfig, "integrations"),
-      appConfig: this.config,
-      lastUpdatedTime: statSync(resolve(this.root, "package.json")).mtimeMs
+      appConfig: this.config
     };
   }
 }

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { type UserConfig, mergeConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -94,7 +95,10 @@ export class ViteContainer {
   }
 
   withApp(pkg: Package) {
-    return new Vite(pkg, this, this.config);
+    const vite = new Vite(pkg, this, this.config);
+    const config = _.omit(this.config, "integrations");
+    vite.virtual("config", `export default ${JSON.stringify(config, null, 2)};`, { global: true });
+    return vite;
   }
 
   build() {

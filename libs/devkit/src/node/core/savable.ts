@@ -1,8 +1,10 @@
-import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
 
 import type { Debugger } from "debug";
+import type { Promisable } from "type-fest";
 
-export abstract class Savable<TJson> {
+export abstract class Savable<TJson extends { toJSON: () => unknown }> {
   private isFirstInitialization = true;
 
   protected constructor(
@@ -10,10 +12,11 @@ export abstract class Savable<TJson> {
     protected readonly debug: Debugger
   ) {}
 
-  protected abstract loadData(json: TJson): void;
+  protected abstract loadData(json: ReturnType<TJson["toJSON"]>): void;
 
   load() {
     const module = this.manifestPath;
+
     if (!existsSync(module)) {
       this.debug("load module graph cache not found at %O", { path: module });
       return;
@@ -22,11 +25,12 @@ export abstract class Savable<TJson> {
     const data = readFileSync(module, "utf-8");
     this.debug("loading module graph cache from %O", { path: module });
 
-    const json = JSON.parse(data) as TJson;
+    const json = JSON.parse(data) as ReturnType<TJson["toJSON"]>;
     this.loadData(json);
   }
 
   save() {
+    mkdirSync(dirname(this.manifestPath), { recursive: true });
     writeFileSync(this.manifestPath, JSON.stringify(this, null, 2), "utf-8");
   }
 
@@ -41,12 +45,21 @@ export abstract class Savable<TJson> {
     }
   }
 
-  protected withPersistence<TReturn>(cb: () => TReturn): TReturn {
+  protected withPersistence<TReturn>(cb: () => TReturn): TReturn;
+  protected withPersistence<TReturn>(cb: () => Promise<TReturn>): Promise<TReturn>;
+  protected withPersistence<TReturn>(cb: () => Promisable<TReturn>): Promisable<TReturn> {
     if (this.isFirstInitialization) {
       this.isFirstInitialization = false;
       this.load();
     }
     const result = cb();
+    if (result instanceof Promise) {
+      return (result as Promise<TReturn>).then(res => {
+        this.save();
+        return res;
+      });
+    }
+
     this.save();
     return result;
   }

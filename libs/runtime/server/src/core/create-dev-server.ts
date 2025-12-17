@@ -18,7 +18,6 @@ export const createDevServer = async (options: DevCommandOptions) => {
 
   const graph = new ModuleGraph(config);
   await graph.indexWorkspace();
-  await graph.forEach(node => node.fetchConfig());
 
   const logger = createLogger(hooks);
   const router = Router.create(logger.extend({ logger: "router" }));

@@ -85,6 +85,8 @@ export class ModuleGraph extends Savable<ModuleGraph> {
       debug("finished parsing infrastructure: %O", {
         totalModules: pkgs.length
       });
+
+      await this.forEach(node => node.fetchConfig());
     });
   }
 
@@ -110,14 +112,19 @@ export class ModuleGraph extends Savable<ModuleGraph> {
     this.edges.forEach((targets, source) => {
       edges[source.name] = Array.from(targets).map(target => target.name);
     });
-    return { $v: 1, nodes, edges };
+    return { nodes, edges };
   }
 
-  protected loadData(data: ModuleGraph) {
+  protected loadData(data: ReturnType<ModuleGraph["toJSON"]>) {
     data.nodes.forEach(nodeData => {
       const node = new Node(nodeData.root, nodeData.packageJson, this.config);
+      Object.assign(node, { _id: nodeData.id });
+      node.loadConfig(nodeData.appConfig);
       this.nodes.add(node);
       this.nodeNameMap.set(node.name, node);
     });
+
+    // ToDo: load edges
+    // console.log(data.edges);
   }
 }
