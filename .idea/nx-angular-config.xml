@@ -4,6 +4,7 @@
     <projects>
       <project name="@velnora/cli" file="file://$PROJECT_DIR$/libs/cli/project.json" />
       <project name="@velnora/cli-helper" file="file://$PROJECT_DIR$/libs/helper/cli/project.json" />
+      <project name="@velnora/commands" file="file://$PROJECT_DIR$/libs/helper/commands/project.json" />
       <project name="@velnora/contracts" file="file://$PROJECT_DIR$/libs/contracts/project.json" />
       <project name="@velnora/core" file="file://$PROJECT_DIR$/libs/core/project.json" />
       <project name="@velnora/devkit" file="file://$PROJECT_DIR$/libs/devkit/project.json" />
