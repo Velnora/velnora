@@ -1,20 +1,8 @@
 import { defineConfig } from "eslint/config";
 import * as tsEslint from "typescript-eslint";
 
-
-
 import js from "@eslint/js";
 import nxPlugin from "@nx/eslint-plugin";
-
-
-
-
-
-
-
-
-
-
 
 const projectScopes = [
   {
@@ -40,7 +28,7 @@ const projectScopes = [
   },
   {
     sourceTag: "scope:router",
-    onlyDependOnLibsWithTags: ["scope:types"],
+    onlyDependOnLibsWithTags: ["scope:types", "scope:devkit"],
     notDependOnLibsWithTags: []
   },
   {

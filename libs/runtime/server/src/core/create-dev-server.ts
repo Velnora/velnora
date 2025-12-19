@@ -22,7 +22,7 @@ export const createDevServer = async (options: DevCommandOptions) => {
   const logger = createLogger(hooks);
   const router = Router.create(logger.extend({ logger: "router" }));
 
-  const container = ViteContainer.create(config, router, {
+  const container = ViteContainer.create(config, graph, router, {
     server: { watch: config.server?.watch }
   });
 

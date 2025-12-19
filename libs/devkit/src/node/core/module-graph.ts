@@ -5,25 +5,29 @@ import { dirname, resolve } from "node:path";
 import { glob } from "glob";
 import type { PackageJson, Promisable } from "type-fest";
 
-import type { VelnoraConfig } from "@velnora/types";
+import type { VelnoraConfig, ModuleGraph as VelnoraModuleGraph } from "@velnora/types";
 
 import { debug } from "../utils/debug";
 import { Node } from "./node";
 import { Savable } from "./savable";
 
-export class ModuleGraph extends Savable<ModuleGraph> {
-  private readonly nodeNameMap = new Map<string, Node>();
-  private readonly nodes = new Set<Node>();
-  private readonly edges = new Map<Node, Set<Node>>();
+export class ModuleGraph extends Savable<ModuleGraph> implements VelnoraModuleGraph {
+  private readonly _nodeNameMap = new Map<string, Node>();
+  private readonly _nodes = new Set<Node>();
+  private readonly _edges = new Map<Node, Set<Node>>();
 
   constructor(private readonly config: VelnoraConfig) {
     super(resolve(config.cacheDir, "module-graph.json"), debug.extend("module-graph"));
   }
 
+  get nodes() {
+    return Array.from(this._nodes);
+  }
+
   indexWorkspace() {
     return this.withPersistence(async () => {
-      if (this.nodes.size > 0) {
-        this.debug("index-workspace module graph loaded from cache with %d nodes", this.nodes.size);
+      if (this._nodes.size > 0) {
+        this.debug("index-workspace module graph loaded from cache with %d nodes", this._nodes.size);
         return;
       }
 
@@ -78,8 +82,8 @@ export class ModuleGraph extends Savable<ModuleGraph> {
         debug("adding package to module graph: %O", { name: pkg.packageJson.name, root: pkg.root });
 
         const node = new Node(pkg.root, pkg.packageJson, this.config);
-        this.nodes.add(node);
-        this.nodeNameMap.set(node.name, node);
+        this._nodes.add(node);
+        this._nodeNameMap.set(node.name, node);
       });
 
       debug("finished parsing infrastructure: %O", {
@@ -91,7 +95,7 @@ export class ModuleGraph extends Savable<ModuleGraph> {
   }
 
   updateNode(node: string | Node, cb: (node: Node) => void) {
-    const targetNode = typeof node === "string" ? this.nodeNameMap.get(node) : node;
+    const targetNode = typeof node === "string" ? this._nodeNameMap.get(node) : node;
     if (!targetNode) throw new Error(`Node not found: ${typeof node === "string" ? node : node.name}`);
     cb(targetNode);
   }
@@ -99,17 +103,33 @@ export class ModuleGraph extends Savable<ModuleGraph> {
   forEach(callback: (module: Node) => Promise<unknown>): Promise<this>;
   forEach(callback: (module: Node) => unknown): this;
   forEach(cb: (node: Node) => Promisable<unknown>) {
-    const results = Array.from(this.nodes).map(node => cb(node));
-    if (results.some(r => r instanceof Promise)) {
-      return Promise.all(results.map(r => Promise.resolve(r))).then(() => this);
-    }
-    return this;
+    let isPromise = false;
+    const results = this.nodes.map(node => {
+      const result = cb(node);
+      isPromise = isPromise || result instanceof Promise;
+      return result;
+    });
+    return isPromise ? Promise.all(results.map(r => Promise.resolve(r))).then(() => this) : this;
+  }
+
+  map<TResult>(callback: (module: Node) => TResult): Promise<TResult[]>;
+  map<TResult>(callback: (module: Node) => Promise<TResult>): Promise<TResult[]>;
+  map<TResult>(callback: (module: Node) => TResult | Promise<TResult>): Promisable<TResult[]> {
+    let isPromise = false;
+    const results: Promisable<TResult>[] = [];
+    this.forEach(node => {
+      const result = callback(node);
+      isPromise = isPromise || result instanceof Promise;
+      results.push(result);
+    });
+
+    return isPromise ? Promise.all(results as Promise<TResult>[]) : (results as TResult[]);
   }
 
   toJSON() {
-    const nodes = Array.from(this.nodes).map(node => node.toJSON());
+    const nodes = Array.from(this._nodes).map(node => node.toJSON());
     const edges: Record<string, string[]> = {};
-    this.edges.forEach((targets, source) => {
+    this._edges.forEach((targets, source) => {
       edges[source.name] = Array.from(targets).map(target => target.name);
     });
     return { nodes, edges };
@@ -120,11 +140,11 @@ export class ModuleGraph extends Savable<ModuleGraph> {
       const node = new Node(nodeData.root, nodeData.packageJson, this.config);
       Object.assign(node, { _id: nodeData.id });
       node.loadConfig(nodeData.appConfig);
-      this.nodes.add(node);
-      this.nodeNameMap.set(node.name, node);
+      this._nodes.add(node);
+      this._nodeNameMap.set(node.name, node);
     });
 
-    // ToDo: load edges
-    // console.log(data.edges);
+    // ToDo: load _edges
+    // console.log(data._edges);
   }
 }

@@ -1,7 +1,7 @@
 export interface PublicRouter {
-  readonly path: string;
-
-  getPath(path: string): string;
-  push(path: string): void;
-  replace(path: string): void;
+  navigate(target: string): void;
+  replace(target: string): void;
+  back(): void;
+  forward(): void;
+  reload(): void;
 }

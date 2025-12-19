@@ -14,7 +14,7 @@ export const virtualModulePlugin = (config: VelnoraConfig, virtualModules: Map<s
 
     resolveId(id) {
       if (virtualModules.has(id)) {
-        const module = resolve(id.slice(1));
+        const module = resolve(id.replace(/^\//, ""));
         idFileMapping.set(module, id);
         return module;
       }
@@ -28,10 +28,11 @@ export const virtualModulePlugin = (config: VelnoraConfig, virtualModules: Map<s
         const protocolId = identifier.startsWith(config.cacheDir)
           ? identifier.slice(config.cacheDir.length + 1)
           : identifier;
+        const source = protocolId.startsWith("velnora:") ? `/${protocolId.slice("velnora:".length)}` : protocolId;
 
         return {
           code: msCode.toString(),
-          map: msCode.generateMap({ hires: true, source: `velnora://${protocolId}`, includeContent: true })
+          map: msCode.generateMap({ hires: true, source: `velnora://${source}`, includeContent: true })
         };
       }
     }

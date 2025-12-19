@@ -4,6 +4,7 @@ export * from "./context";
 export * from "./http";
 export * from "./integration";
 export * from "./logger";
+export * from "./module-graph";
 export * from "./package";
 export * from "./router";
 export * from "./types";

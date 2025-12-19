@@ -4,3 +4,6 @@ export * from "./path-object";
 
 export * from "./client-route";
 export * from "./base-route-descriptor";
+
+export * from "./app-path-object";
+export * from "./external-path-object";

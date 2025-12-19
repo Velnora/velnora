@@ -2,10 +2,10 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { glob } from "glob";
-import _ from "lodash";
 import type { PackageJson } from "type-fest";
 
 import { velnoraAppConfigSchema } from "@velnora/contracts";
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { Node as NodeClient } from "@velnora/devkit";
 import { type Package, PackageKind, type VelnoraAppConfig, type VelnoraConfig } from "@velnora/types";
 

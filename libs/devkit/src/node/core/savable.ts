@@ -14,7 +14,7 @@ export abstract class Savable<TJson extends { toJSON: () => unknown }> {
 
   protected abstract loadData(json: ReturnType<TJson["toJSON"]>): void;
 
-  load() {
+  protected load() {
     const module = this.manifestPath;
 
     if (!existsSync(module)) {
@@ -29,12 +29,12 @@ export abstract class Savable<TJson extends { toJSON: () => unknown }> {
     this.loadData(json);
   }
 
-  save() {
+  protected save() {
     mkdirSync(dirname(this.manifestPath), { recursive: true });
     writeFileSync(this.manifestPath, JSON.stringify(this, null, 2), "utf-8");
   }
 
-  clear() {
+  protected clear() {
     if (existsSync(this.manifestPath)) {
       this.debug("clearing module graph cache at %O", { path: this.manifestPath });
       try {

@@ -10,16 +10,31 @@ export default page(() => {
       <h1>Hello from Velnora appDir</h1>
       <p>This is a streamed SSR page.</p>
 
-      <a
-        href={router.getPath("/a/b")}
-        data-href="/a/b"
-        onClick={event => {
-          event.preventDefault();
-          router.push(event.currentTarget.dataset.href!);
-        }}
-      >
-        Go To
-      </a>
+      <div>
+        <a
+          href="/a/b"
+          data-href="/a/b"
+          onClick={event => {
+            event.preventDefault();
+            router.navigate(event.currentTarget.dataset.href!);
+          }}
+        >
+          Go To
+        </a>
+      </div>
+
+      <div>
+        <a
+          href="about://a/b"
+          data-href="about://a/b"
+          onClick={event => {
+            event.preventDefault();
+            router.navigate(event.currentTarget.dataset.href!);
+          }}
+        >
+          Go To About
+        </a>
+      </div>
 
       <div>{counter}</div>
       <button onClick={() => setCounter(counter + 1)}>Increment</button>

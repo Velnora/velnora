@@ -2,7 +2,7 @@ import _ from "lodash";
 import type { LiteralUnion } from "type-fest";
 import type { EnvironmentOptions } from "vite";
 
-import type { Package, VelnoraConfig, VirtualOptions, ViteApi } from "@velnora/types";
+import type { Package, VirtualOptions, ViteApi } from "@velnora/types";
 
 import { debug } from "../utils/debug";
 import type { ViteContainer } from "./vite-container";
@@ -12,8 +12,7 @@ export class Vite implements ViteApi {
 
   constructor(
     private readonly pkg: Package,
-    private readonly vite: ViteContainer,
-    private readonly config: VelnoraConfig
+    private readonly vite: ViteContainer
   ) {}
 
   get virtualPrefix() {
@@ -21,7 +20,7 @@ export class Vite implements ViteApi {
   }
 
   get virtualConfig() {
-    return `${this.getVirtualPrefix(true)}/config.ts`;
+    return this.vite.virtualConfig;
   }
 
   get virtualAppConfig() {
@@ -46,14 +45,14 @@ export class Vite implements ViteApi {
 
     const extension = options?.extension || "ts";
     this.debug("registering Vite virtual module: %O", { id });
-    const prefix = this.getVirtualPrefix(options?.global || false);
-    const virtualName = `${prefix}/${id}.${extension}`;
-    if (_.isNil(code)) {
+    const virtualName = options?.raw ? id : `${this.getVirtualPrefix(options?.global || false)}/${id}.${extension}`;
+    if (_.isNil(code) && !options?.forceToRegister) {
       throw new Error(`For first time registering virtual module, code must be provided: ${this.pkg.name}@${id}`);
     }
 
     this.vite.idVirtualNameMapping.set(identifier, virtualName);
-    this.vite.virtualModules.set(virtualName, code);
+    if (!_.isNil(code)) this.vite.virtualModules.set(virtualName, code);
+
     return virtualName;
   }
 
@@ -102,11 +101,8 @@ export class Vite implements ViteApi {
     this.virtual(
       "app-config",
       `
-import { Node } from "@velnora/devkit";
-import config from "${this.virtualConfig}";
-    
-const appConfigJSON = ${JSON.stringify(this.pkg)};
-export const appConfig = Node.fromJSON(appConfigJSON, config);
+import { applicationsMap } from "velnora:applications";
+export const appConfig = applicationsMap.get("${this.pkg.name}");
 `
     );
 
@@ -132,7 +128,7 @@ export const appConfig = Node.fromJSON(appConfigJSON, config);
     }
   }
 
-  private getVirtualPrefix(isGlobal?: boolean) {
-    return isGlobal ? `/${this.config.cacheDir}/virtual` : `/${this.config.cacheDir}/virtual/${this.pkg.name}`;
+  private getVirtualPrefix(global = false) {
+    return global ? this.vite.getVirtualPrefix(true) : this.vite.getVirtualPrefix(false, this.pkg.name);
   }
 }

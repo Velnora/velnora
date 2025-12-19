@@ -2,7 +2,7 @@ import _ from "lodash";
 import { type UserConfig, mergeConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-import type { Package, Router, VelnoraConfig } from "@velnora/types";
+import type { ModuleGraph, Package, Router, VelnoraConfig } from "@velnora/types";
 
 import { devSourceMapPlugin } from "../plugins/dev-source-map.plugin";
 import { htmlPlugin } from "../plugins/html";
@@ -22,6 +22,7 @@ export class ViteContainer {
   private readonly _virtualModules = new Map<string, string>();
   private readonly _idVirtualNameMapping = new Map<string, string>();
   private _isUsed = false;
+  private _isFirstTimeUsed = true;
 
   private _userConfig: UserConfig = {
     root: process.cwd(),
@@ -44,12 +45,13 @@ export class ViteContainer {
     appType: "custom"
   };
 
-  static create(config: VelnoraConfig, router: Router, initialConfig: UserConfig = {}) {
-    return new ViteContainer(config, router, initialConfig);
+  static create(config: VelnoraConfig, graph: ModuleGraph, router: Router, initialConfig: UserConfig = {}) {
+    return new ViteContainer(config, graph, router, initialConfig);
   }
 
   private constructor(
     private readonly config: VelnoraConfig,
+    private readonly graph: ModuleGraph,
     router: Router,
     initialConfig: UserConfig = {}
   ) {
@@ -82,6 +84,10 @@ export class ViteContainer {
     return this._userConfig;
   }
 
+  get virtualConfig() {
+    return "velnora:config";
+  }
+
   updateConfig(update: Partial<UserConfig> | ((current: UserConfig) => Partial<UserConfig>)) {
     if (typeof update === "function") {
       const result = update(this._userConfig);
@@ -95,9 +101,13 @@ export class ViteContainer {
   }
 
   withApp(pkg: Package) {
-    const vite = new Vite(pkg, this, this.config);
-    const config = _.omit(this.config, "integrations");
-    vite.virtual("config", `export default ${JSON.stringify(config, null, 2)};`, { global: true });
+    const vite = new Vite(pkg, this);
+
+    if (this._isFirstTimeUsed) {
+      this._isFirstTimeUsed = false;
+      this.initializeCommonVirtualModules(vite);
+    }
+
     return vite;
   }
 
@@ -116,5 +126,38 @@ export class ViteContainer {
     this.debug("Vite configuration marked as used");
 
     return this.userConfig;
+  }
+
+  getVirtualPrefix(isGlobal: false, appName: string): string;
+  getVirtualPrefix(isGlobal: true): string;
+  getVirtualPrefix(isGlobal: boolean, appName?: string) {
+    return isGlobal ? `/${this.config.cacheDir}/virtual` : `/${this.config.cacheDir}/virtual/${appName}`;
+  }
+
+  private initializeCommonVirtualModules(vite: Vite) {
+    const config = _.omit(this.config, "integrations");
+    vite.virtual(this.virtualConfig, `export default ${JSON.stringify(config, null, 2)};`, { raw: true });
+
+    vite.virtual(
+      "velnora:applications",
+      `
+import { Node } from "@velnora/devkit";
+import config from "${this.virtualConfig}";
+
+export const applications = ${JSON.stringify(this.graph.nodes, null, 2)}.map(nodeJson => Node.fromJSON(nodeJson, config));;
+export const applicationsMap = new Map(
+  applications.flatMap(app => [[app.basename, app], [app.name, app]])
+);
+`,
+      { raw: true }
+    );
+
+    const bootstrap = Object.fromEntries(
+      this.graph.nodes.map(node => [
+        node.basename,
+        this.withApp(node).entryClient(undefined, { forceToRegister: true })
+      ])
+    );
+    vite.virtual(`velnora:bootstrap`, `export default ${JSON.stringify(bootstrap, null, 2)};`, { raw: true });
   }
 }
