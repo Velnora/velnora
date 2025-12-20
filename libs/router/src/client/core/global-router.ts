@@ -1,4 +1,3 @@
-/// <reference types="velnora/client" />
 import { applications, applicationsMap } from "velnora:applications";
 import bootstrap from "velnora:bootstrap";
 
