@@ -36,7 +36,8 @@
   },
   "files": [
     "build",
-    "meta"
+    "meta",
+    "packages"
   ],
   "scripts": {
     "build": "tsup --config tsup.config.ts",
