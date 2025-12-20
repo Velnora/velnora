@@ -2,7 +2,8 @@ import { createHooks } from "hookable";
 
 import type { DevCommandOptions } from "@velnora/commands";
 import { createLogger } from "@velnora/core";
-import { Injector, ModuleGraph } from "@velnora/devkit/node";
+import { ContextManager, Injector, ModuleGraph } from "@velnora/devkit/node";
+import { TypeGenerator } from "@velnora/generator";
 import { Router } from "@velnora/router";
 import type { Hooks } from "@velnora/types";
 import { IntegrationContainer, ViteContainer, ViteServer, vite } from "@velnora/vite-integration";
@@ -26,20 +27,18 @@ export const createDevServer = async (options: DevCommandOptions) => {
     server: { watch: config.server?.watch }
   });
 
-  const integrationContainer = new IntegrationContainer(
-    config,
-    router,
-    hooks,
-    container,
-    logger.extend({ logger: "integration-container" })
-  );
+  const typeGenerator = new TypeGenerator();
+
+  const ctxManager = new ContextManager(container, router, typeGenerator, logger.extend({ logger: "context-manager" }));
+
+  const integrationContainer = new IntegrationContainer(config, ctxManager, hooks);
 
   await graph.forEach(node => integrationContainer.configure(node));
 
   const http = Http.create(config);
   const viteServer = ViteServer.createDevServer(container, config, http);
   await viteServer.init();
-  const injector = Injector.makeInjectable(config, http, router, viteServer, container, logger);
+  const injector = Injector.makeInjectable(config, http, router, viteServer, container, ctxManager, logger);
 
   http.on("close", () => void vite.close());
 

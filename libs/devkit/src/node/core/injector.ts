@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 
 import type {
   BackendRoute,
+  ContextManager,
   FrontendRoute,
   FrontendSsrRoute,
   Http,
@@ -21,11 +22,9 @@ import type {
 import { debug } from "../utils/debug";
 import { isAsyncIterable } from "../utils/is-async-iterable";
 import { isReadable } from "../utils/is-readable";
-import { ContextManager } from "./context-manager";
 
 export class Injector {
   private readonly debug = debug.extend("injector");
-  private readonly contextManager: ContextManager;
 
   private readonly serverRoutes = new Map<Route, ServerHandler>();
 
@@ -35,10 +34,9 @@ export class Injector {
     private readonly router: Router,
     private readonly viteServer: ViteServer,
     private readonly container: ViteContainer,
+    private readonly contextManager: ContextManager,
     private readonly logger: Logger
-  ) {
-    this.contextManager = new ContextManager(this.logger.extend({ logger: "context-manager" }));
-  }
+  ) {}
 
   static makeInjectable(
     config: VelnoraConfig,
@@ -46,9 +44,10 @@ export class Injector {
     router: Router,
     viteServer: ViteServer,
     container: ViteContainer,
+    contextManager: ContextManager,
     logger: Logger
   ) {
-    return new Injector(config, http, router, viteServer, container, logger);
+    return new Injector(config, http, router, viteServer, container, contextManager, logger);
   }
 
   inject() {
@@ -92,7 +91,7 @@ export class Injector {
 
         this.logger.log(`Injecting backend route module: ${route.entry}`);
         const handler = await appServer.default;
-        const ctx = this.contextManager.getFor(route);
+        const ctx = this.contextManager.forRoute(route);
         const serverHandler = await handler(ctx);
         this.serverRoutes.set(route, serverHandler);
       }

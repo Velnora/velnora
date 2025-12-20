@@ -1,26 +1,18 @@
 import type { Hookable } from "hookable";
 
-import type { Hooks, Integration, Logger, Package, Router, Stage, VelnoraConfig } from "@velnora/types";
+import type { ContextManager, Hooks, Integration, Package, Stage, VelnoraConfig } from "@velnora/types";
 
 import { debug } from "../utils/debug";
-import { ContextManager } from "./context-manager";
-import type { ViteContainer } from "./vite-container";
 
 export class IntegrationContainer {
   private readonly debug = debug.extend("integration-container");
   private readonly packageIntegrations = new Map<string, Integration[]>();
 
-  private readonly contextManager: ContextManager;
-
   constructor(
     private readonly config: VelnoraConfig,
-    router: Router,
-    hooks: Hookable<Hooks>,
-    viteContainer: ViteContainer,
-    logger: Logger
+    private readonly contextManager: ContextManager,
+    hooks: Hookable<Hooks>
   ) {
-    this.contextManager = new ContextManager(viteContainer, router, logger);
-
     hooks.hook("integration:configure", async (entry: Package) => {
       this.debug("running configure stage for package: %O", { name: entry.name });
       await this.runHook("configure", entry);
@@ -65,7 +57,7 @@ export class IntegrationContainer {
     const hookedPromises = integrations.map(async integration => {
       const hook = integration[hookName];
       if (hook) {
-        const ctx = this.contextManager.getFor(entry, integration);
+        const ctx = this.contextManager.forIntegration(entry, integration);
         this.debug("invoking integration hook: %O", { hookName, packageName: entry.name });
         await hook(ctx);
       }
@@ -99,7 +91,7 @@ export class IntegrationContainer {
 
     const allIntegrations = this.config.integrations || [];
     const applicableIntegrations = allIntegrations.filter(integration =>
-      integration.apply ? integration.apply(this.contextManager.getFor(entry, integration)) : true
+      integration.apply ? integration.apply(this.contextManager.forIntegration(entry, integration)) : true
     );
 
     this.debug("resolved applicable integrations for package: %O", {
