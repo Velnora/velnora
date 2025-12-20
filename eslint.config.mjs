@@ -124,6 +124,20 @@ export default defineConfig(
     }
   })),
 
+  {
+    name: "ts-rules",
+    plugins: { "@typescript-eslint": tsEslint.plugin },
+    rules: {
+      "@typescript-eslint/triple-slash-reference": "off",
+
+      // Make sure we’re using the TS extension rule, not the core one
+      "no-restricted-imports": "off",
+
+      // Enforce writing `import type` for types
+      "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-imports" }]
+    }
+  },
+
   // Nx module boundaries (flat config style)
   {
     name: "nx-boundaries",
@@ -166,13 +180,7 @@ export default defineConfig(
             ...projectScopes
           ]
         }
-      ],
-
-      // Make sure we’re using the TS extension rule, not the core one
-      "no-restricted-imports": "off",
-
-      // Enforce writing `import type` for types
-      "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-imports" }]
+      ]
     }
   },
 
