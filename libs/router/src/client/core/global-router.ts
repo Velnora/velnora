@@ -15,7 +15,7 @@ const apps = applications as Node[];
 const appNames = new Set(apps.map(app => app.basename));
 
 // ToDo: Implement app bootstrap mechanism properly
-console.log(bootstrap);
+// console.log(bootstrap);
 
 export class GlobalRouter {
   private readonly listeners = new Map<Package, Set<(path: PathObject) => void>>();
