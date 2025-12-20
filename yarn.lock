@@ -4677,6 +4677,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@velnora/generator@workspace:libs/generator":
+  version: 0.0.0-use.local
+  resolution: "@velnora/generator@workspace:libs/generator"
+  dependencies:
+    "@types/debug": "npm:^4.1.12"
+    debug: "npm:^4.4.3"
+    tsup: "npm:^8.5.1"
+  languageName: unknown
+  linkType: soft
+
 "@velnora/integrations-nest@workspace:^, @velnora/integrations-nest@workspace:libs/integrations/nest":
   version: 0.0.0-use.local
   resolution: "@velnora/integrations-nest@workspace:libs/integrations/nest"
