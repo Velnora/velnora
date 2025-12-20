@@ -1,8 +1,9 @@
+import { execSync, spawn } from "node:child_process";
 import { relative } from "node:path";
 
 import type { TsConfigJson } from "type-fest";
 
-import { type Tree, updateJson, writeJson } from "@nx/devkit";
+import { type Tree, getPackageManagerCommand, updateJson, writeJson } from "@nx/devkit";
 import { formatFiles, generateFiles, joinPathFragments, names } from "@nx/devkit";
 import { capitalize } from "@nx/devkit/src/utils/string-utils";
 
@@ -35,4 +36,26 @@ export default async function generator(tree: Tree, schema: PackageGeneratorSche
   });
 
   await formatFiles(tree);
+
+  const pm = getPackageManagerCommand("yarn");
+
+  return () => {
+    const { promise, resolve, reject } = Promise.withResolvers<void>();
+
+    const child = spawn(pm.install, {
+      stdio: "inherit",
+      shell: true,
+      env: { ...process.env, YARN_ENABLE_HYPERLINKS: "0" }
+    });
+
+    child.on("exit", code => {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject(new Error(`'${pm.install}' exited with code ${code}`));
+      }
+    });
+
+    return promise;
+  };
 }
