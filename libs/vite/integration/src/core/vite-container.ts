@@ -11,12 +11,6 @@ import { debug } from "../utils/debug";
 import { findTsconfigProject } from "../utils/find-tsconfig-project";
 import { Vite } from "./vite";
 
-const projects: string[] = [];
-let project: string;
-if ((project = findTsconfigProject())) {
-  projects.push(project);
-}
-
 export class ViteContainer {
   private readonly debug = debug.extend("vite-container");
   private readonly _virtualModules = new Map<string, string>();
@@ -33,13 +27,6 @@ export class ViteContainer {
       "import.meta.env.CLIENT": "typeof window !== 'undefined'",
       "import.meta.env.SERVER": "typeof window === 'undefined'"
     },
-    plugins: [
-      tsconfigPaths({
-        // ToDo: replace with [allowImportersRe](https://github.com/aleclarson/vite-tsconfig-paths/pull/193) when merged
-        projects,
-        loose: true
-      })
-    ],
     logLevel: "error",
     // ToDo: Make custom logger instance mapped to velnora logger instance
     appType: "custom"
@@ -59,10 +46,25 @@ export class ViteContainer {
       hasInitialConfig: Object.keys(initialConfig).length > 0
     });
 
+    const projects: string[] = [];
+    let project: string;
+    if ((project = findTsconfigProject())) {
+      projects.push(project);
+    }
+
     this.updateConfig(initialConfig);
     this.config.integrations.forEach(integration => integration.vite && this.updateConfig(integration.vite));
     this.updateConfig({
-      plugins: [devSourceMapPlugin(config), htmlPlugin(router), virtualModulePlugin(this.config, this.virtualModules)]
+      plugins: [
+        tsconfigPaths({
+          // ToDo: replace with [allowImportersRe](https://github.com/aleclarson/vite-tsconfig-paths/pull/193) when merged
+          projects,
+          loose: true
+        }),
+        devSourceMapPlugin(config),
+        htmlPlugin(router),
+        virtualModulePlugin(this.config, this.virtualModules)
+      ]
     });
 
     this.debug("merged initial user config into base config");
