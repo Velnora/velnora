@@ -54,7 +54,8 @@
       "@velnora/plugin-api": ["libs/plugin-api/src/main.ts"],
       "@velnora/types": ["libs/types/src/main.ts"],
       "@velnora/vite-integration": ["libs/vite/integration/src/main.ts"],
-      "@velnora/contracts": ["./libs/contracts/src/main.ts"]
+      "@velnora/contracts": ["./libs/contracts/src/main.ts"],
+      "@velnora/generator": ["./libs/generator/src/main.ts"]
     }
   },
   "exclude": ["node_modules"]
