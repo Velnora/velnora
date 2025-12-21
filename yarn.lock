@@ -4787,6 +4787,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@velnora/mf@workspace:libs/integrations/microfrontend":
+  version: 0.0.0-use.local
+  resolution: "@velnora/mf@workspace:libs/integrations/microfrontend"
+  dependencies:
+    "@types/debug": "npm:^4.1.12"
+    debug: "npm:^4.4.3"
+    tsup: "npm:^8.5.1"
+  languageName: unknown
+  linkType: soft
+
 "@velnora/monorepo@workspace:.":
   version: 0.0.0-use.local
   resolution: "@velnora/monorepo@workspace:."

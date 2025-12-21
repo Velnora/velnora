@@ -35,6 +35,7 @@
       "velnora/react": ["libs/integrations/react/src/client/main.ts"],
       "@velnora/integrations-react/client": ["libs/integrations/react/src/client/main.ts"],
       "@velnora/integrations-react/server": ["libs/integrations/react/src/server/main.ts"],
+      "@velnora/mf": ["./libs/integrations/microfrontend/src/intregration/main.ts"],
 
       "@velnora/core": ["libs/core/src/main.ts"],
       "velnora/core": ["libs/core/src/main.ts"],

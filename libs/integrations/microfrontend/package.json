@@ -1,0 +1,33 @@
+{
+  "name": "@velnora/mf",
+  "version": "0.0.0.dev-0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/velnora.mf.d.ts",
+      "import": "./build/velnora.mf.js"
+    }
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsup --config tsup.config.ts",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "debug": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "tsup": "^8.5.1"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
