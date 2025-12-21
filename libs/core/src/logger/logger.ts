@@ -1,25 +1,36 @@
+import { format, inspect } from "node:util";
+
 import type { Hookable } from "hookable";
-import _ from "lodash";
 import pc from "picocolors";
 
 import { type Hooks, type LogContext, LogLevel } from "@velnora/types";
 
+import { LEVEL_COLOR, LEVEL_LABEL } from "../const";
+import { deepMerge } from "../utils/deep-merge";
+
 const LEVEL_WIDTH = 5;
+const PID_WIDTH = 6;
 
 export class Logger {
   private _minLevel: LogLevel = LogLevel.DEBUG;
 
   constructor(readonly context: LogContext) {}
 
-  static create(hooks: Hookable<Hooks>, ctx?: LogContext) {
-    const logger = new Logger(ctx ?? {});
+  static create(hooks: Hookable<Hooks>, ctx: LogContext = {}) {
+    const logger = new Logger(ctx);
 
-    hooks.hook("logger:trace", msg => logger.trace(msg));
-    hooks.hook("logger:debug", msg => logger.debug(msg));
-    hooks.hook("logger:log", msg => logger.log(msg));
-    hooks.hook("logger:warn", msg => logger.warn(msg));
-    hooks.hook("logger:error", msg => logger.error(msg));
-    hooks.hook("logger:fatal", msg => logger.fatal(msg));
+    const map: Array<[keyof Hooks, LogLevel]> = [
+      ["logger:trace", LogLevel.TRACE],
+      ["logger:debug", LogLevel.DEBUG],
+      ["logger:log", LogLevel.LOG],
+      ["logger:warn", LogLevel.WARN],
+      ["logger:error", LogLevel.ERROR],
+      ["logger:fatal", LogLevel.FATAL]
+    ];
+
+    for (const [name, level] of map) {
+      hooks.hook(name, (msg: unknown) => logger.write(level, msg));
+    }
 
     return logger;
   }
@@ -32,24 +43,15 @@ export class Logger {
     this._minLevel = level;
   }
 
-  write(level: LogLevel, message: unknown, context?: LogContext) {
-    if (level < this.minLevel) return;
-
-    const now = new Date();
-    const prefix = this.formatPrefix(context); // [Velnora]
-    const pid = this.formatPid(process.pid); // right-aligned, dim
-    const timestamp = this.formatTimestamp(now); // 2025-11-25 21:54:58 (dim)
-    const levelLabel = this.formatLevel(level); // right-aligned, colored
-    const contextLabel = this.formatContext(context); // [Core] / [scope] / etc.
-    const msg = this.stringify(message); // handles primitives / objects / errors
+  write(level: LogLevel, ...args: unknown[]) {
+    if (level < this._minLevel) return;
 
     const line =
-      `${prefix} ${pid} - ${timestamp} ${levelLabel}` +
-      (contextLabel ? ` [${contextLabel}]` : "") +
-      (msg ? ` ${msg}` : "");
+      `${this.formatPrefix()} ${this.formatPid(process.pid)} - ` +
+      `${this.formatTimestamp(new Date())} ${this.formatLevel(level)}` +
+      (args.length ? ` ${this.stringify(level, args)}` : "");
 
-    const stream = this.getStreamForLevel(level);
-    stream.write(line + "\n");
+    this.getStreamForLevel(level).write(line + "\n");
   }
 
   trace(msg: unknown, context?: LogContext) {
@@ -77,169 +79,91 @@ export class Logger {
   }
 
   extend(context: LogContext) {
-    const mergedLogContext = _.merge(this.context, context);
-    const newLogger = new Logger(mergedLogContext);
-    newLogger.setMinLevel(this.minLevel);
-    return newLogger;
+    const merged = deepMerge(this.context, context);
+    const next = new Logger(merged);
+    next.setMinLevel(this._minLevel);
+    return next;
   }
 
   /**
    * [Velnora] – prefix, cyan + bold like Nest’s [Nest]
    */
-  private formatPrefix(_context?: LogContext): string {
-    const name = "Velnora"; // or this.prefix / context.app?.name, your choice
-    return pc.cyan(pc.bold(`[${name}]`));
+  private formatPrefix(_context?: LogContext) {
+    const name = "Velnora";
+    return this.colorize("prefix", `[${name}]`);
   }
 
   /**
    * PID column, right-aligned to 6 characters and dimmed.
-   * Example: "  48756"
    */
-  private formatPid(pid: number): string {
-    const PID_WIDTH = 6;
-    const raw = String(pid);
-    const padded = raw.padStart(PID_WIDTH, " ");
-    return pc.dim(padded);
+  private formatPid(pid: number) {
+    return this.colorize("pid", String(pid).padStart(PID_WIDTH, " "));
   }
 
   /**
    * Timestamp as "YYYY-MM-DD HH:mm:SS", dimmed.
-   * Fixed width → visually stable.
    */
-  private formatTimestamp(date: Date): string {
+  private formatTimestamp(date: Date) {
     const pad = (n: number) => String(n).padStart(2, "0");
 
-    const year = date.getFullYear();
-    const month = pad(date.getMonth() + 1);
-    const day = pad(date.getDate());
-    const hours = pad(date.getHours());
-    const minutes = pad(date.getMinutes());
-    const seconds = pad(date.getSeconds());
+    const raw =
+      `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}` +
+      ` ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
 
-    const raw = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    return pc.dim(raw);
+    return this.colorize("timestamp", raw);
   }
 
   /**
    * Level as uppercase, width = 5, right-aligned and colored.
-   * TRACE, DEBUG, INFO, WARN, ERROR, FATAL
-   *
-   * Example: " ERROR"
    */
-  private formatLevel(level: LogLevel): string {
-    let label: string;
-    switch (level) {
-      case LogLevel.TRACE:
-        label = "TRACE";
-        break;
-      case LogLevel.DEBUG:
-        label = "DEBUG";
-        break;
-      case LogLevel.LOG:
-        label = "LOG";
-        break;
-      case LogLevel.WARN:
-        label = "WARN";
-        break;
-      case LogLevel.ERROR:
-        label = "ERROR";
-        break;
-      case LogLevel.FATAL:
-        label = "FATAL";
-        break;
-      default:
-        label = "LOG";
-        break;
-    }
-
+  private formatLevel(level: LogLevel) {
+    const label = LEVEL_LABEL[level] ?? "LOG";
     const padded = label.padStart(LEVEL_WIDTH, " ");
-
-    // bright + bold, Nest-style “in your face”
-    switch (level) {
-      case LogLevel.TRACE:
-        return pc.cyanBright(padded); // shining
-      case LogLevel.DEBUG:
-        return pc.magentaBright(padded);
-      case LogLevel.LOG:
-        return pc.greenBright(padded);
-      case LogLevel.WARN:
-        return pc.yellowBright(padded);
-      case LogLevel.ERROR:
-        return pc.redBright(padded);
-      case LogLevel.FATAL:
-        return pc.bgRedBright(pc.whiteBright(padded));
-      default:
-        return pc.bold(pc.whiteBright(padded));
-    }
+    return this.colorize("level", padded, level);
   }
 
-  /**
-   * Context column (optional).
-   * Chooses something meaningful but not overkill from LogContext.
-   *
-   * Example: "[Core]" or "[http]" or "[velnora:nest]"
-   */
-  private formatContext(context?: LogContext): string {
-    if (!context) return "";
-
-    // Pick ONE main thing for CLI, to avoid eye-bleed.
-    // Priority: app > logger > scope > runtime > side > env
-    const name = context.app
-      ? context.app.name
-      : (context.logger ?? context.scope ?? context.runtime ?? context.side ?? context.env ?? null);
-
-    if (!name) return "";
-
-    return pc.yellowBright(`[${String(name)}]`);
+  private stringify(level: LogLevel, args: unknown[]) {
+    return args.map(v => this.stringifySingle(level, v)).join(" ");
   }
 
-  /**
-   * Converts any message type into a string.
-   * Handles primitives, Error, objects, arrays, null/undefined.
-   */
-  private stringify(value: unknown): string {
-    if (value === null || value === undefined) {
-      return String(value);
-    }
-
-    // Error: show stack if possible
-    if (value instanceof Error) {
-      return value.stack ?? `${value.name}: ${value.message}`;
-    }
+  private stringifySingle(level: LogLevel, value: unknown) {
+    if (value == null) return String(value);
+    if (value instanceof Error) return this.colorize("level", format(value), level);
 
     const t = typeof value;
+    if (t === "string") return value as string;
+    if (t === "number" || t === "boolean" || t === "bigint" || t === "symbol")
+      return String(value as number | boolean | bigint | symbol);
 
-    if (t === "string") {
-      return value as string;
-    }
-
-    if (t === "number" || t === "boolean" || t === "bigint" || t === "symbol") {
-      // eslint-disable-next-line @typescript-eslint/no-base-to-string
-      return String(value);
-    }
-
-    // Functions – don’t dump body, just something short
     if (t === "function") {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-      const fn = value as Function;
+      const fn = value as () => unknown;
       return `[Function${fn.name ? ` ${fn.name}` : ""}]`;
     }
 
-    // Objects / arrays – try JSON, fall back gracefully
-    try {
-      return JSON.stringify(value, null, 2);
-    } catch {
-      return "[Unserializable value]";
-    }
+    return inspect(value, { colors: true, depth: 6, breakLength: 100 });
+  }
+
+  private getStreamForLevel(level: LogLevel) {
+    return level >= LogLevel.ERROR ? process.stderr : process.stdout;
   }
 
   /**
-   * Decide stdout vs stderr based on level.
+   * Centralized coloring rules (single place to tweak styling).
    */
-  private getStreamForLevel(level: LogLevel): NodeJS.WritableStream {
-    if (level >= LogLevel.ERROR) {
-      return process.stderr;
+  private colorize(kind: "prefix" | "pid" | "timestamp" | "level", value: string, level?: LogLevel) {
+    switch (kind) {
+      case "prefix":
+        return pc.cyan(pc.bold(value));
+      case "pid":
+      case "timestamp":
+        return pc.dim(value);
+      case "level": {
+        const color = (level && LEVEL_COLOR[level]) ?? pc.whiteBright;
+        return color(value);
+      }
+
+      default:
+        return value;
     }
-    return process.stdout;
   }
 }
