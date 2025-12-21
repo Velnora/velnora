@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
-import { readdirSync, writeFileSync } from "node:fs";
+import { readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { readFile, rm, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 import { type GlobOptionsWithFileTypesFalse, glob } from "glob";
@@ -21,10 +22,21 @@ export class Fs implements FsApi {
     return matches.length > 0;
   }
 
+  stats(path?: string) {
+    const resolvedPath = path ? resolve(this.root, path) : this.root;
+    return statSync(resolvedPath);
+  }
+
   read(path?: string, options?: FsOptions) {
     const resolvedPath = path ? resolve(this.root, path) : this.root;
     const encoding = options?.encoding || "utf-8";
     return readFileSync(resolvedPath, encoding);
+  }
+
+  readAsync(path?: string, options?: FsOptions) {
+    const resolvedPath = path ? resolve(this.root, path) : this.root;
+    const encoding = options?.encoding || "utf-8";
+    return readFile(resolvedPath, encoding);
   }
 
   write(contents: string, path?: string, options?: Pick<FsOptions, "encoding">) {
@@ -33,9 +45,25 @@ export class Fs implements FsApi {
     writeFileSync(resolvedPath, contents, { encoding });
   }
 
+  async writeAsync(contents: string, path?: string, options?: FsOptions) {
+    const resolvedPath = path ? resolve(this.root, path) : this.root;
+    const encoding = options?.encoding || "utf-8";
+    await writeFile(resolvedPath, contents, { encoding });
+  }
+
   readDir(path: string) {
     const resolvedPath = path ? resolve(this.root, path) : this.root;
     return readdirSync(resolvedPath);
+  }
+
+  rm(path: string, options?: Pick<FsOptions, "force">) {
+    const resolvedPath = path ? resolve(this.root, path) : this.root;
+    rmSync(resolvedPath, { recursive: true, force: options?.force || false });
+  }
+
+  async rmAsync(path: string, options?: Pick<FsOptions, "force">) {
+    const resolvedPath = path ? resolve(this.root, path) : this.root;
+    await rm(resolvedPath, { recursive: true, force: options?.force || false });
   }
 
   pushd(path: string) {
