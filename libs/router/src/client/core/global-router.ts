@@ -63,8 +63,18 @@ export class GlobalRouter {
   navigate(app: Package, path: string) {
     if (typeof window === "undefined") return;
     const pathObject = this.getPathObject(path.replace(/\/+/g, "/"), app);
-    window.history.pushState({}, "", pathObject.href);
-    this.notify(app);
+    if (pathObject.type === "external") {
+      window.location.href = pathObject.url.href;
+      return;
+    }
+
+    if (pathObject.app === app) {
+      window.history.pushState({}, "", pathObject.href);
+      this.notify(app);
+      return;
+    }
+
+    window.location.href = pathObject.href;
   }
 
   replace(app: Package, path: string) {
