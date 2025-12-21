@@ -17,7 +17,7 @@ export class ModuleGraph extends Savable<ModuleGraph> implements VelnoraModuleGr
   private readonly _edges = new Map<Node, Set<Node>>();
 
   constructor(private readonly config: VelnoraConfig) {
-    super(resolve(config.cacheDir, "module-graph.json"), debug.extend("module-graph"));
+    super("module-graph.json", debug.extend("module-graph"));
   }
 
   get nodes() {
@@ -135,7 +135,7 @@ export class ModuleGraph extends Savable<ModuleGraph> implements VelnoraModuleGr
     return { nodes, edges };
   }
 
-  protected loadData(data: ReturnType<ModuleGraph["toJSON"]>) {
+  protected fromJSON(data: ReturnType<ModuleGraph["toJSON"]>) {
     data.nodes.forEach(nodeData => {
       const node = new Node(nodeData.root, nodeData.packageJson, this.config);
       Object.assign(node, { _id: nodeData.id });
