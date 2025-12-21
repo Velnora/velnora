@@ -4,15 +4,15 @@ import { resolve } from "node:path";
 
 import { type GlobOptionsWithFileTypesFalse, glob } from "glob";
 
-import type { FsApi, FsOptions, Package } from "@velnora/types";
+import type { FsApi, FsOptions } from "@velnora/types";
 
 export class Fs implements FsApi {
   private lockedPaths: string[] = [];
 
-  constructor(private readonly pkg: Package) {}
+  constructor(private readonly _root: string) {}
 
   get root() {
-    return this.lockedPaths.length > 0 ? resolve(this.pkg.root, ...Array.from(this.lockedPaths)) : this.pkg.root;
+    return this.lockedPaths.length > 0 ? resolve(this._root, ...Array.from(this.lockedPaths)) : this._root;
   }
 
   exists(path?: string) {

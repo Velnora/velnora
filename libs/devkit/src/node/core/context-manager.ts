@@ -37,7 +37,7 @@ export class ContextManager implements VelnoraContextManager {
       app: entry,
       pkg: new Pkg(entry.packageJson),
       router: this.router.withApp(entry),
-      fs: new Fs(entry),
+      fs: new Fs(entry.root),
       vite: this.viteContainer.withApp(entry),
       types: this.typeGenerator.withApp(entry),
       logger: this.logger.extend({
