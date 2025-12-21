@@ -2,7 +2,7 @@ import { createHooks } from "hookable";
 
 import type { DevCommandOptions } from "@velnora/commands";
 import { createLogger } from "@velnora/core";
-import { ContextManager, Injector, ModuleGraph } from "@velnora/devkit/node";
+import { ContextManager, Injector, ModuleGraph, globals } from "@velnora/devkit/node";
 import { TypeGenerator } from "@velnora/generator";
 import { Router } from "@velnora/router";
 import type { Hooks } from "@velnora/types";
@@ -16,6 +16,7 @@ export const createDevServer = async (options: DevCommandOptions) => {
   const startTime = performance.now();
   const hooks = createHooks<Hooks>();
   const config = await loadAndMergeConfig(options);
+  globals.set("config", config);
 
   const graph = new ModuleGraph(config);
   await graph.indexWorkspace();
@@ -27,7 +28,7 @@ export const createDevServer = async (options: DevCommandOptions) => {
     server: { watch: config.server?.watch }
   });
 
-  const typeGenerator = new TypeGenerator();
+  const typeGenerator = new TypeGenerator(logger.extend({ logger: "type-generator" }));
 
   const ctxManager = new ContextManager(container, router, typeGenerator, logger.extend({ logger: "context-manager" }));
 
