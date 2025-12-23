@@ -1,5 +1,5 @@
-import { applications, applicationsMap } from "velnora:applications";
-import bootstrap from "velnora:bootstrap";
+import { applications, applicationsMap } from "@velnora:applications";
+import bootstrap from "@velnora:bootstrap";
 
 import type { Node } from "@velnora/devkit";
 import type { Package } from "@velnora/types";

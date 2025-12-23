@@ -101,7 +101,7 @@ export class Vite implements ViteApi {
     this.virtual(
       "app-config",
       `
-import { applicationsMap } from "velnora:applications";
+import { applicationsMap } from "@velnora:applications";
 export const appConfig = applicationsMap.get("${this.pkg.name}");
 `
     );

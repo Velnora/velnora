@@ -87,7 +87,7 @@ export class ViteContainer {
   }
 
   get virtualConfig() {
-    return "velnora:config";
+    return "@velnora:config";
   }
 
   updateConfig(update: Partial<UserConfig> | ((current: UserConfig) => Partial<UserConfig>)) {
@@ -141,7 +141,7 @@ export class ViteContainer {
     vite.virtual(this.virtualConfig, `export default ${JSON.stringify(config, null, 2)};`, { raw: true });
 
     vite.virtual(
-      "velnora:applications",
+      "@velnora:applications",
       `
 import { Node } from "@velnora/devkit";
 import config from "${this.virtualConfig}";
@@ -160,6 +160,6 @@ export const applicationsMap = new Map(
         this.withApp(node).entryClient(undefined, { forceToRegister: true })
       ])
     );
-    vite.virtual(`velnora:bootstrap`, `export default ${JSON.stringify(bootstrap, null, 2)};`, { raw: true });
+    vite.virtual(`@velnora:bootstrap`, `export default ${JSON.stringify(bootstrap, null, 2)};`, { raw: true });
   }
 }
