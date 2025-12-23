@@ -5,7 +5,7 @@ import { JSDOM } from "jsdom";
 import type { FC } from "react";
 import { type BootstrapScriptDescriptor, renderToPipeableStream } from "react-dom/server";
 
-import type { ClientRoute } from "@velnora/router/client";
+import { type ClientRoute, GlobalRouter } from "@velnora/router/client";
 import { createRouter } from "@velnora/router/server";
 import type { RenderFn, WithDefault } from "@velnora/types";
 
@@ -28,7 +28,8 @@ export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): R
 
     ctx.logger.log(`Rendering page for path: ${ctx.path} from module: ${route.module}`);
 
-    const router = createRouter(ctx);
+    const globalRouter = GlobalRouter.instance();
+    const router = createRouter(ctx, globalRouter);
 
     const { default: Page } = await ctx.serverEnv.runner.import<WithDefault<FC>>(route.module);
     if (!Page) {
@@ -92,7 +93,15 @@ export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): R
     const nonce = crypto.randomBytes(16).toString("base64");
     const htmlTransform = new Transform({
       transform(chunk, _enc, callback) {
-        callback(null, chunk);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+        const stringChunk = chunk.toString() as string;
+
+        const replacedString = stringChunk.replace(
+          /<\/head>/i,
+          `<meta property="csp-nonce" nonce="${nonce}" />` + `</head>`
+        );
+
+        callback(null, replacedString);
       }
     });
 
