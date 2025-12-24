@@ -29,7 +29,7 @@ export class Logger {
     ];
 
     for (const [name, level] of map) {
-      hooks.hook(name, (msg: unknown) => logger.write(level, msg));
+      hooks.hook(name, (msg: unknown) => logger.write(level, ctx, msg));
     }
 
     return logger;
@@ -43,7 +43,7 @@ export class Logger {
     this._minLevel = level;
   }
 
-  write(level: LogLevel, ...args: unknown[]) {
+  write(level: LogLevel, _ctx?: LogContext, ...args: unknown[]) {
     if (level < this._minLevel) return;
 
     const line =
@@ -55,27 +55,27 @@ export class Logger {
   }
 
   trace(msg: unknown, context?: LogContext) {
-    this.write(LogLevel.TRACE, msg, context);
+    this.write(LogLevel.TRACE, context, msg);
   }
 
   debug(msg: unknown, context?: LogContext) {
-    this.write(LogLevel.DEBUG, msg, context);
+    this.write(LogLevel.DEBUG, context, msg);
   }
 
   log(msg: unknown, context?: LogContext) {
-    this.write(LogLevel.LOG, msg, context);
+    this.write(LogLevel.LOG, context, msg);
   }
 
   warn(msg: unknown, context?: LogContext) {
-    this.write(LogLevel.WARN, msg, context);
+    this.write(LogLevel.WARN, context, msg);
   }
 
   error(msg: unknown, context?: LogContext) {
-    this.write(LogLevel.ERROR, msg, context);
+    this.write(LogLevel.ERROR, context, msg);
   }
 
   fatal(msg: unknown, context?: LogContext) {
-    this.write(LogLevel.FATAL, msg, context);
+    this.write(LogLevel.FATAL, context, msg);
   }
 
   extend(context: LogContext) {
