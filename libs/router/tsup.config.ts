@@ -5,5 +5,6 @@ export default defineWebConfig({
     "velnora.router": "src/router/main.ts",
     "velnora.router.client": "src/client/main.ts",
     "velnora.router.server": "src/server/main.ts"
-  }
+  },
+  external: ["@velnora:applications"]
 });
