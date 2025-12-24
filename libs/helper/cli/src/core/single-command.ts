@@ -13,6 +13,7 @@ export class SingleCommand<TAccum extends object = object> implements CommandDef
   declare describe: string | undefined;
   options: ParsedSpec[] = [];
   commands: CommandDef[] = [];
+  aliases: string[] = [];
 
   constructor(readonly name: string) {}
 
@@ -23,6 +24,17 @@ export class SingleCommand<TAccum extends object = object> implements CommandDef
     this.commands.push(cmd);
     this.registeredCommands.add(command);
     return cmd;
+  }
+
+  addAlias(alias: string) {
+    if (this.aliases.includes(alias)) return this;
+    this.aliases.push(alias);
+    return this;
+  }
+
+  removeAlias(alias: string) {
+    this.aliases = this.aliases.filter(a => a !== alias);
+    return this;
   }
 
   description(desc: string) {

@@ -4,6 +4,7 @@ import type { ParsedSpec } from "./parsed-spec";
 
 export interface CommandDef<TAccum extends object = object> {
   name: string;
+  aliases: string[];
   describe?: string;
   commands: CommandDef[];
   options: ParsedSpec[];

@@ -103,7 +103,7 @@ export class Command {
     for (const command of commands) {
       const handler = command.handler ?? (() => {});
       acc = acc.command(
-        command.name,
+        [command.name, ...command.aliases].filter(Boolean),
         command.describe ?? "",
         yargs => {
           yargs = this._applyOptions(yargs, command.options);
