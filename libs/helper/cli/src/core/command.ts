@@ -1,6 +1,7 @@
 import yargs, { type Argv, type Options } from "yargs";
 import { hideBin } from "yargs/helpers";
 
+import type { CommandDef } from "../types/command-def";
 import type { ConfigOptions } from "../types/config-options";
 import type { ParsedSpec } from "../types/parsed-spec";
 import { parseSpec } from "../utils/parse-spec";
@@ -94,14 +95,21 @@ export class Command {
 
   private _build() {
     this._argv = this._applyOptions(this._argv, this.options);
+    this._argv = this._applyCommands(this._argv, Array.from(this._commands.values()));
+  }
 
+  private _applyCommands = <U>(acc: Argv<U>, commands: CommandDef[]) => {
     // Register subcommands
-    for (const [name, command] of this._commands) {
+    for (const command of commands) {
       const handler = command.handler ?? (() => {});
-      this._argv = this._argv.command(
-        name,
+      acc = acc.command(
+        command.name,
         command.describe ?? "",
-        ya => this._applyOptions(ya, command.options),
+        yargs => {
+          yargs = this._applyOptions(yargs, command.options);
+          yargs = this._applyCommands(yargs, command.commands);
+          return yargs;
+        },
         async args => {
           try {
             return await handler(args);
@@ -112,11 +120,11 @@ export class Command {
         }
       );
     }
-  }
 
-  private _applyOptions = <U>(ya: Argv<U>, specs: ParsedSpec[]): Argv<U> => {
-    let acc = ya;
+    return acc.strictCommands();
+  };
 
+  private _applyOptions = <U>(acc: Argv<U>, specs: ParsedSpec[]) => {
     // local helpers only; keep logic contained to this method
     const toNumber = (x: unknown, key: string): number => {
       const n = typeof x !== "number" ? Number(x) : x;

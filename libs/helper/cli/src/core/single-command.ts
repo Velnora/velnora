@@ -1,6 +1,4 @@
 import type { Merge } from "type-fest";
-import type { ArgumentsCamelCase, Argv, Options } from "yargs";
-import { hideBin } from "yargs/helpers";
 
 import type { CommandDef } from "../types/command-def";
 import type { ConfigOptions } from "../types/config-options";
@@ -9,11 +7,23 @@ import type { ParsedSpec } from "../types/parsed-spec";
 import { parseSpec } from "../utils/parse-spec";
 
 export class SingleCommand<TAccum extends object = object> implements CommandDef<TAccum> {
+  private readonly registeredCommands = new Set<string>();
+
   declare handler: CommandDef<TAccum>["handler"];
   declare describe: string | undefined;
   options: ParsedSpec[] = [];
+  commands: CommandDef[] = [];
 
   constructor(readonly name: string) {}
+
+  command(command: string) {
+    if (this.registeredCommands.has(command))
+      throw new Error(`Command "${command}" already registered. Parent command: "${this.name}".`);
+    const cmd = new SingleCommand(command);
+    this.commands.push(cmd);
+    this.registeredCommands.add(command);
+    return cmd;
+  }
 
   description(desc: string) {
     this.describe = desc;
