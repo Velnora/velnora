@@ -1,4 +1,3 @@
-export * from "./router";
 export * from "./public-router";
 export * from "./path-object";
 
