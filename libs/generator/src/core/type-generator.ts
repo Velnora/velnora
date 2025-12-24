@@ -6,9 +6,10 @@ import type { Logger, Package, TypeGenerator as VelnoraTypeGenerator } from "@ve
 import { DtsGenerator } from "./dts-generator";
 
 const require = createRequire(import.meta.url);
+const resolve = require.resolve;
 
 export class TypeGenerator implements VelnoraTypeGenerator {
-  readonly velnoraRoot = dirname(require.resolve("velnora/package.json"));
+  readonly velnoraRoot = dirname(resolve("velnora/package.json"));
 
   constructor(private readonly logger: Logger) {}
 
