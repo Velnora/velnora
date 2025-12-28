@@ -7,14 +7,12 @@ import { integrationSchema } from "../integration";
 import { appsSchema } from "./apps-schema";
 import { experimentsSchema } from "./experiments.schema";
 import { serverSchema } from "./server.schema";
-import { workspaceSchema } from "./workspace.schema";
 
 export const velnoraConfigSchema = z.object({
   mode: z.string().optional().default("development"),
   root: z.string().optional().default(process.cwd()),
   apps: z.preprocess(nullishObject, appsSchema),
   server: z.preprocess(nullishObject, serverSchema),
-  workspace: z.preprocess(nullishObject, workspaceSchema),
   integrations: z.array(integrationSchema).default([]),
   experiments: z.preprocess(nullishObject, experimentsSchema),
 
@@ -25,5 +23,3 @@ export const velnoraConfigSchema = z.object({
     .transform(p => resolve(p))
     .transform(p => p.replace(new RegExp(`^${resolve(process.cwd())}/`), ""))
 });
-
-export const defaultVelnoraConfig = velnoraConfigSchema.parse({});
