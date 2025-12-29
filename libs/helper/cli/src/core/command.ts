@@ -100,7 +100,7 @@ export class Command<TAccum extends object = object, TPrefetchResult = void> imp
     return this as Command<Merge<TAccum, OptRecordFromPositional<TPositional>>>;
   }
 
-  prefetch<TResult>(cb: () => Promisable<TResult>) {
+  prefetch<const TResult>(cb: () => Promisable<TResult>) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     this.prefetchableCb = cb;
