@@ -1,5 +1,6 @@
 import type { ArgumentsCamelCase } from "yargs";
 
+import type { ParsedPositional } from "./parsed-positional";
 import type { ParsedSpec } from "./parsed-spec";
 
 export interface CommandDef<TAccum extends object = object> {
@@ -8,5 +9,6 @@ export interface CommandDef<TAccum extends object = object> {
   describe?: string;
   commands: CommandDef[];
   options: ParsedSpec[];
+  positionalArgs: ParsedPositional[];
   handler?: (a: ArgumentsCamelCase<TAccum>) => void | Promise<void>;
 }
