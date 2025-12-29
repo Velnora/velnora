@@ -1,6 +1,6 @@
-import { Command, type inferCommandType } from "@velnora/cli-helper";
+import { Program, type inferCommandType } from "@velnora/cli-helper";
 
-export const program = Command.create();
+export const program = Program.createProgram();
 
 program.name("velnora").description("Velnora CLI").version("0.1.0");
 
