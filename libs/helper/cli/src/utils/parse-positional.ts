@@ -1,6 +1,5 @@
 import type { ParsedPositional } from "../types/parsed-positional";
 import type { PositionKind } from "../types/position-kind";
-import type { ValueKind } from "../types/value-kind";
 
 export const parsePositional = (raw: string): ParsedPositional => {
   let spec = raw.trim();
@@ -54,7 +53,6 @@ export const parsePositional = (raw: string): ParsedPositional => {
 
   // type parsing
   let type: PositionKind = "string";
-  const choices: string[] = [];
 
   if (tail) {
     // allow "string[]" / "number[]" etc.
@@ -90,5 +88,5 @@ export const parsePositional = (raw: string): ParsedPositional => {
     }
   }
 
-  return { name, type, array, choices, isRequired: required };
+  return { name, type, array, isRequired: required };
 };

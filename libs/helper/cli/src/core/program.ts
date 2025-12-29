@@ -98,7 +98,7 @@ export class Program {
     this._argv = this._applyCommands(this._argv, Array.from(this._commands.values()));
   }
 
-  private _applyCommands = <U>(acc: Argv<U>, commands: CommandDef[]) => {
+  private _applyCommands<U>(acc: Argv<U>, commands: CommandDef[]) {
     // Register subcommands
     for (const command of commands) {
       const handler = command.handler ?? (() => {});
@@ -106,11 +106,14 @@ export class Program {
         [command.name, ...command.aliases].filter(Boolean),
         command.describe ?? "",
         yargs => {
-          yargs = this._applyOptions(yargs, command.options);
+          yargs = this._applyPositionalArguments(yargs, command.positionalArgs);
           yargs = this._applyCommands(yargs, command.commands);
+          yargs = this._applyOptions(yargs, command.options);
           return yargs;
         },
         async args => {
+          const prefetchedResult = await command.prefetchableCb?.();
+          command.validateFn?.(args, prefetchedResult);
           try {
             return await handler(args);
           } catch (err) {
@@ -122,9 +125,9 @@ export class Program {
     }
 
     return acc.strictCommands();
-  };
+  }
 
-  private _applyOptions = <U>(acc: Argv<U>, specs: ParsedSpec[]) => {
+  private _applyOptions<U>(acc: Argv<U>, specs: ParsedSpec[]) {
     // local helpers only; keep logic contained to this method
     const toNumber = (x: unknown, key: string): number => {
       const n = typeof x !== "number" ? Number(x) : x;
@@ -185,5 +188,14 @@ export class Program {
     }
 
     return acc.strictOptions();
-  };
+  }
+
+  private _applyPositionalArguments<U>(acc: Argv<U>, positionalArgs: CommandDef["positionalArgs"]) {
+    for (const p of positionalArgs) {
+      const name = p.isRequired ? `<${p.name}>` : `[${p.name}]`;
+      acc = acc.positional(name, { type: p.type, array: p.array });
+    }
+
+    return acc;
+  }
 }

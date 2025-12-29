@@ -4,6 +4,5 @@ export interface ParsedPositional {
   name: string;
   type: PositionKind;
   array: boolean;
-  choices: string[];
   isRequired: boolean;
 }
