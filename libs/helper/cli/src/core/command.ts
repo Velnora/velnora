@@ -1,4 +1,5 @@
 import type { Merge, Promisable } from "type-fest";
+import type { ArgumentsCamelCase } from "yargs";
 
 import type { CommandDef } from "../types/command-def";
 import type { ConfigOptions } from "../types/config-options";
@@ -9,11 +10,18 @@ import type { ParsedSpec } from "../types/parsed-spec";
 import { parsePositional } from "../utils/parse-positional";
 import { parseSpec } from "../utils/parse-spec";
 
-export class Command<TAccum extends object = object, TPrefetchResult = void> implements CommandDef<TAccum> {
+export class Command<TAccum extends object = object, TPrefetchResult = void> implements CommandDef<
+  TAccum,
+  TPrefetchResult
+> {
   private readonly registeredCommands = new Set<string>();
 
-  declare handler: CommandDef<TAccum>["handler"];
   declare describe: string | undefined;
+
+  declare prefetchableCb?: CommandDef<TAccum, TPrefetchResult>["prefetchableCb"];
+  declare validateFn?: CommandDef<TAccum, TPrefetchResult>["validateFn"];
+  declare handler: CommandDef<TAccum>["handler"];
+
   options: ParsedSpec[] = [];
   commands: CommandDef[] = [];
   positionalArgs: ParsedPositional[] = [];
@@ -93,10 +101,14 @@ export class Command<TAccum extends object = object, TPrefetchResult = void> imp
   }
 
   prefetch<TResult>(cb: () => Promisable<TResult>) {
-    return this as Command<TAccum, TResult>;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    this.prefetchableCb = cb;
+    return this as unknown as Command<TAccum, TResult>;
   }
 
-  validate() {
+  validate(fn: (args: ArgumentsCamelCase<TAccum>, result: TPrefetchResult) => void) {
+    this.validateFn = fn;
     return this;
   }
 
