@@ -105,7 +105,7 @@ export class Program {
       const positionalNames = command.positionalArgs.map(p => (p.isRequired ? `<${p.name}>` : `[${p.name}]`));
 
       acc = acc.command(
-        [command.name, ...command.aliases].filter(Boolean).flatMap(cmd => positionalNames.map(pos => `${cmd} ${pos}`)),
+        [command.name, ...command.aliases].filter(Boolean).flatMap(cmd => `${cmd} ${positionalNames.join(" ")}`),
         command.describe ?? "",
         yargs => {
           yargs = this._applyPositionalArguments(yargs, command.positionalArgs);
