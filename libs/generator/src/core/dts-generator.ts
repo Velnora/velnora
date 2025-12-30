@@ -1,7 +1,7 @@
 import { type WriteStream, createWriteStream } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
-import { Savable } from "@velnora/devkit/node";
+import { Savable } from "@velnora/devkit";
 import type { DtsGeneratorApi, Logger, Package } from "@velnora/types";
 
 import { debug } from "../utils/debug";

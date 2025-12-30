@@ -143,7 +143,7 @@ export class ViteContainer {
     vite.virtual(
       "@velnora:applications",
       `
-import { Node } from "@velnora/devkit";
+import { Node } from "@velnora/devkit/client";
 import config from "${this.virtualConfig}";
 
 export const applications = ${JSON.stringify(this.graph.nodes, null, 2)}.map(nodeJson => Node.fromJSON(nodeJson, config));;

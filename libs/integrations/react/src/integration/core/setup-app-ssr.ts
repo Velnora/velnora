@@ -1,4 +1,4 @@
-import { getModuleString } from "@velnora/devkit/node";
+import { getModuleString } from "@velnora/devkit";
 import { collectLayoutsForPage, fileToRoutePath } from "@velnora/router";
 import type { ClientRoute } from "@velnora/router/client";
 import { type VelnoraContext, ssrTargetMode } from "@velnora/types";

@@ -48,8 +48,8 @@
       "velnora/router": ["libs/router/src/client/main.ts"],
       "@velnora/router/server": ["libs/router/src/server/main.ts"],
 
-      "@velnora/devkit": ["libs/devkit/src/client/main.ts"],
-      "@velnora/devkit/node": ["libs/devkit/src/node/main.ts"],
+      "@velnora/devkit": ["libs/devkit/src/node/main.ts"],
+      "@velnora/devkit/client": ["libs/devkit/src/client/main.ts"],
 
       "@velnora/rpc": ["libs/rpc/src/main.ts"],
       "@velnora/plugin-api": ["libs/plugin-api/src/main.ts"],

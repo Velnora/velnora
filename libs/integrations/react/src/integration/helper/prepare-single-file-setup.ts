@@ -1,4 +1,4 @@
-import { getModuleString } from "@velnora/devkit/node";
+import { getModuleString } from "@velnora/devkit";
 import type { VelnoraContext } from "@velnora/types";
 
 import pkg from "../../../package.json";

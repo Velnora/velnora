@@ -7,9 +7,9 @@
       "types": "./build/velnora.devkit.d.ts",
       "import": "./build/velnora.devkit.js"
     },
-    "./node": {
-      "types": "./build/velnora.devkit.node.d.ts",
-      "import": "./build/velnora.devkit.node.js"
+    "./client": {
+      "types": "./build/velnora.devkit.client.d.ts",
+      "import": "./build/velnora.devkit.client.js"
     }
   },
   "files": [

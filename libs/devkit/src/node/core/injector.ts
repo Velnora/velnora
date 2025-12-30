@@ -14,6 +14,7 @@ import type {
   ServerSetupFn,
   SsrRequestContext,
   VelnoraConfig,
+  Injector as VelnoraInjector,
   ViteContainer,
   ViteServer,
   WithDefault
@@ -23,7 +24,7 @@ import { debug } from "../utils/debug";
 import { isAsyncIterable } from "../utils/is-async-iterable";
 import { isReadable } from "../utils/is-readable";
 
-export class Injector {
+export class Injector implements VelnoraInjector {
   private readonly debug = debug.extend("injector");
 
   private readonly serverRoutes = new Map<Route, ServerHandler>();

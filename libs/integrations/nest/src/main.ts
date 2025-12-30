@@ -1,4 +1,4 @@
-import { getModuleString } from "@velnora/devkit/node";
+import { getModuleString } from "@velnora/devkit";
 import { defineIntegration } from "@velnora/plugin-api";
 
 import pkg from "../package.json";

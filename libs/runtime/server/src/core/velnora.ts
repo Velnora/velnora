@@ -1,7 +1,5 @@
-import type { Injector } from "@velnora/devkit/node";
-import { type ModuleGraph } from "@velnora/devkit/node";
 import type { Router } from "@velnora/router";
-import type { Http, Logger, VelnoraConfig } from "@velnora/types";
+import type { Http, Injector, Logger, ModuleGraph, VelnoraConfig } from "@velnora/types";
 import type { IntegrationContainer, ViteDev } from "@velnora/vite-integration";
 
 import { debug } from "../utils/debug";
