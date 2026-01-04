@@ -6,7 +6,7 @@ import type { PackageJson } from "type-fest";
 
 import { velnoraAppConfigSchema } from "@velnora/contracts";
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { Node as NodeClient } from "@velnora/devkit";
+import { Node as NodeClient } from "@velnora/devkit/client";
 import { type Package, PackageKind, type VelnoraAppConfig, type VelnoraConfig } from "@velnora/types";
 
 import { VelnoraConfigError } from "../error/velnora-config-error";
