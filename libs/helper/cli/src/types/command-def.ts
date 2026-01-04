@@ -11,7 +11,7 @@ export interface CommandDef<TAccum extends object = object, TPrefetchResult = vo
   commands: CommandDef[];
   options: ParsedSpec[];
   positionalArgs: ParsedPositional[];
-  prefetchableCb?: () => Promisable<TPrefetchResult>;
+  prefetchableCb?: (args: TAccum) => Promisable<TPrefetchResult>;
   validateFn?: (args: ArgumentsCamelCase<TAccum>, result: TPrefetchResult) => void;
   handler?: (a: ArgumentsCamelCase<TAccum>) => Promisable<void>;
 }

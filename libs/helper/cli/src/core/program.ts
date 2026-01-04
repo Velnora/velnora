@@ -114,7 +114,7 @@ export class Program {
           return yargs;
         },
         async args => {
-          const prefetchedResult = await command.prefetchableCb?.();
+          const prefetchedResult = await command.prefetchableCb?.(args);
           command.validateFn?.(args, prefetchedResult);
           try {
             return await handler(args);
