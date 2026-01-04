@@ -105,7 +105,7 @@ export class Program {
       const positionalNames = command.positionalArgs.map(p => (p.isRequired ? `<${p.name}>` : `[${p.name}]`));
 
       acc = acc.command(
-        [command.name, ...command.aliases].filter(Boolean).flatMap(cmd => `${cmd} ${positionalNames.join(" ")}`),
+        [command.name, ...command.aliases].filter(Boolean).flatMap(cmd => `${cmd} ${positionalNames.join(" ")}`.trim()),
         command.describe ?? "",
         yargs => {
           yargs = this._applyPositionalArguments(yargs, command.positionalArgs);
@@ -113,16 +113,17 @@ export class Program {
           yargs = this._applyOptions(yargs, command.options);
           return yargs;
         },
-        async args => {
-          const result = await command.prefetchableCb?.(args);
-          command.validateFn?.(args, result);
-          try {
-            return await handler(args, result);
-          } catch (err) {
-            console.error("Error executing command:", err);
-            process.exit(1);
-          }
-        }
+        command.handler &&
+          (async args => {
+            const result = await command.prefetchableCb?.(args);
+            command.validateFn?.(args, result);
+            try {
+              return await handler(args, result);
+            } catch (err) {
+              console.error("Error executing command:", err);
+              process.exit(1);
+            }
+          })
       );
     }
 
