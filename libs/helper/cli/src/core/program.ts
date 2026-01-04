@@ -114,10 +114,10 @@ export class Program {
           return yargs;
         },
         async args => {
-          const prefetchedResult = await command.prefetchableCb?.(args);
-          command.validateFn?.(args, prefetchedResult);
+          const result = await command.prefetchableCb?.(args);
+          command.validateFn?.(args, result);
           try {
-            return await handler(args);
+            return await handler(args, result);
           } catch (err) {
             console.error("Error executing command:", err);
             process.exit(1);

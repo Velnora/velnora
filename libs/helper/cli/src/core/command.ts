@@ -20,7 +20,7 @@ export class Command<TAccum extends object = object, TPrefetchResult = void> imp
 
   declare prefetchableCb?: CommandDef<TAccum, TPrefetchResult>["prefetchableCb"];
   declare validateFn?: CommandDef<TAccum, TPrefetchResult>["validateFn"];
-  declare handler: CommandDef<TAccum>["handler"];
+  declare handler: CommandDef<TAccum, TPrefetchResult>["handler"];
 
   options: ParsedSpec[] = [];
   commands: CommandDef[] = [];
@@ -112,7 +112,7 @@ export class Command<TAccum extends object = object, TPrefetchResult = void> imp
     return this;
   }
 
-  action(handler: CommandDef<TAccum>["handler"]) {
+  action(handler: CommandDef<TAccum, TPrefetchResult>["handler"]) {
     this.handler = handler;
   }
 }
