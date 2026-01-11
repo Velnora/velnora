@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
-import { readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { readFile, rm, writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
 
 import { type GlobOptionsWithFileTypesFalse, glob } from "glob";
 
@@ -39,15 +39,27 @@ export class Fs implements FsApi {
     return readFile(resolvedPath, encoding);
   }
 
-  write(contents: string, path?: string, options?: Pick<FsOptions, "encoding">) {
+  createDir(path: string, options?: Pick<FsOptions, "force">) {
+    const resolvedPath = path ? resolve(this.root, path) : this.root;
+    return mkdirSync(resolvedPath, { recursive: options?.force });
+  }
+
+  async createDirAsync(path: string, options?: Pick<FsOptions, "force">) {
+    const resolvedPath = path ? resolve(this.root, path) : this.root;
+    await mkdir(resolvedPath, { recursive: options?.force });
+  }
+
+  write(contents: string, path?: string, options?: FsOptions) {
     const resolvedPath = path ? resolve(this.root, path) : this.root;
     const encoding = options?.encoding || "utf-8";
+    if (options?.force) this.createDir(dirname(resolvedPath), { force: true });
     writeFileSync(resolvedPath, contents, { encoding });
   }
 
   async writeAsync(contents: string, path?: string, options?: FsOptions) {
     const resolvedPath = path ? resolve(this.root, path) : this.root;
     const encoding = options?.encoding || "utf-8";
+    if (options?.force) await this.createDirAsync(dirname(resolvedPath), { force: true });
     await writeFile(resolvedPath, contents, { encoding });
   }
 
