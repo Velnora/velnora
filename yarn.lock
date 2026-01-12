@@ -4745,8 +4745,8 @@ __metadata:
   resolution: "@velnora/mf-app-about@workspace:examples/mf-app/apps/about"
   dependencies:
     "@reduxjs/toolkit": "npm:^2.11.2"
-    react: "npm:^19.2.1"
-    react-dom: "npm:^19.2.1"
+    react: "npm:19.2.3"
+    react-dom: "npm:19.2.3"
     velnora: "workspace:^"
   languageName: unknown
   linkType: soft
@@ -4759,8 +4759,8 @@ __metadata:
     "@nestjs/core": "npm:^11.1.9"
     "@reduxjs/toolkit": "npm:^2.11.0"
     motion: "npm:^12.23.25"
-    react: "npm:^19.2.1"
-    react-dom: "npm:^19.2.1"
+    react: "npm:19.2.2"
+    react-dom: "npm:19.2.2"
     reflect-metadata: "npm:^0.2.2"
     rxjs: "npm:^7.8.2"
     velnora: "workspace:^"
@@ -4771,8 +4771,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@velnora/mf-app-landing@workspace:examples/mf-app/apps/landing"
   dependencies:
-    react: "npm:^19.2.1"
-    react-dom: "npm:^19.2.1"
+    react: "npm:19.2.1"
+    react-dom: "npm:19.2.1"
     velnora: "workspace:^"
   languageName: unknown
   linkType: soft
@@ -10489,7 +10489,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^19.2.1":
+"react-dom@npm:19.2.1":
   version: 19.2.1
   resolution: "react-dom@npm:19.2.1"
   dependencies:
@@ -10497,6 +10497,28 @@ __metadata:
   peerDependencies:
     react: ^19.2.1
   checksum: 10c0/e56b6b3d72314df580ca800b70a69a21c6372703c8f45d9b5451ca6519faefb2496d76ffa9c5adb94136d2bbf2fd303d0dfc208a2cd77ede3132877471af9470
+  languageName: node
+  linkType: hard
+
+"react-dom@npm:19.2.2":
+  version: 19.2.2
+  resolution: "react-dom@npm:19.2.2"
+  dependencies:
+    scheduler: "npm:^0.27.0"
+  peerDependencies:
+    react: ^19.2.2
+  checksum: 10c0/392c0ab526b5eba3938c2ed435c6daaed055ebc367398b3bfe424fa5c1667be843c012a44edbeb35187794e441bfed3ba8206e4a060d8b4641f3eac9bda23cd1
+  languageName: node
+  linkType: hard
+
+"react-dom@npm:19.2.3":
+  version: 19.2.3
+  resolution: "react-dom@npm:19.2.3"
+  dependencies:
+    scheduler: "npm:^0.27.0"
+  peerDependencies:
+    react: ^19.2.3
+  checksum: 10c0/dc43f7ede06f46f3acc16ee83107c925530de9b91d1d0b3824583814746ff4c498ea64fd65cd83aba363205268adff52e2827c582634ae7b15069deaeabc4892
   languageName: node
   linkType: hard
 
@@ -10514,10 +10536,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^19.2.1":
+"react@npm:19.2.1":
   version: 19.2.1
   resolution: "react@npm:19.2.1"
   checksum: 10c0/2b5eaf407abb3db84090434c20d6c5a8e447ab7abcd8fe9eaf1ddc299babcf31284ee9db7ea5671d21c85ac5298bd632fa1a7da1ed78d5b368a537f5e1cd5d62
+  languageName: node
+  linkType: hard
+
+"react@npm:19.2.2":
+  version: 19.2.2
+  resolution: "react@npm:19.2.2"
+  checksum: 10c0/cf64766e3c7d885aadbf4372c28ecc81627dc33155bd1fdf4a150b2590c859bab38e2eb0ad5a1956d0a3c38e5b1d4b6e4c6598da5d8f640dc237f892a6a66546
+  languageName: node
+  linkType: hard
+
+"react@npm:19.2.3":
+  version: 19.2.3
+  resolution: "react@npm:19.2.3"
+  checksum: 10c0/094220b3ba3a76c1b668f972ace1dd15509b157aead1b40391d1c8e657e720c201d9719537375eff08f5e0514748c0319063392a6f000e31303aafc4471f1436
   languageName: node
   linkType: hard
 
