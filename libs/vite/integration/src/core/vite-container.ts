@@ -1,3 +1,5 @@
+import { resolve } from "node:path";
+
 import _ from "lodash";
 import { type UserConfig, mergeConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -55,6 +57,7 @@ export class ViteContainer {
     this.updateConfig(initialConfig);
     this.config.integrations.forEach(integration => integration.vite && this.updateConfig(integration.vite));
     this.updateConfig({
+      cacheDir: resolve(config.cacheDir, "vite/cache"),
       plugins: [
         tsconfigPaths({
           // ToDo: replace with [allowImportersRe](https://github.com/aleclarson/vite-tsconfig-paths/pull/193) when merged
