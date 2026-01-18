@@ -29,11 +29,9 @@
     "@velnora/devkit": "workspace:^",
     "@velnora/plugin-api": "workspace:^",
     "@velnora/router": "workspace:^",
-    "@vitejs/plugin-react": "^5.1.1",
-    "jsdom": "^27.3.0"
+    "@vitejs/plugin-react": "^5.1.1"
   },
   "devDependencies": {
-    "@types/jsdom": "^27.0.0",
     "@velnora/types": "workspace:^",
     "eslint": "^9.39.1",
     "tsup": "^8.5.1",

@@ -1,10 +1,9 @@
 import * as crypto from "node:crypto";
-import { Transform } from "node:stream";
 
-import { JSDOM } from "jsdom";
 import type { FC } from "react";
-import { type BootstrapScriptDescriptor, renderToPipeableStream } from "react-dom/server";
+import { renderToPipeableStream } from "react-dom/server";
 
+import { pipeParsedHtml } from "@velnora/devkit";
 import { type ClientRoute, GlobalRouter } from "@velnora/router/client";
 import { createRouter } from "@velnora/router/server";
 import type { RenderFn, WithDefault } from "@velnora/types";
@@ -12,7 +11,6 @@ import type { RenderFn, WithDefault } from "@velnora/types";
 import { Router } from "../../client/components/router";
 import { getLayouts } from "../../client/utils/get-layouts";
 import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";
-import { specialName } from "../utils/special-name";
 
 export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): RenderFn => {
   const pathRouteMap = new Map<string, ReactRouteDescriptor>(routes.map(r => [r.path, r.route]));
@@ -42,75 +40,15 @@ export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): R
     layouts.forEach((Layout, idx) => (page = <Layout key={route.layouts[idx]}>{page}</Layout>));
     page = <Router router={router}>{page}</Router>;
 
-    const viteSpecificScripts = await ctx.transformRouteIndexHtml(ctx.route, "");
-    const dom = new JSDOM(viteSpecificScripts);
-
-    const scripts = Array.from(dom.window.document.querySelectorAll("script")).map(script => ({
-      content: script.textContent,
-      attributes: Object.fromEntries(Array.from(script.attributes).map(attr => [attr.name, attr.value]))
-    }));
-
-    const {
-      scripts: scriptScripts,
-      contentScripts,
-      moduleScripts,
-      unknownScripts
-    } = scripts.reduce(
-      (acc, script) => {
-        const baseDescriptor: Omit<BootstrapScriptDescriptor, "src"> = {
-          integrity: script.attributes.integrity,
-          crossOrigin: script.attributes.crossorigin
-        };
-
-        if (script.attributes.type === "module" && script.attributes.src) {
-          acc.moduleScripts.push({ src: script.attributes.src, ...baseDescriptor });
-        } else if (script.attributes.type === "module" && !script.attributes.src && script.content) {
-          const name = specialName(crypto.createHash("sha256").update(script.content).digest("hex").slice(0, 6));
-          const virtualSrc = ctx.vite.virtual(name, script.content, { global: name === "react/refresh" });
-          acc.contentScripts.push({ ...baseDescriptor, src: virtualSrc });
-        } else if (!script.attributes.type && script.attributes.src) {
-          acc.scripts.push({ src: script.attributes.src, ...baseDescriptor });
-        } else {
-          acc.unknownScripts.push(script);
-        }
-
-        return acc;
-      },
-      {
-        scripts: [] as BootstrapScriptDescriptor[],
-        contentScripts: [] as BootstrapScriptDescriptor[],
-        moduleScripts: [] as BootstrapScriptDescriptor[],
-        unknownScripts: [] as typeof scripts
-      }
-    );
-
-    if (unknownScripts.length > 0) {
-      ctx.logger.warn(
-        `Found ${unknownScripts.length} unknown script(s) during SSR for path: ${ctx.path}. These scripts will be ignored. Please contact with Velnora team if you need support for these script types.`
-      );
-    }
-
+    const viteHtml = await ctx.transformRouteIndexHtml(ctx.route, "");
     const nonce = crypto.randomBytes(16).toString("base64");
-    const htmlTransform = new Transform({
-      transform(chunk, _enc, callback) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-        const stringChunk = chunk.toString() as string;
 
-        const replacedString = stringChunk.replace(
-          /<\/head>/i,
-          `<meta property="csp-nonce" nonce="${nonce}" />` + `</head>`
-        );
-
-        callback(null, replacedString);
-      }
-    });
+    const parseHtmlStream = pipeParsedHtml(`<meta property="csp-nonce" nonce="${nonce}" />${viteHtml}`);
 
     const stream = renderToPipeableStream(page, {
       nonce,
-      bootstrapModules: [...contentScripts, ...moduleScripts],
-      bootstrapScripts: scriptScripts,
       onShellReady() {
-        stream.pipe(htmlTransform);
+        stream.pipe(parseHtmlStream);
       },
       onError(error) {
         ctx.logger.error(`Error during SSR rendering for path: ${ctx.path}`);
@@ -121,7 +59,7 @@ export const appDirSsrHandler = (routes: ClientRoute<ReactRouteDescriptor>[]): R
 
     const connect = import.meta.env.DEV ? `connect-src 'self' ws: wss: http: https:` : `connect-src 'self'`;
     return {
-      body: htmlTransform,
+      body: parseHtmlStream,
       status: 200,
       headers: {
         "Content-Type": "text/html",
