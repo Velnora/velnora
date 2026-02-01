@@ -1,0 +1,38 @@
+{
+  "name": "@velnora/utils",
+  "version": "0.0.0.dev-0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/velnora.utils.d.ts",
+      "import": "./dist/velnora.utils.mjs",
+      "require": "./dist/velnora.utils.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "stub": "unbuild --stub",
+    "lint": "eslint .",
+    "test": "npx vitest run",
+    "typecheck": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "debug": "^4.4.3",
+    "destr": "^2.0.5",
+    "find-up": "^8.0.0"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "unbuild": "^3.6.1",
+    "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
