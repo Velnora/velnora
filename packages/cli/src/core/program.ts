@@ -7,6 +7,21 @@ import type { ParsedSpec } from "../types/parsed-spec";
 import { parseSpec } from "../utils/parse-spec";
 import { Command } from "./command";
 
+/**
+ * The main entry point for the CLI application.
+ * Wraps `yargs` to provide a fluent, type-safe API for defining commands and options.
+ *
+ * @example
+ * ```ts
+ * const program = Program.createProgram()
+ *   .name("my-cli")
+ *   .description("A cool CLI")
+ *   .version("1.0.0");
+ *
+ * program.command("run", "Run the app").action(() => { ... });
+ * await program.parseAsync();
+ * ```
+ */
 export class Program {
   private _argv: Argv<unknown>;
   private options: ParsedSpec[] = []; // root-only options
@@ -16,8 +31,14 @@ export class Program {
     this._argv = argv;
   }
 
-  static createProgram() {
-    const argv = yargs(hideBin(process.argv))
+  /**
+   * Creates a new Program instance.
+   *
+   * @param args - Optional arguments array to parse. Defaults to `process.argv`.
+   *               Useful for dependency injection during testing.
+   */
+  static createProgram(args?: string[]) {
+    const argv = yargs(args ?? hideBin(process.argv))
       .help()
       .strict()
       .recommendCommands()
@@ -27,21 +48,40 @@ export class Program {
     return new Program(argv);
   }
 
+  /**
+   * Sets the CLI script name.
+   * @param n - The name of the script (e.g., "velnora").
+   */
   name(n: string) {
     this._argv = this._argv.scriptName(n);
     return this;
   }
 
+  /**
+   * Sets the CLI description.
+   * @param description - A brief description of what the CLI tool does.
+   */
   description(description: string) {
     this._argv = this._argv.usage(description);
     return this;
   }
 
+  /**
+   * Sets the CLI version.
+   * @param v - The version string (e.g., "1.0.0").
+   */
   version(v: string) {
     this._argv = this._argv.version(v);
     return this;
   }
 
+  /**
+   * Registers a new command or retrieves an existing one.
+   *
+   * @param name - The name of the command.
+   * @param desc - Optional description for the command.
+   * @returns The `Command` instance for further configuration.
+   */
   command<N extends string>(name: N, desc?: string) {
     const command = this._commands.get(name) ?? new Command(name);
     if (desc) command.description(desc);
@@ -49,6 +89,13 @@ export class Program {
     return command;
   }
 
+  /**
+   * Registers a global option available to all commands.
+   *
+   * @param spec - The option specification (e.g., "--verbose", "--foo <string>").
+   * @param config - Additional configuration for the option (description, default value, etc.).
+   * @throws Error if the option is already registered.
+   */
   option<const TSpec extends `--${string}`>(spec: TSpec, config?: ConfigOptions<TSpec>) {
     const parsed = parseSpec(spec, config);
 
@@ -83,14 +130,38 @@ export class Program {
     return this;
   }
 
+  /**
+   * Synchronously parses the arguments and executes the corresponding command.
+   * @returns The parsed arguments.
+   */
   parse() {
     this._build();
     return this._argv.parse();
   }
 
-  async parseAsync(): Promise<unknown> {
+  /**
+   * Asynchronously parses the arguments and executes the corresponding command.
+   *
+   * @param args - Optional arguments to parse. If provided, overrides the internal arguments.
+   * @returns A promise resolving to the parsed arguments.
+   */
+  async parseAsync(args?: string[]): Promise<unknown> {
     this._build();
+    if (args) {
+      return this._argv.parseAsync(args);
+    }
     return this._argv.parseAsync();
+  }
+
+  /**
+   * Configures whether the process should exit on error/help or throw an error instead.
+   * Useful for testing to prevent the test runner from exiting.
+   *
+   * @param exitProcess - If false, errors will throw exceptions instead of exiting the process.
+   */
+  overrideExit(exitProcess = false) {
+    this._argv = this._argv.exitProcess(exitProcess);
+    return this;
   }
 
   private _build() {
@@ -140,7 +211,9 @@ export class Program {
       return n;
     };
     const splitMaybe = (v: unknown): unknown[] => {
-      if (Array.isArray(v)) return v;
+      if (Array.isArray(v)) {
+        return v.flatMap(item => splitMaybe(item));
+      }
       if (typeof v === "string") {
         return v
           .split(",")

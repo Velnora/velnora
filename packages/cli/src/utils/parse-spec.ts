@@ -2,6 +2,19 @@ import type { ConfigOptions } from "../types/config-options";
 import type { ParsedSpec } from "../types/parsed-spec";
 import type { ValueKind } from "../types/value-kind";
 
+/**
+ * Parses a command-line option specification string into a structured object.
+ *
+ * @param spec - The specification string (e.g., "--port <number>", "-f, --force").
+ * @param configOptions - Additional configuration options (description, default, etc.).
+ * @returns A `ParsedSpec` object containing parsed details like type, aliases, and required status.
+ *
+ * @example
+ * ```ts
+ * parseSpec("--name <string>", { required: true })
+ * // Returns: { longs: ["name"], shorts: [], type: "string", isRequired: true, ... }
+ * ```
+ */
 export const parseSpec = <TSpec extends string>(spec: TSpec, configOptions?: ConfigOptions<TSpec>): ParsedSpec => {
   const segments = spec
     .split(",")
@@ -54,6 +67,8 @@ export const parseSpec = <TSpec extends string>(spec: TSpec, configOptions?: Con
         type = "string";
         break;
       case "boolean":
+      case "true":
+      case "false":
         type = "boolean";
         break;
       default:
