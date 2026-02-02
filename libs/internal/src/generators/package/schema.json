@@ -47,6 +47,11 @@
           "items": { "type": "string" }
         }
       ]
+    },
+    "skipTests": {
+      "type": "boolean",
+      "description": "Skip generating test files",
+      "default": false
     }
   },
   "required": ["name", "directory", "scope"],

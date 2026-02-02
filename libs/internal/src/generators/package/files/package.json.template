@@ -4,25 +4,28 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./build/velnora.<%= name %>.d.ts",
-      "import": "./build/velnora.<%= name %>.js"
+      "types": "./dist/velnora.<%= name %>.d.ts",
+      "import": "./dist/velnora.<%= name %>.mjs",
+      "require": "./dist/velnora.<%= name %>.cjs"
     }
   },
   "files": [
-    "build"
+    "dist"
   ],
   "scripts": {
-    "build": "tsup --config tsup.config.ts",
+    "build": "unbuild",
+    "stub": "unbuild --stub",
     "lint": "eslint .",
-    "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.build.json"
+<% if (!skipTests) { %>    "test": "vitest run",
+<% } %>    "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "debug": "^4.4.3"
   },
   "devDependencies": {
     "@types/debug": "^4.1.12",
-    "tsup": "^8.5.1"
+    "@velnora/internal": "workspace:*",
+    "unbuild": "^3.3.1"
   },
   "engines": {
     "node": ">=24"

@@ -1,18 +1,12 @@
 {
   "name": "@velnora/internal",
-  "private": true,
+  "version": "0.0.0-dev.0",
   "type": "module",
-  "main": "./src/main.ts",
-  "types": "./src/main.ts",
+  "exports": {
+    ".": "./src/main.ts"
+  },
   "dependencies": {
-    "@nx/devkit": "22.2.3",
-    "@types/node": "^24.10.1",
-    "debug": "^4.4.3",
-    "tsup": "^8.5.1",
-    "type-fest": "^5.2.0"
-  },
-  "devDependencies": {
-    "@types/debug": "^4.1.12"
-  },
-  "generators": "./generators.json"
+    "defu": "^6.1.4",
+    "unbuild": "^3.3.1"
+  }
 }

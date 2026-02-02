@@ -1,0 +1,7 @@
+import { defineNodeConfig } from '@velnora/internal';
+
+export default defineNodeConfig({
+  entries: [
+    { input: 'src/main', name: 'velnora.<%= name %>' }
+  ]
+});

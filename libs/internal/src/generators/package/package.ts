@@ -1,10 +1,18 @@
-import { execSync, spawn } from "node:child_process";
+import { spawn } from "node:child_process";
 import { relative } from "node:path";
 
 import type { TsConfigJson } from "type-fest";
 
-import { type Tree, getPackageManagerCommand, updateJson, writeJson } from "@nx/devkit";
-import { formatFiles, generateFiles, joinPathFragments, names } from "@nx/devkit";
+import {
+  type Tree,
+  formatFiles,
+  generateFiles,
+  getPackageManagerCommand,
+  joinPathFragments,
+  names,
+  updateJson,
+  writeJson
+} from "@nx/devkit";
 import { capitalize } from "@nx/devkit/src/utils/string-utils";
 
 import type { PackageGeneratorSchema } from "./schema";
@@ -21,7 +29,8 @@ export default async function generator(tree: Tree, schema: PackageGeneratorSche
   generateFiles(tree, joinPathFragments(__dirname, "files"), schema.directory, {
     name: pkg.name,
     target: capitalize(schema.target || "node"),
-    tags
+    tags,
+    skipTests: schema.skipTests
   });
 
   writeJson<TsConfigJson>(tree, joinPathFragments(schema.directory, "tsconfig.json"), {

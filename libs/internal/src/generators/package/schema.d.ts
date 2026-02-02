@@ -4,4 +4,5 @@ export interface PackageGeneratorSchema {
   target?: "node" | "web";
   scope: string;
   tags: string | string[];
+  skipTests?: boolean;
 }
