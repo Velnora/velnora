@@ -91,13 +91,13 @@ export class Command<TAccum extends object = object, TPrefetchResult = void> imp
     }
     this.options.push(parsed);
 
-    return this as Command<Merge<TAccum, OptRecordFromSpec<TSpec>>>;
+    return this as unknown as Command<Merge<TAccum, OptRecordFromSpec<TSpec>>>;
   }
 
   positional<TPositional extends string>(positional: TPositional) {
     const positionalArg = parsePositional(positional);
     this.positionalArgs.push(positionalArg);
-    return this as Command<Merge<TAccum, OptRecordFromPositional<TPositional>>>;
+    return this as unknown as Command<Merge<TAccum, OptRecordFromPositional<TPositional>>>;
   }
 
   prefetch<const TResult>(cb: (args: TAccum) => Promisable<TResult>) {

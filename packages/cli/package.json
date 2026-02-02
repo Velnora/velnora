@@ -10,8 +10,8 @@
   },
   "scripts": {
     "build": "tsup --config tsup.config.ts",
-    "lint": "eslint .",
-    "test": "vitest run",
+    "lint": "eslint ",
+    "test": "node_modules/.bin/vitest run",
     "typecheck": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
