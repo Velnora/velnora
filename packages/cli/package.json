@@ -11,16 +11,17 @@
   },
   "scripts": {
     "build": "unbuild",
+    "coverage": "vitest run --coverage",
     "lint": "eslint ",
-    "test": "node_modules/.bin/vitest run",
+    "test": "vitest run",
     "typecheck": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
     "yargs": "^18.0.0"
   },
   "devDependencies": {
-    "@types/node": "^25.0.2",
     "@types/yargs": "^17.0.35",
+    "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^9.39.1",
     "type-fest": "^5.2.0",
     "unbuild": "^3.6.1",
