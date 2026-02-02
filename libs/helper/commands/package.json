@@ -5,21 +5,23 @@
   "exports": {
     ".": {
       "types": "./build/velnora.commands.d.ts",
-      "import": "./build/velnora.commands.js"
+      "import": "./build/velnora.commands.mjs",
+      "require": "./build/velnora.commands.cjs"
     }
   },
   "files": [
     "build"
   ],
   "scripts": {
-    "build": "tsup --config tsup.config.ts",
+    "build": "unbuild",
     "lint": "eslint .",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.build.json"
   },
   "devDependencies": {
     "@velnora/cli-helper": "workspace:^",
-    "tsup": "^8.5.1"
+    "@velnora/internal": "workspace:^",
+    "unbuild": "^3.3.1"
   },
   "engines": {
     "node": ">=24"

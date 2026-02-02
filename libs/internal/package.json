@@ -2,9 +2,8 @@
   "name": "@velnora/internal",
   "version": "0.0.0-dev.0",
   "type": "module",
-  "exports": {
-    ".": "./src/main.ts"
-  },
+  "main": "./src/main.ts",
+  "types": "./src/main.ts",
   "dependencies": {
     "defu": "^6.1.4",
     "unbuild": "^3.3.1"

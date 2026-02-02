@@ -5,11 +5,12 @@
   "exports": {
     ".": {
       "types": "./build/velnora.cli-helper.d.ts",
-      "import": "./build/velnora.cli-helper.js"
+      "import": "./build/velnora.cli-helper.mjs",
+      "require": "./build/velnora.cli-helper.cjs"
     }
   },
   "scripts": {
-    "build": "tsup --config tsup.config.ts",
+    "build": "unbuild",
     "lint": "eslint ",
     "test": "node_modules/.bin/vitest run",
     "typecheck": "tsc -p tsconfig.build.json"
@@ -21,9 +22,8 @@
     "@types/node": "^25.0.2",
     "@types/yargs": "^17.0.35",
     "eslint": "^9.39.1",
-    "tsup": "^8.5.1",
     "type-fest": "^5.2.0",
-    "typescript": "^5.9.3",
+    "unbuild": "^3.6.1",
     "vitest": "^4.0.14"
   },
   "engines": {
