@@ -4,8 +4,11 @@ export const program = Program.createProgram();
 
 program.name("velnora").description("Velnora CLI").version("0.1.0");
 
+export const initCommand = program.command("init").description("Create a new Velnora workspace.");
+
 export const devCommand = program
   .command("dev")
+  .description("Start the development server in watch mode.")
   .option("--host <string>", { description: "Host to run the development server on" })
   .option("--port <number>, -p", { description: "Port to run the development server on" })
   .option("--watch, -w", { description: "Enable watch mode", default: false })
@@ -14,12 +17,14 @@ export const devCommand = program
 
 export type DevCommandOptions = inferCommandType<typeof devCommand>;
 
-export const previewCommand = program
-  .command("preview")
-  .option("--port <number>, -p", { description: "Port to run the preview server on", default: 5000 });
+export const buildCommand = program
+  .command("build")
+  .description("Build the current project or workspace for production.");
 
-export type PreviewCommandOptions = inferCommandType<typeof previewCommand>;
+export const listCommand = program.command("list").description("List all discovered projects in the workspace.");
 
-export const buildCommand = program.command("build");
+export const graphCommand = program.command("graph").description("Display the dependency graph of the workspace.");
 
-export const inspectCommand = program.command("inspect");
+export const doctorCommand = program
+  .command("doctor")
+  .description("Check for issues with configuration and environment.");
