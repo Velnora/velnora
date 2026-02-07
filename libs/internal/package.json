@@ -7,5 +7,6 @@
   "dependencies": {
     "defu": "^6.1.4",
     "unbuild": "^3.3.1"
-  }
+  },
+  "generators": "./generators.json"
 }
