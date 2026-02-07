@@ -1,16 +1,16 @@
 {
   "name": "@velnora/<%= name %>",
-  "version": "0.0.0.dev-0",
+  "version": "0.0.0-dev.0",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/velnora.<%= name %>.d.ts",
-      "import": "./dist/velnora.<%= name %>.mjs",
-      "require": "./dist/velnora.<%= name %>.cjs"
+      "types": "./build/velnora.<%= name %>.d.ts",
+      "import": "./build/velnora.<%= name %>.mjs",
+      "require": "./build/velnora.<%= name %>.cjs"
     }
   },
   "files": [
-    "dist"
+    "build"
   ],
   "scripts": {
     "build": "unbuild",
@@ -19,12 +19,7 @@
 <% if (!skipTests) { %>    "test": "vitest run",
 <% } %>    "typecheck": "tsc -p tsconfig.json"
   },
-  "dependencies": {
-    "debug": "^4.4.3"
-  },
   "devDependencies": {
-    "@types/debug": "^4.1.12",
-    "@velnora/internal": "workspace:*",
     "unbuild": "^3.3.1"
   },
   "engines": {

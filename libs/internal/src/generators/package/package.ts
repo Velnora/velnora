@@ -33,6 +33,22 @@ export default async function generator(tree: Tree, schema: PackageGeneratorSche
     skipTests: schema.skipTests
   });
 
+  if (!schema.skipTests) {
+    tree.write(
+      joinPathFragments(schema.directory, "vitest.config.ts"),
+      `
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    include: ["src/**/*.spec.ts"]
+  }
+});
+
+`
+    );
+  }
+
   writeJson<TsConfigJson>(tree, joinPathFragments(schema.directory, "tsconfig.json"), {
     extends: relative(schema.directory, "tsconfig.base.json").replaceAll("\\", "/")
   });

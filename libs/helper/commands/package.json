@@ -15,8 +15,9 @@
   "scripts": {
     "build": "unbuild",
     "lint": "eslint .",
+    "stub": "unbuild --stub",
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.build.json"
+    "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "@velnora/cli-helper": "workspace:^",

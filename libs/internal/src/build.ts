@@ -1,36 +1,37 @@
 import { defu } from "defu";
 import { type BuildConfig, defineBuildConfig } from "unbuild";
 
-export function defineNodeConfig(options: BuildConfig) {
-  const name = options.name ? options.name : "velnora";
-  const pkgName = name.startsWith("velnora.") ? name : `velnora.${name}`;
+const getPkgName = (name?: string) => (!name ? "velnora" : name.match(/^velnora\.?/) ? name : `velnora.${name}`);
+
+export const defineNodeConfig = (options: Omit<BuildConfig, "name"> & Record<"name", string>) => {
+  console.log(options.name);
+  const pkgName = getPkgName(options.name);
 
   return defineBuildConfig(
-    defu(options, {
+    defu<BuildConfig, BuildConfig[]>(options, {
       outDir: "build",
       name: pkgName,
       declaration: true,
       clean: true,
       entries: [{ input: "src/main", name: pkgName }],
-      rollup: { emitCJS: true },
+      rollup: { emitCJS: false },
       failOnWarn: false
     })
   );
-}
+};
 
-export function defineWebConfig(options: BuildConfig) {
-  const name = options.name ? options.name : "velnora";
-  const pkgName = name.startsWith("velnora.") ? name : `velnora.${name}`;
+export const defineWebConfig = (options: BuildConfig) => {
+  const pkgName = getPkgName(options.name);
 
   return defineBuildConfig(
-    defu(options, {
+    defu<BuildConfig, BuildConfig[]>(options, {
       outDir: "build",
       name: pkgName,
       declaration: true,
       clean: true,
       entries: [{ input: "src/main", name: pkgName }],
-      rollup: { emitCJS: true, inlineDependencies: true },
+      rollup: { inlineDependencies: true },
       failOnWarn: false
     })
   );
-}
+};
