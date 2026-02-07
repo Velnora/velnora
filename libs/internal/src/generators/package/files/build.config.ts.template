@@ -1,6 +1,6 @@
-import { defineNodeConfig } from '@velnora/internal';
+import { define<%= target %>Config } from '@velnora/internal';
 
-export default defineNodeConfig({
+export default define<%= target %>Config({
   entries: [
     { input: 'src/main', name: 'velnora.<%= name %>' }
   ]
