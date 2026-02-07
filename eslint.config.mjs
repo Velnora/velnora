@@ -4,99 +4,10 @@ import * as tsEslint from "typescript-eslint";
 import js from "@eslint/js";
 import nxPlugin from "@nx/eslint-plugin";
 
-const projectScopes = [
-  {
-    sourceTag: "scope:velnora",
-    onlyDependOnLibsWithTags: [
-      "scope:plugin-api",
-      "scope:runtime",
-      "scope:integrations",
-      "scope:types",
-      "scope:router"
-    ],
-    notDependOnLibsWithTags: ["side:server"]
-  },
-  {
-    sourceTag: "scope:types",
-    onlyDependOnLibsWithTags: [],
-    notDependOnLibsWithTags: []
-  },
-  {
-    sourceTag: "scope:rpc",
-    onlyDependOnLibsWithTags: [],
-    notDependOnLibsWithTags: []
-  },
-  {
-    sourceTag: "scope:router",
-    onlyDependOnLibsWithTags: ["scope:types", "scope:devkit"],
-    notDependOnLibsWithTags: []
-  },
-  {
-    sourceTag: "scope:plugin-api",
-    onlyDependOnLibsWithTags: ["scope:types"],
-    notDependOnLibsWithTags: []
-  },
-  {
-    sourceTag: "scope:internal",
-    onlyDependOnLibsWithTags: [],
-    notDependOnLibsWithTags: []
-  },
-  {
-    sourceTag: "scope:devkit",
-    onlyDependOnLibsWithTags: ["scope:types", "scope:contracts", "scope:vite"],
-    notDependOnLibsWithTags: []
-  },
-  {
-    sourceTag: "scope:core",
-    onlyDependOnLibsWithTags: ["scope:types"],
-    notDependOnLibsWithTags: []
-  },
-  {
-    sourceTag: "scope:contracts",
-    onlyDependOnLibsWithTags: ["scope:types"],
-    notDependOnLibsWithTags: []
-  },
-  {
-    sourceTag: "scope:cli",
-    onlyDependOnLibsWithTags: ["scope:commands", "scope:runtime:server"],
-    notDependOnLibsWithTags: ["side:client", "scope:integrations"]
-  },
-  {
-    sourceTag: "scope:commands",
-    onlyDependOnLibsWithTags: ["scope:cli-helper", "scope:runtime:server"],
-    notDependOnLibsWithTags: []
-  },
-  {
-    sourceTag: "scope:vite",
-    onlyDependOnLibsWithTags: ["scope:types", "scope:plugin-api", "scope:router"],
-    notDependOnLibsWithTags: []
-  },
-  {
-    sourceTag: "scope:runtime",
-    onlyDependOnLibsWithTags: [],
-    notDependOnLibsWithTags: []
-  },
-  {
-    sourceTag: "scope:runtime",
-    onlyDependOnLibsWithTags: [],
-    notDependOnLibsWithTags: []
-  },
-  {
-    sourceTag: "scope:integrations",
-    onlyDependOnLibsWithTags: ["scope:types"],
-    notDependOnLibsWithTags: ["scope:integration"]
-  },
-  {
-    sourceTag: "scope:integrations",
-    onlyDependOnLibsWithTags: ["scope:schema", "scope:plugin-api", "scope:devkit"],
-    notDependOnLibsWithTags: ["scope:integration"]
-  },
-  {
-    sourceTag: "scope:cli-helper",
-    onlyDependOnLibsWithTags: [],
-    notDependOnLibsWithTags: []
-  }
-];
+const projectScopes = {
+  velnora: { dependsOn: [], notDependsOn: [] },
+  cli: { dependsOn: ["scope:commands", "scope:utils"], notDependsOn: [] }
+};
 
 export default defineConfig(
   // Global ignores
@@ -177,7 +88,11 @@ export default defineConfig(
             },
 
             // 6) project.json-defined scopes
-            ...projectScopes
+            ...Object.entries(projectScopes).map(([scopeName, { dependsOn, notDependsOn }]) => ({
+              sourceTag: `scope:${scopeName}`,
+              onlyDependOnLibsWithTags: dependsOn,
+              notDependOnLibsWithTags: notDependsOn
+            }))
           ]
         }
       ]
