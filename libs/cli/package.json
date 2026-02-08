@@ -19,11 +19,8 @@
     "@velnora/runtime-server": "workspace:^"
   },
   "devDependencies": {
-    "@velnora/commands": "workspace:^",
-    "eslint": "^9.39.1",
-    "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.14"
+    "@velnora/internal": "workspace:*",
+    "unbuild": "^3.6.1"
   },
   "engines": {
     "node": ">=24"

@@ -57,16 +57,7 @@
     "vitest": "^4.0.14"
   },
   "devDependencies": {
-    "@velnora/cli": "workspace:^",
-    "type-fest": "^5.2.0"
-  },
-  "peerDependencies": {
-    "@velnora/integrations-react": "workspace:*"
-  },
-  "peerDependenciesMeta": {
-    "@velnora/integrations-react": {
-      "optional": true
-    }
+    "unbuild": "^3.6.1"
   },
   "engines": {
     "node": ">=24"
