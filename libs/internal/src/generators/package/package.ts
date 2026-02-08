@@ -1,4 +1,3 @@
-import { spawn } from "node:child_process";
 import { relative } from "node:path";
 
 import type { TsConfigJson } from "type-fest";
@@ -16,6 +15,7 @@ import {
 import { capitalize } from "@nx/devkit/src/utils/string-utils";
 
 import type { PackageGeneratorSchema } from "./schema";
+import { executeCommand } from "./utils/execute-command";
 
 export default async function generator(tree: Tree, schema: PackageGeneratorSchema) {
   const pkg = names(schema.name);
@@ -52,23 +52,8 @@ export default async function generator(tree: Tree, schema: PackageGeneratorSche
 
   const pm = getPackageManagerCommand("yarn");
 
-  return () => {
-    const { promise, resolve, reject } = Promise.withResolvers<void>();
-
-    const child = spawn(pm.install, {
-      stdio: "inherit",
-      shell: true,
-      env: { ...process.env, YARN_ENABLE_HYPERLINKS: "0" }
-    });
-
-    child.on("exit", code => {
-      if (code === 0) {
-        resolve();
-      } else {
-        reject(new Error(`'${pm.install}' exited with code ${code}`));
-      }
-    });
-
-    return promise;
+  return async () => {
+    await executeCommand(pm.install);
+    await executeCommand(pm.run("prepare"));
   };
 }

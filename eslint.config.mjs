@@ -5,8 +5,13 @@ import js from "@eslint/js";
 import nxPlugin from "@nx/eslint-plugin";
 
 const projectScopes = {
-  velnora: { dependsOn: [], notDependsOn: [] },
-  cli: { dependsOn: ["scope:commands", "scope:utils"], notDependsOn: [] }
+  "cli": { dependsOn: ["scope:commands", "scope:utils"], notDependsOn: [] },
+  "commands": {},
+  "sync": {},
+  "types": {},
+  "utils": {},
+  "velnora": { dependsOn: [], notDependsOn: [] },
+  "cli-helper": {}
 };
 
 export default defineConfig(
