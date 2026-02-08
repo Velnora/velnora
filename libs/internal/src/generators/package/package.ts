@@ -26,7 +26,7 @@ export default async function generator(tree: Tree, schema: PackageGeneratorSche
     ...(Array.isArray(schema.tags) ? schema.tags : [schema.tags])
   ].filter(Boolean);
 
-  generateFiles(tree, joinPathFragments(__dirname, "files"), schema.directory, {
+  generateFiles(tree, joinPathFragments(__dirname, "files/base"), schema.directory, {
     name: pkg.name,
     target: capitalize(schema.target || "node"),
     tags,
@@ -34,19 +34,7 @@ export default async function generator(tree: Tree, schema: PackageGeneratorSche
   });
 
   if (!schema.skipTests) {
-    tree.write(
-      joinPathFragments(schema.directory, "vitest.config.ts"),
-      `
-import { defineConfig } from "vitest/config";
-
-export default defineConfig({
-  test: {
-    include: ["src/**/*.spec.ts"]
-  }
-});
-
-`
-    );
+    generateFiles(tree, joinPathFragments(__dirname, "files/tests"), schema.directory, {});
   }
 
   writeJson<TsConfigJson>(tree, joinPathFragments(schema.directory, "tsconfig.json"), {

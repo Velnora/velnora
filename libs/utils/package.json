@@ -1,6 +1,6 @@
 {
   "name": "@velnora/utils",
-  "version": "0.0.0.dev-0",
+  "version": "0.0.0-dev.0",
   "type": "module",
   "exports": {
     ".": {
@@ -15,16 +15,11 @@
     "build": "unbuild",
     "lint": "eslint .",
     "stub": "unbuild --stub",
-    "test": "npx vitest run",
-    "typecheck": "tsc -p tsconfig.build.json"
-  },
-  "dependencies": {
-    "destr": "^2.0.5",
-    "find-up": "^8.0.0"
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json"
   },
   "devDependencies": {
-    "unbuild": "^3.6.1",
-    "vitest": "^4.0.18"
+    "unbuild": "^3.6.1"
   },
   "engines": {
     "node": ">=24"

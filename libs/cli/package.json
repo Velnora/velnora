@@ -10,10 +10,11 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "tsup --config tsup.config.ts",
+    "build": "unbuild",
     "lint": "eslint .",
+    "stub": "unbuild --stub",
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.build.json"
+    "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "@velnora/runtime-server": "workspace:^"

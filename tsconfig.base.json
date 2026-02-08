@@ -5,58 +5,20 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
-
     "strict": true,
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
     "resolveJsonModule": true,
-
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-
     "types": ["vite/client", "@types/node"],
-
     "baseUrl": ".",
     "paths": {
-      "velnora": ["libs/velnora/src/main.ts"],
-      "velnora/app": ["libs/velnora/src/app.ts"],
-
       "@velnora/internal": ["libs/internal/src/main.ts"],
-      "@velnora/internal/*": ["libs/internal/src/*"],
-
-      "@velnora/cli": ["libs/cli/src/main.ts"],
-
-      "@velnora/integrations-nest": ["libs/integrations/nest/src/main.ts"],
-      "@velnora/integrations-nest/server": ["libs/integrations/nest/src/server.ts"],
-
-      "@velnora/integrations-react": ["libs/integrations/react/src/integration/main.ts"],
-      "velnora/react": ["libs/integrations/react/src/client/main.ts"],
-      "@velnora/integrations-react/client": ["libs/integrations/react/src/client/main.ts"],
-      "@velnora/integrations-react/server": ["libs/integrations/react/src/server/main.ts"],
-      "@velnora/mf": ["libs/integrations/microfrontend/src/intregration/main.ts"],
-
-      "@velnora/core": ["libs/core/src/main.ts"],
-      "velnora/core": ["libs/core/src/main.ts"],
-
-      "@velnora/runtime-client": ["libs/runtime/client/src/main.ts"],
-      "@velnora/runtime-server": ["libs/runtime/server/src/main.ts"],
-
-      "@velnora/router": ["libs/router/src/router/main.ts"],
-      "@velnora/router/client": ["libs/router/src/client/main.ts"],
-      "velnora/router": ["libs/router/src/client/main.ts"],
-      "@velnora/router/server": ["libs/router/src/server/main.ts"],
-
-      "@velnora/devkit": ["libs/devkit/src/node/main.ts"],
-      "@velnora/devkit/client": ["libs/devkit/src/client/main.ts"],
-
-      "@velnora/rpc": ["libs/rpc/src/main.ts"],
-      "@velnora/plugin-api": ["libs/plugin-api/src/main.ts"],
-      "@velnora/types": ["libs/types/src/main.ts"],
-      "@velnora/vite-integration": ["libs/vite/integration/src/main.ts"],
-      "@velnora/contracts": ["libs/contracts/src/main.ts"],
-      "@velnora/generator": ["libs/generator/src/main.ts"]
+      "@velnora/utils": ["./libs/utils/src/main.ts"],
+      "@velnora/commands": ["libs/helper/commands/src/main.ts"],
       "@velnora/cli-helper": ["packages/cli/src/main.ts"],
-      "@velnora/commands": ["libs/helper/commands/src/main.ts"]
+      "@velnora/types": ["./libs/types/src/main.ts"]
     }
   },
   "exclude": ["node_modules"]

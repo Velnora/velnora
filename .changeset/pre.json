@@ -6,7 +6,7 @@
     "@velnora/contracts": "0.0.0-dev.0",
     "@velnora/core": "0.0.0-dev.0",
     "@velnora/devkit": "0.0.0-dev.0",
-    "@velnora/generator": "0.0.0.dev-0",
+    "@velnora/generator": "0.0.0-dev.0",
     "@velnora/cli-helper": "0.0.0-dev.0",
     "@velnora/commands": "0.0.0-dev.0",
     "@velnora/integrations-nest": "0.0.0-dev.0",

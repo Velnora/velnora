@@ -1,35 +1,25 @@
 {
   "name": "@velnora/types",
   "version": "0.0.0-dev.0",
-  "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {
       "types": "./build/velnora.types.d.ts",
-      "import": "./build/velnora.types.js"
+      "import": "./build/velnora.types.mjs"
     }
   },
   "files": [
     "build"
   ],
   "scripts": {
-    "build": "tsup --config tsup.config.ts",
+    "build": "unbuild",
     "lint": "eslint .",
+    "stub": "unbuild --stub",
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.build.json"
-  },
-  "dependencies": {
-    "@types/qs": "^6.14.0",
-    "glob": "^13.0.0"
+    "typecheck": "tsc -p tsconfig.json"
   },
   "devDependencies": {
-    "@types/express": "^5.0.6",
-    "eslint": "^9.39.1",
-    "tsup": "^8.5.1",
-    "type-fest": "^5.2.0",
-    "typescript": "^5.9.3",
-    "vite": "^7.2.6",
-    "vitest": "^4.0.14"
+    "unbuild": "^3.6.1"
   },
   "engines": {
     "node": ">=24"

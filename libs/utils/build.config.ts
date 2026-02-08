@@ -1,10 +1,3 @@
-import { defineBuildConfig } from "unbuild";
+import { defineNodeConfig } from "@velnora/internal";
 
-export default defineBuildConfig({
-  entries: [{ input: "src/main", name: "velnora.utils" }],
-  declaration: true,
-  clean: true,
-  rollup: {
-    emitCJS: true
-  }
-});
+export default defineNodeConfig({ name: "utils" });
