@@ -13,8 +13,8 @@
   ],
   "scripts": {
     "build": "unbuild",
-    "stub": "unbuild --stub",
     "lint": "eslint .",
+    "stub": "unbuild --stub",
     "test": "npx vitest run",
     "typecheck": "tsc -p tsconfig.build.json"
   },
