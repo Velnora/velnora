@@ -5,8 +5,7 @@
   "exports": {
     ".": {
       "types": "./dist/velnora.utils.d.ts",
-      "import": "./dist/velnora.utils.mjs",
-      "require": "./dist/velnora.utils.cjs"
+      "import": "./dist/velnora.utils.mjs"
     }
   },
   "files": [

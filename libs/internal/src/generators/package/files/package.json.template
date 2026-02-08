@@ -5,8 +5,7 @@
   "exports": {
     ".": {
       "types": "./build/velnora.<%= name %>.d.ts",
-      "import": "./build/velnora.<%= name %>.mjs",
-      "require": "./build/velnora.<%= name %>.cjs"
+      "import": "./build/velnora.<%= name %>.mjs"
     }
   },
   "files": [

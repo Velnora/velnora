@@ -5,8 +5,7 @@
   "exports": {
     ".": {
       "types": "./build/velnora.commands.d.ts",
-      "import": "./build/velnora.commands.mjs",
-      "require": "./build/velnora.commands.cjs"
+      "import": "./build/velnora.commands.mjs"
     }
   },
   "files": [

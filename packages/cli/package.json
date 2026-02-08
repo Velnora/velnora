@@ -5,8 +5,7 @@
   "exports": {
     ".": {
       "types": "./build/velnora.cli-helper.d.ts",
-      "import": "./build/velnora.cli-helper.mjs",
-      "require": "./build/velnora.cli-helper.cjs"
+      "import": "./build/velnora.cli-helper.mjs"
     }
   },
   "scripts": {
