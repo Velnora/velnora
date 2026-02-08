@@ -5,10 +5,16 @@
   "exports": {
     ".": {
       "types": "./build/velnora.cli.d.ts",
-      "import": "./build/velnora.cli.js"
+      "import": "./build/velnora.cli.mjs"
     },
     "./package.json": "./package.json"
   },
+  "bin": {
+    "velnora": "./build/velnora.cli.mjs"
+  },
+  "files": [
+    "build"
+  ],
   "scripts": {
     "build": "unbuild",
     "lint": "eslint .",
@@ -17,7 +23,8 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@velnora/runtime-server": "workspace:^"
+    "@velnora/commands": "workspace:^",
+    "@velnora/utils": "workspace:^"
   },
   "devDependencies": {
     "@velnora/internal": "workspace:*",

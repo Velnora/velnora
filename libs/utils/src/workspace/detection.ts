@@ -3,36 +3,42 @@ import { dirname } from "node:path";
 
 import destr from "destr";
 import { findUp } from "find-up";
+import type { PackageJson } from "type-fest";
 
 import { VELNORA_CONFIG_FILES } from "../constants";
 
-export { VELNORA_CONFIG_FILES };
-
-export async function findWorkspaceRoot(cwd: string): Promise<string | undefined> {
-  // 1. Look for velnora.config.* files
+/**
+ * Detects the workspace root directory.
+ *
+ * It traverses up from the current working directory (`cwd`) looking for:
+ * 1. A `velnora.config.*` file.
+ * 2. A `package.json` file containing a `velnora` property.
+ *
+ * @param cwd - The current working directory to start searching from.
+ * @returns The absolute path to the workspace root, or `undefined` if not found (falls back to `cwd` in implementation but logical return helps).
+ *          Actually implementation returns `dirname` or `cwd` fallback.
+ */
+export const findWorkspaceRoot = async (cwd: string) => {
   const configPath = await findUp(VELNORA_CONFIG_FILES, { cwd });
 
   if (configPath) {
     return dirname(configPath);
   }
 
-  // 2. Look for package.json with "velnora" property
   const packageJsonPath = await findUp("package.json", { cwd });
 
   if (packageJsonPath) {
     try {
       const pkgContent = readFileSync(packageJsonPath, "utf-8");
-      // Use destr for safe parsing
-      const pkg = destr(pkgContent);
+      const pkg = destr<PackageJson>(pkgContent);
 
       if (pkg && typeof pkg === "object" && "velnora" in pkg) {
         return dirname(packageJsonPath);
       }
     } catch {
-      // Ignore errors
+      // empty
     }
   }
 
-  // 3. Fallback
   return cwd;
-}
+};

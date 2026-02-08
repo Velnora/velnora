@@ -1,25 +1,29 @@
-import { buildCommand, devCommand, inspectCommand, previewCommand, program } from "@velnora/commands";
+import {
+  buildCommand,
+  devCommand,
+  doctorCommand,
+  graphCommand,
+  initCommand,
+  listCommand,
+  program
+} from "@velnora/commands";
+import { findProjects, findWorkspaceRoot } from "@velnora/utils";
 
-devCommand.action(async opts => {
-  const { createDevServer } = await import("@velnora/runtime-server");
-  const velnora = await createDevServer(opts);
-  await velnora.listen();
-  velnora.printUrls();
+initCommand.action(async () => {});
+
+devCommand.action(async () => {
+  const workspaceRoot = await findWorkspaceRoot(process.cwd());
+  const projects = await findProjects(workspaceRoot);
+
+  console.log(projects);
 });
 
-previewCommand.action(async opts => {
-  const { createPreviewServer } = await import("@velnora/runtime-server");
-  await createPreviewServer(opts);
-});
+buildCommand.action(async () => {});
 
-buildCommand.action(async () => {
-  // const { buildAll } = await import("./tasks/build.js");
-  // await buildAll();
-});
+listCommand.action(async () => {});
 
-inspectCommand.action(async () => {
-  // const { printGraph } = await import("./tasks/inspect.js");
-  // await printGraph();
-});
+graphCommand.action(async () => {});
+
+doctorCommand.action(async () => {});
 
 await program.parseAsync();

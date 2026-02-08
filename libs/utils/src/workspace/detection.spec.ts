@@ -4,7 +4,8 @@ import destr from "destr";
 import { findUp } from "find-up";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { VELNORA_CONFIG_FILES, findWorkspaceRoot } from "./detection";
+import { VELNORA_CONFIG_FILES } from "../constants";
+import { findWorkspaceRoot } from "./detection";
 
 // Mock find-up and fs
 vi.mock("find-up");

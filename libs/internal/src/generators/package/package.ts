@@ -38,7 +38,7 @@ export default async function generator(tree: Tree, schema: PackageGeneratorSche
   }
 
   writeJson<TsConfigJson>(tree, joinPathFragments(schema.directory, "tsconfig.json"), {
-    extends: relative(schema.directory, "tsconfig.base.json").replaceAll("\\", "/")
+    extends: relative(schema.directory, "tsconfig.base").replaceAll("\\", "/")
   });
 
   updateJson<TsConfigJson>(tree, "tsconfig.base.json", json => {
