@@ -8,9 +8,11 @@
       "import": "./build/velnora.cli-helper.mjs"
     }
   },
+  "files": [
+    "build"
+  ],
   "scripts": {
     "build": "unbuild",
-    "coverage": "vitest run --coverage",
     "lint": "eslint ",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.build.json"

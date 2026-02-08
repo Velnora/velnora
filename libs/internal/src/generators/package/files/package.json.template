@@ -13,8 +13,8 @@
   ],
   "scripts": {
     "build": "unbuild",
-    "stub": "unbuild --stub",
     "lint": "eslint .",
+    "stub": "unbuild --stub",
 <% if (!skipTests) { %>    "test": "vitest run",
 <% } %>    "typecheck": "tsc -p tsconfig.json"
   },
