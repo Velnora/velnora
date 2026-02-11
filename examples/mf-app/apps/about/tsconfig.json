@@ -1,4 +1,0 @@
-{
-  "extends": "../../tsconfig.base",
-  "include": ["velnora/client", "velnora/packages/apps/about"]
-}

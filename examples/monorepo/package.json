@@ -1,0 +1,14 @@
+{
+  "name": "example-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "libs/*"
+  ],
+  "scripts": {
+    "dev": "velnora dev"
+  },
+  "devDependencies": {
+    "@velnora/cli": "file:../../libs/cli"
+  }
+}
