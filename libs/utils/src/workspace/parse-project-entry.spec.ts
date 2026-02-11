@@ -38,7 +38,7 @@ describe("parseProjectEntry", () => {
     const result = await parseProjectEntry(mockPath);
 
     expect(result).toBeNull();
-    expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("Missing 'name'"));
+    expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("Missing 'name' in config file"));
 
     consoleSpy.mockRestore();
   });
