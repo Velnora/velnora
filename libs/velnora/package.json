@@ -34,32 +34,28 @@
     "velnora": "./bin/velnora.js",
     "velnora-dev": "./bin/velnora-dev.ts"
   },
+  "bin": "./bin/velnora.js",
   "files": [
     "build",
-    "meta",
-    "packages"
+    "bin"
   ],
   "scripts": {
-    "build": "tsup --config tsup.config.ts",
+    "build": "unbuild",
     "lint": "eslint .",
-    "prepublishOnly": "./scripts/ignore-dev.sh",
+    "stub": "unbuild --stub",
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.build.json"
+    "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@velnora/core": "workspace:^",
-    "@velnora/plugin-api": "workspace:^",
-    "@velnora/router": "workspace:^",
-    "@velnora/types": "workspace:^",
-    "eslint": "^9.39.1",
-    "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.14"
+    "@velnora/cli": "workspace:^"
   },
   "devDependencies": {
     "unbuild": "^3.6.1"
   },
   "engines": {
     "node": ">=24"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
