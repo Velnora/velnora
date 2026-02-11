@@ -1,72 +1,78 @@
-import { readFileSync } from "node:fs";
+import { readFileSync as readFileSyncSync } from "node:fs";
 
 import destr from "destr";
 import { findUp } from "find-up";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { VELNORA_CONFIG_FILES } from "../constants";
 import { findWorkspaceRoot } from "./detection";
 
-// Mock find-up and fs
-vi.mock("find-up");
+// Mock dependencies
+vi.mock("find-up", () => ({
+  findUp: vi.fn()
+}));
 vi.mock("node:fs");
 vi.mock("destr");
 
-describe("findWorkspaceRoot", () => {
-  const cwd = "/users/dev/project";
+const mockFindUp = vi.mocked(findUp);
+const mockReadFileSync = vi.mocked(readFileSyncSync);
+const mockDestr = vi.mocked(destr);
 
+describe("findWorkspaceRoot", () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
 
-  it("should return directory containing velnora.config", async () => {
-    // Mock findUp to return a config path
-    vi.mocked(findUp).mockResolvedValueOnce("/users/dev/project/velnora.config.json");
+  it("should find workspace root if package.json has workspaces", async () => {
+    // mockFindUp logic needs careful setup because findUp is called in a loop with DIFFERENT cwd.
+    // The implementation passes specific `cwd` options.
+    // However, `findUp` *finds* based on file system or mock.
+    // The implementation does: `await findUp("package.json", { cwd: dir })`
 
-    const result = await findWorkspaceRoot(cwd);
-    expect(result).toBe("/users/dev/project");
-    expect(findUp).toHaveBeenCalledWith(VELNORA_CONFIG_FILES, { cwd });
+    // Test 1: immediate find
+    mockFindUp.mockImplementation(async (file, opts) => {
+      // Satisfy async requirement with a dummy await if needed, or simply return a Promise
+      await Promise.resolve();
+      if (opts?.cwd === "/root") return "/root/package.json";
+      return undefined;
+    });
+
+    mockReadFileSync.mockReturnValue(JSON.stringify({ workspaces: ["packages/*"] }));
+    mockDestr.mockReturnValue({ workspaces: ["packages/*"] });
+
+    const root = await findWorkspaceRoot("/root");
+    expect(root).toBe("/root");
   });
 
-  it("should return directory containing package.json with velnora property", async () => {
-    // First call for config returns undefined
-    vi.mocked(findUp).mockResolvedValueOnce(undefined);
-    // Second call for package.json returns path
-    vi.mocked(findUp).mockResolvedValueOnce("/users/dev/project/package.json");
-    // Mock readFileSync
-    vi.mocked(readFileSync).mockReturnValue('{"velnora":{}}');
-    // Mock destr to return object
-    vi.mocked(destr).mockReturnValue({ velnora: {} });
+  it("should traverse up until it finds package.json with workspaces", async () => {
+    // Level 1: /root/packages/app -> finds package.json (no workspaces)
+    // Level 2: /root/packages -> finds package.json in /root (has workspaces)
 
-    const result = await findWorkspaceRoot(cwd);
-    expect(result).toBe("/users/dev/project");
+    mockFindUp.mockImplementation(async (file, opts) => {
+      await Promise.resolve();
+      // First call: cwd = /root/packages/app
+      if (opts?.cwd === "/root/packages/app") return "/root/packages/app/package.json";
+      // Second call: cwd = /root/packages (parent of app package.json dir)
+      if (opts?.cwd === "/root/packages") return "/root/package.json";
+      // Third call: cwd = /root (parent of root package.json dir, if we continued)
+      if (opts?.cwd === "/root") return "/root/package.json"; // Or undefined if we want to stop
+      return undefined;
+    });
+
+    mockReadFileSync.mockImplementation((path: unknown) => {
+      const p = path as string;
+      if (p === "/root/packages/app/package.json") return JSON.stringify({ name: "app" });
+      if (p === "/root/package.json") return JSON.stringify({ workspaces: ["packages/*"] });
+      return "{}";
+    });
+
+    mockDestr.mockImplementation((content: string) => JSON.parse(content));
+
+    const root = await findWorkspaceRoot("/root/packages/app");
+    expect(root).toBe("/root");
   });
 
-  it("should ignore package.json without velnora property", async () => {
-    vi.mocked(findUp).mockResolvedValueOnce(undefined);
-    vi.mocked(findUp).mockResolvedValueOnce("/users/dev/project/package.json");
-    vi.mocked(readFileSync).mockReturnValue('{"name":"my-pkg"}');
-    vi.mocked(destr).mockReturnValue({ name: "my-pkg" });
-
-    const result = await findWorkspaceRoot(cwd);
-    expect(result).toBe(cwd); // Fallback to cwd
-  });
-
-  it("should ignore invalid package.json (mocked via destr behavior coverage, though destr is safe)", async () => {
-    // Even if destr returns null/undefined/primitive, check our logic handles it
-    vi.mocked(findUp).mockResolvedValueOnce(undefined);
-    vi.mocked(findUp).mockResolvedValueOnce("/users/dev/project/package.json");
-    vi.mocked(readFileSync).mockReturnValue("invalid");
-    vi.mocked(destr).mockReturnValue(undefined); // destr handles invalid json by returning input or safe value
-
-    const result = await findWorkspaceRoot(cwd);
-    expect(result).toBe(cwd);
-  });
-
-  it("should fallback to cwd if nothing found", async () => {
-    vi.mocked(findUp).mockResolvedValue(undefined);
-
-    const result = await findWorkspaceRoot(cwd);
-    expect(result).toBe(cwd);
+  it("should throw error if no package.json with workspaces is found", async () => {
+    mockFindUp.mockResolvedValue(undefined);
+    await expect(findWorkspaceRoot("/some/path")).rejects.toThrow(/No workspace root found/);
   });
 });
