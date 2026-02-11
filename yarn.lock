@@ -4472,6 +4472,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@velnora-examples/monorepo@workspace:examples/monorepo":
+  version: 0.0.0-use.local
+  resolution: "@velnora-examples/monorepo@workspace:examples/monorepo"
+  dependencies:
+    velnora: "workspace:^"
+  languageName: unknown
+  linkType: soft
+
 "@velnora/cli-helper@workspace:^, @velnora/cli-helper@workspace:packages/cli":
   version: 0.0.0-use.local
   resolution: "@velnora/cli-helper@workspace:packages/cli"
@@ -11571,7 +11579,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"velnora@workspace:libs/velnora":
+"velnora@workspace:^, velnora@workspace:libs/velnora":
   version: 0.0.0-use.local
   resolution: "velnora@workspace:libs/velnora"
   dependencies:
