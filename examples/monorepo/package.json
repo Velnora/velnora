@@ -1,5 +1,5 @@
 {
-  "name": "example-monorepo",
+  "name": "@velnora-examples/monorepo",
   "version": "0.0.0-dev.0",
   "private": true,
   "workspaces": [
@@ -10,6 +10,6 @@
     "dev": "velnora dev"
   },
   "devDependencies": {
-    "@velnora/cli": "file:../../libs/cli"
+    "velnora": "workspace:^"
   }
 }
