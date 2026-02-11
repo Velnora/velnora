@@ -4,7 +4,7 @@ import destr from "destr";
 import { findUp } from "find-up";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { findWorkspaceRoot } from "./detection";
+import { detectWorkspace } from "./detect-workspace";
 
 // Mock dependencies
 vi.mock("find-up", () => ({
@@ -39,7 +39,7 @@ describe("findWorkspaceRoot", () => {
     mockReadFileSync.mockReturnValue(JSON.stringify({ workspaces: ["packages/*"] }));
     mockDestr.mockReturnValue({ workspaces: ["packages/*"] });
 
-    const root = await findWorkspaceRoot("/root");
+    const root = await detectWorkspace("/root");
     expect(root).toBe("/root");
   });
 
@@ -67,12 +67,12 @@ describe("findWorkspaceRoot", () => {
 
     mockDestr.mockImplementation((content: string) => JSON.parse(content));
 
-    const root = await findWorkspaceRoot("/root/packages/app");
+    const root = await detectWorkspace("/root/packages/app");
     expect(root).toBe("/root");
   });
 
   it("should throw error if no package.json with workspaces is found", async () => {
     mockFindUp.mockResolvedValue(undefined);
-    await expect(findWorkspaceRoot("/some/path")).rejects.toThrow(/No workspace root found/);
+    await expect(detectWorkspace("/some/path")).rejects.toThrow(/No workspace root found/);
   });
 });

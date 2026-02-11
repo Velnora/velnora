@@ -4,7 +4,7 @@ import destr from "destr";
 import fg from "fast-glob";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { findProjects } from "./discovery";
+import { detectProjects } from "./detect-projects";
 
 vi.mock("fast-glob");
 vi.mock("node:fs/promises");
@@ -44,7 +44,7 @@ describe("findProjects", () => {
 
     mockFg.mockResolvedValue(["/root/packages/a/package.json"]);
 
-    const projects = await findProjects(root);
+    const projects = await detectProjects(root);
 
     expect(mockFg).toHaveBeenCalledWith(
       ["packages/*/package.json", "libs/**/package.json"],
@@ -74,7 +74,7 @@ describe("findProjects", () => {
     mockDestr.mockImplementation(c => JSON.parse(c));
     mockFg.mockResolvedValue([]);
 
-    await findProjects(root);
+    await detectProjects(root);
 
     expect(mockFg).toHaveBeenCalledWith(
       expect.anything(),
@@ -89,7 +89,7 @@ describe("findProjects", () => {
     mockReadFile.mockResolvedValue("{}");
     mockDestr.mockReturnValue({});
 
-    const projects = await findProjects("/root");
+    const projects = await detectProjects("/root");
     expect(projects).toEqual([]);
     expect(mockFg).not.toHaveBeenCalled();
   });

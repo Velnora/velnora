@@ -1,3 +1,3 @@
-export * from "./workspace/detection";
-export * from "./workspace/discovery";
+export * from "./workspace/detect-projects";
+export * from "./workspace/detect-workspace";
 export * from "./constants";

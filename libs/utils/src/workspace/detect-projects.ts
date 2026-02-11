@@ -1,7 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import destr from "destr";
 import fg from "fast-glob";
 import type { PackageJson } from "type-fest";
 
@@ -20,11 +19,8 @@ import { parseProjectEntry } from "./parse-project-entry";
  * @param workspaceRoot - The absolute path to the workspace root directory.
  * @returns A promise that resolves to an array of detected Project objects.
  */
-export const findProjects = async (workspaceRoot: string) => {
-  const pkgPath = join(workspaceRoot, "package.json");
-  const pkgContent = await readFile(pkgPath, "utf-8").catch(() => "{}");
-  const pkg = destr<PackageJson>(pkgContent);
-  const workspaces = pkg?.workspaces;
+export const detectProjects = async (workspaceRoot: string, rootPkgJson: PackageJson) => {
+  const workspaces = rootPkgJson?.workspaces;
 
   const patterns = (Array.isArray(workspaces) ? workspaces : workspaces?.packages || []).map(
     ws => `${ws}/package.json`

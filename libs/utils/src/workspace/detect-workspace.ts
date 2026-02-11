@@ -14,7 +14,7 @@ import { isAbsoluteRoot } from "../utils/is-absolute-root";
  * @returns The absolute path to the workspace root.
  * @throws If no workspace root is found.
  */
-export const findWorkspaceRoot = async (cwd: string) => {
+export const detectWorkspace = async (cwd: string) => {
   let dir = cwd;
 
   while (true) {
@@ -26,7 +26,7 @@ export const findWorkspaceRoot = async (cwd: string) => {
       const pkgJson = destr<PackageJson>(readFileSync(pkgPath, "utf-8"));
 
       if (pkgJson?.workspaces) {
-        return dirname(pkgPath);
+        return { root: dirname(pkgPath), rootPackageJson: pkgJson };
       }
     } catch {
       // Ignore read errors and continue searching up

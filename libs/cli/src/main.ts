@@ -7,13 +7,13 @@ import {
   listCommand,
   program
 } from "@velnora/commands";
-import { findProjects, findWorkspaceRoot } from "@velnora/utils";
+import { detectProjects, detectWorkspace } from "@velnora/utils";
 
 initCommand.action(async () => {});
 
 devCommand.action(async () => {
-  const workspaceRoot = await findWorkspaceRoot(process.cwd());
-  const projects = await findProjects(workspaceRoot);
+  const workspace = await detectWorkspace(process.cwd());
+  const projects = await detectProjects(workspace.root, workspace.rootPackageJson);
 
   console.log(projects);
 });
