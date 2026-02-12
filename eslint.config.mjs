@@ -10,7 +10,7 @@ const projectScopes = {
   "sync": {},
   "types": {},
   "utils": {},
-  "velnora": { dependsOn: [], notDependsOn: [] },
+  "velnora": { dependsOn: ["scope:types"], notDependsOn: [] },
   "cli-helper": {}
 };
 
