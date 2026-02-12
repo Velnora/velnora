@@ -1,0 +1,75 @@
+import { defu } from "defu";
+import { H3 } from "h3";
+import { toNodeHandler } from "h3/node";
+import { type Listener, listen } from "listhen";
+
+import type { HostOptions, Project } from "@velnora/types";
+
+const DEFAULT_OPTIONS: Required<HostOptions> = {
+  port: 3000,
+  host: "localhost"
+};
+
+export class Host {
+  private app: H3;
+  private listener: Listener | null = null;
+  private options: Required<HostOptions>;
+
+  constructor(
+    private projects: Project[],
+    options?: HostOptions
+  ) {
+    this.options = defu(options ?? {}, DEFAULT_OPTIONS);
+    this.app = new H3();
+
+    this.registerRoutes();
+  }
+
+  /**
+   * Register a route for each discovered project.
+   * Each project gets a base path at `/{project.name}`.
+   */
+  private registerRoutes(): void {
+    for (const project of this.projects) {
+      this.app.get(`/${project.name}/**`, () => ({
+        project: project.name,
+        displayName: project.displayName,
+        root: project.root,
+        status: "registered"
+      }));
+    }
+
+    // Root route: list all registered projects
+    this.app.get("/", () => ({
+      velnora: true,
+      projects: this.projects.map(p => ({
+        name: p.name,
+        displayName: p.displayName,
+        path: `/${p.name}/`
+      }))
+    }));
+  }
+
+  /**
+   * Start the HTTP server.
+   */
+  async listen(): Promise<Listener> {
+    this.listener = await listen(toNodeHandler(this.app), {
+      port: this.options.port,
+      hostname: this.options.host,
+      showURL: false
+    });
+
+    return this.listener;
+  }
+
+  /**
+   * Gracefully shut down the server.
+   */
+  async close(): Promise<void> {
+    if (this.listener) {
+      await this.listener.close();
+      this.listener = null;
+    }
+  }
+}
