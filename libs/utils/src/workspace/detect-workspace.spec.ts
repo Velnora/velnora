@@ -39,7 +39,7 @@ describe("findWorkspaceRoot", () => {
     mockReadFileSync.mockReturnValue(JSON.stringify({ workspaces: ["packages/*"] }));
     mockDestr.mockReturnValue({ workspaces: ["packages/*"] });
 
-    const root = await detectWorkspace("/root");
+    const { root } = await detectWorkspace("/root");
     expect(root).toBe("/root");
   });
 
@@ -67,7 +67,7 @@ describe("findWorkspaceRoot", () => {
 
     mockDestr.mockImplementation((content: string) => JSON.parse(content));
 
-    const root = await detectWorkspace("/root/packages/app");
+    const { root } = await detectWorkspace("/root/packages/app");
     expect(root).toBe("/root");
   });
 
