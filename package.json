@@ -1,8 +1,10 @@
 {
   "name": "@velnora/monorepo",
+  "version": "0.0.0-dev.0",
   "private": true,
   "type": "module",
   "workspaces": [
+    "packages/*",
     "libs/*",
     "libs/**/*",
     "examples/*",
@@ -19,6 +21,7 @@
     "dev": "nx run hello-mfe-shell:dev",
     "lint": "nx run-many -t lint",
     "lint:all": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "prepare": "nx run-many -t stub",
     "test": "nx run-many -t test",
     "typecheck": "nx run-many -t typecheck"
   },
