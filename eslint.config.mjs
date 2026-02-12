@@ -54,6 +54,15 @@ export default defineConfig(
     }
   },
 
+  {
+    name: "ts-test-rules",
+    plugins: { "@typescript-eslint": tsEslint.plugin },
+    files: ["**/*.test.ts", "**/*.spec.ts"],
+    rules: {
+      "@typescript-eslint/no-unsafe-assignment": "off"
+    }
+  },
+
   // Nx module boundaries (flat config style)
   {
     name: "nx-boundaries",
