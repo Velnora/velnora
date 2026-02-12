@@ -1,0 +1,29 @@
+{
+  "name": "@velnora/kernel",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/velnora.kernel.d.ts",
+      "import": "./build/velnora.kernel.mjs"
+    }
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "lint": "eslint .",
+    "stub": "unbuild --stub",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "unbuild": "^3.6.1"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

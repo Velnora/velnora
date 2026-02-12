@@ -18,7 +18,9 @@
       "@velnora/utils": ["./libs/utils/src/main.ts"],
       "@velnora/commands": ["libs/helper/commands/src/main.ts"],
       "@velnora/cli-helper": ["packages/cli/src/main.ts"],
-      "@velnora/types": ["./libs/types/src/main.ts"]
+      "@velnora/types": ["./libs/types/src/main.ts"],
+      "@velnora/host": ["./libs/host/src/main.ts"],
+      "@velnora/kernel": ["./libs/kernel/src/main.ts"]
     }
   },
   "exclude": ["node_modules"]

@@ -1,0 +1,35 @@
+{
+  "name": "@velnora/host",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/velnora.host.d.ts",
+      "import": "./build/velnora.host.mjs"
+    }
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "lint": "eslint .",
+    "stub": "unbuild --stub",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@velnora/types": "workspace:^",
+    "unbuild": "^3.6.1"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "defu": "^6.1.4",
+    "h3": "^2.0.1-rc.14",
+    "listhen": "^1.9.0"
+  }
+}
