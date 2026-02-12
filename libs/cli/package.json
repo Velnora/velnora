@@ -19,7 +19,6 @@
     "build": "unbuild",
     "lint": "eslint .",
     "stub": "unbuild --stub",
-    "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
