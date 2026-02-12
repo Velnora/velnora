@@ -5,34 +5,12 @@
   "exports": {
     ".": {
       "types": "./build/velnora.d.ts",
-      "import": "./build/velnora.js"
+      "import": "./build/velnora.mjs"
     },
     "./app": {
       "types": "./build/velnora.app.d.ts",
-      "import": "./build/velnora.app.js"
-    },
-    "./core": {
-      "types": "./meta/core.d.ts",
-      "import": "./meta/core.js"
-    },
-    "./react": {
-      "types": "./meta/react.d.ts",
-      "import": "./meta/react.js"
-    },
-    "./router": {
-      "types": "./meta/router.d.ts",
-      "import": "./meta/router.js"
-    },
-    "./client": {
-      "types": "./client.d.ts"
-    },
-    "./package.json": "./package.json"
-  },
-  "main": "./build/velnora.js",
-  "types": "./build/velnora.d.ts",
-  "bin": {
-    "velnora": "./bin/velnora.js",
-    "velnora-dev": "./bin/velnora-dev.ts"
+      "import": "./build/velnora.app.mjs"
+    }
   },
   "bin": "./bin/velnora.js",
   "files": [

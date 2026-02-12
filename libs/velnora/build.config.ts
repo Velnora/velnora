@@ -1,5 +1,6 @@
 import { defineNodeConfig } from "@velnora/internal";
 
 export default defineNodeConfig({
-  entries: { "velnora.runtime-client": "src/main.ts" }
+  name: "velnora",
+  entries: [{ input: "src/app.ts", name: "velnora.app" }]
 });
