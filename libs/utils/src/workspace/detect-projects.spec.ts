@@ -1,77 +1,60 @@
 import { readFile } from "node:fs/promises";
 
-import destr from "destr";
 import fg from "fast-glob";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { detectProjects } from "./detect-projects";
+import { parseProjectEntry } from "./parse-project-entry";
 
 vi.mock("fast-glob");
 vi.mock("node:fs/promises");
-vi.mock("destr");
-vi.mock("node:path", async () => {
-  const actual = await vi.importActual<Record<string, unknown>>("node:path");
-  return {
-    ...actual,
-    join: (a: string, b: string) => `${a}/${b}`
-  };
-});
+vi.mock("./parse-project-entry", () => ({
+  parseProjectEntry: vi.fn()
+}));
 
 const mockFg = vi.mocked(fg);
 const mockReadFile = vi.mocked(readFile);
-const mockDestr = vi.mocked(destr);
+const mockParseProjectEntry = vi.mocked(parseProjectEntry);
 
-describe("findProjects", () => {
+describe("detectProjects", () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
 
   it("should use workspaces from package.json and ignores from .gitignore", async () => {
-    const root = "/root";
     const rootPkgJson = { workspaces: ["packages/*", "libs/**"] };
 
-    mockReadFile.mockImplementation((path: unknown) => {
-      const p = path as string;
-      if (p === `/root/.gitignore`) {
-        return Promise.resolve("node_modules\ntemp/\n");
-      }
-      return Promise.resolve(JSON.stringify({ name: "pkg-name" }));
+    mockReadFile.mockResolvedValue("node_modules\ntemp/\n");
+    mockFg.mockResolvedValue(["/root/packages/a/package.json"]);
+    mockParseProjectEntry.mockResolvedValue({
+      name: "packages/a",
+      displayName: "pkg-name",
+      root: "/root/packages/a",
+      packageJson: { name: "pkg-name" },
+      config: {}
     });
 
-    mockDestr.mockImplementation((content: string) => JSON.parse(content));
-
-    mockFg.mockResolvedValue(["/root/packages/a/package.json"]);
-
-    const projects = await detectProjects(root, rootPkgJson);
+    const projects = await detectProjects(rootPkgJson);
 
     expect(mockFg).toHaveBeenCalledWith(
       ["packages/*/package.json", "libs/**/package.json"],
       expect.objectContaining({
-        cwd: root,
         absolute: true,
         ignore: expect.arrayContaining(["node_modules", "temp/", "**/dist/**", "**/build/**", "**/.git/**"])
       })
     );
 
     expect(projects).toHaveLength(1);
-    expect(projects[0]?.name).toBe("pkg-name");
+    expect(projects[0]?.displayName).toBe("pkg-name");
   });
 
   it("should handle missing .gitignore and use defaults", async () => {
-    const root = "/root";
     const rootPkgJson = { workspaces: ["packages/*"] };
 
-    mockReadFile.mockImplementation((path: unknown) => {
-      const p = path as string;
-      if (p === `/root/.gitignore`) return Promise.reject(new Error("no file"));
-      return Promise.resolve(JSON.stringify({ name: "pkg" }));
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    mockDestr.mockImplementation(c => JSON.parse(c));
+    mockReadFile.mockRejectedValue(new Error("no file"));
     mockFg.mockResolvedValue([]);
 
-    await detectProjects(root, rootPkgJson);
+    await detectProjects(rootPkgJson);
 
     expect(mockFg).toHaveBeenCalledWith(
       expect.anything(),
@@ -83,10 +66,8 @@ describe("findProjects", () => {
 
   it("should return empty array if no workspaces defined", async () => {
     const rootPkgJson = {};
-    mockReadFile.mockResolvedValue("{}");
-    mockDestr.mockReturnValue({});
 
-    const projects = await detectProjects("/root", rootPkgJson);
+    const projects = await detectProjects(rootPkgJson);
     expect(projects).toEqual([]);
     expect(mockFg).not.toHaveBeenCalled();
   });
