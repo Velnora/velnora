@@ -25,7 +25,7 @@ export class Kernel {
     this.root = root;
     process.chdir(root);
 
-    this.projects = await detectProjects(root, rootPackageJson);
+    this.projects = await detectProjects(rootPackageJson);
   }
 
   /**

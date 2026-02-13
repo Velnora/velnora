@@ -6,11 +6,12 @@ import { parseProjectEntry } from "./parse-project-entry";
 
 vi.mock("node:fs/promises");
 
-const WORKSPACE_ROOT = "/root";
-
 describe("parseProjectEntry", () => {
   beforeEach(() => {
     vi.resetAllMocks();
+
+    // Workspace root is always process.cwd()
+    vi.spyOn(process, "cwd").mockReturnValue("/root");
 
     // By default, no velnora.config.* files exist
     vi.mocked(access).mockRejectedValue(new Error("ENOENT"));
@@ -22,7 +23,7 @@ describe("parseProjectEntry", () => {
 
     vi.mocked(readFile).mockResolvedValue(JSON.stringify(mockPkg));
 
-    const result = await parseProjectEntry(mockPath, WORKSPACE_ROOT);
+    const result = await parseProjectEntry(mockPath);
 
     expect(result).toEqual({
       name: "packages/app",
@@ -41,7 +42,7 @@ describe("parseProjectEntry", () => {
 
     const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    const result = await parseProjectEntry(mockPath, WORKSPACE_ROOT);
+    const result = await parseProjectEntry(mockPath);
 
     expect(result).toBeNull();
     expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('missing "name" in package.json'));
@@ -56,7 +57,7 @@ describe("parseProjectEntry", () => {
 
     const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    const result = await parseProjectEntry(mockPath, WORKSPACE_ROOT);
+    const result = await parseProjectEntry(mockPath);
 
     expect(result).toBeNull();
     expect(consoleSpy).toHaveBeenCalled();
@@ -71,7 +72,7 @@ describe("parseProjectEntry", () => {
 
     const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    const result = await parseProjectEntry(mockPath, WORKSPACE_ROOT);
+    const result = await parseProjectEntry(mockPath);
 
     expect(result).toBeNull();
     expect(consoleSpy).toHaveBeenCalled();
