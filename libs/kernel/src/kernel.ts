@@ -23,6 +23,8 @@ export class Kernel {
     const { root, rootPackageJson } = await detectWorkspace(process.cwd());
 
     this.root = root;
+    process.chdir(root);
+
     this.projects = await detectProjects(root, rootPackageJson);
   }
 
