@@ -9,6 +9,7 @@ export default defineConfig({
       provider: "v8",
       include: ["libs/**/src/**/*.ts", "packages/**/src/**/*.ts"],
       exclude: ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts", "**/*.config.ts", "**/dist/**", "**/build/**"]
-    }
+    },
+    projects: ["libs/*", "packages/*"]
   }
 });

@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.base",
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": false,
+
+    "types": ["vitest/globals"],
+
+    "skipLibCheck": false,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true
+  },
+  "exclude": ["node_modules"]
+}

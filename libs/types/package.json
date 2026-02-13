@@ -19,7 +19,8 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "devDependencies": {
-    "unbuild": "^3.6.1"
+    "unbuild": "^3.6.1",
+    "vitest": "^4.0.18"
   },
   "engines": {
     "node": ">=24"

@@ -22,11 +22,12 @@
     "lint": "nx run-many -t lint",
     "lint:all": "eslint . --ext .ts,.tsx,.js,.jsx",
     "prepare": "nx run-many -t stub",
-    "test": "nx run-many -t test",
+    "test": "vitest --config vitest.config.ts",
     "typecheck": "nx run-many -t typecheck"
   },
   "dependencies": {
-    "@nx/devkit": "22.2.3"
+    "@nx/devkit": "22.2.3",
+    "@velnora/internal": "workspace:^"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.8",

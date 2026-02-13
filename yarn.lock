@@ -4435,7 +4435,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@velnora/internal@workspace:*, @velnora/internal@workspace:libs/internal":
+"@velnora/internal@workspace:*, @velnora/internal@workspace:^, @velnora/internal@workspace:libs/internal":
   version: 0.0.0-use.local
   resolution: "@velnora/internal@workspace:libs/internal"
   dependencies:
@@ -4475,6 +4475,7 @@ __metadata:
     "@types/react": "npm:^19.2.7"
     "@types/react-dom": "npm:^19.2.3"
     "@typescript-eslint/parser": "npm:^8.48.0"
+    "@velnora/internal": "workspace:^"
     depcheck: "npm:^1.4.7"
     eslint: "npm:^9.39.1"
     nx: "npm:^22.1.3"
@@ -4495,6 +4496,7 @@ __metadata:
   resolution: "@velnora/types@workspace:libs/types"
   dependencies:
     unbuild: "npm:^3.6.1"
+    vitest: "npm:^4.0.18"
   languageName: unknown
   linkType: soft
 
