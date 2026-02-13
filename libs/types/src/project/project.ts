@@ -3,9 +3,15 @@ import type { ProjectConfig } from "./project-config";
 export interface Project {
   /**
    * The resolved name of the project.
-   * Derived from `project.json` / `package.json` or inferred from the directory name.
+   * Derived from `package.json` or inferred from the directory name.
    */
   name: string;
+
+  /**
+   * A human-friendly display name for the project.
+   * Derived from the package name (e.g. `@scope/my-app` → `my-app`).
+   */
+  readonly displayName: string;
 
   /**
    * The absolute file system path to the project's root directory.

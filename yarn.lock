@@ -4423,7 +4423,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@velnora/host@workspace:libs/host":
+"@velnora/host@workspace:^, @velnora/host@workspace:libs/host":
   version: 0.0.0-use.local
   resolution: "@velnora/host@workspace:libs/host"
   dependencies:
@@ -4448,6 +4448,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@velnora/kernel@workspace:libs/kernel"
   dependencies:
+    "@velnora/host": "workspace:^"
+    "@velnora/types": "workspace:^"
+    "@velnora/utils": "workspace:^"
     unbuild: "npm:^3.6.1"
   languageName: unknown
   linkType: soft

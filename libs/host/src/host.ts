@@ -29,7 +29,7 @@ export class Host {
    * Register a route for each discovered project.
    * Each project gets a base path at `/{project.name}`.
    */
-  private registerRoutes(): void {
+  private registerRoutes() {
     for (const project of this.projects) {
       this.app.get(`/${project.name}/**`, () => ({
         project: project.name,
@@ -53,7 +53,7 @@ export class Host {
   /**
    * Start the HTTP server.
    */
-  async listen(): Promise<Listener> {
+  async listen() {
     this.listener = await listen(toNodeHandler(this.app), {
       port: this.options.port,
       hostname: this.options.host,
@@ -66,7 +66,7 @@ export class Host {
   /**
    * Gracefully shut down the server.
    */
-  async close(): Promise<void> {
+  async close() {
     if (this.listener) {
       await this.listener.close();
       this.listener = null;

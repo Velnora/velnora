@@ -9,7 +9,7 @@ import type { Project, ProjectConfig } from "@velnora/types";
  * @param entry - The absolute path to the configuration file.
  * @returns The parsed Project object or null if parsing fails.
  */
-export const parseProjectEntry = async (entry: string): Promise<Project | null> => {
+export const parseProjectEntry = async (entry: string) => {
   try {
     const dir = dirname(entry);
     const content = await readFile(entry, "utf-8");
@@ -22,6 +22,7 @@ export const parseProjectEntry = async (entry: string): Promise<Project | null> 
 
     return {
       name: config.name,
+      displayName: config.name.replace(/^@[^/]+\//, ""),
       root: dir,
       config,
       configFile: entry

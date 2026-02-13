@@ -17,7 +17,12 @@
     "stub": "unbuild --stub",
     "typecheck": "tsc -p tsconfig.json"
   },
+  "dependencies": {
+    "@velnora/host": "workspace:^",
+    "@velnora/utils": "workspace:^"
+  },
   "devDependencies": {
+    "@velnora/types": "workspace:^",
     "unbuild": "^3.6.1"
   },
   "engines": {
