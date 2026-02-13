@@ -55,7 +55,7 @@ export const detectProjects = async (workspaceRoot: string, rootPkgJson: Package
 
   const projectsMap = new Map<string, Project>();
 
-  const packageConfigResults = await Promise.all(entries.map(entry => parseProjectEntry(entry)));
+  const packageConfigResults = await Promise.all(entries.map(entry => parseProjectEntry(entry, workspaceRoot)));
 
   for (const result of packageConfigResults) {
     if (result) {
