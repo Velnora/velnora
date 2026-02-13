@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -6,39 +6,45 @@ import { parseProjectEntry } from "./parse-project-entry";
 
 vi.mock("node:fs/promises");
 
+const WORKSPACE_ROOT = "/root";
+
 describe("parseProjectEntry", () => {
   beforeEach(() => {
     vi.resetAllMocks();
+
+    // By default, no velnora.config.* files exist
+    vi.mocked(access).mockRejectedValue(new Error("ENOENT"));
   });
 
-  it("should parse a valid package.json", async () => {
+  it("should parse a valid package.json with path-based name", async () => {
     const mockPath = "/root/packages/app/package.json";
-    const mockConfig = { name: "my-app", version: "1.0.0" };
+    const mockPkg = { name: "@scope/my-app", version: "1.0.0" };
 
-    vi.mocked(readFile).mockResolvedValue(JSON.stringify(mockConfig));
+    vi.mocked(readFile).mockResolvedValue(JSON.stringify(mockPkg));
 
-    const result = await parseProjectEntry(mockPath);
+    const result = await parseProjectEntry(mockPath, WORKSPACE_ROOT);
 
     expect(result).toEqual({
-      name: "my-app",
+      name: "packages/app",
+      displayName: "@scope/my-app",
       root: "/root/packages/app",
-      configFile: mockPath,
-      config: mockConfig
+      packageJson: mockPkg,
+      config: {}
     });
   });
 
   it("should return null if name is missing", async () => {
     const mockPath = "/root/packages/unnamed-lib/package.json";
-    const mockConfig = { version: "1.0.0" };
+    const mockPkg = { version: "1.0.0" };
 
-    vi.mocked(readFile).mockResolvedValue(JSON.stringify(mockConfig));
+    vi.mocked(readFile).mockResolvedValue(JSON.stringify(mockPkg));
 
     const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    const result = await parseProjectEntry(mockPath);
+    const result = await parseProjectEntry(mockPath, WORKSPACE_ROOT);
 
     expect(result).toBeNull();
-    expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("Missing 'name' in config file"));
+    expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('missing "name" in package.json'));
 
     consoleSpy.mockRestore();
   });
@@ -48,10 +54,9 @@ describe("parseProjectEntry", () => {
 
     vi.mocked(readFile).mockRejectedValue(new Error("File not found"));
 
-    // Suppress console.warn for this test
     const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    const result = await parseProjectEntry(mockPath);
+    const result = await parseProjectEntry(mockPath, WORKSPACE_ROOT);
 
     expect(result).toBeNull();
     expect(consoleSpy).toHaveBeenCalled();
@@ -66,7 +71,7 @@ describe("parseProjectEntry", () => {
 
     const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    const result = await parseProjectEntry(mockPath);
+    const result = await parseProjectEntry(mockPath, WORKSPACE_ROOT);
 
     expect(result).toBeNull();
     expect(consoleSpy).toHaveBeenCalled();
