@@ -230,6 +230,9 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+.DS_Store
+Thumbs.db
+
 # yarn v2
 .yarn/cache
 .yarn/unplugged
