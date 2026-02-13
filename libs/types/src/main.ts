@@ -1,3 +1,3 @@
-export * from "./project/project-config";
-export * from "./project/project";
+export * from "./config";
+export * from "./project";
 export * from "./host";
