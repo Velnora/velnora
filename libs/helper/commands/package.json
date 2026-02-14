@@ -23,6 +23,7 @@
     "yargs": "^18.0.0"
   },
   "devDependencies": {
+    "@velnora/types": "workspace:^",
     "unbuild": "^3.6.1"
   },
   "engines": {

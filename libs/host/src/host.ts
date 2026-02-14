@@ -3,9 +3,10 @@ import { H3 } from "h3";
 import { toNodeHandler } from "h3/node";
 import { type Listener, listen } from "listhen";
 
-import type { HostOptions, Project } from "@velnora/types";
+import type { DevCommandOptions } from "@velnora/commands";
+import type { Project, RequiredKeys } from "@velnora/types";
 
-const DEFAULT_OPTIONS: Required<HostOptions> = {
+const DEFAULT_OPTIONS: RequiredKeys<DevCommandOptions, "host" | "port"> = {
   port: 3000,
   host: "localhost"
 };
@@ -13,11 +14,11 @@ const DEFAULT_OPTIONS: Required<HostOptions> = {
 export class Host {
   private app: H3;
   private listener: Listener | null = null;
-  private options: Required<HostOptions>;
+  private options: RequiredKeys<DevCommandOptions, "host" | "port">;
 
   constructor(
     private projects: Project[],
-    options?: HostOptions
+    options?: DevCommandOptions
   ) {
     this.options = defu(options ?? {}, DEFAULT_OPTIONS);
     this.app = new H3();

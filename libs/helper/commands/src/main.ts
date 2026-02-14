@@ -1,4 +1,5 @@
 import { Program, type inferCommandType } from "@velnora/cli-helper";
+import type { RequiredKeys } from "@velnora/types";
 
 export const program = Program.createProgram();
 
@@ -15,7 +16,7 @@ export const devCommand = program
   .option("--mode <development|production>", { description: "Set the mode", default: "development" })
   .option("--root <string>", { description: "Root directory of the project", default: "." });
 
-export type DevCommandOptions = inferCommandType<typeof devCommand>;
+export type DevCommandOptions = RequiredKeys<inferCommandType<typeof devCommand>, "host" | "port">;
 
 export const buildCommand = program
   .command("build")
