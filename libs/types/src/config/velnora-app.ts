@@ -1,3 +1,7 @@
+import type { LiteralUnion } from "type-fest";
+
+import type { VelnoraEnvironment } from "./velnora-environment";
+
 /**
  * Per-project Velnora configuration.
  *
@@ -12,5 +16,6 @@
  * Used by `defineConfig()` in the `velnora` package to provide
  * type-safe authoring of project configuration files.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface VelnoraAppConfig {}
+export interface VelnoraAppConfig {
+  environments?: Record<LiteralUnion<"dev" | "prod", string>, VelnoraEnvironment>;
+}
