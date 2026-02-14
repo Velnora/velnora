@@ -4,12 +4,11 @@ import { dirname, relative } from "node:path";
 import destr from "destr";
 import type { PackageJson } from "type-fest";
 
-import type { Project } from "@velnora/types";
-
+import { Project } from "../project";
 import { loadProjectConfig } from "./load-project-config";
 
 /**
- * Parses a single `package.json` entry into a {@link Project} object.
+ * Parses a single `package.json` entry into a {@link Project} instance.
  *
  * Reads the `package.json` at the given path, derives both a stable
  * path-based `name` (relative to `process.cwd()`) and a human-readable
@@ -35,13 +34,7 @@ export const parseProjectEntry = async (entry: string) => {
 
     const config = await loadProjectConfig(dir);
 
-    return {
-      name: relative(process.cwd(), dir),
-      displayName: packageJson.name,
-      root: dir,
-      packageJson,
-      config
-    } satisfies Project;
+    return new Project({ name: relative(process.cwd(), dir), root: dir, packageJson, config });
   } catch (error) {
     console.warn(`[Velnora] Failed to load project at ${entry}:`, error);
     return null;

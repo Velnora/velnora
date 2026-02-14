@@ -12,7 +12,7 @@ const DEFAULT_OPTIONS: RequiredKeys<DevCommandOptions, "host" | "port"> = {
 };
 
 export class Host {
-  private app: H3;
+  private readonly app: H3;
   private listener: Listener | null = null;
   private options: RequiredKeys<DevCommandOptions, "host" | "port">;
 
@@ -32,7 +32,7 @@ export class Host {
    */
   private registerRoutes() {
     for (const project of this.projects) {
-      this.app.get(`/${project.name}/**`, () => ({
+      this.app.get(`${project.path}/**`, () => ({
         project: project.name,
         displayName: project.displayName,
         root: project.root,
@@ -43,10 +43,10 @@ export class Host {
     // Root route: list all registered projects
     this.app.get("/", () => ({
       velnora: true,
-      projects: this.projects.map(p => ({
-        name: p.name,
-        displayName: p.displayName,
-        path: `/${p.name}/`
+      projects: this.projects.map(project => ({
+        name: project.name,
+        displayName: project.displayName,
+        path: project.path
       }))
     }));
   }

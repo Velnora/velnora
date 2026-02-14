@@ -48,7 +48,7 @@ export class Kernel {
     console.log(`[Velnora] Serving ${this.projects.length} project(s):`);
 
     for (const project of this.projects) {
-      console.log(`  → /${project.name}/`);
+      console.log(`  → ${project.displayName} at ${project.path}`);
     }
   }
 

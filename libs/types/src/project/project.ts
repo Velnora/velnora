@@ -1,6 +1,6 @@
 import type { PackageJson } from "type-fest";
 
-import type { VelnoraAppConfig } from "../config/velnora-app";
+import type { VelnoraAppConfig } from "../config";
 
 export interface Project {
   /**
@@ -14,7 +14,7 @@ export interface Project {
    * anything declared inside `package.json` or `velnora.config.ts`, making it
    * safe to use as a map key, route segment, or cache identifier.
    */
-  name: string;
+  readonly name: string;
 
   /**
    * A human-readable label for the project, taken directly from `packageJson.name`.
@@ -35,7 +35,10 @@ export interface Project {
    * use this path as their working directory. Guaranteed to be an absolute,
    * resolved path with no trailing slash.
    */
-  root: string;
+  readonly root: string;
+
+  // need jsdoc comment
+  readonly path: string;
 
   /**
    * The full, parsed contents of the project's `package.json`.
@@ -44,7 +47,7 @@ export interface Project {
    * inspect dependencies, scripts, or custom fields without re-reading the file.
    * Typed as `PackageJson` from `type-fest` for broad compatibility.
    */
-  packageJson: PackageJson;
+  readonly packageJson: PackageJson;
 
   /**
    * The resolved Velnora configuration for this project.
@@ -55,5 +58,5 @@ export interface Project {
    *
    * This is the per-project counterpart to the workspace-level `VelnoraConfig`.
    */
-  config: VelnoraAppConfig;
+  readonly config: VelnoraAppConfig;
 }

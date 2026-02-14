@@ -38,5 +38,5 @@ export const loadProjectConfig = async (projectRoot: string): Promise<VelnoraApp
     }
   }
 
-  return {} as VelnoraAppConfig;
+  return {};
 };
