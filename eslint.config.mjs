@@ -5,7 +5,7 @@ import js from "@eslint/js";
 import nxPlugin from "@nx/eslint-plugin";
 
 const projectScopes = {
-  "cli": { dependsOn: ["scope:commands", "scope:utils"], notDependsOn: [] },
+  "cli": { dependsOn: ["scope:commands", "scope:kernel"], notDependsOn: [] },
   "commands": {},
   "sync": {},
   "types": {},

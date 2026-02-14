@@ -7,15 +7,14 @@ import {
   listCommand,
   program
 } from "@velnora/commands";
-import { detectProjects, detectWorkspace } from "@velnora/utils";
+import { createKernel } from "@velnora/kernel";
 
 initCommand.action(async () => {});
 
-devCommand.action(async () => {
-  const workspace = await detectWorkspace(process.cwd());
-  const projects = await detectProjects(workspace.root, workspace.rootPackageJson);
-
-  console.log(projects);
+devCommand.action(async options => {
+  const kernel = createKernel();
+  await kernel.init();
+  await kernel.bootHost(options);
 });
 
 buildCommand.action(async () => {});

@@ -1,5 +1,6 @@
+import type { DevCommandOptions } from "@velnora/commands";
 import { Host } from "@velnora/host";
-import type { HostOptions, Project } from "@velnora/types";
+import type { Project } from "@velnora/types";
 import { detectProjects, detectWorkspace } from "@velnora/utils";
 
 /**
@@ -33,7 +34,7 @@ export class Kernel {
    *
    * Must be called **after** `init()`.
    */
-  async bootHost(options?: HostOptions) {
+  async bootHost(options?: DevCommandOptions) {
     if (this.projects.length === 0) {
       throw new Error("[Velnora] No projects discovered. Did you call kernel.init() first?");
     }

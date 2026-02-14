@@ -4406,7 +4406,7 @@ __metadata:
   dependencies:
     "@velnora/commands": "workspace:^"
     "@velnora/internal": "workspace:*"
-    "@velnora/utils": "workspace:^"
+    "@velnora/kernel": "workspace:^"
     unbuild: "npm:^3.6.1"
   bin:
     velnora: ./build/velnora.cli.mjs
@@ -4418,6 +4418,7 @@ __metadata:
   resolution: "@velnora/commands@workspace:libs/helper/commands"
   dependencies:
     "@velnora/cli-helper": "workspace:^"
+    "@velnora/types": "workspace:^"
     unbuild: "npm:^3.6.1"
     yargs: "npm:^18.0.0"
   languageName: unknown
@@ -4444,10 +4445,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@velnora/kernel@workspace:libs/kernel":
+"@velnora/kernel@workspace:^, @velnora/kernel@workspace:libs/kernel":
   version: 0.0.0-use.local
   resolution: "@velnora/kernel@workspace:libs/kernel"
   dependencies:
+    "@velnora/commands": "workspace:^"
     "@velnora/host": "workspace:^"
     "@velnora/types": "workspace:^"
     "@velnora/utils": "workspace:^"
