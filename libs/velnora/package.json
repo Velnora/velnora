@@ -28,6 +28,7 @@
     "@velnora/cli": "workspace:^"
   },
   "devDependencies": {
+    "@velnora/types": "workspace:^",
     "unbuild": "^3.6.1"
   },
   "engines": {

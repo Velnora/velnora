@@ -25,11 +25,8 @@ depCheckScript=$(yarn bin depcheck)
 #   @velnora-examples/base-profile missingDeps:order
 #     → Matches "@velnora-examples/base-profile"
 #     → Ignores "order" in missing dependencies
-#
 IGNORE_LIST=$(cat <<EOF
-@velnora/mf-app-host deps:@nestjs/core,react-dom
-@velnora/vite-integration deps:rolldown-vite
-@velnora/devkit missingDeps:@velnora/devkit
+@velnora-examples/* devDeps:velnora
 * missingDeps:@velnora/internal
 EOF)
 

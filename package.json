@@ -23,6 +23,7 @@
     "lint:all": "eslint . --ext .ts,.tsx,.js,.jsx",
     "prepare": "nx run-many -t stub",
     "test": "vitest --config vitest.config.ts",
+    "test:coverage": "vitest --config vitest.config.ts --coverage",
     "typecheck": "nx run-many -t typecheck"
   },
   "dependencies": {

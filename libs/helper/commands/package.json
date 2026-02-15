@@ -19,12 +19,12 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@velnora/cli-helper": "workspace:^",
-    "yargs": "^18.0.0"
+    "@velnora/cli-helper": "workspace:^"
   },
   "devDependencies": {
     "@velnora/types": "workspace:^",
-    "unbuild": "^3.6.1"
+    "unbuild": "^3.6.1",
+    "vitest": "^4.0.18"
   },
   "engines": {
     "node": ">=24"
