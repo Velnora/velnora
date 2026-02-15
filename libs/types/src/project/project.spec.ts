@@ -17,6 +17,10 @@ describe("Project interface (type-level)", () => {
     expectTypeOf<Project["root"]>().toEqualTypeOf<string>();
   });
 
+  it("has a string `path` field", () => {
+    expectTypeOf<Project["path"]>().toEqualTypeOf<string>();
+  });
+
   it("has a `packageJson` field typed as PackageJson", () => {
     expectTypeOf<Project["packageJson"]>().toEqualTypeOf<PackageJson>();
   });
@@ -30,6 +34,7 @@ describe("Project interface (type-level)", () => {
       name: string;
       displayName: string;
       root: string;
+      path: string;
       packageJson: PackageJson;
       config: VelnoraAppConfig;
     };
@@ -38,6 +43,6 @@ describe("Project interface (type-level)", () => {
   });
 
   it("has exactly the expected keys", () => {
-    expectTypeOf<keyof Project>().toEqualTypeOf<"name" | "displayName" | "root" | "packageJson" | "config">();
+    expectTypeOf<keyof Project>().toEqualTypeOf<"name" | "displayName" | "root" | "path" | "packageJson" | "config">();
   });
 });

@@ -3,12 +3,11 @@ import type { PackageJson } from "type-fest";
 import type { Project as IProject, ProjectOptions, VelnoraAppConfig } from "@velnora/types";
 
 /**
- * Concrete implementation of the {@link IProject} interface.
+ * Represents a discovered project within the Velnora workspace.
  *
- * Wraps the raw data discovered during workspace scanning into a
- * proper class with readonly getters. `displayName` is derived from
- * `packageJson.name`, eliminating the previous `{} satisfies` pattern
- * where it had to be duplicated manually.
+ * Provides readonly access to project metadata (name, root, config)
+ * and derives computed properties like `displayName` and `path`
+ * from the underlying `package.json`.
  */
 export class Project implements IProject {
   private readonly _name: string;

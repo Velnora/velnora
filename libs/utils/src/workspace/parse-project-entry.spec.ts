@@ -2,6 +2,7 @@ import { access, readFile } from "node:fs/promises";
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { Project } from "../project";
 import { parseProjectEntry } from "./parse-project-entry";
 
 vi.mock("node:fs/promises");
@@ -25,13 +26,13 @@ describe("parseProjectEntry", () => {
 
     const result = await parseProjectEntry(mockPath);
 
-    expect(result).toEqual({
-      name: "packages/app",
-      displayName: "@scope/my-app",
-      root: "/root/packages/app",
-      packageJson: mockPkg,
-      config: {}
-    });
+    expect(result).toBeInstanceOf(Project);
+    expect(result!.name).toBe("packages/app");
+    expect(result!.displayName).toBe("@scope/my-app");
+    expect(result!.root).toBe("/root/packages/app");
+    expect(result!.path).toBe("/@scope/my-app");
+    expect(result!.packageJson).toEqual(mockPkg);
+    expect(result!.config).toEqual({});
   });
 
   it("should return null if name is missing", async () => {

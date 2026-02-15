@@ -28,11 +28,11 @@ const mockDetectWorkspace = vi.mocked(detectWorkspace);
 const mockDetectProjects = vi.mocked(detectProjects);
 const MockHost = vi.mocked(Host);
 
-/** Minimal {@link Project} fixture used across all tests. */
 const fakeProject: Project = {
   name: "apps/web",
   displayName: "@test/web",
   root: "/workspace/apps/web",
+  path: "/@test/web",
   packageJson: { name: "@test/web" },
   config: {}
 };

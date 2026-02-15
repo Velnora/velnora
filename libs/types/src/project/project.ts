@@ -37,7 +37,13 @@ export interface Project {
    */
   readonly root: string;
 
-  // need jsdoc comment
+  /**
+   * The URL path prefix used to route requests to this project.
+   *
+   * Derived from `packageJson.name` (e.g. `/@acme/dashboard`).
+   * The Host registers each project under this path so that
+   * incoming requests can be dispatched to the correct app.
+   */
   readonly path: string;
 
   /**
