@@ -19,6 +19,13 @@ const DEFAULT_OPTIONS: RequiredKeys<DevCommandOptions, "host" | "port"> = {
   host: "localhost"
 };
 
+/**
+ * HTTP server that serves static assets for each discovered Velnora project.
+ *
+ * Routes every project under its `path` prefix, injects a `<base>` tag into
+ * served HTML so relative asset references resolve correctly, and exposes a
+ * JSON introspection endpoint at `/{project.path}/__json`.
+ */
 export class Host {
   private readonly app: H3;
   private listener: Listener | null = null;
@@ -35,8 +42,7 @@ export class Host {
   }
 
   /**
-   * Register a route for each discovered project.
-   * Each project gets a base path at `/{project.path}`.
+   * Register HTTP routes for every project and a root listing endpoint.
    */
   private registerRoutes() {
     for (const project of this.projects) {
@@ -76,6 +82,11 @@ export class Host {
     );
   }
 
+  /**
+   * Read a static file and, for HTML, inject/replace the `<base href>` tag
+   * so that relative asset paths (CSS, JS, images) resolve under the
+   * project's route prefix.
+   */
   private getStaticContents(project: Project, id: string, event: H3Event<EventHandlerRequest>) {
     const file = resolveStaticFile(project, id);
     if (!file) return undefined;
@@ -99,6 +110,7 @@ export class Host {
       });
   }
 
+  /** Return MIME type, size, and mtime for a resolved static file. */
   private getStaticMeta(project: Project, id: string) {
     const file = resolveStaticFile(project, id);
     if (!file) return;
@@ -113,9 +125,7 @@ export class Host {
     };
   }
 
-  /**
-   * Start the HTTP server.
-   */
+  /** Start the HTTP server on the configured host and port. */
   async listen() {
     this.listener = await listen(toNodeHandler(this.app), {
       port: this.options.port,
@@ -126,9 +136,7 @@ export class Host {
     return this.listener;
   }
 
-  /**
-   * Gracefully shut down the server.
-   */
+  /** Gracefully shut down the server. */
   async close() {
     if (this.listener) {
       await this.listener.close();
