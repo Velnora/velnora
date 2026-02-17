@@ -9,7 +9,7 @@ import type { Project } from "@velnora/types";
  * Strips the project path prefix from the URL, falls back to `index.html`
  * for bare directory requests, and returns the absolute file path.
  *
- * @returns The absolute file path, or `;` if the file doesn't exist.
+ * @returns The absolute file path, or `null` if the file doesn't exist.
  */
 export const resolveStaticFile = (project: Project, id: string) => {
   let relativePath = id.slice(project.path.length);
