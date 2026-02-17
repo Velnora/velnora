@@ -269,7 +269,12 @@ export class Program {
   private _applyPositionalArguments<U>(acc: Argv<U>, positionalArgs: CommandDef["positionalArgs"]) {
     for (const p of positionalArgs) {
       const name = p.isRequired ? `<${p.name}>` : `[${p.name}]`;
-      acc = acc.positional(name, { type: p.type, array: p.array, demandOption: p.isRequired });
+      acc = acc.positional(name, {
+        type: p.type,
+        array: p.array,
+        demandOption: p.isRequired,
+        description: p.description
+      });
     }
 
     return acc;

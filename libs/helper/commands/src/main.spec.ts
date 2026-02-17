@@ -36,4 +36,10 @@ describe("commands", () => {
     expect(optionNames).toContain("mode");
     expect(optionNames).toContain("root");
   });
+
+  it("should configure init command options", () => {
+    const options = initCommand.options;
+    const optionNames = options.flatMap(o => o.longs);
+    expect(optionNames).toContain("cwd");
+  });
 });

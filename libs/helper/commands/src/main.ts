@@ -5,7 +5,10 @@ export const program = Program.createProgram();
 
 program.name("velnora").description("Velnora CLI").version("0.1.0");
 
-export const initCommand = program.command("init").description("Create a new Velnora workspace.");
+export const initCommand = program
+  .command("init")
+  .description("Create a new Velnora workspace.")
+  .positional("<cwd:string>", { description: "Directory to initialize the workspace in" });
 
 export const devCommand = program
   .command("dev")

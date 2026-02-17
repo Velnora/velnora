@@ -131,10 +131,15 @@ export class Command<TAccum extends object = object, TPrefetchResult = void> imp
    * Registers a positional argument for this command.
    *
    * @param positional - The positional argument spec (e.g., "<name>", "[dir]").
+   * @param config - Configuration options (description, default, required).
    * @returns The `Command` instance with updated argument types.
    */
-  positional<TPositional extends string>(positional: TPositional) {
+  positional<TPositional extends string>(
+    positional: TPositional,
+    config?: Pick<ConfigOptions<TPositional>, "description">
+  ) {
     const positionalArg = parsePositional(positional);
+    positionalArg.description = config?.description;
     this.positionalArgs.push(positionalArg);
     return this as unknown as Command<Merge<TAccum, OptRecordFromPositional<TPositional>>>;
   }
