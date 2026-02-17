@@ -4421,6 +4421,7 @@ __metadata:
   resolution: "@velnora/cli@workspace:libs/cli"
   dependencies:
     "@velnora/commands": "workspace:^"
+    "@velnora/generator": "workspace:^"
     "@velnora/internal": "workspace:*"
     "@velnora/kernel": "workspace:^"
     unbuild: "npm:^3.6.1"
@@ -4440,6 +4441,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@velnora/generator@workspace:^, @velnora/generator@workspace:libs/generator":
+  version: 0.0.0-use.local
+  resolution: "@velnora/generator@workspace:libs/generator"
+  dependencies:
+    unbuild: "npm:^3.6.1"
+  languageName: unknown
+  linkType: soft
+
 "@velnora/host@workspace:^, @velnora/host@workspace:libs/host":
   version: 0.0.0-use.local
   resolution: "@velnora/host@workspace:libs/host"
@@ -4449,6 +4458,7 @@ __metadata:
     defu: "npm:^6.1.4"
     h3: "npm:^2.0.1-rc.14"
     listhen: "npm:^1.9.0"
+    unbuild: "npm:^3.6.1"
   languageName: unknown
   linkType: soft
 

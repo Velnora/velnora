@@ -7,9 +7,15 @@ import {
   listCommand,
   program
 } from "@velnora/commands";
+import { initWorkspace } from "@velnora/generator";
 import { createKernel } from "@velnora/kernel";
 
-initCommand.action(async () => {});
+initCommand.action(options => {
+  const cwd = options.cwd || process.cwd();
+  const result = initWorkspace(cwd);
+  const status = result.status === "created" ? "Initialized workspace" : "Already initialized";
+  console.info(`[Velnora] ${status}: ${result.configPath}`);
+});
 
 devCommand.action(async options => {
   const kernel = createKernel();

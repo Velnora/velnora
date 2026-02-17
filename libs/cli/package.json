@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@velnora/commands": "workspace:^",
+    "@velnora/generator": "workspace:^",
     "@velnora/kernel": "workspace:^"
   },
   "devDependencies": {
