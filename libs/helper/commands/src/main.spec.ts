@@ -37,9 +37,8 @@ describe("commands", () => {
     expect(optionNames).toContain("root");
   });
 
-  it("should configure init command options", () => {
-    const options = initCommand.options;
-    const optionNames = options.flatMap(o => o.longs);
-    expect(optionNames).toContain("cwd");
+  it("should configure init command positional args", () => {
+    const positionalNames = initCommand.positionalArgs.map(p => p.name);
+    expect(positionalNames).toContain("cwd");
   });
 });
