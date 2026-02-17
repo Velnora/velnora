@@ -1,3 +1,5 @@
+import { dirname } from "node:path";
+
 import {
   buildCommand,
   devCommand,
@@ -14,7 +16,7 @@ initCommand.action(options => {
   const cwd = options.cwd || process.cwd();
   const result = initWorkspace(cwd);
   const status = result.status === "created" ? "Initialized workspace" : "Already initialized";
-  console.info(`[Velnora] ${status}: ${result.configPath}`);
+  console.info(`[Velnora] ${status}: ${dirname(result.configPath)}`);
 });
 
 devCommand.action(async options => {
