@@ -1,28 +1,25 @@
 {
   "name": "@velnora/generator",
-  "version": "0.0.0.dev-0",
+  "version": "0.0.0-dev.0",
   "type": "module",
   "exports": {
     ".": {
       "types": "./build/velnora.generator.d.ts",
-      "import": "./build/velnora.generator.js"
+      "import": "./build/velnora.generator.mjs"
     }
   },
   "files": [
     "build"
   ],
   "scripts": {
-    "build": "tsup --config tsup.config.ts",
+    "build": "unbuild",
     "lint": "eslint .",
+    "stub": "unbuild --stub",
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.build.json"
-  },
-  "dependencies": {
-    "debug": "^4.4.3"
+    "typecheck": "tsc -p tsconfig.json"
   },
   "devDependencies": {
-    "@types/debug": "^4.1.12",
-    "tsup": "^8.5.1"
+    "unbuild": "^3.6.1"
   },
   "engines": {
     "node": ">=24"
