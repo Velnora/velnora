@@ -1,5 +1,3 @@
-import { dirname } from "node:path";
-
 import {
   buildCommand,
   devCommand,
@@ -9,14 +7,12 @@ import {
   listCommand,
   program
 } from "@velnora/commands";
-import { initWorkspace } from "@velnora/generator";
 import { createKernel } from "@velnora/kernel";
 
+import { handleInit } from "./handlers/init";
+
 initCommand.action(options => {
-  const cwd = options.cwd || process.cwd();
-  const result = initWorkspace(cwd);
-  const status = result.status === "created" ? "Initialized workspace" : "Already initialized";
-  console.info(`[Velnora] ${status}: ${dirname(result.configPath)}`);
+  handleInit(options.cwd || process.cwd());
 });
 
 devCommand.action(async options => {

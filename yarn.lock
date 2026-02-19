@@ -4425,6 +4425,7 @@ __metadata:
     "@velnora/internal": "workspace:*"
     "@velnora/kernel": "workspace:^"
     unbuild: "npm:^3.6.1"
+    vitest: "npm:^4.0.18"
   bin:
     velnora: ./build/velnora.cli.mjs
   languageName: unknown
