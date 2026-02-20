@@ -1,6 +1,5 @@
+import type { Artifact } from "../utils";
 import type { AddOptions } from "./add-options";
-
-import type { Artifact } from "../utils/artifact";
 import type { AuditResult } from "./audit-result";
 import type { Dependency } from "./dependency";
 import type { DependencyTree } from "./dependency-tree";

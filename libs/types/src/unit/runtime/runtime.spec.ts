@@ -7,12 +7,12 @@ import type { CompileResult } from "./compile-result";
 import type { ExecuteOptions } from "./execute-options";
 import type { ProcessHandle } from "./process-handle";
 import type { ResolvedToolchain } from "./resolved-toolchain";
-import type { TestSuiteResult } from "./test-result-suite";
 import type { TestResult } from "./test-result";
+import type { TestSuiteResult } from "./test-result-suite";
+import type { Toolchain } from "./toolchain";
 import type { ToolchainContext } from "./toolchain-context";
 import type { ToolchainFeatures } from "./toolchain-features";
 import type { ToolchainProcess } from "./toolchain-process";
-import type { Toolchain } from "./toolchain";
 
 describe("CompileResult interface (type-level)", () => {
   it("has a boolean `success` property", () => {
@@ -318,9 +318,7 @@ describe("Toolchain interface (type-level)", () => {
     });
 
     it("has a `resolvePackageManager` method returning Promise<PackageManager>", () => {
-      expectTypeOf<Toolchain["resolvePackageManager"]>().toEqualTypeOf<
-        (cwd: string) => Promise<PackageManager>
-      >();
+      expectTypeOf<Toolchain["resolvePackageManager"]>().toEqualTypeOf<(cwd: string) => Promise<PackageManager>>();
     });
   });
 

@@ -418,9 +418,7 @@ describe("PackageManager interface (type-level)", () => {
 
   describe("analysis operations (optional)", () => {
     it("publish is an optional method accepting an Artifact", () => {
-      expectTypeOf<PackageManager["publish"]>().toEqualTypeOf<
-        ((artifact: Artifact) => Promise<void>) | undefined
-      >();
+      expectTypeOf<PackageManager["publish"]>().toEqualTypeOf<((artifact: Artifact) => Promise<void>) | undefined>();
     });
 
     it("audit is an optional method returning Promise<AuditResult>", () => {

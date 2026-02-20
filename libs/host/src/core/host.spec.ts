@@ -8,12 +8,12 @@
 import { statSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 
+import { listen } from "listhen";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { Project } from "@velnora/types";
 
 import { resolveStaticFile } from "../utils/resolve-static-file";
-
 import { Host } from "./host";
 
 vi.mock("node:fs", () => ({
@@ -32,12 +32,8 @@ vi.mock("../utils/resolve-static-file", () => ({
 const mockCloseFn = vi.fn();
 
 vi.mock("listhen", () => ({
-  listen: vi.fn().mockImplementation(() =>
-    Promise.resolve({ url: "http://localhost:3000", close: mockCloseFn })
-  )
+  listen: vi.fn().mockImplementation(() => Promise.resolve({ url: "http://localhost:3000", close: mockCloseFn }))
 }));
-
-import { listen } from "listhen";
 
 const mockResolveStaticFile = vi.mocked(resolveStaticFile);
 const mockStatSync = vi.mocked(statSync);

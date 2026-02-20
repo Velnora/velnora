@@ -46,7 +46,8 @@ import { type RuntimeUnit, UnitKind } from "@velnora/types";
  *
  * export default defineRuntime((env) => ({
  *   name: "node",
- *   version: "22.0.0",  toolchain: env.command === "build"
+ *   version: "22.0.0",
+ *   toolchain: env.command === "build"
  *     ? { compiler: "swc" }
  *     : { compiler: "tsc" },
 

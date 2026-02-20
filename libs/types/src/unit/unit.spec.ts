@@ -2,41 +2,37 @@ import { describe, expectTypeOf, it } from "vitest";
 
 import type { PackageManager } from "../package-manager";
 import type { Project } from "../project";
-import type { Artifact } from "../utils/artifact";
+import type { Artifact } from "../utils";
 import type { BaseUnit } from "./base-unit";
-import type { CompileResult } from "./runtime/compile-result";
-import type { ExecuteOptions } from "./runtime/execute-options";
-import type { ProcessHandle } from "./runtime/process-handle";
-import type { ResolvedToolchain } from "./runtime/resolved-toolchain";
-import type { TestResult } from "./runtime/test-result";
-import type { Toolchain } from "./runtime/toolchain";
-import type { ToolchainContext } from "./runtime/toolchain-context";
-import type { ToolchainFeatures } from "./runtime/toolchain-features";
-import type { ToolchainProcess } from "./runtime/toolchain-process";
+import type {
+  CompileResult,
+  ExecuteOptions,
+  ProcessHandle,
+  ResolvedToolchain,
+  TestResult,
+  Toolchain,
+  ToolchainContext,
+  ToolchainFeatures,
+  ToolchainProcess
+} from "./runtime";
 import type { RuntimeUnit } from "./runtime-unit";
-import { UnitKind } from "./unit-kind";
+import type { UnitKind } from "./unit-kind";
 import type { VelnoraUnit } from "./velnora-unit";
 
 // ---------------------------------------------------------------------------
 // UnitKind
 // ---------------------------------------------------------------------------
 describe("UnitKind enum (type-level)", () => {
-  it("has a RUNTIME member equal to the string 'runtime'", () => {
-    expectTypeOf(UnitKind.RUNTIME).toEqualTypeOf<UnitKind.RUNTIME>();
-    expectTypeOf<typeof UnitKind.RUNTIME>().toEqualTypeOf<UnitKind.RUNTIME>();
-    // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-    const value: string = UnitKind.RUNTIME;
-    expectTypeOf(value).toBeString();
+  it("has a RUNTIME member assignable to 'runtime'", () => {
+    expectTypeOf<UnitKind.RUNTIME>().toExtend<"runtime">();
   });
 
-  it("has an ADAPTER member equal to the string 'adapter'", () => {
-    expectTypeOf(UnitKind.ADAPTER).toEqualTypeOf<UnitKind.ADAPTER>();
-    expectTypeOf<typeof UnitKind.ADAPTER>().toEqualTypeOf<UnitKind.ADAPTER>();
+  it("has an ADAPTER member assignable to 'adapter'", () => {
+    expectTypeOf<UnitKind.ADAPTER>().toExtend<"adapter">();
   });
 
-  it("has an INTEGRATION member equal to the string 'integration'", () => {
-    expectTypeOf(UnitKind.INTEGRATION).toEqualTypeOf<UnitKind.INTEGRATION>();
-    expectTypeOf<typeof UnitKind.INTEGRATION>().toEqualTypeOf<UnitKind.INTEGRATION>();
+  it("has an INTEGRATION member assignable to 'integration'", () => {
+    expectTypeOf<UnitKind.INTEGRATION>().toExtend<"integration">();
   });
 
   it("members are assignable to string", () => {
@@ -183,15 +179,11 @@ describe("RuntimeUnit<R, O> interface (type-level)", () => {
     });
 
     it("has `resolve` method with correct signature", () => {
-      expectTypeOf<RuntimeUnit["resolve"]>().toEqualTypeOf<
-        (ctx: ToolchainContext) => Promise<ResolvedToolchain>
-      >();
+      expectTypeOf<RuntimeUnit["resolve"]>().toEqualTypeOf<(ctx: ToolchainContext) => Promise<ResolvedToolchain>>();
     });
 
     it("has `compile` method with correct signature", () => {
-      expectTypeOf<RuntimeUnit["compile"]>().toEqualTypeOf<
-        (project: Project) => ToolchainProcess<CompileResult>
-      >();
+      expectTypeOf<RuntimeUnit["compile"]>().toEqualTypeOf<(project: Project) => ToolchainProcess<CompileResult>>();
     });
 
     it("has `execute` method with correct signature", () => {
@@ -201,15 +193,11 @@ describe("RuntimeUnit<R, O> interface (type-level)", () => {
     });
 
     it("has `test` method with correct signature", () => {
-      expectTypeOf<RuntimeUnit["test"]>().toEqualTypeOf<
-        (project: Project) => ToolchainProcess<TestResult>
-      >();
+      expectTypeOf<RuntimeUnit["test"]>().toEqualTypeOf<(project: Project) => ToolchainProcess<TestResult>>();
     });
 
     it("has `package` method with correct signature", () => {
-      expectTypeOf<RuntimeUnit["package"]>().toEqualTypeOf<
-        (project: Project) => ToolchainProcess<Artifact>
-      >();
+      expectTypeOf<RuntimeUnit["package"]>().toEqualTypeOf<(project: Project) => ToolchainProcess<Artifact>>();
     });
 
     it("has `packageManagers` property typed as PackageManager[]", () => {
@@ -217,9 +205,7 @@ describe("RuntimeUnit<R, O> interface (type-level)", () => {
     });
 
     it("has `resolvePackageManager` method with correct signature", () => {
-      expectTypeOf<RuntimeUnit["resolvePackageManager"]>().toEqualTypeOf<
-        (cwd: string) => Promise<PackageManager>
-      >();
+      expectTypeOf<RuntimeUnit["resolvePackageManager"]>().toEqualTypeOf<(cwd: string) => Promise<PackageManager>>();
     });
 
     it("has optional `features` property typed as ToolchainFeatures", () => {

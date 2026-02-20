@@ -12,7 +12,6 @@
  *
  * @module
  */
-
 import "./velnora";
 
 export * from "./artifact";

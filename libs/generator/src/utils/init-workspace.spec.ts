@@ -1,6 +1,6 @@
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { basename, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
+import { basename, join, resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 

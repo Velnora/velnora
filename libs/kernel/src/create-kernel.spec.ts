@@ -6,8 +6,8 @@
  */
 import { describe, expect, it } from "vitest";
 
-import { Kernel } from "./kernel";
 import { createKernel } from "./create-kernel";
+import { Kernel } from "./kernel";
 
 describe("createKernel", () => {
   it("should return a Kernel instance", () => {

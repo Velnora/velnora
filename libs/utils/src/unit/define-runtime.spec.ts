@@ -107,9 +107,7 @@ describe("defineRuntime", () => {
       const wrapped = defineRuntime(factory);
 
       const serveEnv: ConfigEnv = { command: "serve", mode: "development" };
-      const unit = (wrapped as (env: ConfigEnv) => ReturnType<typeof createMinimalUnit> & { kind: UnitKind })(
-        serveEnv
-      );
+      const unit = (wrapped as (env: ConfigEnv) => ReturnType<typeof createMinimalUnit> & { kind: UnitKind })(serveEnv);
 
       expect(unit.kind).toBe(UnitKind.RUNTIME);
     });
