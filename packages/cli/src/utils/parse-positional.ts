@@ -58,15 +58,13 @@ export const parsePositional = (raw: string): ParsedPositional => {
     // allow "string[]" / "number[]" etc.
     const typeExpr = tail.replace(/\s+/g, " ").trim();
 
-    if (!array && typeExpr.endsWith("...")) {
+    if (!array && typeExpr.endsWith("..."))
       throw new Error(`Invalid positional type "${typeExpr}" in "${raw}". Use "[]" to denote an variadic type only.`);
-    }
 
-    if (array && !typeExpr.endsWith("[]")) {
+    if (array && !typeExpr.endsWith("[]"))
       throw new Error(
         `Invalid positional type "${typeExpr}" in "${raw}". Variadic positional types must use "${typeExpr}[]" syntax.`
       );
-    }
 
     switch (typeExpr) {
       case "string":
