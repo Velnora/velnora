@@ -1,3 +1,4 @@
+import type { IntegrationUnit } from "./integration-unit";
 import type { RuntimeUnit } from "./runtime-unit";
 
 /**
@@ -8,4 +9,4 @@ import type { RuntimeUnit } from "./runtime-unit";
  * that any code accepting a `VelnoraUnit` automatically handles all
  * variants through the `kind` discriminant.
  */
-export type VelnoraUnit = RuntimeUnit;
+export type VelnoraUnit = IntegrationUnit | RuntimeUnit;

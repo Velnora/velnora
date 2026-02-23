@@ -1,5 +1,20 @@
-import type { ConfigEnv } from "@velnora/types";
-import { type RuntimeUnit, UnitKind } from "@velnora/types";
+import { type ConfigEnv, type RuntimeUnit, UnitKind } from "@velnora/types";
+
+import { defineUnit } from "./define-unit";
+
+export function defineRuntime<
+  TRequiredUnits extends readonly string[] = readonly [],
+  TOptionalUnits extends readonly string[] = readonly []
+>(unit: Omit<RuntimeUnit<TRequiredUnits, TOptionalUnits>, "kind">): RuntimeUnit<TRequiredUnits, TOptionalUnits>;
+
+export function defineRuntime<
+  TRequiredUnits extends readonly string[] = readonly [],
+  TOptionalUnits extends readonly string[] = readonly []
+>(
+  unit: (env: ConfigEnv) => Omit<RuntimeUnit<TRequiredUnits, TOptionalUnits>, "kind">
+): (env: ConfigEnv) => RuntimeUnit<TRequiredUnits, TOptionalUnits>;
+
+// ToDO: Fix docs. @examples are wrong
 
 /**
  * Creates a {@link RuntimeUnit} with the `kind` discriminant automatically set
@@ -15,7 +30,7 @@ import { type RuntimeUnit, UnitKind } from "@velnora/types";
  *    consumers branch on the active CLI command or environment mode.
  *
  * @typeParam TRequiredUnits - A readonly tuple of unit name strings that
- *   **must** be present for this runtime unit to initialise. Defaults to
+ *   **must** be present for this runtime unit to initialize. Defaults to
  *   `readonly string[]` (unconstrained).
  * @typeParam TOptionalUnits - A readonly tuple of unit name strings that this
  *   runtime unit **may** consume when available. Defaults to
@@ -54,19 +69,13 @@ import { type RuntimeUnit, UnitKind } from "@velnora/types";
  * }));
  * ```
  */
-export const defineRuntime = <
-  TRequiredUnits extends readonly string[] = readonly string[],
-  TOptionalUnits extends readonly string[] = readonly string[]
+export function defineRuntime<
+  TRequiredUnits extends readonly string[] = readonly [],
+  TOptionalUnits extends readonly string[] = readonly []
 >(
   unit:
     | ((env: ConfigEnv) => Omit<RuntimeUnit<TRequiredUnits, TOptionalUnits>, "kind">)
     | Omit<RuntimeUnit<TRequiredUnits, TOptionalUnits>, "kind">
-) => {
-  if (typeof unit === "function") {
-    return (env: ConfigEnv): RuntimeUnit<TRequiredUnits, TOptionalUnits> => {
-      const unitDef = unit(env);
-      return { ...unitDef, kind: UnitKind.RUNTIME };
-    };
-  }
-  return { ...unit, kind: UnitKind.RUNTIME };
-};
+) {
+  return defineUnit(UnitKind.RUNTIME, unit);
+}

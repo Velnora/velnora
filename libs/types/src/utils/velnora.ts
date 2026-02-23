@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+
 /**
  * Global `Velnora` namespace used as the **declaration-merging** entry point
  * for the entire type system.
@@ -54,7 +56,25 @@ declare namespace Velnora {
      * }
      * ```
      */
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     interface Features {}
   }
+
+  /**
+   * Open interface that integration units use to register and discover
+   * public APIs via {@link UnitContext.expose} and {@link UnitContext.query}.
+   *
+   * Augment this interface in each integration package to declare the APIs
+   * it provides. TypeScript's declaration merging ensures the keys are
+   * visible across the entire workspace.
+   *
+   * @example
+   * ```typescript
+   * declare namespace Velnora {
+   *   interface UnitRegistry {
+   *     "react-dom": { hydrate(el: HTMLElement): void };
+   *   }
+   * }
+   * ```
+   */
+  interface UnitRegistry {}
 }
