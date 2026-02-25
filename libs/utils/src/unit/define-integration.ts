@@ -34,8 +34,6 @@ export function defineIntegration<
  * export default defineIntegration({
  *   name: "react",
  *   version: "1.0.0",
- *   required: [],
- *   optional: [],
  * });
  * ```
  *
@@ -44,8 +42,6 @@ export function defineIntegration<
  * export default defineIntegration((env) => ({
  *   name: env.mode === "production" ? "react-prod" : "react-dev",
  *   version: "1.0.0",
- *   required: [],
- *   optional: [],
  * }));
  * ```
  */
