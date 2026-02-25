@@ -23,7 +23,7 @@ export interface BaseUnit<
   /** Semantic version string following semver (e.g. `"1.2.3"`). */
   version: string;
 
-  /** Tuple of unit names that must be registered before this unit can initialise. */
+  /** Tuple of unit names that must be registered before this unit can initialize. */
   required: TRequiredUnits;
 
   /** Tuple of unit names that this unit can optionally consume if they are available. */

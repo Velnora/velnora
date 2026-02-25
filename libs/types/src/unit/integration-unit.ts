@@ -37,7 +37,7 @@ export interface IntegrationUnit<
   kind: UnitKind.INTEGRATION;
 
   /**
-   * Called during host initialisation to register public APIs and perform
+   * Called during host initialization to register public APIs and perform
    * one-time setup. Use {@link UnitContext.expose} to advertise capabilities
    * to other units.
    */
@@ -45,7 +45,7 @@ export interface IntegrationUnit<
 
   /**
    * Called at build time to run framework-specific compilation, code
-   * generation, or asset optimisation.
+   * generation, or asset optimization.
    */
   build?(ctx: UnitContext<TRequiredUnits, TOptionalUnits>): void | Promise<void>;
 }
