@@ -1,3 +1,5 @@
+import type { VelnoraUnit } from "./velnora-unit";
+
 /**
  * The shared foundation interface for all unit kinds in Velnora's plugin system.
  *
@@ -36,4 +38,15 @@ export interface BaseUnit<
    * runtime without coupling to a specific unit by name.
    */
   capabilities?: string[];
+
+  /**
+   * An optional list of other units that this unit bundles together and re-exports as a single dependency. This is purely a type-level convenience for units that
+   * are always consumed together -- it has no runtime effect and does not
+   * automatically pull in the bundled units as dependencies.
+   *
+   * For example, a React integration unit might bundle the `react` and `react-dom`
+   * units together so that consumers only have to declare a dependency on the
+   * integration unit.
+   */
+  units?: VelnoraUnit<TRequiredUnits, TOptionalUnits>[];
 }
