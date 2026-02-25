@@ -76,5 +76,5 @@ declare namespace Velnora {
    * }
    * ```
    */
-  interface UnitRegistry {}
+  interface UnitRegistry extends Record<string, unknown> {}
 }
