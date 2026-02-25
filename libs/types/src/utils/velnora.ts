@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-empty-object-type, @typescript-eslint/no-unused-vars */
 
 /**
  * Global `Velnora` namespace used as the **declaration-merging** entry point
@@ -27,7 +27,7 @@
  * `Velnora.Toolchain.Features`, any keys added here are picked up across the
  * entire workspace with no additional imports.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 declare namespace Velnora {
   /**
    * Sub-namespace for toolchain-related declaration merging.
