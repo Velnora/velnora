@@ -9,4 +9,7 @@ import type { RuntimeUnit } from "./runtime-unit";
  * that any code accepting a `VelnoraUnit` automatically handles all
  * variants through the `kind` discriminant.
  */
-export type VelnoraUnit = IntegrationUnit | RuntimeUnit;
+export type VelnoraUnit<
+  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
+  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
+> = IntegrationUnit<TRequiredUnits, TOptionalUnits> | RuntimeUnit<TRequiredUnits, TOptionalUnits>;

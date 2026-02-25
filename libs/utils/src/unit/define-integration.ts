@@ -4,13 +4,13 @@ import { UnitKind } from "@velnora/types";
 import { defineUnit } from "./define-unit";
 
 export function defineIntegration<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly [],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly []
+  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
+  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
 >(unit: Omit<IntegrationUnit<TRequiredUnits, TOptionalUnits>, "kind">): IntegrationUnit<TRequiredUnits, TOptionalUnits>;
 
 export function defineIntegration<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly [],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly []
+  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
+  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
 >(
   unit: (env: ConfigEnv) => Omit<IntegrationUnit<TRequiredUnits, TOptionalUnits>, "kind">
 ): (env: ConfigEnv) => IntegrationUnit<TRequiredUnits, TOptionalUnits>;
@@ -50,8 +50,8 @@ export function defineIntegration<
  * ```
  */
 export function defineIntegration<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly [],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly []
+  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
+  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
 >(
   unit:
     | Omit<IntegrationUnit<TRequiredUnits, TOptionalUnits>, "kind">

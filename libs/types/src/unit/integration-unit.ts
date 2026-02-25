@@ -30,8 +30,8 @@ import type { UnitKind } from "./unit-kind";
  * ```
  */
 export interface IntegrationUnit<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly [],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly []
+  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
+  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
 > extends BaseUnit<TRequiredUnits, TOptionalUnits> {
   /** Discriminant — always `"integration"` for this unit kind. */
   kind: UnitKind.INTEGRATION;

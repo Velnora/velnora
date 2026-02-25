@@ -17,8 +17,8 @@
  * @typeParam TOptionalUnits - Tuple of soft-dependency keys (may be `undefined`).
  */
 export interface UnitContext<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly [],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly []
+  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
+  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
 > {
   /** Register a public API for a single capability. */
   expose<TKey extends keyof Velnora.UnitRegistry>(key: TKey, api: Velnora.UnitRegistry[TKey]): void;

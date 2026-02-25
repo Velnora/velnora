@@ -3,13 +3,13 @@ import { type ConfigEnv, type RuntimeUnit, UnitKind } from "@velnora/types";
 import { defineUnit } from "./define-unit";
 
 export function defineRuntime<
-  TRequiredUnits extends readonly string[] = readonly [],
-  TOptionalUnits extends readonly string[] = readonly []
+  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
+  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
 >(unit: Omit<RuntimeUnit<TRequiredUnits, TOptionalUnits>, "kind">): RuntimeUnit<TRequiredUnits, TOptionalUnits>;
 
 export function defineRuntime<
-  TRequiredUnits extends readonly string[] = readonly [],
-  TOptionalUnits extends readonly string[] = readonly []
+  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
+  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
 >(
   unit: (env: ConfigEnv) => Omit<RuntimeUnit<TRequiredUnits, TOptionalUnits>, "kind">
 ): (env: ConfigEnv) => RuntimeUnit<TRequiredUnits, TOptionalUnits>;
@@ -70,8 +70,8 @@ export function defineRuntime<
  * ```
  */
 export function defineRuntime<
-  TRequiredUnits extends readonly string[] = readonly [],
-  TOptionalUnits extends readonly string[] = readonly []
+  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
+  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
 >(
   unit:
     | ((env: ConfigEnv) => Omit<RuntimeUnit<TRequiredUnits, TOptionalUnits>, "kind">)

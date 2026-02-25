@@ -13,7 +13,10 @@
  *   unit **can** use when available but does not strictly depend on. Missing
  *   optional units are silently ignored at boot time.
  */
-export interface BaseUnit<TRequiredUnits extends readonly string[], TOptionalUnits extends readonly string[]> {
+export interface BaseUnit<
+  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
+  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
+> {
   /** Unique, human-readable identifier for this unit (e.g. `"node"`, `"vite"`, `"react"`). */
   name: string;
 

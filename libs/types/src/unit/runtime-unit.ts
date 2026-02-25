@@ -28,8 +28,8 @@ import type { UnitKind } from "./unit-kind";
  * @see Toolchain -- compile / execute / test / package lifecycle hooks.
  */
 export interface RuntimeUnit<
-  TRequiredUnits extends readonly string[] = readonly string[],
-  TOptionalUnits extends readonly string[] = readonly string[]
+  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
+  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
 >
   extends BaseUnit<TRequiredUnits, TOptionalUnits>, Toolchain {
   /** Discriminant that identifies this unit as a language runtime. */
