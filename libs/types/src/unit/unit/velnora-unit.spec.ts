@@ -1,7 +1,7 @@
 import { describe, expectTypeOf, it } from "vitest";
 
+import type { Toolchain } from "../runtime";
 import type { BaseUnit } from "./base-unit";
-import type { Toolchain } from "./runtime";
 import type { RuntimeUnit } from "./runtime-unit";
 import type { UnitKind } from "./unit-kind";
 import type { VelnoraUnit } from "./velnora-unit";

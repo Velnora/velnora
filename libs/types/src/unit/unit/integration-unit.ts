@@ -1,5 +1,5 @@
+import type { UnitContext } from "../integration";
 import type { BaseUnit } from "./base-unit";
-import type { UnitContext } from "./integration";
 import type { UnitKind } from "./unit-kind";
 
 /**

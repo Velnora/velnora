@@ -1,3 +1,4 @@
+import type { AdapterUnit } from "./adapter-unit";
 import type { IntegrationUnit } from "./integration-unit";
 import type { RuntimeUnit } from "./runtime-unit";
 
@@ -12,4 +13,7 @@ import type { RuntimeUnit } from "./runtime-unit";
 export type VelnoraUnit<
   TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
   TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
-> = IntegrationUnit<TRequiredUnits, TOptionalUnits> | RuntimeUnit<TRequiredUnits, TOptionalUnits>;
+> =
+  | IntegrationUnit<TRequiredUnits, TOptionalUnits>
+  | RuntimeUnit<TRequiredUnits, TOptionalUnits>
+  | AdapterUnit<TRequiredUnits, TOptionalUnits>;

@@ -1,9 +1,8 @@
 import { describe, expectTypeOf, it } from "vitest";
 
-import type { PackageManager } from "../package-manager";
-import type { Project } from "../project";
-import type { Artifact } from "../utils";
-import type { BaseUnit } from "./base-unit";
+import type { PackageManager } from "../../package-manager";
+import type { Project } from "../../project";
+import type { Artifact } from "../../utils";
 import type {
   CompileResult,
   ExecuteOptions,
@@ -14,7 +13,8 @@ import type {
   ToolchainContext,
   ToolchainFeatures,
   ToolchainProcess
-} from "./runtime";
+} from "../runtime";
+import type { BaseUnit } from "./base-unit";
 import type { RuntimeUnit } from "./runtime-unit";
 import type { UnitKind } from "./unit-kind";
 

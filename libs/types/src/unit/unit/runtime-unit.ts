@@ -1,5 +1,5 @@
+import type { Toolchain } from "../runtime";
 import type { BaseUnit } from "./base-unit";
-import type { Toolchain } from "./runtime";
 import type { UnitKind } from "./unit-kind";
 
 /**
