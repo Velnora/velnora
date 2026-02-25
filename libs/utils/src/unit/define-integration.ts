@@ -57,5 +57,5 @@ export function defineIntegration<
     | Omit<IntegrationUnit<TRequiredUnits, TOptionalUnits>, "kind">
     | ((env: ConfigEnv) => Omit<IntegrationUnit<TRequiredUnits, TOptionalUnits>, "kind">)
 ) {
-  return defineUnit(UnitKind.INTEGRATION, unit);
+  return defineUnit<IntegrationUnit<TRequiredUnits, TOptionalUnits>>(UnitKind.INTEGRATION, unit);
 }
