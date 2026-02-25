@@ -1,4 +1,4 @@
-import type { UnitContext } from "../integration";
+import type { IntegrationBuildContext, IntegrationConfigureContext } from "../integration";
 import type { BaseUnit } from "./base-unit";
 import type { UnitKind } from "./unit-kind";
 
@@ -10,7 +10,7 @@ import type { UnitKind } from "./unit-kind";
  * Extends {@link BaseUnit} with two optional lifecycle hooks:
  *
  * - `configure` — called during host initialisation to register APIs via
- *   {@link UnitContext.expose}.
+ *   {@link BaseUnitContext.expose}.
  * - `build` — called at build time to perform framework-specific
  *   compilation or asset generation.
  *
@@ -38,14 +38,14 @@ export interface IntegrationUnit<
 
   /**
    * Called during host initialization to register public APIs and perform
-   * one-time setup. Use {@link UnitContext.expose} to advertise capabilities
+   * one-time setup. Use {@link BaseUnitContext.expose} to advertise capabilities
    * to other units.
    */
-  configure?(ctx: UnitContext<TRequiredUnits, TOptionalUnits>): void | Promise<void>;
+  configure?(ctx: IntegrationConfigureContext<TRequiredUnits, TOptionalUnits>): void | Promise<void>;
 
   /**
    * Called at build time to run framework-specific compilation, code
    * generation, or asset optimization.
    */
-  build?(ctx: UnitContext<TRequiredUnits, TOptionalUnits>): void | Promise<void>;
+  build?(ctx: IntegrationBuildContext<TRequiredUnits, TOptionalUnits>): void | Promise<void>;
 }

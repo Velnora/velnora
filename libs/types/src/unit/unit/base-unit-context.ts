@@ -16,7 +16,7 @@
  * @typeParam TRequiredUnits - Tuple of hard-dependency keys (never `undefined`).
  * @typeParam TOptionalUnits - Tuple of soft-dependency keys (may be `undefined`).
  */
-export interface UnitContext<
+export interface BaseUnitContext<
   TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
   TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
 > {

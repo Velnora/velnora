@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from "vitest";
 
-import type { UnitContext } from "../integration";
+import type { BaseUnitContext } from "../integration";
 import type { BaseUnit } from "./base-unit";
 import type { IntegrationUnit } from "./integration-unit";
 

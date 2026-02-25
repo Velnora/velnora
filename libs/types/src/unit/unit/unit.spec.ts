@@ -3,7 +3,7 @@ import { describe, expectTypeOf, it } from "vitest";
 import type { PackageManager } from "../../package-manager";
 import type { Project } from "../../project";
 import type { Artifact } from "../../utils";
-import type { UnitContext } from "../integration";
+import type { BaseUnitContext } from "../integration";
 import type {
   CompileResult,
   ExecuteOptions,
@@ -319,18 +319,18 @@ describe("IntegrationUnit<TRequiredUnits, TOptionalUnits> interface (type-level)
 // ---------------------------------------------------------------------------
 describe("UnitContext<TRequiredUnits, TOptionalUnits> interface (type-level)", () => {
   it("is an object type", () => {
-    expectTypeOf<UnitContext>().toBeObject();
+    expectTypeOf<BaseUnitContext>().toBeObject();
   });
 
   it("has an `expose` method", () => {
-    expectTypeOf<UnitContext["expose"]>().toBeFunction();
+    expectTypeOf<BaseUnitContext["expose"]>().toBeFunction();
   });
 
   it("has a `query` method", () => {
-    expectTypeOf<UnitContext["query"]>().toBeFunction();
+    expectTypeOf<BaseUnitContext["query"]>().toBeFunction();
   });
 
   it("has exactly `expose` and `query` keys", () => {
-    expectTypeOf<keyof UnitContext>().toEqualTypeOf<"expose" | "query">();
+    expectTypeOf<keyof BaseUnitContext>().toEqualTypeOf<"expose" | "query">();
   });
 });

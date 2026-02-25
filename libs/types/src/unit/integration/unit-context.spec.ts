@@ -1,24 +1,24 @@
 import { describe, expectTypeOf, it } from "vitest";
 
-import type { UnitContext } from "./unit-context";
+import type { BaseUnitContext } from "../unit/base-unit-context";
 
 // ---------------------------------------------------------------------------
 // UnitContext<TRequiredUnits, TOptionalUnits>
 // ---------------------------------------------------------------------------
 describe("UnitContext<TRequiredUnits, TOptionalUnits> interface (type-level)", () => {
   it("is an object type", () => {
-    expectTypeOf<UnitContext>().toBeObject();
+    expectTypeOf<BaseUnitContext>().toBeObject();
   });
 
   it("has an `expose` method", () => {
-    expectTypeOf<UnitContext["expose"]>().toBeFunction();
+    expectTypeOf<BaseUnitContext["expose"]>().toBeFunction();
   });
 
   it("has a `query` method", () => {
-    expectTypeOf<UnitContext["query"]>().toBeFunction();
+    expectTypeOf<BaseUnitContext["query"]>().toBeFunction();
   });
 
   it("has exactly `expose` and `query` keys", () => {
-    expectTypeOf<keyof UnitContext>().toEqualTypeOf<"expose" | "query">();
+    expectTypeOf<keyof BaseUnitContext>().toEqualTypeOf<"expose" | "query">();
   });
 });
