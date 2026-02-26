@@ -1,3 +1,5 @@
+import type { LiteralUnion } from "type-fest";
+
 import type { IntegrationBuildContext, IntegrationConfigureContext } from "../integration";
 import type { BaseUnit } from "./base-unit";
 import type { UnitKind } from "./unit-kind";
@@ -30,9 +32,10 @@ import type { UnitKind } from "./unit-kind";
  * ```
  */
 export interface IntegrationUnit<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
-> extends BaseUnit<TRequiredUnits, TOptionalUnits> {
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TCapabilities extends (keyof Velnora.UnitRegistry)[]
+> extends BaseUnit<TRequiredUnits, TOptionalUnits, TCapabilities> {
   /** Discriminant — always `"integration"` for this unit kind. */
   kind: UnitKind.INTEGRATION;
 
@@ -41,7 +44,7 @@ export interface IntegrationUnit<
    * one-time setup. Use {@link BaseUnitContext.expose} to advertise capabilities
    * to other units.
    */
-  configure?(ctx: IntegrationConfigureContext<TRequiredUnits, TOptionalUnits>): void | Promise<void>;
+  configure?(ctx: IntegrationConfigureContext<TRequiredUnits, TOptionalUnits, TCapabilities>): void | Promise<void>;
 
   /**
    * Called at build time to run framework-specific compilation, code

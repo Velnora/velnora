@@ -1,3 +1,5 @@
+import type { LiteralUnion } from "type-fest";
+
 import type { Project } from "../../project";
 import type { AdapterBuildContext } from "../adapter/adapter-build-context";
 import type { AdapterDevContext } from "../adapter/adapter-dev-context";
@@ -6,10 +8,14 @@ import type { BaseUnit } from "./base-unit";
 import type { UnitKind } from "./unit-kind";
 
 export interface AdapterUnit<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
-> extends BaseUnit<TRequiredUnits, TOptionalUnits> {
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TCapabilities extends (keyof Velnora.UnitRegistry)[]
+> extends BaseUnit<TRequiredUnits, TOptionalUnits, TCapabilities> {
   kind: UnitKind.ADAPTER;
-  dev(project: Project, ctx: AdapterDevContext<TRequiredUnits, TOptionalUnits>): Promise<DevServerResult>;
-  build(project: Project, ctx: AdapterBuildContext<TRequiredUnits, TOptionalUnits>): Promise<void>;
+  dev(
+    project: Project,
+    ctx: AdapterDevContext<TRequiredUnits, TOptionalUnits, TCapabilities>
+  ): Promise<DevServerResult>;
+  build(project: Project, ctx: AdapterBuildContext<TRequiredUnits, TOptionalUnits, TCapabilities>): Promise<void>;
 }

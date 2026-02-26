@@ -1,3 +1,5 @@
+import type { LiteralUnion } from "type-fest";
+
 import type { AdapterUnit } from "./adapter-unit";
 import type { IntegrationUnit } from "./integration-unit";
 import type { RuntimeUnit } from "./runtime-unit";
@@ -11,9 +13,10 @@ import type { RuntimeUnit } from "./runtime-unit";
  * variants through the `kind` discriminant.
  */
 export type VelnoraUnit<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TCapabilities extends (keyof Velnora.UnitRegistry)[]
 > =
-  | IntegrationUnit<TRequiredUnits, TOptionalUnits>
-  | RuntimeUnit<TRequiredUnits, TOptionalUnits>
-  | AdapterUnit<TRequiredUnits, TOptionalUnits>;
+  | IntegrationUnit<TRequiredUnits, TOptionalUnits, TCapabilities>
+  | RuntimeUnit<TRequiredUnits, TOptionalUnits, TCapabilities>
+  | AdapterUnit<TRequiredUnits, TOptionalUnits, TCapabilities>;

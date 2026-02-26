@@ -1,3 +1,5 @@
+import type { LiteralUnion } from "type-fest";
+
 import type { VelnoraUnit } from "./velnora-unit";
 
 /**
@@ -16,8 +18,9 @@ import type { VelnoraUnit } from "./velnora-unit";
  *   optional units are silently ignored at boot time.
  */
 export interface BaseUnit<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TCapabilities extends (keyof Velnora.UnitRegistry)[]
 > {
   /** Unique, human-readable identifier for this unit (e.g. `"node"`, `"vite"`, `"react"`). */
   name: string;
@@ -48,5 +51,5 @@ export interface BaseUnit<
    * units together so that consumers only have to declare a dependency on the
    * integration unit.
    */
-  units?: VelnoraUnit<TRequiredUnits, TOptionalUnits>[];
+  units?: VelnoraUnit<TRequiredUnits, TOptionalUnits, TCapabilities>[];
 }

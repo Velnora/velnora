@@ -1,6 +1,9 @@
+import type { LiteralUnion } from "type-fest";
+
 import type { BaseUnitContext } from "../unit/base-unit-context";
 
 export interface IntegrationBuildContext<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
-> extends BaseUnitContext<TRequiredUnits, TOptionalUnits> {}
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TCapabilities extends (keyof Velnora.UnitRegistry)[]
+> extends BaseUnitContext<TRequiredUnits, TOptionalUnits, TCapabilities> {}

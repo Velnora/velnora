@@ -1,3 +1,5 @@
+import type { LiteralUnion } from "type-fest";
+
 import type { Toolchain } from "../runtime";
 import type { BaseUnit } from "./base-unit";
 import type { UnitKind } from "./unit-kind";
@@ -28,10 +30,11 @@ import type { UnitKind } from "./unit-kind";
  * @see Toolchain -- compile / execute / test / package lifecycle hooks.
  */
 export interface RuntimeUnit<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TCapabilities extends (keyof Velnora.UnitRegistry)[]
 >
-  extends BaseUnit<TRequiredUnits, TOptionalUnits>, Toolchain {
+  extends BaseUnit<TRequiredUnits, TOptionalUnits, TCapabilities>, Toolchain {
   /** Discriminant that identifies this unit as a language runtime. */
   kind: UnitKind.RUNTIME;
 }

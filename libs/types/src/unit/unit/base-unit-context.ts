@@ -1,3 +1,5 @@
+import type { LiteralUnion } from "type-fest";
+
 /**
  * Context object injected into {@link IntegrationUnit} lifecycle hooks.
  *
@@ -17,24 +19,38 @@
  * @typeParam TOptionalUnits - Tuple of soft-dependency keys (may be `undefined`).
  */
 export interface BaseUnitContext<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TCapabilities extends (keyof Velnora.UnitRegistry)[]
 > {
   /** Register a public API for a single capability. */
-  expose<TKey extends keyof Velnora.UnitRegistry>(key: TKey, api: Velnora.UnitRegistry[TKey]): void;
+  expose<TKey extends TCapabilities>(
+    key: TKey,
+    api: TKey extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TKey] : never
+  ): void;
 
   /** Register a public API for multiple capabilities at once. */
-  expose<TKey extends keyof Velnora.UnitRegistry>(keys: readonly TKey[], api: Velnora.UnitRegistry[TKey]): void;
+  expose(api: {
+    [TProp in TCapabilities[number]]: TProp extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TProp] : never;
+  }): void;
 
   /** Query a hard dependency — guaranteed to exist, never undefined. */
-  query<TKey extends TRequiredUnits[number]>(key: TKey): Velnora.UnitRegistry[TKey];
+  query<TKey extends TRequiredUnits[number]>(
+    key: TKey
+  ): TKey extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TKey] : never;
 
   /** Query a soft dependency — returns undefined if not installed. */
-  query<TKey extends TOptionalUnits[number]>(key: TKey): Velnora.UnitRegistry[TKey] | undefined;
+  query<TKey extends TOptionalUnits[number]>(
+    key: TKey
+  ): TKey extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TKey] | undefined : never;
 
   /** Query multiple hard dependencies — returns a mapped object. */
-  query<TKey extends TRequiredUnits[number]>(keys: readonly TKey[]): { [TProp in TKey]: Velnora.UnitRegistry[TProp] };
+  query<TKey extends TRequiredUnits[number]>(
+    keys: readonly TKey[]
+  ): { [TProp in TKey]: TProp extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TProp] : never };
 
   /** Query multiple soft dependencies — each value may be undefined. */
-  query<TKey extends TOptionalUnits[number]>(keys: readonly TKey[]): { [TProp in TKey]?: Velnora.UnitRegistry[TProp] };
+  query<TKey extends TOptionalUnits[number]>(
+    keys: readonly TKey[]
+  ): { [TProp in TKey]?: TProp extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TProp] : never };
 }
