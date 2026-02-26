@@ -70,7 +70,7 @@ export interface Toolchain {
    * @returns A streaming process handle that resolves to a
    *   {@link CompileResult}.
    */
-  compile(project: Project): ToolchainProcess<CompileResult>;
+  compile?(project: Project): ToolchainProcess<CompileResult>;
 
   /**
    * Starts the project as a long-running process (e.g. a dev server).
@@ -80,7 +80,7 @@ export interface Toolchain {
    * @returns A streaming process handle that resolves to a
    *   {@link ProcessHandle}.
    */
-  execute(project: Project, opts?: ExecuteOptions): ToolchainProcess<ProcessHandle>;
+  execute?(project: Project, opts?: ExecuteOptions): ToolchainProcess<ProcessHandle>;
 
   /**
    * Runs the project's test suite.
@@ -89,7 +89,7 @@ export interface Toolchain {
    * @returns A streaming process handle that resolves to a
    *   {@link TestResult}.
    */
-  test(project: Project): ToolchainProcess<TestResult>;
+  test?(project: Project): ToolchainProcess<TestResult>;
 
   /**
    * Packages the project into a distributable artifact (JAR, tgz,
@@ -99,7 +99,7 @@ export interface Toolchain {
    * @returns A streaming process handle that resolves to an
    *   {@link Artifact}.
    */
-  package(project: Project): ToolchainProcess<Artifact>;
+  package?(project: Project): ToolchainProcess<Artifact>;
 
   // ── Package Management ────────────────────────────────────────────
 
@@ -111,7 +111,7 @@ export interface Toolchain {
    * @returns The {@link PackageManager} instance that matches the
    *   project's lockfile or manifest.
    */
-  resolvePackageManager(cwd: string): Promisable<PackageManager>;
+  resolvePackageManager(cwd: string): Promisable<PackageManager> | void;
 
   // ── Optional Extensions ───────────────────────────────────────────
 
