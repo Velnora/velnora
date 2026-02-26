@@ -4571,6 +4571,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@velnora/utils@workspace:libs/utils"
   dependencies:
+    "@types/lodash.merge": "npm:^4"
     "@types/node": "npm:^25.2.2"
     "@types/semver": "npm:^7"
     "@velnora/types": "workspace:*"
@@ -4578,6 +4579,7 @@ __metadata:
     fast-glob: "npm:^3.3.3"
     find-up: "npm:^8.0.0"
     jiti: "npm:^2.6.1"
+    lodash.merge: "npm:^4.6.2"
     semver: "npm:^7.7.4"
     type-fest: "npm:^5.4.4"
     unbuild: "npm:^3.6.1"

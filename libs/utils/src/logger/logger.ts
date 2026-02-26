@@ -1,12 +1,12 @@
+import merge from "lodash.merge";
+
 import { format, inspect } from "node:util";
 
-import type { Hookable } from "hookable";
 import pc from "picocolors";
 
-import { type Hooks, type LogContext, LogLevel } from "@velnora/types";
+import { type LogContext, LogLevel } from "@velnora/types";
 
 import { LEVEL_COLOR, LEVEL_LABEL } from "../const";
-import { deepMerge } from "../utils/deep-merge";
 
 const LEVEL_WIDTH = 5;
 const PID_WIDTH = 6;
@@ -16,23 +16,8 @@ export class Logger {
 
   constructor(readonly context: LogContext) {}
 
-  static create(hooks: Hookable<Hooks>, ctx: LogContext = {}) {
-    const logger = new Logger(ctx);
-
-    const map: Array<[keyof Hooks, LogLevel]> = [
-      ["logger:trace", LogLevel.TRACE],
-      ["logger:debug", LogLevel.DEBUG],
-      ["logger:log", LogLevel.LOG],
-      ["logger:warn", LogLevel.WARN],
-      ["logger:error", LogLevel.ERROR],
-      ["logger:fatal", LogLevel.FATAL]
-    ];
-
-    for (const [name, level] of map) {
-      hooks.hook(name, (msg: unknown) => logger.write(level, ctx, msg));
-    }
-
-    return logger;
+  static create(ctx: LogContext = {}) {
+    return new Logger(ctx);
   }
 
   get minLevel() {
@@ -79,7 +64,7 @@ export class Logger {
   }
 
   extend(context: LogContext) {
-    const merged = deepMerge(this.context, context);
+    const merged = merge(this.context, context);
     const next = new Logger(merged);
     next.setMinLevel(this._minLevel);
     return next;
