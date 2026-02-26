@@ -50,5 +50,5 @@ export interface IntegrationUnit<
    * Called at build time to run framework-specific compilation, code
    * generation, or asset optimization.
    */
-  build?(ctx: IntegrationBuildContext<TRequiredUnits, TOptionalUnits>): void | Promise<void>;
+  build?(ctx: IntegrationBuildContext<TRequiredUnits, TOptionalUnits, TCapabilities>): void | Promise<void>;
 }
