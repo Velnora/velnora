@@ -26,10 +26,10 @@ export interface BaseUnit<
   version: string;
 
   /** Tuple of unit names that must be registered before this unit can initialize. */
-  required: TRequiredUnits;
+  required?: TRequiredUnits;
 
   /** Tuple of unit names that this unit can optionally consume if they are available. */
-  optional: TOptionalUnits;
+  optional?: TOptionalUnits;
 
   /**
    * An optional list of capability tokens this unit advertises to the host.

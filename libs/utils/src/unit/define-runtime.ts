@@ -1,18 +1,6 @@
-import { type ConfigEnv, type RuntimeUnit, UnitKind } from "@velnora/types";
+import { UnitKind } from "@velnora/types";
 
 import { defineUnit } from "./define-unit";
-
-export function defineRuntime<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
->(unit: Omit<RuntimeUnit<TRequiredUnits, TOptionalUnits>, "kind">): RuntimeUnit<TRequiredUnits, TOptionalUnits>;
-
-export function defineRuntime<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
->(
-  unit: (env: ConfigEnv) => Omit<RuntimeUnit<TRequiredUnits, TOptionalUnits>, "kind">
-): (env: ConfigEnv) => RuntimeUnit<TRequiredUnits, TOptionalUnits>;
 
 // ToDO: Fix docs. @examples are wrong
 
@@ -69,13 +57,4 @@ export function defineRuntime<
  * }));
  * ```
  */
-export function defineRuntime<
-  TRequiredUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[],
-  TOptionalUnits extends readonly (keyof Velnora.UnitRegistry)[] = readonly (keyof Velnora.UnitRegistry)[]
->(
-  unit:
-    | ((env: ConfigEnv) => Omit<RuntimeUnit<TRequiredUnits, TOptionalUnits>, "kind">)
-    | Omit<RuntimeUnit<TRequiredUnits, TOptionalUnits>, "kind">
-) {
-  return defineUnit(UnitKind.RUNTIME, unit);
-}
+export const defineRuntime = defineUnit(UnitKind.RUNTIME);

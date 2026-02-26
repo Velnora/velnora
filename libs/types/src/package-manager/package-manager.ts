@@ -44,31 +44,11 @@ import type { OutdatedResult } from "./outdated-result";
 export interface PackageManager {
   /** Human-readable identifier for this package manager (e.g. `"npm"`, `"maven"`, `"nuget"`, `"cargo"`). */
   name: string;
-  /** The toolchain / runtime this package manager belongs to (e.g. `"node"`, `"jvm"`, `"dotnet"`, `"rust"`). */
-  runtime: string;
-
-  // ── Resolution ───────────────────────────────────────────────────────
-
-  /**
-   * Detect whether this package manager is in use within the given directory.
-   *
-   * Typically checks for the presence of a manifest or lockfile.
-   *
-   * @param cwd - The working directory to inspect.
-   * @returns `true` if this package manager manages the project at `cwd`.
-   */
-  detect(cwd: string): Promise<boolean>;
-  /**
-   * Resolve the absolute path to the package manager binary.
-   *
-   * @returns The filesystem path to the executable.
-   */
-  resolveBinary(): Promise<string>;
 
   // ── Manifest & Lockfile ──────────────────────────────────────────────
 
   /** The canonical manifest filename (e.g. `"package.json"`, `"build.gradle.kts"`, `"*.csproj"`). */
-  manifestName: string;
+  manifestName?: string;
   /** The lockfile filename, if the package manager supports one (e.g. `"yarn.lock"`, `"gradle.lockfile"`). */
   lockfileName?: string;
 

@@ -1,3 +1,5 @@
+import type { Promisable } from "type-fest";
+
 import type { PackageManager } from "../../package-manager";
 import type { Project } from "../../project";
 import type { Artifact } from "../../utils";
@@ -28,16 +30,6 @@ export interface Toolchain {
   // ── Identity ──────────────────────────────────────────────────────
 
   /**
-   * Unique, short identifier for this toolchain.
-   *
-   * @example "jvm"
-   * @example "dotnet"
-   * @example "node"
-   * @example "go"
-   */
-  name: string;
-
-  /**
    * Primary language or platform this toolchain targets.
    *
    * @example "java"
@@ -57,7 +49,7 @@ export interface Toolchain {
    * @param cwd - Absolute path to the project root.
    * @returns `true` if the toolchain recognises the project layout.
    */
-  detect(cwd: string): Promise<boolean>;
+  detect(cwd: string): Promisable<boolean>;
 
   /**
    * Resolves the toolchain to a concrete binary and version on the
@@ -66,7 +58,7 @@ export interface Toolchain {
    * @param ctx - Ambient context including the working directory.
    * @returns The resolved binary path and its semver version.
    */
-  resolve(ctx: ToolchainContext): Promise<ResolvedToolchain>;
+  resolve(ctx: ToolchainContext): Promisable<ResolvedToolchain>;
 
   // ── Lifecycle ─────────────────────────────────────────────────────
 
@@ -112,14 +104,6 @@ export interface Toolchain {
   // ── Package Management ────────────────────────────────────────────
 
   /**
-   * The set of package managers this toolchain ships with or supports.
-   *
-   * A single toolchain may expose multiple managers (e.g. Node.js
-   * supports npm, Yarn, and pnpm).
-   */
-  packageManagers: PackageManager[];
-
-  /**
    * Detects and returns the active package manager for the project at
    * the given path.
    *
@@ -127,7 +111,7 @@ export interface Toolchain {
    * @returns The {@link PackageManager} instance that matches the
    *   project's lockfile or manifest.
    */
-  resolvePackageManager(cwd: string): Promise<PackageManager>;
+  resolvePackageManager(cwd: string): Promisable<PackageManager>;
 
   // ── Optional Extensions ───────────────────────────────────────────
 
