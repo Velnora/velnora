@@ -4524,6 +4524,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@velnora/runtime-node@workspace:libs/unit/runtime/node":
+  version: 0.0.0-use.local
+  resolution: "@velnora/runtime-node@workspace:libs/unit/runtime/node"
+  dependencies:
+    unbuild: "npm:^3.6.1"
+  languageName: unknown
+  linkType: soft
+
 "@velnora/types@workspace:*, @velnora/types@workspace:^, @velnora/types@workspace:libs/types":
   version: 0.0.0-use.local
   resolution: "@velnora/types@workspace:libs/types"

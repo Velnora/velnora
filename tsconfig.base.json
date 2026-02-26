@@ -21,7 +21,8 @@
       "@velnora/types": ["./libs/types/src/main.ts"],
       "@velnora/host": ["./libs/host/src/main.ts"],
       "@velnora/kernel": ["./libs/kernel/src/main.ts"],
-      "@velnora/generator": ["./libs/generator/src/main.ts"]
+      "@velnora/generator": ["./libs/generator/src/main.ts"],
+      "@velnora/runtime-node": ["./libs/unit/runtime/node/src/main.ts"]
     }
   },
   "exclude": ["node_modules"]

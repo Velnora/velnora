@@ -1,0 +1,30 @@
+{
+  "name": "@velnora/runtime-node",
+  "version": "0.0.0-dev.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/velnora.runtime-node.d.ts",
+      "import": "./build/velnora.runtime-node.mjs"
+    }
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "lint": "eslint .",
+    "stub": "unbuild --stub",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "unbuild": "^3.6.1"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
