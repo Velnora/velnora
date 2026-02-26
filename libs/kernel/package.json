@@ -20,9 +20,11 @@
   "dependencies": {
     "@velnora/commands": "workspace:^",
     "@velnora/host": "workspace:^",
-    "@velnora/utils": "workspace:^"
+    "@velnora/utils": "workspace:^",
+    "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
+    "@types/lodash.merge": "^4",
     "@velnora/types": "workspace:^",
     "unbuild": "^3.6.1",
     "vitest": "^4.0.18"

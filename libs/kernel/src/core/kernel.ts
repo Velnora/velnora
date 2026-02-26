@@ -1,7 +1,10 @@
+import merge from "lodash.merge";
+
 import type { DevCommandOptions } from "@velnora/commands";
 import { Host } from "@velnora/host";
-import type { Project } from "@velnora/types";
-import { detectProjects, detectWorkspace } from "@velnora/utils";
+import node from "@velnora/runtime-node";
+import type { Project, VelnoraConfig } from "@velnora/types";
+import { detectProjects, detectWorkspace, parseConfig } from "@velnora/utils";
 
 /**
  * The Kernel is the Layer 0 runtime orchestrator for Velnora.
@@ -12,7 +15,12 @@ import { detectProjects, detectWorkspace } from "@velnora/utils";
 export class Kernel {
   private root!: string;
   private projects: Project[] = [];
+  private config: VelnoraConfig | null = null;
   private host: Host | null = null;
+
+  private get configDefaults(): VelnoraConfig {
+    return { integrations: [node] };
+  }
 
   /**
    * Discover the workspace root and all projects within it.
@@ -26,7 +34,12 @@ export class Kernel {
     this.root = root;
     process.chdir(root);
 
-    this.projects = await detectProjects(rootPackageJson);
+    [this.config, this.projects] = await Promise.all([
+      parseConfig<VelnoraConfig>(root),
+      detectProjects(rootPackageJson)
+    ]);
+
+    this.config = merge(this.configDefaults, this.config);
   }
 
   /**

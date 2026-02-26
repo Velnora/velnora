@@ -1,2 +1,1 @@
-export { Kernel } from "./kernel";
-export { createKernel } from "./create-kernel";
+export * from "./core";
