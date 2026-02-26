@@ -4,7 +4,7 @@ import destr from "destr";
 import { createJiti } from "jiti";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { loadProjectConfig } from "./load-project-config";
+import { parseConfig } from "./parse-config";
 
 // Mock dependencies
 vi.mock("node:fs/promises", () => ({
@@ -25,7 +25,7 @@ const mockDestr = vi.mocked(destr);
 
 const PROJECT_ROOT = "/workspace/apps/my-app";
 
-describe("loadProjectConfig", () => {
+describe("parseConfig", () => {
   const mockJitiImport = vi.fn();
 
   beforeEach(() => {
@@ -36,7 +36,7 @@ describe("loadProjectConfig", () => {
   it("should return {} when no config file is found", async () => {
     mockAccess.mockRejectedValue(new Error("ENOENT"));
 
-    const result = await loadProjectConfig(PROJECT_ROOT);
+    const result = await parseConfig(PROJECT_ROOT);
 
     expect(result).toEqual({});
     expect(mockAccess).toHaveBeenCalledTimes(3);
@@ -49,7 +49,7 @@ describe("loadProjectConfig", () => {
     mockAccess.mockResolvedValueOnce(undefined);
     mockJitiImport.mockResolvedValueOnce(config);
 
-    const result = await loadProjectConfig(PROJECT_ROOT);
+    const result = await parseConfig(PROJECT_ROOT);
 
     expect(result).toEqual(config);
     expect(mockJitiImport).toHaveBeenCalledWith(`${PROJECT_ROOT}/velnora.config.ts`, { default: true });
@@ -68,7 +68,7 @@ describe("loadProjectConfig", () => {
     mockReadFile.mockResolvedValueOnce('{"name":"json-app"}' as never);
     mockDestr.mockReturnValueOnce(config as never);
 
-    const result = await loadProjectConfig(PROJECT_ROOT);
+    const result = await parseConfig(PROJECT_ROOT);
 
     expect(result).toEqual(config);
     expect(mockReadFile).toHaveBeenCalledWith(`${PROJECT_ROOT}/velnora.config.json`, "utf-8");
@@ -83,7 +83,7 @@ describe("loadProjectConfig", () => {
     mockAccess.mockResolvedValueOnce(undefined);
     mockJitiImport.mockResolvedValueOnce(tsConfig);
 
-    const result = await loadProjectConfig(PROJECT_ROOT);
+    const result = await parseConfig(PROJECT_ROOT);
 
     expect(result).toEqual(tsConfig);
     // access should only be called once since .ts was found immediately
@@ -104,7 +104,7 @@ describe("loadProjectConfig", () => {
     mockReadFile.mockResolvedValueOnce(rawJson as never);
     mockDestr.mockReturnValueOnce(parsedConfig as never);
 
-    await loadProjectConfig(PROJECT_ROOT);
+    await parseConfig(PROJECT_ROOT);
 
     expect(mockDestr).toHaveBeenCalledOnce();
     expect(mockDestr).toHaveBeenCalledWith(rawJson);

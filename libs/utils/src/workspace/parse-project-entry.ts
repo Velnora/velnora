@@ -4,8 +4,10 @@ import { dirname, relative } from "node:path";
 import destr from "destr";
 import type { PackageJson } from "type-fest";
 
+import type { VelnoraAppConfig } from "@velnora/types";
+
 import { Project } from "../project";
-import { loadProjectConfig } from "./load-project-config";
+import { parseConfig } from "./parse-config";
 
 /**
  * Parses a single `package.json` entry into a {@link Project} instance.
@@ -32,11 +34,12 @@ export const parseProjectEntry = async (entry: string) => {
       return null;
     }
 
-    const config = await loadProjectConfig(dir);
+    const config = await parseConfig<VelnoraAppConfig>(dir);
 
     return new Project({ name: relative(process.cwd(), dir), root: dir, packageJson, config });
   } catch (error) {
     console.warn(`[Velnora] Failed to load project at ${entry}:`, error);
-    return null;
   }
+
+  return null;
 };
