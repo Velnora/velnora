@@ -13,9 +13,15 @@ import type { RuntimeUnit } from "./runtime-unit";
  * variants through the `kind` discriminant.
  */
 export type VelnoraUnit<
-  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
-  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
-  TCapabilities extends (keyof Velnora.UnitRegistry)[]
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[] = LiteralUnion<
+    keyof Velnora.UnitRegistry,
+    string
+  >[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[] = LiteralUnion<
+    keyof Velnora.UnitRegistry,
+    string
+  >[],
+  TCapabilities extends (keyof Velnora.UnitRegistry)[] = (keyof Velnora.UnitRegistry)[]
 > =
   | IntegrationUnit<TRequiredUnits, TOptionalUnits, TCapabilities>
   | RuntimeUnit<TRequiredUnits, TOptionalUnits, TCapabilities>

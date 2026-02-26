@@ -1,3 +1,6 @@
+import type { VelnoraUnit } from "../unit";
+import type { ConfigEnv } from "../utils";
+
 /**
  * Workspace-level Velnora configuration.
  *
@@ -8,5 +11,7 @@
  * This is resolved once during `Kernel.init()` and made available to all
  * downstream consumers (adapters, plugins, CLI commands).
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface VelnoraConfig {}
+
+export interface VelnoraConfig {
+  integrations?: (VelnoraUnit | ((env: ConfigEnv) => VelnoraUnit))[];
+}
