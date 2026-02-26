@@ -19,9 +19,15 @@ import type { LiteralUnion } from "type-fest";
  * @typeParam TOptionalUnits - Tuple of soft-dependency keys (may be `undefined`).
  */
 export interface BaseUnitContext<
-  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
-  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
-  TCapabilities extends (keyof Velnora.UnitRegistry)[]
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[] = LiteralUnion<
+    keyof Velnora.UnitRegistry,
+    string
+  >[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[] = LiteralUnion<
+    keyof Velnora.UnitRegistry,
+    string
+  >[],
+  TCapabilities extends (keyof Velnora.UnitRegistry)[] = (keyof Velnora.UnitRegistry)[]
 > {
   /** Register a public API for a single capability. */
   expose<TKey extends TCapabilities>(
