@@ -4031,6 +4031,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash.merge@npm:^4":
+  version: 4.6.9
+  resolution: "@types/lodash.merge@npm:4.6.9"
+  dependencies:
+    "@types/lodash": "npm:*"
+  checksum: 10c0/2e2ccacdceb2e23343a514e8c24540fc4e1f1ffd616b645eb72ec685da9389d99a2544f04d61921e46a6768f8cc0fe5f58d4f7edaba9bc50552f0ca7df905e83
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.17.24
+  resolution: "@types/lodash@npm:4.17.24"
+  checksum: 10c0/b72f60d4daacdad1fa643edb3faba204c02a01eb1ac00a83ff73496a6d236fc55e459c06106e8ced42277dba932d087d8fc090f8de4ef590d3f91e6d6f7ce85a
+  languageName: node
+  linkType: hard
+
 "@types/minimatch@npm:^3.0.3":
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5"
@@ -4485,10 +4501,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@velnora/kernel@workspace:libs/kernel"
   dependencies:
+    "@types/lodash.merge": "npm:^4"
     "@velnora/commands": "workspace:^"
     "@velnora/host": "workspace:^"
     "@velnora/types": "workspace:^"
     "@velnora/utils": "workspace:^"
+    lodash.merge: "npm:^4.6.2"
     unbuild: "npm:^3.6.1"
     vitest: "npm:^4.0.18"
   languageName: unknown
