@@ -21,7 +21,8 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     export interface NodeJS extends JavaScriptRuntime {}
 
-    export interface JavaScript extends JavaScriptRuntime, Record<string, never> {}
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    export interface JavaScript extends JavaScriptRuntime {}
 
     export interface UnitRegistry {
       javascript: JavaScript;
