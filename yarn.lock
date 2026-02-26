@@ -4095,6 +4095,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/semver@npm:^7":
+  version: 7.7.1
+  resolution: "@types/semver@npm:7.7.1"
+  checksum: 10c0/c938aef3bf79a73f0f3f6037c16e2e759ff40c54122ddf0b2583703393d8d3127130823facb880e694caa324eb6845628186aac1997ee8b31dc2d18fafe26268
+  languageName: node
+  linkType: hard
+
 "@types/stack-utils@npm:^2.0.3":
   version: 2.0.3
   resolution: "@types/stack-utils@npm:2.0.3"
@@ -4547,11 +4554,13 @@ __metadata:
   resolution: "@velnora/utils@workspace:libs/utils"
   dependencies:
     "@types/node": "npm:^25.2.2"
+    "@types/semver": "npm:^7"
     "@velnora/types": "workspace:*"
     destr: "npm:^2.0.5"
     fast-glob: "npm:^3.3.3"
     find-up: "npm:^8.0.0"
     jiti: "npm:^2.6.1"
+    semver: "npm:^7.7.4"
     type-fest: "npm:^5.4.4"
     unbuild: "npm:^3.6.1"
     vitest: "npm:^4.0.18"
@@ -10858,7 +10867,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.5, semver@npm:^7.3.8, semver@npm:^7.5.3, semver@npm:^7.5.4, semver@npm:^7.6.3, semver@npm:^7.7.2, semver@npm:^7.7.3":
+"semver@npm:^7.3.5, semver@npm:^7.3.8, semver@npm:^7.5.3, semver@npm:^7.5.4, semver@npm:^7.6.3, semver@npm:^7.7.2, semver@npm:^7.7.3, semver@npm:^7.7.4":
   version: 7.7.4
   resolution: "semver@npm:7.7.4"
   bin:
