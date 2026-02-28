@@ -10,6 +10,7 @@
     "noUncheckedIndexedAccess": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "types": ["vite/client", "@types/node"],
     "baseUrl": ".",

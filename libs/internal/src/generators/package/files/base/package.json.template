@@ -5,21 +5,21 @@
   "exports": {
     ".": {
       "types": "./build/velnora.<%= name %>.d.ts",
-      "import": "./build/velnora.<%= name %>.mjs"
+      "import": "./build/velnora.<%= name %>.js"
     }
   },
   "files": [
     "build"
   ],
   "scripts": {
-    "build": "unbuild",
+    "build": "vite build",
     "lint": "eslint .",
-    "stub": "unbuild --stub",
 <% if (!skipTests) { %>    "test": "vitest run",
 <% } %>    "typecheck": "tsc -p tsconfig.json"
   },
   "devDependencies": {
-    "unbuild": "^3.6.1"
+    "vite": "<%= versions.vite %>",
+    "vite-plugin-dts": "<%= versions.viteDts %>"
   },
   "engines": {
     "node": ">=24"

@@ -14,6 +14,7 @@ import {
 } from "@nx/devkit";
 import { capitalize } from "@nx/devkit/src/utils/string-utils";
 
+import pkgJson from "../../../package.json";
 import type { PackageGeneratorSchema } from "./schema";
 import { executeCommand } from "./utils/execute-command";
 
@@ -30,7 +31,11 @@ export default async function generator(tree: Tree, schema: PackageGeneratorSche
     name: pkg.name,
     target: capitalize(schema.target || "node"),
     tags,
-    skipTests: schema.skipTests
+    skipTests: schema.skipTests,
+    versions: {
+      vite: pkgJson.dependencies.vite,
+      viteDts: pkgJson.dependencies["vite-plugin-dts"]
+    }
   });
 
   if (!schema.skipTests) {
