@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import { relative } from "node:path";
 
 import type { TsConfigJson } from "type-fest";

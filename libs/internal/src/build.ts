@@ -1,3 +1,8 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
 import type { UserConfig } from "vite";
 
 import { defineBaseConfig } from "./config/define-base-config";
