@@ -8,16 +8,16 @@ import type { LiteralUnion } from "type-fest";
 import type { Unit, UnitKind } from "@velnora/types";
 import { type ConfigEnv } from "@velnora/types";
 
+import type { WithConfigEnv } from "../types";
+
 export const defineUnit = <TUnitKind extends UnitKind>(kind: TUnitKind) => {
   return <
     const TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
     const TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
     const TCapabilities extends (keyof Velnora.UnitRegistry)[]
   >(
-    unit:
-      | ((env: ConfigEnv) => Omit<Unit<TUnitKind, TRequiredUnits, TOptionalUnits, TCapabilities>, "kind">)
-      | Omit<Unit<TUnitKind, TRequiredUnits, TOptionalUnits, TCapabilities>, "kind">
-  ) => {
+    unit: WithConfigEnv<Omit<Unit<TUnitKind, TRequiredUnits, TOptionalUnits, TCapabilities>, "kind">>
+  ): WithConfigEnv<Unit<TUnitKind, TRequiredUnits, TOptionalUnits, TCapabilities>> => {
     if (typeof unit === "function") {
       return (env: ConfigEnv): Unit<TUnitKind, TRequiredUnits, TOptionalUnits, TCapabilities> => {
         const unitDef = unit(env);

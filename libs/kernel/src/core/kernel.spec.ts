@@ -78,7 +78,7 @@ describe("Kernel", () => {
 
   describe("bootHost", () => {
     it("should throw if no projects discovered", async () => {
-      await expect(kernel.bootHost()).rejects.toThrow(/No projects discovered/);
+      await expect(kernel.boot()).rejects.toThrow(/No projects discovered/);
     });
 
     it("should create Host and listen after init", async () => {
@@ -90,7 +90,7 @@ describe("Kernel", () => {
       });
 
       await kernel.init();
-      await kernel.bootHost();
+      await kernel.boot();
 
       expect(MockHost).toHaveBeenCalledWith([fakeProject], undefined);
       expect(mockListen).toHaveBeenCalled();
@@ -106,7 +106,7 @@ describe("Kernel", () => {
       const options = { port: 4000, host: "0.0.0.0" };
 
       await kernel.init();
-      await kernel.bootHost(options);
+      await kernel.boot(options);
 
       expect(MockHost).toHaveBeenCalledWith([fakeProject], options);
     });
@@ -129,7 +129,7 @@ describe("Kernel", () => {
       });
 
       await kernel.init();
-      await kernel.bootHost();
+      await kernel.boot();
       await kernel.shutdown();
 
       expect(mockClose).toHaveBeenCalled();
@@ -146,7 +146,7 @@ describe("Kernel", () => {
       });
 
       await kernel.init();
-      await kernel.bootHost();
+      await kernel.boot();
       await kernel.shutdown();
 
       // Second shutdown should be a no-op

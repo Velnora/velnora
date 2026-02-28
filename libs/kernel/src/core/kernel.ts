@@ -3,11 +3,11 @@
  * type: author
  * author: MDReal
  */
-
 import merge from "lodash.merge";
 
+import h3 from "@velnora/adapter-h3";
 import type { DevCommandOptions } from "@velnora/commands";
-import { Host } from "@velnora/host";
+import type { Host } from "@velnora/host";
 import node from "@velnora/runtime-node";
 import type { Project, VelnoraConfig } from "@velnora/types";
 import { detectProjects, detectWorkspace, parseConfig } from "@velnora/utils";
@@ -18,14 +18,18 @@ import { detectProjects, detectWorkspace, parseConfig } from "@velnora/utils";
  * It wires together workspace/project discovery and boots the Host HTTP server
  * so that every discovered project is served under its own URL namespace.
  */
-export class Kernel {
+export class Kernel<
+  TRequiredUnits extends (keyof Velnora.UnitRegistry)[] = (keyof Velnora.UnitRegistry)[],
+  TOptionalUnits extends (keyof Velnora.UnitRegistry)[] = (keyof Velnora.UnitRegistry)[],
+  TCapabilities extends (keyof Velnora.UnitRegistry)[] = (keyof Velnora.UnitRegistry)[]
+> {
   private root!: string;
   private projects: Project[] = [];
   private config: VelnoraConfig | null = null;
   private host: Host | null = null;
 
   private get configDefaults(): VelnoraConfig {
-    return { integrations: [node] };
+    return { integrations: [node, h3] };
   }
 
   /**
@@ -53,22 +57,23 @@ export class Kernel {
    *
    * Must be called **after** `init()`.
    */
-  async bootHost(options?: DevCommandOptions) {
+  async boot(options?: DevCommandOptions) {
     if (this.projects.length === 0) {
       throw new Error("[Velnora] No projects discovered. Did you call kernel.init() first?");
     }
 
-    this.host = new Host(this.projects, options);
-
-    const listener = await this.host.listen();
-    const url = listener.url;
-
-    console.log(`[Velnora] Host running at ${url}`);
-    console.log(`[Velnora] Serving ${this.projects.length} project(s):`);
-
-    for (const project of this.projects) {
-      console.log(`  → ${project.displayName} at ${project.path}`);
-    }
+    console.log(this.config);
+    // this.host = new Host(this.projects, options);
+    //
+    // const listener = await this.host.listen();
+    // const url = listener.url;
+    //
+    // console.log(`[Velnora] Host running at ${url}`);
+    // console.log(`[Velnora] Serving ${this.projects.length} project(s):`);
+    //
+    // for (const project of this.projects) {
+    //   console.log(`  → ${project.displayName} at ${project.path}`);
+    // }
   }
 
   /**

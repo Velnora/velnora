@@ -27,7 +27,7 @@ initCommand.action(options => {
 devCommand.action(async options => {
   const kernel = createKernel();
   await kernel.init();
-  await kernel.bootHost(options);
+  await kernel.boot(options);
 });
 
 buildCommand.action(async () => {});
