@@ -10,6 +10,8 @@
 
 export * from "./adapter-unit";
 export * from "./base-unit";
+export * from "./base-unit-context";
+export * from "./expose-unit-context";
 export * from "./integration-unit";
 export * from "./runtime-unit";
 export * from "./unit-kind";

@@ -37,20 +37,22 @@ export interface BaseUnitContext<
   /** Query a hard dependency — guaranteed to exist, never undefined. */
   query<TKey extends TRequiredUnits[number]>(
     key: TKey
-  ): TKey extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TKey] : never;
+  ): TKey extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TKey] : unknown;
 
   /** Query a soft dependency — returns undefined if not installed. */
   query<TKey extends TOptionalUnits[number]>(
     key: TKey
-  ): TKey extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TKey] | undefined : never;
+  ): TKey extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TKey] | undefined : unknown;
 
   /** Query multiple hard dependencies — returns a mapped object. */
-  query<TKey extends TRequiredUnits[number]>(
-    keys: readonly TKey[]
-  ): { [TProp in TKey]: TProp extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TProp] : never };
+  query(keys: TRequiredUnits): {
+    [TProp in TRequiredUnits[number]]: TProp extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TProp] : unknown;
+  };
 
   /** Query multiple soft dependencies — each value may be undefined. */
-  query<TKey extends TOptionalUnits[number]>(
-    keys: readonly TKey[]
-  ): { [TProp in TKey]?: TProp extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TProp] : never };
+  query(keys: TOptionalUnits): {
+    [TProp in TOptionalUnits[number]]?: TProp extends keyof Velnora.UnitRegistry
+      ? Velnora.UnitRegistry[TProp]
+      : unknown;
+  };
 }

@@ -4,7 +4,7 @@
  * author: MDReal
  */
 
-import type { LiteralUnion } from "type-fest";
+import type { LiteralUnion, Promisable } from "type-fest";
 
 import type { Project } from "../../project";
 import type { AdapterBuildContext } from "../adapter/adapter-build-context";
@@ -19,6 +19,6 @@ export interface AdapterUnit<
   TCapabilities extends (keyof Velnora.UnitRegistry)[]
 > extends BaseUnit<TRequiredUnits, TOptionalUnits, TCapabilities> {
   kind: UnitKind.ADAPTER;
-  dev(project: Project, ctx: AdapterDevContext<TRequiredUnits, TOptionalUnits>): Promise<DevServerResult>;
-  build(project: Project, ctx: AdapterBuildContext<TRequiredUnits, TOptionalUnits>): Promise<void>;
+  dev(project: Project, ctx: AdapterDevContext<TRequiredUnits, TOptionalUnits>): Promisable<DevServerResult>;
+  build(project: Project, ctx: AdapterBuildContext<TRequiredUnits, TOptionalUnits>): Promisable<void>;
 }
