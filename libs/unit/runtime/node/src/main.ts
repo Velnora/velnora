@@ -39,8 +39,6 @@ export default defineRuntime({
   runtime: "node",
   version: pkgJson.version,
 
-  required: ["htt"],
-
   capabilities: ["javascript", "node"],
 
   detect(cwd) {
