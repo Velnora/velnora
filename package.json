@@ -21,7 +21,7 @@
     "dev": "nx run hello-mfe-shell:dev",
     "lint": "nx run-many -t lint",
     "lint:all": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "prepare": "nx run-many -t stub",
+    "prepare": "nx run-many -t build",
     "test": "vitest --config vitest.config.ts",
     "test:coverage": "vitest --config vitest.config.ts --coverage",
     "typecheck": "nx run-many -t typecheck"

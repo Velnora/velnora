@@ -5,11 +5,11 @@
   "exports": {
     ".": {
       "types": "./build/velnora.d.ts",
-      "import": "./build/velnora.mjs"
+      "import": "./build/velnora.js"
     },
     "./app": {
       "types": "./build/velnora.app.d.ts",
-      "import": "./build/velnora.app.mjs"
+      "import": "./build/velnora.app.js"
     }
   },
   "bin": "./bin/velnora.js",
@@ -18,9 +18,8 @@
     "bin"
   ],
   "scripts": {
-    "build": "unbuild",
+    "build": "vite build",
     "lint": "eslint .",
-    "stub": "unbuild --stub",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json"
   },
@@ -29,7 +28,8 @@
   },
   "devDependencies": {
     "@velnora/types": "workspace:^",
-    "unbuild": "^3.6.1"
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4"
   },
   "engines": {
     "node": ">=24"

@@ -5,22 +5,22 @@
   "exports": {
     ".": {
       "types": "./build/velnora.types.d.ts",
-      "import": "./build/velnora.types.mjs"
+      "import": "./build/velnora.types.js"
     }
   },
   "files": [
     "build"
   ],
   "scripts": {
-    "build": "unbuild",
+    "build": "vite build",
     "lint": "eslint .",
-    "stub": "unbuild --stub",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json"
   },
   "devDependencies": {
     "type-fest": "^5.4.4",
-    "unbuild": "^3.6.1",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.0.18"
   },
   "engines": {

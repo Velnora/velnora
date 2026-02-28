@@ -5,16 +5,15 @@
   "exports": {
     ".": {
       "types": "./build/velnora.kernel.d.ts",
-      "import": "./build/velnora.kernel.mjs"
+      "import": "./build/velnora.kernel.js"
     }
   },
   "files": [
     "build"
   ],
   "scripts": {
-    "build": "unbuild",
+    "build": "vite build",
     "lint": "eslint .",
-    "stub": "unbuild --stub",
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
@@ -26,7 +25,8 @@
   "devDependencies": {
     "@types/lodash.merge": "^4",
     "@velnora/types": "workspace:^",
-    "unbuild": "^3.6.1",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.0.18"
   },
   "engines": {
