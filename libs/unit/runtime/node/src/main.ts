@@ -28,15 +28,9 @@ interface JavaScriptRuntime {
 
 declare global {
   namespace Velnora {
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-    export interface NodeJS extends JavaScriptRuntime {}
-
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-    export interface JavaScript extends JavaScriptRuntime {}
-
     export interface UnitRegistry {
-      javascript: JavaScript;
-      node: NodeJS;
+      javascript: JavaScriptRuntime;
+      node: JavaScriptRuntime;
     }
   }
 }
@@ -45,6 +39,8 @@ export default defineRuntime({
   name: "node",
   runtime: "node",
   version: pkgJson.version,
+
+  required: ["htt"],
 
   capabilities: ["javascript", "node"],
 
