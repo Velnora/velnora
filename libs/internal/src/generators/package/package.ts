@@ -3,10 +3,11 @@
  * type: author
  * author: MDReal
  */
-
+import { createRequire } from "node:module";
 import { relative } from "node:path";
 
-import type { TsConfigJson } from "type-fest";
+import type { PackageJson } from "type-fest";
+import { type TsConfigJson } from "type-fest";
 
 import {
   type Tree,
@@ -20,9 +21,11 @@ import {
 } from "@nx/devkit";
 import { capitalize } from "@nx/devkit/src/utils/string-utils";
 
-import pkgJson from "../../../package.json";
 import type { PackageGeneratorSchema } from "./schema";
 import { executeCommand } from "./utils/execute-command";
+
+const require = createRequire(import.meta.url);
+const pkgJson = require("../../../package.json") as PackageJson;
 
 export default async function generator(tree: Tree, schema: PackageGeneratorSchema) {
   const pkg = names(schema.name);
@@ -39,8 +42,8 @@ export default async function generator(tree: Tree, schema: PackageGeneratorSche
     tags,
     skipTests: schema.skipTests,
     versions: {
-      vite: pkgJson.dependencies.vite,
-      viteDts: pkgJson.dependencies["vite-plugin-dts"]
+      vite: pkgJson.dependencies!.vite,
+      viteDts: pkgJson.dependencies!["vite-plugin-dts"]
     }
   });
 
