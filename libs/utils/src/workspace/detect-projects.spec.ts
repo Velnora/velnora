@@ -1,18 +1,18 @@
 import { readFile } from "node:fs/promises";
 
-import fg from "fast-glob";
+import { glob } from "glob";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { detectProjects } from "./detect-projects";
 import { parseProjectEntry } from "./parse-project-entry";
 
-vi.mock("fast-glob");
+vi.mock("glob");
 vi.mock("node:fs/promises");
 vi.mock("./parse-project-entry", () => ({
   parseProjectEntry: vi.fn()
 }));
 
-const mockFg = vi.mocked(fg);
+const mockFg = vi.mocked(glob);
 const mockReadFile = vi.mocked(readFile);
 const mockParseProjectEntry = vi.mocked(parseProjectEntry);
 

@@ -20,8 +20,8 @@
   "dependencies": {
     "@velnora/types": "workspace:*",
     "destr": "^2.0.5",
-    "fast-glob": "^3.3.3",
     "find-up": "^8.0.0",
+    "glob": "^13.0.6",
     "jiti": "^2.6.1",
     "lodash.merge": "^4.6.2",
     "semver": "^7.7.4"

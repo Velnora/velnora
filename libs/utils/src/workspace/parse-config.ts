@@ -6,7 +6,7 @@
 import { access, readFile } from "node:fs/promises";
 
 import destr from "destr";
-import { glob } from "fast-glob";
+import { glob } from "glob";
 
 import { VELNORA_CONFIG_FILES } from "../constants";
 import { jiti } from "../utils/jiti";

@@ -5,7 +5,7 @@
  */
 import { readFile } from "node:fs/promises";
 
-import fg from "fast-glob";
+import { glob } from "glob";
 import type { PackageJson } from "type-fest";
 
 import type { Project } from "@velnora/types";
@@ -52,7 +52,7 @@ export const detectProjects = async (rootPkgJson: PackageJson) => {
     }
   }
 
-  const entries = await fg(patterns, {
+  const entries = await glob(patterns, {
     ignore: finalIgnores,
     absolute: true
   });
