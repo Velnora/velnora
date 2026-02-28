@@ -4290,6 +4290,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@velnora/adapter-h3@workspace:libs/unit/adapter/h3":
+  version: 0.0.0-use.local
+  resolution: "@velnora/adapter-h3@workspace:libs/unit/adapter/h3"
+  dependencies:
+    h3: "npm:^2.0.1-rc.14"
+    vite: "npm:^7.3.1"
+    vite-plugin-dts: "npm:^4.5.4"
+  languageName: unknown
+  linkType: soft
+
 "@velnora/cli-helper@workspace:^, @velnora/cli-helper@workspace:packages/cli":
   version: 0.0.0-use.local
   resolution: "@velnora/cli-helper@workspace:packages/cli"

@@ -23,7 +23,8 @@
       "@velnora/host": ["./libs/host/src/main.ts"],
       "@velnora/kernel": ["./libs/kernel/src/main.ts"],
       "@velnora/generator": ["./libs/generator/src/main.ts"],
-      "@velnora/runtime-node": ["./libs/unit/runtime/node/src/main.ts"]
+      "@velnora/runtime-node": ["./libs/unit/runtime/node/src/main.ts"],
+      "@velnora/adapter-h3": ["./libs/unit/adapter/h3/src/main.ts"]
     }
   },
   "exclude": ["node_modules"]
