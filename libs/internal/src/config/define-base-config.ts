@@ -1,26 +1,30 @@
 import { defu } from "defu";
-import { type BuildConfig, defineBuildConfig } from "unbuild";
+import { type UserConfig, defineConfig } from "vite";
+import dtsPlugin from "vite-plugin-dts";
 
-import type { WithRequiredName } from "../types/with-required-name";
+import type { VelnoraLibConfig } from "../types/velnora-lib-config";
 import { buildEntries } from "./build-entries";
 import { getPkgName } from "./get-pkg-name";
 
-/**
- * Internal base builder used by both Node + Web wrappers.
- * - Keeps the exact same public API for define{Node,Web}Config
- * - Injects shared defaults once
- * - Allows env-specific defaults (node/web) without “abstracting” user options
- */
-export const defineBaseConfig = (options: WithRequiredName<BuildConfig>, envDefaults: BuildConfig) => {
+export const defineBaseConfig = (options: VelnoraLibConfig, envDefaults?: UserConfig): UserConfig => {
   const pkgName = getPkgName(options.name);
-  const entries = buildEntries(pkgName, options.entries);
+  const entry = options.build?.lib ? buildEntries(pkgName, options.build?.lib?.entry) : { [pkgName]: "src/main.ts" };
 
-  return defineBuildConfig(
-    defu<BuildConfig, BuildConfig[]>({ ...options, name: pkgName, entries }, envDefaults, {
-      outDir: "build",
-      declaration: true,
-      clean: true,
-      failOnWarn: false
-    })
+  return defineConfig(
+    defu<UserConfig, UserConfig[]>(
+      {
+        plugins: [dtsPlugin({ rollupTypes: true })],
+        build: {
+          outDir: "build",
+          emptyOutDir: true,
+          lib: {
+            entry,
+            name: pkgName,
+            formats: ["es"]
+          }
+        }
+      },
+      envDefaults || {}
+    )
   );
 };

@@ -1,20 +1,12 @@
-import type { BuildConfig } from "unbuild";
+import type { UserConfig } from "vite";
 
 import { defineBaseConfig } from "./config/define-base-config";
-import type { WithRequiredName } from "./types/with-required-name";
+import type { VelnoraLibConfig } from "./types/velnora-lib-config";
 
-export const defineNodeConfig = (options: WithRequiredName<BuildConfig>) => {
+export const defineNodeConfig = (options: VelnoraLibConfig): UserConfig => {
   return defineBaseConfig(options, {
-    rollup: {
-      emitCJS: false
-    }
+    build: { ssr: true }
   });
 };
 
-export const defineWebConfig = (options: WithRequiredName<BuildConfig>) => {
-  return defineBaseConfig(options, {
-    rollup: {
-      inlineDependencies: true
-    }
-  });
-};
+export const defineWebConfig = defineBaseConfig;
