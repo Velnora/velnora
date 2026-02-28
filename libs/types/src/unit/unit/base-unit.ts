@@ -42,7 +42,7 @@ export interface BaseUnit<
    * Other units may query the capability registry to discover features at
    * runtime without coupling to a specific unit by name.
    */
-  capabilities?: string[];
+  capabilities?: TCapabilities;
 
   /**
    * An optional list of other units that this unit bundles together and re-exports as a single dependency. This is purely a type-level convenience for units that

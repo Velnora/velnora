@@ -7,7 +7,7 @@ export const defineUnit = <TUnitKind extends UnitKind>(kind: TUnitKind) => {
   return <
     const TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
     const TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
-    TCapabilities extends (keyof Velnora.UnitRegistry)[]
+    const TCapabilities extends (keyof Velnora.UnitRegistry)[]
   >(
     unit:
       | ((env: ConfigEnv) => Omit<Unit<TUnitKind, TRequiredUnits, TOptionalUnits, TCapabilities>, "kind">)

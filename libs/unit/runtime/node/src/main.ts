@@ -52,6 +52,14 @@ export default defineRuntime({
     return { binary: nodeExecutable, version: pkgJson.engines?.node || nodeVersion };
   },
 
+  configure(ctx) {
+    const runtime: JavaScriptRuntime = {
+      async run(file: string) {}
+    };
+
+    ctx.expose({ node: runtime, javascript: runtime });
+  },
+
   // compile() {},
   //
   // execute() {},
