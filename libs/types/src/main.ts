@@ -9,6 +9,7 @@
  */
 
 export * from "./config";
+export * from "./http";
 export * from "./logger";
 export * from "./project";
 export * from "./package-manager";
