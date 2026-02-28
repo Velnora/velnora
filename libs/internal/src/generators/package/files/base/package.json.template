@@ -18,8 +18,7 @@
 <% } %>    "typecheck": "tsc -p tsconfig.json"
   },
   "devDependencies": {
-    "vite": "<%= versions.vite %>",
-    "vite-plugin-dts": "<%= versions.viteDts %>"
+    "vite": "<%= versions.vite %>"
   },
   "engines": {
     "node": ">=24"

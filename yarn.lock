@@ -4296,7 +4296,6 @@ __metadata:
   dependencies:
     h3: "npm:^2.0.1-rc.14"
     vite: "npm:^7.3.1"
-    vite-plugin-dts: "npm:^4.5.4"
   languageName: unknown
   linkType: soft
 
@@ -4308,7 +4307,6 @@ __metadata:
     eslint: "npm:^9.39.1"
     type-fest: "npm:^5.2.0"
     vite: "npm:^7.3.1"
-    vite-plugin-dts: "npm:^4.5.4"
     vitest: "npm:^4.0.14"
     yargs: "npm:^18.0.0"
   languageName: unknown
@@ -4323,7 +4321,6 @@ __metadata:
     "@velnora/internal": "workspace:*"
     "@velnora/kernel": "workspace:^"
     vite: "npm:^7.3.1"
-    vite-plugin-dts: "npm:^4.5.4"
     vitest: "npm:^4.0.18"
   bin:
     velnora: ./build/velnora.cli.js
@@ -4337,7 +4334,6 @@ __metadata:
     "@velnora/cli-helper": "workspace:^"
     "@velnora/types": "workspace:^"
     vite: "npm:^7.3.1"
-    vite-plugin-dts: "npm:^4.5.4"
     vitest: "npm:^4.0.18"
   languageName: unknown
   linkType: soft
@@ -4347,7 +4343,6 @@ __metadata:
   resolution: "@velnora/generator@workspace:libs/generator"
   dependencies:
     vite: "npm:^7.3.1"
-    vite-plugin-dts: "npm:^4.5.4"
   languageName: unknown
   linkType: soft
 
@@ -4361,7 +4356,6 @@ __metadata:
     h3: "npm:^2.0.1-rc.14"
     listhen: "npm:^1.9.0"
     vite: "npm:^7.3.1"
-    vite-plugin-dts: "npm:^4.5.4"
   languageName: unknown
   linkType: soft
 
@@ -4389,7 +4383,6 @@ __metadata:
     lodash.merge: "npm:^4.6.2"
     type-fest: "npm:^5.4.4"
     vite: "npm:^7.3.1"
-    vite-plugin-dts: "npm:^4.5.4"
     vitest: "npm:^4.0.18"
   languageName: unknown
   linkType: soft
@@ -4437,7 +4430,6 @@ __metadata:
   dependencies:
     "@velnora/utils": "workspace:^"
     vite: "npm:^7.3.1"
-    vite-plugin-dts: "npm:^4.5.4"
   languageName: unknown
   linkType: soft
 
@@ -4447,7 +4439,6 @@ __metadata:
   dependencies:
     type-fest: "npm:^5.4.4"
     vite: "npm:^7.3.1"
-    vite-plugin-dts: "npm:^4.5.4"
     vitest: "npm:^4.0.18"
   languageName: unknown
   linkType: soft
@@ -4468,7 +4459,6 @@ __metadata:
     semver: "npm:^7.7.4"
     type-fest: "npm:^5.4.4"
     vite: "npm:^7.3.1"
-    vite-plugin-dts: "npm:^4.5.4"
     vitest: "npm:^4.0.18"
   languageName: unknown
   linkType: soft
@@ -11268,7 +11258,6 @@ __metadata:
     "@velnora/cli": "workspace:^"
     "@velnora/types": "workspace:^"
     vite: "npm:^7.3.1"
-    vite-plugin-dts: "npm:^4.5.4"
   bin:
     velnora: ./bin/velnora.js
   languageName: unknown

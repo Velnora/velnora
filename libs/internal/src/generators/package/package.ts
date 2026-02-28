@@ -42,8 +42,7 @@ export default async function generator(tree: Tree, schema: PackageGeneratorSche
     tags,
     skipTests: schema.skipTests,
     versions: {
-      vite: pkgJson.dependencies!.vite,
-      viteDts: pkgJson.dependencies!["vite-plugin-dts"]
+      vite: pkgJson.dependencies!.vite
     }
   });
 
