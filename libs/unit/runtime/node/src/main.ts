@@ -18,21 +18,9 @@ import { defineRuntime, validateVersionRange } from "@velnora/utils";
 
 import pkgJson from "../package.json";
 import { NpmPackageManager } from "./package-managers/npm";
+import type { JavaScriptRuntime } from "./types/javascript-runtime";
 
 const require = createRequire(import.meta.url);
-
-interface JavaScriptRuntime {
-  run(file: string): Promise<void>;
-}
-
-declare global {
-  namespace Velnora {
-    export interface UnitRegistry {
-      javascript: JavaScriptRuntime;
-      node: JavaScriptRuntime;
-    }
-  }
-}
 
 export default defineRuntime({
   name: "node",

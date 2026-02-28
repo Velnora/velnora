@@ -7,43 +7,27 @@
  * layer: tooling
  * visibility: public
  */
-import type { BaseHttpAdapter } from "@velnora/types";
 import { defineAdapter } from "@velnora/utils";
 
 import pkgJson from "../package.json";
+import type { HttpAdapter } from "./types/http-adapter";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface HttpAdapter extends BaseHttpAdapter {}
+export default defineAdapter({
+  name: "h3",
+  version: pkgJson.version,
+  capabilities: ["http", "h3"],
 
-declare global {
-  namespace Velnora {
-    export interface UnitRegistry {
-      http: HttpAdapter;
-      h3: HttpAdapter;
-    }
-  }
-}
+  configure(ctx) {
+    const httpAdapter: HttpAdapter = {
+      use() {},
+      listen() {},
+      close() {}
+    };
 
-export default defineAdapter(() => {
-  return {
-    name: "h3",
-    version: pkgJson.version,
-    capabilities: ["http", "h3"],
+    ctx.expose({ http: httpAdapter, h3: httpAdapter });
+  },
 
-    required: [""],
+  async dev() {},
 
-    configure(ctx) {
-      const httpAdapter: HttpAdapter = {
-        use() {},
-        listen() {},
-        close() {}
-      };
-
-      ctx.expose({ http: httpAdapter, h3: httpAdapter });
-    },
-
-    async dev() {},
-
-    build() {}
-  };
+  build() {}
 });
