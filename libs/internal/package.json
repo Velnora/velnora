@@ -8,7 +8,8 @@
     "@nx/devkit": "^22.5.1",
     "defu": "^6.1.4",
     "vite": "^7.3.1",
-    "vite-plugin-dts": "^4.5.4"
+    "vite-plugin-dts": "^4.5.4",
+    "vite-tsconfig-paths": "^6.1.1"
   },
   "devDependencies": {
     "type-fest": "^5.4.4"

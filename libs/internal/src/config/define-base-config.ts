@@ -1,6 +1,7 @@
 import { defu } from "defu";
 import { type UserConfig, defineConfig } from "vite";
 import dtsPlugin from "vite-plugin-dts";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 import type { VelnoraLibConfig } from "../types/velnora-lib-config";
 import { buildEntries } from "./build-entries";
@@ -13,7 +14,7 @@ export const defineBaseConfig = (options: VelnoraLibConfig, envDefaults?: UserCo
   return defineConfig(
     defu<UserConfig, UserConfig[]>(
       {
-        plugins: [dtsPlugin({ rollupTypes: true })],
+        plugins: [dtsPlugin({ rollupTypes: true, pathsToAliases: false }), tsconfigPaths()],
         build: {
           outDir: "build",
           emptyOutDir: true,
@@ -21,6 +22,9 @@ export const defineBaseConfig = (options: VelnoraLibConfig, envDefaults?: UserCo
             entry,
             name: pkgName,
             formats: ["es"]
+          },
+          rollupOptions: {
+            external: /^@velnora\/.*$/
           }
         }
       },
