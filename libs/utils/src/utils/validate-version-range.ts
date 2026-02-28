@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import { intersects, satisfies, valid, validRange } from "semver";
 
 export const validateVersionRange = (version: string, range: string) => {

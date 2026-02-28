@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import { readFileSync } from "node:fs";
 import { dirname } from "node:path";
 

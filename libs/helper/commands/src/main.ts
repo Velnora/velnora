@@ -7,7 +7,6 @@
  * layer: tooling
  * visibility: public
  */
-
 import { Program, type inferCommandType } from "@velnora/cli-helper";
 import type { RequiredKeys } from "@velnora/types";
 

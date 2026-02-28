@@ -1,6 +1,5 @@
-import { describe, expectTypeOf, it } from "vitest";
-
 import type { PackageJson } from "type-fest";
+import { describe, expectTypeOf, it } from "vitest";
 
 import type { VelnoraAppConfig } from "../config";
 import type { ProjectOptions } from "./project-options";

@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import { dirname } from "node:path";
 
 import { initWorkspace } from "@velnora/generator";

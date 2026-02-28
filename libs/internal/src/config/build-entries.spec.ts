@@ -29,7 +29,7 @@ describe("buildEntries", () => {
     const result = buildEntries("velnora.kernel", { extra: "src/extra.ts" });
     expect(result).toEqual({
       "velnora.kernel": "src/main.ts",
-      extra: "src/extra.ts"
+      "extra": "src/extra.ts"
     });
   });
 });

@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 

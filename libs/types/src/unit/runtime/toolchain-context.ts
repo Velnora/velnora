@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import type { LiteralUnion } from "type-fest";
 
 import type { BaseUnitContext } from "../unit/base-unit-context";

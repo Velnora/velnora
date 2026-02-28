@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import type { Artifact } from "../utils";
 import type { AddOptions } from "./add-options";
 import type { AuditResult } from "./audit-result";

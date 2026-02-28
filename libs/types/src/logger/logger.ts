@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import type { LogContext } from "./log-context";
 import type { LogLevel } from "./log-level";
 import type { LogLevelNames } from "./log-level-names";

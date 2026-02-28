@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import type { TestSuiteResult } from "./test-result-suite";
 
 /**

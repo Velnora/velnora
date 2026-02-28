@@ -7,7 +7,6 @@
  * layer: core
  * visibility: public
  */
-
 /**
  * Shared utility types and ambient declarations used across the Velnora type
  * system.

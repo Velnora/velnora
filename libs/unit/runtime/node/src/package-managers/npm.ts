@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import type {
   AddOptions,
   Artifact,

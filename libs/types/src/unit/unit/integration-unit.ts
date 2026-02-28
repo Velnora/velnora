@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import type { LiteralUnion, Promisable } from "type-fest";
 
 import type { IntegrationBuildContext } from "../integration";

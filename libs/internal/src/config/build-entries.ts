@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import { basename } from "node:path";
 
 import type { InputOption } from "rollup";
