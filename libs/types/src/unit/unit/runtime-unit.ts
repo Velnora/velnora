@@ -34,7 +34,7 @@ export interface RuntimeUnit<
   TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
   TCapabilities extends (keyof Velnora.UnitRegistry)[]
 >
-  extends BaseUnit<TRequiredUnits, TOptionalUnits, TCapabilities>, Toolchain {
+  extends BaseUnit<TRequiredUnits, TOptionalUnits, TCapabilities>, Toolchain<TRequiredUnits, TOptionalUnits> {
   /** Discriminant that identifies this unit as a language runtime. */
   kind: UnitKind.RUNTIME;
 }

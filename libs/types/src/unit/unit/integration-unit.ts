@@ -1,6 +1,6 @@
-import type { LiteralUnion } from "type-fest";
+import type { LiteralUnion, Promisable } from "type-fest";
 
-import type { IntegrationBuildContext, IntegrationConfigureContext } from "../integration";
+import type { IntegrationBuildContext } from "../integration";
 import type { BaseUnit } from "./base-unit";
 import type { UnitKind } from "./unit-kind";
 
@@ -40,15 +40,8 @@ export interface IntegrationUnit<
   kind: UnitKind.INTEGRATION;
 
   /**
-   * Called during host initialization to register public APIs and perform
-   * one-time setup. Use {@link BaseUnitContext.expose} to advertise capabilities
-   * to other units.
-   */
-  configure?(ctx: IntegrationConfigureContext<TRequiredUnits, TOptionalUnits, TCapabilities>): void | Promise<void>;
-
-  /**
    * Called at build time to run framework-specific compilation, code
    * generation, or asset optimization.
    */
-  build?(ctx: IntegrationBuildContext<TRequiredUnits, TOptionalUnits, TCapabilities>): void | Promise<void>;
+  build?(ctx: IntegrationBuildContext<TRequiredUnits, TOptionalUnits>): Promisable<void>;
 }

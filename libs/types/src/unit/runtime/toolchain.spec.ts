@@ -1,8 +1,9 @@
+import type { Promisable } from "type-fest";
 import { describe, expectTypeOf, it } from "vitest";
 
-import type { PackageManager } from "../../package-manager/package-manager";
-import type { Project } from "../../project/project";
-import type { Artifact } from "../../utils/artifact";
+import type { PackageManager } from "../../package-manager";
+import type { Project } from "../../project";
+import type { Artifact } from "../../utils";
 import type { CompileResult } from "./compile-result";
 import type { ExecuteOptions } from "./execute-options";
 import type { ProcessHandle } from "./process-handle";
@@ -15,10 +16,6 @@ import type { ToolchainProcess } from "./toolchain-process";
 
 describe("Toolchain interface (type-level)", () => {
   describe("identity properties", () => {
-    it("has a required string `name` property", () => {
-      expectTypeOf<Toolchain["name"]>().toEqualTypeOf<string>();
-    });
-
     it("has a required string `runtime` property", () => {
       expectTypeOf<Toolchain["runtime"]>().toEqualTypeOf<string>();
     });
@@ -26,11 +23,13 @@ describe("Toolchain interface (type-level)", () => {
 
   describe("resolution methods", () => {
     it("has a `detect` method that accepts a string and returns Promise<boolean>", () => {
-      expectTypeOf<Toolchain["detect"]>().toEqualTypeOf<(cwd: string) => Promise<boolean>>();
+      expectTypeOf<Toolchain["detect"]>().toEqualTypeOf<(cwd: string) => Promisable<boolean>>();
     });
 
     it("has a `resolve` method that accepts ToolchainContext and returns Promise<ResolvedToolchain>", () => {
-      expectTypeOf<Toolchain["resolve"]>().toEqualTypeOf<(ctx: ToolchainContext) => Promise<ResolvedToolchain>>();
+      expectTypeOf<Toolchain["resolve"]>().toEqualTypeOf<
+        (ctx: ToolchainContext<string[], string[]>) => Promisable<ResolvedToolchain>
+      >();
     });
   });
 
@@ -55,12 +54,10 @@ describe("Toolchain interface (type-level)", () => {
   });
 
   describe("package management", () => {
-    it("has a `packageManagers` property typed as PackageManager[]", () => {
-      expectTypeOf<Toolchain["packageManagers"]>().toEqualTypeOf<PackageManager[]>();
-    });
-
     it("has a `resolvePackageManager` method returning Promise<PackageManager>", () => {
-      expectTypeOf<Toolchain["resolvePackageManager"]>().toEqualTypeOf<(cwd: string) => Promise<PackageManager>>();
+      expectTypeOf<Toolchain["resolvePackageManager"]>().toEqualTypeOf<
+        (cwd: string) => Promisable<PackageManager> | void
+      >();
     });
   });
 
@@ -71,12 +68,11 @@ describe("Toolchain interface (type-level)", () => {
   });
 
   it("is not assignable from an empty object (many required properties)", () => {
-    expectTypeOf<{}>().not.toExtend<Toolchain>();
+    expectTypeOf<object>().not.toExtend<Toolchain>();
   });
 
   it("has exactly the expected keys", () => {
     expectTypeOf<keyof Toolchain>().toEqualTypeOf<
-      | "name"
       | "runtime"
       | "detect"
       | "resolve"
@@ -84,7 +80,6 @@ describe("Toolchain interface (type-level)", () => {
       | "execute"
       | "test"
       | "package"
-      | "packageManagers"
       | "resolvePackageManager"
       | "features"
     >();

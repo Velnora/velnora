@@ -1,4 +1,4 @@
-import type { Promisable } from "type-fest";
+import type { LiteralUnion, Promisable } from "type-fest";
 
 import type { PackageManager } from "../../package-manager";
 import type { Project } from "../../project";
@@ -26,7 +26,16 @@ import type { ToolchainProcess } from "./toolchain-process";
  * @see {@link ToolchainFeatures} for the capability flags a toolchain
  *   can advertise.
  */
-export interface Toolchain {
+export interface Toolchain<
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[] = LiteralUnion<
+    keyof Velnora.UnitRegistry,
+    string
+  >[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[] = LiteralUnion<
+    keyof Velnora.UnitRegistry,
+    string
+  >[]
+> {
   // ── Identity ──────────────────────────────────────────────────────
 
   /**
@@ -58,7 +67,7 @@ export interface Toolchain {
    * @param ctx - Ambient context including the working directory.
    * @returns The resolved binary path and its semver version.
    */
-  resolve(ctx: ToolchainContext): Promisable<ResolvedToolchain>;
+  resolve(ctx: ToolchainContext<TRequiredUnits, TOptionalUnits>): Promisable<ResolvedToolchain>;
 
   // ── Lifecycle ─────────────────────────────────────────────────────
 

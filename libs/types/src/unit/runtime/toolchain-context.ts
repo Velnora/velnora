@@ -1,3 +1,7 @@
+import type { LiteralUnion } from "type-fest";
+
+import type { BaseUnitContext } from "../unit/base-unit-context";
+
 /**
  * Ambient context passed to {@link Toolchain.resolve}.
  *
@@ -5,7 +9,10 @@
  * locate and validate its binary. Additional fields (e.g. resolved
  * configuration, logger) will be added as the runtime layer matures.
  */
-export interface ToolchainContext {
+export interface ToolchainContext<
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[]
+> extends BaseUnitContext<TRequiredUnits, TOptionalUnits> {
   /** Absolute path to the working directory of the project being resolved. */
   cwd: string;
   // ToDo: Implement these later when we have a better idea of what the toolchain needs to know about the project and the environment

@@ -1,5 +1,7 @@
-import type { LiteralUnion } from "type-fest";
+import type { LiteralUnion, Promisable } from "type-fest";
 
+import type { BaseUnitContext } from "./base-unit-context";
+import type { ExposeUnitContext } from "./expose-unit-context";
 import type { VelnoraUnit } from "./velnora-unit";
 
 /**
@@ -52,4 +54,11 @@ export interface BaseUnit<
    * integration unit.
    */
   units?: VelnoraUnit<TRequiredUnits, TOptionalUnits, TCapabilities>[];
+
+  /**
+   * Called during host initialization to register public APIs and perform
+   * one-time setup. Use {@link BaseUnitContext.expose} to advertise capabilities
+   * to other units.
+   */
+  configure?(ctx: BaseUnitContext<TRequiredUnits, TOptionalUnits> & ExposeUnitContext<TCapabilities>): Promisable<void>;
 }

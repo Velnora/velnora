@@ -26,20 +26,8 @@ export interface BaseUnitContext<
   TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[] = LiteralUnion<
     keyof Velnora.UnitRegistry,
     string
-  >[],
-  TCapabilities extends (keyof Velnora.UnitRegistry)[] = (keyof Velnora.UnitRegistry)[]
+  >[]
 > {
-  /** Register a public API for a single capability. */
-  expose<TKey extends TCapabilities>(
-    key: TKey,
-    api: TKey extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TKey] : never
-  ): void;
-
-  /** Register a public API for multiple capabilities at once. */
-  expose(api: {
-    [TProp in TCapabilities[number]]: TProp extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TProp] : never;
-  }): void;
-
   /** Query a hard dependency — guaranteed to exist, never undefined. */
   query<TKey extends TRequiredUnits[number]>(
     key: TKey
