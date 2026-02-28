@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import type { ConfigOptions } from "../types/config-options";
 import type { ParsedSpec } from "../types/parsed-spec";
 import type { ValueKind } from "../types/value-kind";

@@ -1,3 +1,8 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
 import { access, readFile } from "node:fs/promises";
 
 import destr from "destr";

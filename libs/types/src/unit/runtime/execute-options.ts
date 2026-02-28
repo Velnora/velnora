@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * Configuration passed to {@link Toolchain.execute} to control how a
  * project is run.
  *

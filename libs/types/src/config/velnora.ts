@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import type { VelnoraUnit } from "../unit";
 import type { ConfigEnv } from "../utils";
 

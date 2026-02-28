@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * Discriminant enum for the three unit kinds in Velnora's plugin system.
  *
  * Every {@link VelnoraUnit} carries a `kind` property whose value is one of

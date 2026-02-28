@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * Represents a module that may expose its value via a `default` export.
  *
  * When dynamically importing a config file (e.g. via `jiti`), the resolved

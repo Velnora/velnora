@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * A lightweight reference to a running toolchain process.
  *
  * Returned by {@link Toolchain.execute} (wrapped in a

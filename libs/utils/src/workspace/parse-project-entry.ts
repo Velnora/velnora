@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import { readFile } from "node:fs/promises";
 import { dirname, relative } from "node:path";
 

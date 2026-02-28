@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import type { TokenToTsUnion } from "./token-to-ts-union";
 
 export type TokenToTs<T extends string> = T extends "number"

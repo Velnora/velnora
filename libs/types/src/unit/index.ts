@@ -1,4 +1,14 @@
 /**
+ * @velnora-meta
+ * type: author
+ * project: Velnora
+ * author: MDReal
+ * package: @velnora/types
+ * layer: core
+ * visibility: public
+ */
+
+/**
  * @module unit
  *
  * Public surface for Velnora's unit type system.

@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import type { ConfigOptions } from "./config-options";
 import type { PositionKind } from "./position-kind";
 

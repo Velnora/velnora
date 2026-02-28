@@ -1,4 +1,14 @@
 /**
+ * @velnora-meta
+ * type: author
+ * project: Velnora
+ * author: MDReal
+ * package: @velnora/types
+ * layer: core
+ * visibility: public
+ */
+
+/**
  * Package-manager abstraction layer.
  *
  * Exports a runtime-agnostic {@link PackageManager} interface and all

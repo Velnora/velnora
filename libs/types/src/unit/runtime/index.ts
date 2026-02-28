@@ -1,4 +1,14 @@
 /**
+ * @velnora-meta
+ * type: author
+ * project: Velnora
+ * author: MDReal
+ * package: @velnora/types
+ * layer: core
+ * visibility: public
+ */
+
+/**
  * Runtime toolchain types.
  *
  * This module exports every interface related to the runtime toolchain

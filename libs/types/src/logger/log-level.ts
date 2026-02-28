@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 export enum LogLevel {
   TRACE = 1,
   DEBUG = 2,

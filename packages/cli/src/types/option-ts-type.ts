@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import type { TokenBase } from "./token-base";
 import type { TokenToTs } from "./token-to-ts";
 import type { ValueToken } from "./value-token";

@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * The result of checking project dependencies for newer available versions.
  *
  * Returned by {@link PackageManager.outdated} and contains an array of

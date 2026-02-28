@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import type { AllLongFlags } from "./all-long-flags";
 import type { AllShortFlags } from "./all-short-flags";
 import type { KebabToCamel } from "./kebab-to-camel";

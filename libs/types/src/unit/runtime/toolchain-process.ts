@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * A handle to a long-running toolchain operation.
  *
  * Every lifecycle method on {@link Toolchain} (`compile`, `execute`,

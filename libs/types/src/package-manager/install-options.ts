@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * Options that control how {@link PackageManager.install} resolves and
  * installs dependencies.
  *

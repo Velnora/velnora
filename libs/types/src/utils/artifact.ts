@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * Represents a build output artifact produced by a toolchain's packaging step.
  *
  * When the kernel invokes {@link Toolchain.package}, the toolchain compiles and

@@ -1,3 +1,13 @@
+/**
+ * @velnora-meta
+ * type: author
+ * project: Velnora
+ * author: MDReal
+ * package: @velnora/types
+ * layer: core
+ * visibility: public
+ */
+
 export * from "./config";
 export * from "./logger";
 export * from "./project";

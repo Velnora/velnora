@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * Classifies how a dependency is used within a project.
  *
  * The scope determines at which lifecycle phase the dependency is needed and

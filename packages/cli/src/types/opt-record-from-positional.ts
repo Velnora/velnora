@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import type { ParsePositionalSpec } from "./parse-positional-spec";
 
 export type OptRecordFromPositional<TSpec extends string> =

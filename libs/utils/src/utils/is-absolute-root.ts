@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * Checks whether a path string represents the filesystem root.
  *
  * On POSIX systems the root is `"/"`. On Windows it is a drive letter

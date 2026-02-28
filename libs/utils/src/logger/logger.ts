@@ -1,3 +1,8 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
 import merge from "lodash.merge";
 
 import { format, inspect } from "node:util";
@@ -6,7 +11,7 @@ import pc from "picocolors";
 
 import { type LogContext, LogLevel } from "@velnora/types";
 
-import { LEVEL_COLOR, LEVEL_LABEL } from "../const";
+import { LEVEL_COLOR, LEVEL_LABEL } from "../constants";
 
 const LEVEL_WIDTH = 5;
 const PID_WIDTH = 6;

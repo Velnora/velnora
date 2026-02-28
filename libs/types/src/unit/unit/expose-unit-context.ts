@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * Context object injected into {@link IntegrationUnit} lifecycle hooks.
  *
  * Provides two core capabilities:

@@ -1,3 +1,13 @@
+/**
+ * @velnora-meta
+ * type: author
+ * project: Velnora
+ * author: MDReal
+ * package: @velnora/cli
+ * layer: tooling
+ * visibility: public
+ */
+
 import {
   buildCommand,
   devCommand,

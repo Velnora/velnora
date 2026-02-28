@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import type { CleanToken } from "./clean-token";
 import type { FirstWord } from "./first-word";
 import type { NonEmpty } from "./non-empty";

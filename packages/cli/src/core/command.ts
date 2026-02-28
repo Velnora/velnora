@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import type { Merge, Promisable } from "type-fest";
 import type { ArgumentsCamelCase } from "yargs";
 

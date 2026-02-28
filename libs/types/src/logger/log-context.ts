@@ -1,8 +1,13 @@
-import type { Package } from "../package";
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+import type { Project } from "../project";
 
 export interface LogContext {
   // Recommended reserved fields
-  app?: Package;
+  app?: Project;
   logger?: string; // e.g. "velnora", "velnora:nest", "velnora:react"
   scope?: string; // "http", "hmr", "integration", "dev-server"
   runtime?: string; // "node", "bun", "deno", "jvm", ...

@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * Environment-specific overrides for a Velnora project.
  *
  * Keyed by environment name (e.g. `"dev"`, `"prod"`) inside

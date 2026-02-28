@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * The outcome of a toolchain compilation step.
  *
  * Returned inside a {@link ToolchainProcess} when {@link Toolchain.compile}

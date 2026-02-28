@@ -1,3 +1,13 @@
+/**
+ * @velnora-meta
+ * type: author
+ * project: Velnora
+ * author: MDReal
+ * package: @velnora/commands
+ * layer: tooling
+ * visibility: public
+ */
+
 import { Program, type inferCommandType } from "@velnora/cli-helper";
 import type { RequiredKeys } from "@velnora/types";
 

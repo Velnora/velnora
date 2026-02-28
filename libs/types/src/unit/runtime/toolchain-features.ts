@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * Capability flags a toolchain can advertise.
  *
  * Each boolean property indicates whether the toolchain supports a

@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * The result of resolving a toolchain to a concrete binary on disk.
  *
  * Produced by {@link Toolchain.resolve} after inspecting the local

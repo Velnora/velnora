@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 /** Minimal extension → MIME mapping for static dev serving. */
 export const MIME_TYPES: Record<string, string> = {
   ".html": "text/html",

@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import type { LiteralUnion, Promisable } from "type-fest";
 
 import type { PackageManager } from "../../package-manager";

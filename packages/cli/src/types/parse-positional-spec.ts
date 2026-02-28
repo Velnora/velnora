@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import type { Trim } from "type-fest";
 
 import type { NameOptional } from "./name-optional";

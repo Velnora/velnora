@@ -1,3 +1,9 @@
+/**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
 import { statSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { extname } from "node:path";

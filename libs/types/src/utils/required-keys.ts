@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * Makes the specified keys of `TObject` required while keeping the rest optional.
  *
  * Useful when a function needs only a subset of fields to be guaranteed present

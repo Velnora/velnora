@@ -1,4 +1,10 @@
 /**
+ * @velnora-meta
+ * type: author
+ * author: MDReal
+ */
+
+/**
  * A single test suite's results within a test run.
  *
  * Each suite groups related test cases (e.g. a single test file or a
