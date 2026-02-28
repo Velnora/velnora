@@ -4425,6 +4425,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@velnora/runtime-node@workspace:libs/unit/runtime/node"
   dependencies:
+    "@velnora/utils": "workspace:^"
     vite: "npm:^7.3.1"
     vite-plugin-dts: "npm:^4.5.4"
   languageName: unknown
