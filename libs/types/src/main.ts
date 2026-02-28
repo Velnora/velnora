@@ -7,6 +7,7 @@
  * layer: core
  * visibility: public
  */
+/// <reference path="./velnora-env.d.ts" />
 
 export * from "./config";
 export * from "./http";

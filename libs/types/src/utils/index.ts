@@ -21,7 +21,6 @@
  *
  * @module
  */
-import "./velnora";
 
 export * from "./artifact";
 export * from "./config-env";

@@ -4,7 +4,7 @@
  * author: MDReal
  */
 
-/* eslint-disable @typescript-eslint/no-empty-object-type, @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 
 /**
  * Global `Velnora` namespace used as the **declaration-merging** entry point
