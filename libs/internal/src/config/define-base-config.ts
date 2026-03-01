@@ -7,12 +7,17 @@ import type { VelnoraLibConfig } from "../types/velnora-lib-config";
 import { buildEntries } from "./build-entries";
 import { getPkgName } from "./get-pkg-name";
 
-export const defineBaseConfig = (options: VelnoraLibConfig, envDefaults?: UserConfig): UserConfig => {
-  const pkgName = getPkgName(options.name);
-  const entry = options.build?.lib ? buildEntries(pkgName, options.build?.lib?.entry) : { [pkgName]: "src/main.ts" };
+export const defineBaseConfig = ({ name, ...userConfig }: VelnoraLibConfig, envDefaults?: UserConfig): UserConfig => {
+  const pkgName = getPkgName(name);
+  const entry = userConfig.build?.lib
+    ? buildEntries(pkgName, userConfig.build?.lib?.entry)
+    : { [pkgName]: "src/main.ts" };
+
+  delete userConfig.build?.lib;
 
   return defineConfig(
     defu<UserConfig, UserConfig[]>(
+      userConfig,
       {
         plugins: [dtsPlugin({ rollupTypes: true, pathsToAliases: false }), tsconfigPaths()],
         build: {
