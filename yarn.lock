@@ -4323,7 +4323,7 @@ __metadata:
     vite: "npm:^7.3.1"
     vitest: "npm:^4.0.18"
   bin:
-    velnora: ./build/velnora.cli.js
+    velnora: ./bin/velnora.js
   languageName: unknown
   linkType: soft
 
