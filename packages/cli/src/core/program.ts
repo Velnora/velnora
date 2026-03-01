@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import yargs, { type Argv, type Options } from "yargs";
 import { hideBin } from "yargs/helpers";
 

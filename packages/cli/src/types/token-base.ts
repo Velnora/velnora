@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import type { StripDots } from "./strip-dots";
 import type { ValueToken } from "./value-token";
 

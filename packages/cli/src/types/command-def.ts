@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import type { Promisable } from "type-fest";
 import type { ArgumentsCamelCase } from "yargs";
 

@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import type { CleanToken } from "./clean-token";
 import type { FirstWord } from "./first-word";
 import type { IsSingleChar } from "./is-single-char";

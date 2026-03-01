@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import type { DefaultForSpec } from "./default-for-spec";
 
 export interface ConfigOptions<TSpec extends string> {

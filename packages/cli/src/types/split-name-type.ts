@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import type { Trim } from "type-fest";
 
 export type SplitNameType<S extends string> = S extends `${infer N}:${infer T}`

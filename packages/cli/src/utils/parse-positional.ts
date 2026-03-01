@@ -3,7 +3,6 @@
  * type: author
  * author: MDReal
  */
-
 import type { ParsedPositional } from "../types/parsed-positional";
 import type { PositionKind } from "../types/position-kind";
 
