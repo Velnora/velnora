@@ -35,9 +35,15 @@ import type { UnitKind } from "./unit-kind";
  * @see Toolchain -- compile / execute / test / package lifecycle hooks.
  */
 export interface RuntimeUnit<
-  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
-  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
-  TCapabilities extends (keyof Velnora.UnitRegistry)[]
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[] = LiteralUnion<
+    keyof Velnora.UnitRegistry,
+    string
+  >[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[] = LiteralUnion<
+    keyof Velnora.UnitRegistry,
+    string
+  >[],
+  TCapabilities extends (keyof Velnora.UnitRegistry)[] = (keyof Velnora.UnitRegistry)[]
 >
   extends BaseUnit<TRequiredUnits, TOptionalUnits, TCapabilities>, Toolchain<TRequiredUnits, TOptionalUnits> {
   /** Discriminant that identifies this unit as a language runtime. */

@@ -14,29 +14,15 @@ describe("PackageManager interface (type-level)", () => {
     it("has a string `name` property", () => {
       expectTypeOf<PackageManager["name"]>().toEqualTypeOf<string>();
     });
-
-    it("has a string `runtime` property", () => {
-      expectTypeOf<PackageManager["runtime"]>().toEqualTypeOf<string>();
-    });
-
-    it("has a string `manifestName` property", () => {
-      expectTypeOf<PackageManager["manifestName"]>().toEqualTypeOf<string>();
-    });
   });
 
   describe("optional properties", () => {
+    it("has an optional string `manifestName` property", () => {
+      expectTypeOf<PackageManager["manifestName"]>().toEqualTypeOf<string | undefined>();
+    });
+
     it("has an optional string `lockfileName` property", () => {
       expectTypeOf<PackageManager["lockfileName"]>().toEqualTypeOf<string | undefined>();
-    });
-  });
-
-  describe("resolution methods", () => {
-    it("detect accepts a string cwd and returns Promise<boolean>", () => {
-      expectTypeOf<PackageManager["detect"]>().toEqualTypeOf<(cwd: string) => Promise<boolean>>();
-    });
-
-    it("resolveBinary returns Promise<string>", () => {
-      expectTypeOf<PackageManager["resolveBinary"]>().toEqualTypeOf<() => Promise<string>>();
     });
   });
 
@@ -80,9 +66,6 @@ describe("PackageManager interface (type-level)", () => {
     it("has exactly the expected keys", () => {
       expectTypeOf<keyof PackageManager>().toEqualTypeOf<
         | "name"
-        | "runtime"
-        | "detect"
-        | "resolveBinary"
         | "manifestName"
         | "lockfileName"
         | "install"
@@ -100,9 +83,6 @@ describe("PackageManager interface (type-level)", () => {
     it("is assignable from a valid object with all required and optional members", () => {
       type Valid = {
         name: string;
-        runtime: string;
-        detect: (cwd: string) => Promise<boolean>;
-        resolveBinary: () => Promise<string>;
         manifestName: string;
         lockfileName: string;
         install: (opts?: InstallOptions) => Promise<void>;
@@ -120,10 +100,6 @@ describe("PackageManager interface (type-level)", () => {
     it("is assignable from a valid object with only required members", () => {
       type Minimal = {
         name: string;
-        runtime: string;
-        detect: (cwd: string) => Promise<boolean>;
-        resolveBinary: () => Promise<string>;
-        manifestName: string;
         install: (opts?: InstallOptions) => Promise<void>;
         list: () => Promise<DependencyTree>;
       };
@@ -134,27 +110,19 @@ describe("PackageManager interface (type-level)", () => {
     it("is not assignable without the required `install` method", () => {
       type MissingInstall = {
         name: string;
-        runtime: string;
-        detect: (cwd: string) => Promise<boolean>;
-        resolveBinary: () => Promise<string>;
-        manifestName: string;
         list: () => Promise<DependencyTree>;
       };
 
       expectTypeOf<MissingInstall>().not.toExtend<PackageManager>();
     });
 
-    it("is not assignable without the required `detect` method", () => {
-      type MissingDetect = {
-        name: string;
-        runtime: string;
-        resolveBinary: () => Promise<string>;
-        manifestName: string;
+    it("is not assignable without the required `name` property", () => {
+      type MissingName = {
         install: (opts?: InstallOptions) => Promise<void>;
         list: () => Promise<DependencyTree>;
       };
 
-      expectTypeOf<MissingDetect>().not.toExtend<PackageManager>();
+      expectTypeOf<MissingName>().not.toExtend<PackageManager>();
     });
   });
 });

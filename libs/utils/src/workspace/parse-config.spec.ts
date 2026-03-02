@@ -1,9 +1,11 @@
 import { access, readFile } from "node:fs/promises";
 
 import destr from "destr";
-import { createJiti } from "jiti";
+import { glob } from "glob";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+// Import the mocked jiti to get a handle on its .import method
+import { jiti } from "../utils/jiti";
 import { parseConfig } from "./parse-config";
 
 // Mock dependencies
@@ -11,58 +13,53 @@ vi.mock("node:fs/promises", () => ({
   access: vi.fn(),
   readFile: vi.fn()
 }));
-vi.mock("jiti", () => ({
-  createJiti: vi.fn()
-}));
-vi.mock("destr", () => ({
-  default: vi.fn()
-}));
+vi.mock("glob", () => ({ glob: vi.fn() }));
+vi.mock("../utils/jiti", () => ({ jiti: { import: vi.fn() } }));
+vi.mock("destr", () => ({ default: vi.fn() }));
 
 const mockAccess = vi.mocked(access);
 const mockReadFile = vi.mocked(readFile);
-const mockCreateJiti = vi.mocked(createJiti);
+const mockGlob = vi.mocked(glob);
 const mockDestr = vi.mocked(destr);
+
+const mockJitiImport = vi.mocked(jiti.import.bind(jiti));
 
 const PROJECT_ROOT = "/workspace/apps/my-app";
 
 describe("parseConfig", () => {
-  const mockJitiImport = vi.fn();
-
   beforeEach(() => {
     vi.resetAllMocks();
-    mockCreateJiti.mockReturnValue({ import: mockJitiImport } as unknown as ReturnType<typeof createJiti>);
   });
 
   it("should return {} when no config file is found", async () => {
-    mockAccess.mockRejectedValue(new Error("ENOENT"));
+    mockGlob.mockResolvedValue([] as never);
 
     const result = await parseConfig(PROJECT_ROOT);
 
     expect(result).toEqual({});
-    expect(mockAccess).toHaveBeenCalledTimes(3);
+    expect(mockGlob).toHaveBeenCalledWith(["velnora.config.ts", "velnora.config.js", "velnora.config.json"], {
+      cwd: PROJECT_ROOT
+    });
   });
 
   it("should load .ts file via jiti when it exists", async () => {
     const config = { name: "my-app", client: { framework: "react" } };
 
-    // access succeeds for the first candidate (velnora.config.ts)
+    mockGlob.mockResolvedValue(["velnora.config.ts"] as never);
     mockAccess.mockResolvedValueOnce(undefined);
-    mockJitiImport.mockResolvedValueOnce(config);
+    mockJitiImport.mockResolvedValueOnce(config as never);
 
     const result = await parseConfig(PROJECT_ROOT);
 
     expect(result).toEqual(config);
-    expect(mockJitiImport).toHaveBeenCalledWith(`${PROJECT_ROOT}/velnora.config.ts`, { default: true });
+    expect(mockJitiImport).toHaveBeenCalledWith("velnora.config.ts", { default: true });
     expect(mockReadFile).not.toHaveBeenCalled();
   });
 
-  it("should load .json file via readFile + destr when .ts and .js don't exist", async () => {
+  it("should load .json file via readFile + destr", async () => {
     const config = { name: "json-app" };
 
-    // .ts and .js don't exist
-    mockAccess.mockRejectedValueOnce(new Error("ENOENT"));
-    mockAccess.mockRejectedValueOnce(new Error("ENOENT"));
-    // .json exists
+    mockGlob.mockResolvedValue(["velnora.config.json"] as never);
     mockAccess.mockResolvedValueOnce(undefined);
 
     mockReadFile.mockResolvedValueOnce('{"name":"json-app"}' as never);
@@ -71,36 +68,23 @@ describe("parseConfig", () => {
     const result = await parseConfig(PROJECT_ROOT);
 
     expect(result).toEqual(config);
-    expect(mockReadFile).toHaveBeenCalledWith(`${PROJECT_ROOT}/velnora.config.json`, "utf-8");
+    expect(mockReadFile).toHaveBeenCalledWith("velnora.config.json", "utf-8");
     expect(mockDestr).toHaveBeenCalledWith('{"name":"json-app"}');
     expect(mockJitiImport).not.toHaveBeenCalled();
   });
 
-  it("should return the first config found (.ts takes precedence over .js)", async () => {
-    const tsConfig = { name: "from-ts" };
+  it("should throw when multiple config files are found", async () => {
+    mockGlob.mockResolvedValue(["velnora.config.ts", "velnora.config.js", "velnora.config.json"] as never);
 
-    // .ts exists
-    mockAccess.mockResolvedValueOnce(undefined);
-    mockJitiImport.mockResolvedValueOnce(tsConfig);
-
-    const result = await parseConfig(PROJECT_ROOT);
-
-    expect(result).toEqual(tsConfig);
-    // access should only be called once since .ts was found immediately
-    expect(mockAccess).toHaveBeenCalledTimes(1);
-    expect(mockAccess).toHaveBeenCalledWith(`${PROJECT_ROOT}/velnora.config.ts`);
+    await expect(parseConfig(PROJECT_ROOT)).rejects.toThrow(/Multiple config files found/);
   });
 
   it("should use destr for JSON parsing", async () => {
     const rawJson = '{"name":"destr-test","client":{"framework":"react"}}';
     const parsedConfig = { name: "destr-test", client: { framework: "react" } };
 
-    // .ts and .js don't exist
-    mockAccess.mockRejectedValueOnce(new Error("ENOENT"));
-    mockAccess.mockRejectedValueOnce(new Error("ENOENT"));
-    // .json exists
+    mockGlob.mockResolvedValue(["velnora.config.json"] as never);
     mockAccess.mockResolvedValueOnce(undefined);
-
     mockReadFile.mockResolvedValueOnce(rawJson as never);
     mockDestr.mockReturnValueOnce(parsedConfig as never);
 
@@ -108,5 +92,25 @@ describe("parseConfig", () => {
 
     expect(mockDestr).toHaveBeenCalledOnce();
     expect(mockDestr).toHaveBeenCalledWith(rawJson);
+  });
+
+  it("should return {} when access to config file fails", async () => {
+    mockGlob.mockResolvedValue(["velnora.config.ts"] as never);
+    mockAccess.mockRejectedValueOnce(new Error("ENOENT"));
+
+    const result = await parseConfig(PROJECT_ROOT);
+
+    expect(result).toEqual({});
+    expect(mockJitiImport).not.toHaveBeenCalled();
+  });
+
+  it("should return {} when jiti.import throws", async () => {
+    mockGlob.mockResolvedValue(["velnora.config.ts"] as never);
+    mockAccess.mockResolvedValueOnce(undefined);
+    mockJitiImport.mockRejectedValueOnce(new Error("Syntax error") as never);
+
+    const result = await parseConfig(PROJECT_ROOT);
+
+    expect(result).toEqual({});
   });
 });

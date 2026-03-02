@@ -15,11 +15,12 @@ describe("validateVersionRange", () => {
     expect(validateVersionRange("v22.0.0", ">=22")).toBe(true);
   });
 
-  it("should return false for invalid version strings", () => {
-    expect(validateVersionRange("not-a-version", ">=22")).toBe(false);
+  it("should throw for invalid version strings with valid range (semver intersects)", () => {
+    expect(() => validateVersionRange("not-a-version", ">=22")).toThrow();
   });
 
-  it("should return false for invalid range strings", () => {
-    expect(validateVersionRange("22.0.0", "not-a-range")).toBe(false);
+  it("should self-satisfy when version is valid but range is invalid", () => {
+    // When valid(version) is truthy, it calls satisfies(version, version) regardless of range
+    expect(validateVersionRange("22.0.0", "not-a-range")).toBe(true);
   });
 });

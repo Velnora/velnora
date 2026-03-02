@@ -1,4 +1,5 @@
 import { describe, expectTypeOf, it } from "vitest";
+import type { Promisable } from "type-fest";
 
 import type { PackageManager } from "../../package-manager/package-manager";
 import type { Project } from "../../project/project";
@@ -194,16 +195,16 @@ describe("ToolchainContext interface (type-level)", () => {
     expectTypeOf<ToolchainContext["cwd"]>().toEqualTypeOf<string>();
   });
 
+  it("inherits `query` from BaseUnitContext", () => {
+    expectTypeOf<ToolchainContext>().toHaveProperty("query");
+  });
+
   it("is not assignable from an empty object (cwd is required)", () => {
     expectTypeOf<{}>().not.toExtend<ToolchainContext>();
   });
 
-  it("is assignable from a valid object literal", () => {
-    expectTypeOf<{ cwd: string }>().toExtend<ToolchainContext>();
-  });
-
   it("has exactly the expected keys", () => {
-    expectTypeOf<keyof ToolchainContext>().toEqualTypeOf<"cwd">();
+    expectTypeOf<keyof ToolchainContext>().toEqualTypeOf<"cwd" | "query">();
   });
 });
 
@@ -273,52 +274,52 @@ describe("ToolchainProcess<T> interface (type-level)", () => {
 
 describe("Toolchain interface (type-level)", () => {
   describe("identity properties", () => {
-    it("has a required string `name` property", () => {
-      expectTypeOf<Toolchain["name"]>().toEqualTypeOf<string>();
-    });
-
     it("has a required string `runtime` property", () => {
       expectTypeOf<Toolchain["runtime"]>().toEqualTypeOf<string>();
     });
   });
 
   describe("resolution methods", () => {
-    it("has a `detect` method that accepts a string and returns Promise<boolean>", () => {
-      expectTypeOf<Toolchain["detect"]>().toEqualTypeOf<(cwd: string) => Promise<boolean>>();
+    it("has a `detect` method that accepts a string and returns Promisable<boolean>", () => {
+      expectTypeOf<Toolchain["detect"]>().toEqualTypeOf<(cwd: string) => Promisable<boolean>>();
     });
 
-    it("has a `resolve` method that accepts ToolchainContext and returns Promise<ResolvedToolchain>", () => {
-      expectTypeOf<Toolchain["resolve"]>().toEqualTypeOf<(ctx: ToolchainContext) => Promise<ResolvedToolchain>>();
+    it("has a `resolve` method that accepts ToolchainContext and returns Promisable<ResolvedToolchain>", () => {
+      expectTypeOf<Toolchain["resolve"]>().toEqualTypeOf<(ctx: ToolchainContext) => Promisable<ResolvedToolchain>>();
     });
   });
 
   describe("lifecycle methods", () => {
-    it("has a `compile` method returning ToolchainProcess<CompileResult>", () => {
-      expectTypeOf<Toolchain["compile"]>().toEqualTypeOf<(project: Project) => ToolchainProcess<CompileResult>>();
+    it("has an optional `compile` method returning ToolchainProcess<CompileResult>", () => {
+      expectTypeOf<NonNullable<Toolchain["compile"]>>().toEqualTypeOf<
+        (project: Project) => ToolchainProcess<CompileResult>
+      >();
     });
 
-    it("has an `execute` method returning ToolchainProcess<ProcessHandle>", () => {
-      expectTypeOf<Toolchain["execute"]>().toEqualTypeOf<
+    it("has an optional `execute` method returning ToolchainProcess<ProcessHandle>", () => {
+      expectTypeOf<NonNullable<Toolchain["execute"]>>().toEqualTypeOf<
         (project: Project, opts?: ExecuteOptions) => ToolchainProcess<ProcessHandle>
       >();
     });
 
-    it("has a `test` method returning ToolchainProcess<TestResult>", () => {
-      expectTypeOf<Toolchain["test"]>().toEqualTypeOf<(project: Project) => ToolchainProcess<TestResult>>();
+    it("has an optional `test` method returning ToolchainProcess<TestResult>", () => {
+      expectTypeOf<NonNullable<Toolchain["test"]>>().toEqualTypeOf<
+        (project: Project) => ToolchainProcess<TestResult>
+      >();
     });
 
-    it("has a `package` method returning ToolchainProcess<Artifact>", () => {
-      expectTypeOf<Toolchain["package"]>().toEqualTypeOf<(project: Project) => ToolchainProcess<Artifact>>();
+    it("has an optional `package` method returning ToolchainProcess<Artifact>", () => {
+      expectTypeOf<NonNullable<Toolchain["package"]>>().toEqualTypeOf<
+        (project: Project) => ToolchainProcess<Artifact>
+      >();
     });
   });
 
   describe("package management", () => {
-    it("has a `packageManagers` property typed as PackageManager[]", () => {
-      expectTypeOf<Toolchain["packageManagers"]>().toEqualTypeOf<PackageManager[]>();
-    });
-
-    it("has a `resolvePackageManager` method returning Promise<PackageManager>", () => {
-      expectTypeOf<Toolchain["resolvePackageManager"]>().toEqualTypeOf<(cwd: string) => Promise<PackageManager>>();
+    it("has a `resolvePackageManager` method returning Promisable<PackageManager> | void", () => {
+      expectTypeOf<Toolchain["resolvePackageManager"]>().toEqualTypeOf<
+        (cwd: string) => Promisable<PackageManager> | void
+      >();
     });
   });
 
@@ -334,7 +335,6 @@ describe("Toolchain interface (type-level)", () => {
 
   it("has exactly the expected keys", () => {
     expectTypeOf<keyof Toolchain>().toEqualTypeOf<
-      | "name"
       | "runtime"
       | "detect"
       | "resolve"
@@ -342,7 +342,6 @@ describe("Toolchain interface (type-level)", () => {
       | "execute"
       | "test"
       | "package"
-      | "packageManagers"
       | "resolvePackageManager"
       | "features"
     >();

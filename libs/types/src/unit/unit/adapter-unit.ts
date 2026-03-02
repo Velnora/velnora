@@ -13,9 +13,15 @@ import type { BaseUnit } from "./base-unit";
 import type { UnitKind } from "./unit-kind";
 
 export interface AdapterUnit<
-  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
-  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
-  TCapabilities extends (keyof Velnora.UnitRegistry)[]
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[] = LiteralUnion<
+    keyof Velnora.UnitRegistry,
+    string
+  >[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[] = LiteralUnion<
+    keyof Velnora.UnitRegistry,
+    string
+  >[],
+  TCapabilities extends (keyof Velnora.UnitRegistry)[] = (keyof Velnora.UnitRegistry)[]
 > extends BaseUnit<TRequiredUnits, TOptionalUnits, TCapabilities> {
   kind: UnitKind.ADAPTER;
   dev(project: Project, ctx: AdapterDevContext<TRequiredUnits, TOptionalUnits>): Promisable<DevServerResult>;

@@ -1,9 +1,9 @@
+import type { Promisable } from "type-fest";
 import { describe, expectTypeOf, it } from "vitest";
 
 import type { PackageManager } from "../../package-manager";
 import type { Project } from "../../project";
 import type { Artifact } from "../../utils";
-import type { BaseUnitContext } from "../integration";
 import type {
   CompileResult,
   ExecuteOptions,
@@ -15,7 +15,9 @@ import type {
   ToolchainFeatures,
   ToolchainProcess
 } from "../runtime";
+import type { AdapterUnit } from "./adapter-unit";
 import type { BaseUnit } from "./base-unit";
+import type { BaseUnitContext } from "./base-unit-context";
 import type { IntegrationUnit } from "./integration-unit";
 import type { RuntimeUnit } from "./runtime-unit";
 import type { UnitKind } from "./unit-kind";
@@ -53,72 +55,61 @@ describe("UnitKind enum (type-level)", () => {
 });
 
 // ---------------------------------------------------------------------------
-// BaseUnit<TRequiredUnits, TOptionalUnits>
+// BaseUnit<TRequiredUnits, TOptionalUnits, TCapabilities>
 // ---------------------------------------------------------------------------
-describe("BaseUnit<TRequiredUnits, TOptionalUnits> interface (type-level)", () => {
-  // Use a concrete instantiation for most checks
-  type ConcreteBase = BaseUnit<readonly ["node"], readonly ["go", "jvm"]>;
-
+describe("BaseUnit<TRequiredUnits, TOptionalUnits, TCapabilities> interface (type-level)", () => {
   it("has a string `name` property", () => {
-    expectTypeOf<ConcreteBase["name"]>().toEqualTypeOf<string>();
+    expectTypeOf<BaseUnit["name"]>().toEqualTypeOf<string>();
   });
 
   it("has a string `version` property", () => {
-    expectTypeOf<ConcreteBase["version"]>().toEqualTypeOf<string>();
+    expectTypeOf<BaseUnit["version"]>().toEqualTypeOf<string>();
   });
 
-  it("carries the exact required tuple type from its first generic parameter", () => {
-    expectTypeOf<ConcreteBase["required"]>().toEqualTypeOf<readonly ["node"]>();
+  it("has an optional `required` property", () => {
+    expectTypeOf<BaseUnit["required"]>().toExtend<string[] | undefined>();
   });
 
-  it("carries the exact optional tuple type from its second generic parameter", () => {
-    expectTypeOf<ConcreteBase["optional"]>().toEqualTypeOf<readonly ["go", "jvm"]>();
+  it("has an optional `optional` property", () => {
+    expectTypeOf<BaseUnit["optional"]>().toExtend<string[] | undefined>();
   });
 
-  it("has an optional `capabilities` property typed as string[]", () => {
-    expectTypeOf<ConcreteBase["capabilities"]>().toEqualTypeOf<string[] | undefined>();
+  it("has an optional `capabilities` property", () => {
+    expectTypeOf<BaseUnit["capabilities"]>().toExtend<(keyof Velnora.UnitRegistry)[] | undefined>();
   });
 
-  it("allows omitting the capabilities property", () => {
-    type WithoutCapabilities = {
-      name: string;
-      version: string;
-      required: readonly ["node"];
-      optional: readonly ["go", "jvm"];
-    };
+  it("has an optional `units` property", () => {
+    expectTypeOf<BaseUnit>().toHaveProperty("units");
+  });
 
-    expectTypeOf<WithoutCapabilities>().toExtend<ConcreteBase>();
+  it("has an optional `configure` method", () => {
+    expectTypeOf<BaseUnit>().toHaveProperty("configure");
+    type ConfigureFn = NonNullable<BaseUnit["configure"]>;
+    expectTypeOf<ConfigureFn>().toBeFunction();
   });
 
   it("is generic -- different tuple parameters produce different types", () => {
-    type A = BaseUnit<readonly ["node"], readonly []>;
-    type B = BaseUnit<readonly ["jvm", "kotlin"], readonly ["node"]>;
+    type A = BaseUnit<["node"], []>;
+    type B = BaseUnit<["jvm", "kotlin"], ["node"]>;
 
-    expectTypeOf<A["required"]>().toEqualTypeOf<readonly ["node"]>();
-    expectTypeOf<B["required"]>().toEqualTypeOf<readonly ["jvm", "kotlin"]>();
-
-    // The two instantiations are structurally distinct
     expectTypeOf<A["required"]>().not.toEqualTypeOf<B["required"]>();
   });
 
-  it("accepts readonly string[] as an unconstrained generic argument", () => {
-    type Unconstrained = BaseUnit<readonly string[], readonly string[]>;
-
-    expectTypeOf<Unconstrained["required"]>().toEqualTypeOf<readonly string[]>();
-    expectTypeOf<Unconstrained["optional"]>().toEqualTypeOf<readonly string[]>();
+  it("can be instantiated with zero type arguments (all have defaults)", () => {
+    expectTypeOf<BaseUnit>().toBeObject();
   });
 
   it("has exactly the expected keys", () => {
-    expectTypeOf<keyof BaseUnit<readonly string[], readonly string[]>>().toEqualTypeOf<
-      "name" | "version" | "required" | "optional" | "capabilities"
+    expectTypeOf<keyof BaseUnit>().toEqualTypeOf<
+      "name" | "version" | "required" | "optional" | "capabilities" | "units" | "configure"
     >();
   });
 });
 
 // ---------------------------------------------------------------------------
-// RuntimeUnit<TRequiredUnits, TOptionalUnits>
+// RuntimeUnit<TRequiredUnits, TOptionalUnits, TCapabilities>
 // ---------------------------------------------------------------------------
-describe("RuntimeUnit<TRequiredUnits, TOptionalUnits> interface (type-level)", () => {
+describe("RuntimeUnit<TRequiredUnits, TOptionalUnits, TCapabilities> interface (type-level)", () => {
   describe("discriminant", () => {
     it("has `kind` narrowed to UnitKind.RUNTIME, not the full UnitKind union", () => {
       expectTypeOf<RuntimeUnit["kind"]>().toEqualTypeOf<UnitKind.RUNTIME>();
@@ -127,27 +118,27 @@ describe("RuntimeUnit<TRequiredUnits, TOptionalUnits> interface (type-level)", (
   });
 
   describe("default generic parameters", () => {
-    it("defaults TRequiredUnits to readonly string[]", () => {
-      expectTypeOf<RuntimeUnit["required"]>().toEqualTypeOf<readonly string[]>();
+    it("defaults TRequiredUnits to string[] (via LiteralUnion)", () => {
+      expectTypeOf<RuntimeUnit["required"]>().toExtend<string[] | undefined>();
     });
 
-    it("defaults TOptionalUnits to readonly string[]", () => {
-      expectTypeOf<RuntimeUnit["optional"]>().toEqualTypeOf<readonly string[]>();
+    it("defaults TOptionalUnits to string[] (via LiteralUnion)", () => {
+      expectTypeOf<RuntimeUnit["optional"]>().toExtend<string[] | undefined>();
     });
   });
 
   describe("specific generic parameters", () => {
-    type Specific = RuntimeUnit<readonly ["node"], readonly ["go"]>;
+    type Specific = RuntimeUnit<["node"], ["go"]>;
 
     it("carries exact tuple types when generic parameters are specified", () => {
-      expectTypeOf<Specific["required"]>().toEqualTypeOf<readonly ["node"]>();
-      expectTypeOf<Specific["optional"]>().toEqualTypeOf<readonly ["go"]>();
+      expectTypeOf<Specific["required"]>().toEqualTypeOf<["node"] | undefined>();
+      expectTypeOf<Specific["optional"]>().toEqualTypeOf<["go"] | undefined>();
     });
   });
 
   describe("BaseUnit inheritance", () => {
     it("extends BaseUnit (is assignable to BaseUnit with matching generics)", () => {
-      expectTypeOf<RuntimeUnit>().toExtend<BaseUnit<readonly string[], readonly string[]>>();
+      expectTypeOf<RuntimeUnit>().toExtend<BaseUnit>();
     });
 
     it("inherits `name` as string from BaseUnit", () => {
@@ -159,7 +150,7 @@ describe("RuntimeUnit<TRequiredUnits, TOptionalUnits> interface (type-level)", (
     });
 
     it("inherits optional `capabilities` from BaseUnit", () => {
-      expectTypeOf<RuntimeUnit["capabilities"]>().toEqualTypeOf<string[] | undefined>();
+      expectTypeOf<RuntimeUnit["capabilities"]>().toExtend<(keyof Velnora.UnitRegistry)[] | undefined>();
     });
   });
 
@@ -168,46 +159,46 @@ describe("RuntimeUnit<TRequiredUnits, TOptionalUnits> interface (type-level)", (
       expectTypeOf<RuntimeUnit>().toExtend<Toolchain>();
     });
 
-    it("has Toolchain `name` property (string)", () => {
-      expectTypeOf<RuntimeUnit["name"]>().toEqualTypeOf<string>();
-    });
-
     it("has Toolchain `runtime` property (string)", () => {
       expectTypeOf<RuntimeUnit["runtime"]>().toEqualTypeOf<string>();
     });
 
-    it("has `detect` method with correct signature", () => {
-      expectTypeOf<RuntimeUnit["detect"]>().toEqualTypeOf<(cwd: string) => Promise<boolean>>();
+    it("has `detect` method returning Promisable<boolean>", () => {
+      expectTypeOf<RuntimeUnit["detect"]>().toEqualTypeOf<(cwd: string) => Promisable<boolean>>();
     });
 
-    it("has `resolve` method with correct signature", () => {
-      expectTypeOf<RuntimeUnit["resolve"]>().toEqualTypeOf<(ctx: ToolchainContext) => Promise<ResolvedToolchain>>();
+    it("has `resolve` method returning Promisable<ResolvedToolchain>", () => {
+      expectTypeOf<RuntimeUnit["resolve"]>().toEqualTypeOf<
+        (ctx: ToolchainContext) => Promisable<ResolvedToolchain>
+      >();
     });
 
-    it("has `compile` method with correct signature", () => {
-      expectTypeOf<RuntimeUnit["compile"]>().toEqualTypeOf<(project: Project) => ToolchainProcess<CompileResult>>();
+    it("has optional `compile` method with correct signature", () => {
+      type CompileFn = NonNullable<RuntimeUnit["compile"]>;
+      expectTypeOf<CompileFn>().toEqualTypeOf<(project: Project) => ToolchainProcess<CompileResult>>();
     });
 
-    it("has `execute` method with correct signature", () => {
-      expectTypeOf<RuntimeUnit["execute"]>().toEqualTypeOf<
+    it("has optional `execute` method with correct signature", () => {
+      type ExecuteFn = NonNullable<RuntimeUnit["execute"]>;
+      expectTypeOf<ExecuteFn>().toEqualTypeOf<
         (project: Project, opts?: ExecuteOptions) => ToolchainProcess<ProcessHandle>
       >();
     });
 
-    it("has `test` method with correct signature", () => {
-      expectTypeOf<RuntimeUnit["test"]>().toEqualTypeOf<(project: Project) => ToolchainProcess<TestResult>>();
+    it("has optional `test` method with correct signature", () => {
+      type TestFn = NonNullable<RuntimeUnit["test"]>;
+      expectTypeOf<TestFn>().toEqualTypeOf<(project: Project) => ToolchainProcess<TestResult>>();
     });
 
-    it("has `package` method with correct signature", () => {
-      expectTypeOf<RuntimeUnit["package"]>().toEqualTypeOf<(project: Project) => ToolchainProcess<Artifact>>();
+    it("has optional `package` method with correct signature", () => {
+      type PackageFn = NonNullable<RuntimeUnit["package"]>;
+      expectTypeOf<PackageFn>().toEqualTypeOf<(project: Project) => ToolchainProcess<Artifact>>();
     });
 
-    it("has `packageManagers` property typed as PackageManager[]", () => {
-      expectTypeOf<RuntimeUnit["packageManagers"]>().toEqualTypeOf<PackageManager[]>();
-    });
-
-    it("has `resolvePackageManager` method with correct signature", () => {
-      expectTypeOf<RuntimeUnit["resolvePackageManager"]>().toEqualTypeOf<(cwd: string) => Promise<PackageManager>>();
+    it("has `resolvePackageManager` method returning Promisable<PackageManager> | void", () => {
+      expectTypeOf<RuntimeUnit["resolvePackageManager"]>().toEqualTypeOf<
+        (cwd: string) => Promisable<PackageManager> | void
+      >();
     });
 
     it("has optional `features` property typed as ToolchainFeatures", () => {
@@ -217,38 +208,50 @@ describe("RuntimeUnit<TRequiredUnits, TOptionalUnits> interface (type-level)", (
 });
 
 // ---------------------------------------------------------------------------
-// VelnoraUnit
+// VelnoraUnit (discriminated union)
 // ---------------------------------------------------------------------------
 describe("VelnoraUnit type alias (type-level)", () => {
   it("RuntimeUnit is assignable to VelnoraUnit", () => {
     expectTypeOf<RuntimeUnit>().toExtend<VelnoraUnit>();
   });
 
-  it("VelnoraUnit is assignable to RuntimeUnit (currently equivalent)", () => {
-    expectTypeOf<VelnoraUnit>().toExtend<RuntimeUnit>();
+  it("IntegrationUnit is assignable to VelnoraUnit", () => {
+    expectTypeOf<IntegrationUnit>().toExtend<VelnoraUnit>();
   });
 
-  it("VelnoraUnit equals RuntimeUnit at this point in time", () => {
-    expectTypeOf<VelnoraUnit>().toEqualTypeOf<RuntimeUnit>();
+  it("AdapterUnit is assignable to VelnoraUnit", () => {
+    expectTypeOf<AdapterUnit>().toExtend<VelnoraUnit>();
   });
 
-  it("has `kind` discriminant of UnitKind.RUNTIME", () => {
-    expectTypeOf<VelnoraUnit["kind"]>().toEqualTypeOf<UnitKind.RUNTIME>();
+  it("VelnoraUnit is NOT equivalent to RuntimeUnit alone", () => {
+    expectTypeOf<VelnoraUnit>().not.toEqualTypeOf<RuntimeUnit>();
   });
 
-  it("inherits BaseUnit metadata via RuntimeUnit", () => {
-    expectTypeOf<VelnoraUnit>().toExtend<BaseUnit<readonly string[], readonly string[]>>();
+  it("VelnoraUnit is NOT equivalent to IntegrationUnit alone", () => {
+    expectTypeOf<VelnoraUnit>().not.toEqualTypeOf<IntegrationUnit>();
   });
 
-  it("inherits Toolchain lifecycle via RuntimeUnit", () => {
-    expectTypeOf<VelnoraUnit>().toExtend<Toolchain>();
+  it("VelnoraUnit is NOT equivalent to AdapterUnit alone", () => {
+    expectTypeOf<VelnoraUnit>().not.toEqualTypeOf<AdapterUnit>();
+  });
+
+  it("has `kind` covering the full UnitKind enum", () => {
+    expectTypeOf<VelnoraUnit["kind"]>().toEqualTypeOf<UnitKind>();
+  });
+
+  it("all union members share `name` as string", () => {
+    expectTypeOf<VelnoraUnit["name"]>().toBeString();
+  });
+
+  it("all union members share `version` as string", () => {
+    expectTypeOf<VelnoraUnit["version"]>().toBeString();
   });
 });
 
 // ---------------------------------------------------------------------------
-// IntegrationUnit<TRequiredUnits, TOptionalUnits>
+// IntegrationUnit<TRequiredUnits, TOptionalUnits, TCapabilities>
 // ---------------------------------------------------------------------------
-describe("IntegrationUnit<TRequiredUnits, TOptionalUnits> interface (type-level)", () => {
+describe("IntegrationUnit<TRequiredUnits, TOptionalUnits, TCapabilities> interface (type-level)", () => {
   describe("discriminant", () => {
     it("has `kind` narrowed to the literal 'integration'", () => {
       expectTypeOf<IntegrationUnit["kind"]>().toExtend<"integration">();
@@ -256,18 +259,18 @@ describe("IntegrationUnit<TRequiredUnits, TOptionalUnits> interface (type-level)
   });
 
   describe("default generic parameters", () => {
-    it("defaults TRequiredUnits to readonly []", () => {
-      expectTypeOf<IntegrationUnit["required"]>().toEqualTypeOf<readonly []>();
+    it("defaults TRequiredUnits to string[] (via LiteralUnion)", () => {
+      expectTypeOf<IntegrationUnit["required"]>().toExtend<string[] | undefined>();
     });
 
-    it("defaults TOptionalUnits to readonly []", () => {
-      expectTypeOf<IntegrationUnit["optional"]>().toEqualTypeOf<readonly []>();
+    it("defaults TOptionalUnits to string[] (via LiteralUnion)", () => {
+      expectTypeOf<IntegrationUnit["optional"]>().toExtend<string[] | undefined>();
     });
   });
 
   describe("BaseUnit inheritance", () => {
     it("extends BaseUnit", () => {
-      expectTypeOf<IntegrationUnit>().toExtend<BaseUnit<readonly [], readonly []>>();
+      expectTypeOf<IntegrationUnit>().toExtend<BaseUnit>();
     });
 
     it("inherits `name` as string from BaseUnit", () => {
@@ -279,7 +282,7 @@ describe("IntegrationUnit<TRequiredUnits, TOptionalUnits> interface (type-level)
     });
 
     it("inherits optional `capabilities` from BaseUnit", () => {
-      expectTypeOf<IntegrationUnit["capabilities"]>().toEqualTypeOf<string[] | undefined>();
+      expectTypeOf<IntegrationUnit["capabilities"]>().toExtend<(keyof Velnora.UnitRegistry)[] | undefined>();
     });
   });
 
@@ -294,43 +297,49 @@ describe("IntegrationUnit<TRequiredUnits, TOptionalUnits> interface (type-level)
       expectTypeOf<BuildFn>().toBeFunction();
     });
 
-    it("`configure` returns void or Promise<void>", () => {
+    it("`configure` return type includes void", () => {
       type ConfigureReturn = ReturnType<NonNullable<IntegrationUnit["configure"]>>;
-      expectTypeOf<ConfigureReturn>().toExtend<void | Promise<void>>();
+      expectTypeOf<void>().toExtend<ConfigureReturn>();
     });
 
-    it("`build` returns void or Promise<void>", () => {
+    it("`configure` return type includes Promise<void>", () => {
+      type ConfigureReturn = ReturnType<NonNullable<IntegrationUnit["configure"]>>;
+      expectTypeOf<Promise<void>>().toExtend<ConfigureReturn>();
+    });
+
+    it("`build` return type includes void", () => {
       type BuildReturn = ReturnType<NonNullable<IntegrationUnit["build"]>>;
-      expectTypeOf<BuildReturn>().toExtend<void | Promise<void>>();
+      expectTypeOf<void>().toExtend<BuildReturn>();
+    });
+
+    it("`build` return type includes Promise<void>", () => {
+      type BuildReturn = ReturnType<NonNullable<IntegrationUnit["build"]>>;
+      expectTypeOf<Promise<void>>().toExtend<BuildReturn>();
     });
   });
 
   describe("has exactly the expected keys", () => {
-    it("includes kind, name, version, required, optional, capabilities, configure, build", () => {
+    it("includes kind, name, version, required, optional, capabilities, units, configure, build", () => {
       expectTypeOf<keyof IntegrationUnit>().toEqualTypeOf<
-        "kind" | "name" | "version" | "required" | "optional" | "capabilities" | "configure" | "build"
+        "kind" | "name" | "version" | "required" | "optional" | "capabilities" | "units" | "configure" | "build"
       >();
     });
   });
 });
 
 // ---------------------------------------------------------------------------
-// UnitContext<TRequiredUnits, TOptionalUnits>
+// BaseUnitContext<TRequiredUnits, TOptionalUnits>
 // ---------------------------------------------------------------------------
-describe("UnitContext<TRequiredUnits, TOptionalUnits> interface (type-level)", () => {
+describe("BaseUnitContext<TRequiredUnits, TOptionalUnits> interface (type-level)", () => {
   it("is an object type", () => {
     expectTypeOf<BaseUnitContext>().toBeObject();
-  });
-
-  it("has an `expose` method", () => {
-    expectTypeOf<BaseUnitContext["expose"]>().toBeFunction();
   });
 
   it("has a `query` method", () => {
     expectTypeOf<BaseUnitContext["query"]>().toBeFunction();
   });
 
-  it("has exactly `expose` and `query` keys", () => {
-    expectTypeOf<keyof BaseUnitContext>().toEqualTypeOf<"expose" | "query">();
+  it("has exactly `query` key (no `expose`)", () => {
+    expectTypeOf<keyof BaseUnitContext>().toEqualTypeOf<"query">();
   });
 });

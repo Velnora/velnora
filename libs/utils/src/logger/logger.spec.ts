@@ -1,4 +1,4 @@
-import { type MockInstance, beforeEach, describe, expect, it, vi } from "vitest";
+import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { LogLevel } from "@velnora/types";
 
@@ -11,6 +11,10 @@ describe("Logger", () => {
   beforeEach(() => {
     stdoutSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
     stderrSpy = vi.spyOn(process.stderr, "write").mockImplementation(() => true);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   describe("create", () => {

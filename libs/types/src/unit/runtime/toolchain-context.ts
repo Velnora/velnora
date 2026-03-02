@@ -15,8 +15,14 @@ import type { BaseUnitContext } from "../unit/base-unit-context";
  * configuration, logger) will be added as the runtime layer matures.
  */
 export interface ToolchainContext<
-  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[],
-  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[]
+  TRequiredUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[] = LiteralUnion<
+    keyof Velnora.UnitRegistry,
+    string
+  >[],
+  TOptionalUnits extends LiteralUnion<keyof Velnora.UnitRegistry, string>[] = LiteralUnion<
+    keyof Velnora.UnitRegistry,
+    string
+  >[]
 > extends BaseUnitContext<TRequiredUnits, TOptionalUnits> {
   /** Absolute path to the working directory of the project being resolved. */
   cwd: string;

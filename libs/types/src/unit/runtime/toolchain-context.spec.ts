@@ -7,15 +7,15 @@ describe("ToolchainContext interface (type-level)", () => {
     expectTypeOf<ToolchainContext["cwd"]>().toEqualTypeOf<string>();
   });
 
+  it("has a `query` method inherited from BaseUnitContext", () => {
+    expectTypeOf<ToolchainContext["query"]>().toBeFunction();
+  });
+
   it("is not assignable from an empty object (cwd is required)", () => {
     expectTypeOf<{}>().not.toExtend<ToolchainContext>();
   });
 
-  it("is assignable from a valid object literal", () => {
-    expectTypeOf<{ cwd: string }>().toExtend<ToolchainContext>();
-  });
-
   it("has exactly the expected keys", () => {
-    expectTypeOf<keyof ToolchainContext>().toEqualTypeOf<"cwd">();
+    expectTypeOf<keyof ToolchainContext>().toEqualTypeOf<"cwd" | "query">();
   });
 });
