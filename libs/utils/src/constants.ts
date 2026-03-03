@@ -7,6 +7,8 @@ import pc from "picocolors";
 
 import { LogLevel } from "@velnora/types";
 
+import { makeRegistryObject } from "./utils/make-registry-object";
+
 export const VELNORA_CONFIG_FILES = ["velnora.config.ts", "velnora.config.js", "velnora.config.json"];
 
 export const LEVEL_LABEL: Record<LogLevel, string> = {
@@ -26,3 +28,13 @@ export const LEVEL_COLOR: Record<LogLevel, (s: string) => string> = {
   [LogLevel.ERROR]: pc.redBright,
   [LogLevel.FATAL]: (s: string) => pc.bgRedBright(pc.whiteBright(s))
 };
+
+export const UNITS_REGISTRY = makeRegistryObject("units", {
+  warnings: "warnings",
+  aliases: "aliases",
+  store: "store"
+});
+
+export const CONTEXT_REGISTRY = makeRegistryObject("context", {
+  base: "base"
+});
