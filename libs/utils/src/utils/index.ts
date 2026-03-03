@@ -8,4 +8,5 @@
  * visibility: public
  */
 
+export * from "./global-registry";
 export * from "./validate-version-range";

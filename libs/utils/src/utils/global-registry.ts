@@ -1,23 +1,15 @@
-export class GlobalRegistry {
-  private readonly store: Map<string | symbol, unknown>;
+export class GlobalRegistry<TItem> {
+  private readonly store: Map<string | symbol, TItem>;
   private readonly prefix: string;
-
-  /**
-   * Get (or create) a global Map for a namespace
-   * and return a scoped registry instance.
-   */
-  static use(namespace: string, prefix = "") {
-    return new GlobalRegistry(namespace, prefix);
-  }
 
   constructor(namespace: string, prefix = "") {
     const g = globalThis as unknown as Record<string, unknown>;
 
     const existing = g[namespace];
     if (existing instanceof Map) {
-      this.store = existing as Map<string | symbol, unknown>;
+      this.store = existing as Map<string | symbol, TItem>;
     } else {
-      const map = new Map<string | symbol, unknown>();
+      const map = new Map<string | symbol, TItem>();
       g[namespace] = map;
       this.store = map;
     }
@@ -25,36 +17,57 @@ export class GlobalRegistry {
     this.prefix = prefix;
   }
 
-  private k(key: string | symbol) {
-    if (!this.prefix || typeof key !== "string") return key;
-    return `${this.prefix}:${key}`;
-  }
-
   get size() {
     return this.store.size;
   }
 
-  set(key: string | symbol, value: unknown) {
+  /**
+   * Get (or create) a global Map for a namespace
+   * and return a scoped registry instance.
+   */
+  static use<TItem>(namespace: string, prefix = "") {
+    return new GlobalRegistry<TItem>(namespace, prefix);
+  }
+
+  set(key: string | symbol, value: TItem) {
     this.store.set(this.k(key), value);
   }
 
-  setIfAbsent(key: string | symbol, value: unknown) {
+  setIfAbsent(key: string | symbol, value: TItem) {
     const kk = this.k(key);
     if (!this.store.has(kk)) {
       this.store.set(kk, value);
     }
   }
 
-  get<TValue = unknown>(key: string | symbol) {
+  get<TValue = TItem>(key: string | symbol) {
     return this.store.get(this.k(key)) as TValue | undefined;
   }
 
-  getOrThrow<TValue = unknown>(key: string | symbol): TValue {
+  getOrThrow<TValue = TItem>(key: string | symbol): TValue {
     const kk = this.k(key);
     if (!this.store.has(kk)) {
       throw new Error(`GlobalRegistry: key "${String(kk)}" not found`);
     }
     return this.store.get(kk) as TValue;
+  }
+
+  getOrCreate<TValue = TItem>(key: string, defaultValue?: TValue): TValue {
+    const kk = this.k(key);
+    if (!this.store.has(kk)) {
+      if (defaultValue === undefined) {
+        throw new Error(`GlobalRegistry: key "${String(kk)}" not found and no default value provided`);
+      }
+      this.store.set(kk, defaultValue as unknown as TItem);
+    }
+    return this.store.get(kk) as unknown as TValue;
+  }
+
+  getAll<TValue = TItem>() {
+    const kkPrefix = this.k("");
+    return Array.from(this.store.entries())
+      .filter(([k]) => (typeof k === "string" ? k.startsWith(kkPrefix) : k))
+      .map(([, v]) => v as unknown as TValue);
   }
 
   has(key: string | symbol) {
@@ -80,7 +93,7 @@ export class GlobalRegistry {
   entries() {
     return Object.fromEntries(Array.from(this.store.entries()).filter(([k]) => typeof k === "string")) as Record<
       string,
-      unknown
+      TItem
     >;
   }
 
@@ -88,7 +101,12 @@ export class GlobalRegistry {
     return Array.from(this.store.entries());
   }
 
-  forEach(callback: (value: unknown, key: string | symbol) => void) {
+  forEach(callback: (value: TItem, key: string | symbol) => void) {
     this.store.forEach(callback);
+  }
+
+  private k<TKey extends string | symbol>(key: TKey): TKey {
+    if (!this.prefix || typeof key !== "string") return key;
+    return `${this.prefix}:${key}` as TKey;
   }
 }
