@@ -16,7 +16,6 @@ import type {
 
 export class NpmPackageManager implements PackageManager {
   readonly name = "npm";
-  readonly manifestName = "package.json";
   readonly lockfileName = "package-lock.json";
 
   install(opts?: InstallOptions): Promise<void> {

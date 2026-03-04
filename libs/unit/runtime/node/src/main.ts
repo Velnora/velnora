@@ -30,13 +30,13 @@ export default defineRuntime({
   capabilities: ["javascript", "node"],
 
   detect(cwd) {
-    if (!existsSync(resolve(cwd, NpmPackageManager.prototype.manifestName))) return false;
-    const pkgJson = require(resolve(cwd, NpmPackageManager.prototype.manifestName)) as PackageJson;
+    if (!existsSync(resolve(cwd, "package.json"))) return false;
+    const pkgJson = require(resolve(cwd, "package.json")) as PackageJson;
     return Boolean(!pkgJson.engines?.node || validateVersionRange(process.versions.node, pkgJson.engines.node));
   },
 
   resolve(ctx) {
-    const pkgJson = require(resolve(ctx.cwd, NpmPackageManager.prototype.manifestName)) as PackageJson;
+    const pkgJson = require(resolve(ctx.cwd, "package.json")) as PackageJson;
     const nodeExecutable = execSync('node -e "console.log(process.execPath);"', { encoding: "utf-8" });
     const nodeVersion = execSync('node -e "console.log(process.versions.node);"', { encoding: "utf-8" });
 
@@ -60,7 +60,7 @@ export default defineRuntime({
   // package() {},
 
   resolvePackageManager(cwd: string) {
-    if (!existsSync(resolve(cwd, NpmPackageManager.prototype.manifestName))) return;
+    if (!existsSync(resolve(cwd, "package.json"))) return;
     if (existsSync(resolve(cwd, NpmPackageManager.prototype.lockfileName))) return new NpmPackageManager();
   }
 });
