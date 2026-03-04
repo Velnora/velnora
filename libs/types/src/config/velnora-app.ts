@@ -22,5 +22,7 @@ import type { VelnoraEnvironment } from "./velnora-environment";
  * type-safe authoring of project configuration files.
  */
 export interface VelnoraAppConfig {
+  runtime?: string;
+
   environments?: Record<LiteralUnion<"dev" | "prod", string>, VelnoraEnvironment>;
 }
