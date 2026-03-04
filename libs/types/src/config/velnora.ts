@@ -5,6 +5,7 @@
  */
 import type { VelnoraUnit } from "../unit";
 import type { ConfigEnv } from "../utils";
+import type { Resolve } from "./velnora/resolve";
 
 /**
  * Workspace-level Velnora configuration.
@@ -16,7 +17,7 @@ import type { ConfigEnv } from "../utils";
  * This is resolved once during `Kernel.init()` and made available to all
  * downstream consumers (adapters, plugins, CLI commands).
  */
-
 export interface VelnoraConfig {
+  resolve?: Resolve;
   integrations?: (VelnoraUnit | ((env: ConfigEnv) => VelnoraUnit))[];
 }
