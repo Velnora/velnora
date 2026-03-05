@@ -24,12 +24,16 @@ vi.mock("@velnora/utils", () => ({
     use: vi.fn(() => ({
       has: vi.fn(() => false),
       get: vi.fn(),
-      set: vi.fn()
+      set: vi.fn(),
+      getAll: vi.fn(() => [])
     }))
   },
+  UNITS_REGISTRY: { warnings: ":units:warnings", aliases: ":units:aliases", store: ":units:store" },
+  CONTEXT_REGISTRY: { base: ":context:base" },
   defineAdapter: vi.fn(),
   defineRuntime: vi.fn(),
-  validateVersionRange: vi.fn()
+  validateVersionRange: vi.fn(),
+  makeRegistryObject: vi.fn()
 }));
 
 vi.mock("@velnora/host", () => ({
