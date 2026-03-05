@@ -22,7 +22,7 @@ const mockReadFile = vi.mocked(readFile);
 const mockGlob = vi.mocked(glob);
 const mockDestr = vi.mocked(destr);
 
-const mockJitiImport = vi.mocked(jiti.import.bind(jiti));
+const mockJitiImport = vi.mocked(jiti.import);
 
 const PROJECT_ROOT = "/workspace/apps/my-app";
 
