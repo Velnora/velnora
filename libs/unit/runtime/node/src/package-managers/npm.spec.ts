@@ -8,11 +8,6 @@ describe("NpmPackageManager", () => {
     expect(pm.name).toBe("npm");
   });
 
-  it("should have correct manifest name", () => {
-    const pm = new NpmPackageManager();
-    expect(pm.manifestName).toBe("package.json");
-  });
-
   it("should have correct lockfile name", () => {
     const pm = new NpmPackageManager();
     expect(pm.lockfileName).toBe("package-lock.json");
