@@ -1,5 +1,6 @@
 import { dirname } from "node:path";
 
+import { initWorkspace } from "@velnora/generator";
 import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { handleInit } from "./init";
@@ -7,6 +8,8 @@ import { handleInit } from "./init";
 vi.mock("@velnora/generator", () => ({
   initWorkspace: vi.fn()
 }));
+
+const mockInitWorkspace = vi.mocked(initWorkspace);
 
 describe("handleInit", () => {
   let consoleInfoSpy: MockInstance;
@@ -19,10 +22,7 @@ describe("handleInit", () => {
     vi.restoreAllMocks();
   });
 
-  it("should call initWorkspace with the provided cwd", async () => {
-    const { initWorkspace } = await import("@velnora/generator");
-    const mockInitWorkspace = vi.mocked(initWorkspace);
-
+  it("should call initWorkspace with the provided cwd", () => {
     mockInitWorkspace.mockReturnValue({
       configPath: "/my/project/velnora.config.ts",
       packageJsonPath: "/my/project/package.json",
@@ -34,10 +34,7 @@ describe("handleInit", () => {
     expect(mockInitWorkspace).toHaveBeenCalledWith("/my/project");
   });
 
-  it("should log 'Initialized workspace' when status is created", async () => {
-    const { initWorkspace } = await import("@velnora/generator");
-    const mockInitWorkspace = vi.mocked(initWorkspace);
-
+  it("should log 'Initialized workspace' when status is created", () => {
     mockInitWorkspace.mockReturnValue({
       configPath: "/workspace/velnora.config.ts",
       packageJsonPath: "/workspace/package.json",
@@ -51,10 +48,7 @@ describe("handleInit", () => {
     );
   });
 
-  it("should log 'Already initialized' when status is exists", async () => {
-    const { initWorkspace } = await import("@velnora/generator");
-    const mockInitWorkspace = vi.mocked(initWorkspace);
-
+  it("should log 'Already initialized' when status is exists", () => {
     mockInitWorkspace.mockReturnValue({
       configPath: "/workspace/velnora.config.ts",
       packageJsonPath: "/workspace/package.json",
