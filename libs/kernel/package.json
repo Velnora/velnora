@@ -26,8 +26,8 @@
   "devDependencies": {
     "@types/lodash.merge": "^4",
     "@velnora/types": "workspace:^",
-    "vite": "^7.3.1",
-    "vitest": "^4.0.18"
+    "vite": "^8.0.0",
+    "vitest": "^4.1.0"
   },
   "engines": {
     "node": ">=24"
