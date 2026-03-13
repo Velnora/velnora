@@ -4295,6 +4295,7 @@ __metadata:
   resolution: "@velnora/adapter-h3@workspace:libs/unit/adapter/h3"
   dependencies:
     h3: "npm:^2.0.1-rc.14"
+    listhen: "npm:^1.9.0"
     vite: "npm:^7.3.1"
   languageName: unknown
   linkType: soft
