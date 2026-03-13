@@ -29,6 +29,8 @@ export const LEVEL_COLOR: Record<LogLevel, (s: string) => string> = {
   [LogLevel.FATAL]: (s: string) => pc.bgRedBright(pc.whiteBright(s))
 };
 
+export const CONFIG_REGISTRY = makeRegistryObject("config", {});
+
 export const UNITS_REGISTRY = makeRegistryObject("units", {
   warnings: "warnings",
   aliases: "aliases",
