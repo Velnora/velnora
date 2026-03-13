@@ -8,6 +8,7 @@
  * visibility: public
  */
 
+export * from "./core";
 export * from "./project";
 export * from "./utils";
 export * from "./types";
