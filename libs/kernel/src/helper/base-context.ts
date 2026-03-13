@@ -5,7 +5,7 @@
  */
 import type { Promisable } from "type-fest";
 
-import type { BaseUnitContext, ExposeUnitContext, VelnoraConfig, VelnoraUnit } from "@velnora/types";
+import type { BaseUnitContext, ExposeUnitContext, VelnoraUnit } from "@velnora/types";
 import { CONTEXT_REGISTRY, GlobalRegistry, UNITS_REGISTRY } from "@velnora/utils";
 
 import type { ExposeItem } from "../types/expose-item";
@@ -173,8 +173,12 @@ export class BaseContext implements BaseUnitContext, ExposeUnitContext {
 
   query<TKey extends keyof Velnora.UnitRegistry>(key: TKey): Velnora.UnitRegistry[TKey];
   query<TKey extends keyof Velnora.UnitRegistry>(key: TKey): Velnora.UnitRegistry[TKey];
-  query(keys: (keyof Velnora.UnitRegistry)[]): { [TProp in keyof Velnora.UnitRegistry]: Velnora.UnitRegistry[TProp] };
-  query(keys: (keyof Velnora.UnitRegistry)[]): { [TProp in keyof Velnora.UnitRegistry]?: Velnora.UnitRegistry[TProp] };
+  query(...keys: (keyof Velnora.UnitRegistry)[]): {
+    [TProp in keyof Velnora.UnitRegistry]: Velnora.UnitRegistry[TProp];
+  };
+  query(...keys: (keyof Velnora.UnitRegistry)[]): {
+    [TProp in keyof Velnora.UnitRegistry]?: Velnora.UnitRegistry[TProp];
+  };
   query<TKey extends keyof Velnora.UnitRegistry>(
     keyOrKeys: TKey | TKey[]
   ): TKey | { [TProp in TKey]?: Velnora.UnitRegistry[TProp] } {
