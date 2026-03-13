@@ -20,7 +20,17 @@ import {
   type VelnoraConfig,
   type VelnoraUnit
 } from "@velnora/types";
-import { GlobalRegistry, UNITS_REGISTRY, detectProjects, detectWorkspace, parseConfig } from "@velnora/utils";
+import {
+  CONFIG_REGISTRY,
+  GlobalRegistry,
+  NoAdapterProvidedException,
+  NoRuntimeProvidedException,
+  UNITS_REGISTRY,
+  detectProjects,
+  detectWorkspace,
+  parseConfig
+} from "@velnora/utils";
+import { DepGraph } from "@velnora/utils";
 
 import { BaseContext } from "../helper/base-context";
 
@@ -37,6 +47,8 @@ export class Kernel {
 
   private server: Http.Server | null = null;
 
+  private readonly configRegistry = GlobalRegistry.use(CONFIG_REGISTRY);
+
   private readonly registry = GlobalRegistry.use(UNITS_REGISTRY);
   private readonly runtimeStoreRegistry = GlobalRegistry.use<RuntimeUnit>(UNITS_REGISTRY.store, UnitKind.RUNTIME);
   private readonly adapterStoreRegistry = GlobalRegistry.use<AdapterUnit>(UNITS_REGISTRY.store, UnitKind.ADAPTER);
@@ -44,6 +56,11 @@ export class Kernel {
     UNITS_REGISTRY.store,
     UnitKind.INTEGRATION
   );
+
+  private readonly integrationsGraph = new DepGraph<VelnoraUnit>(unit => ({
+    key: unit.name,
+    children: [...(unit.required || []), ...(unit.optional || [])]
+  }));
 
   private get configDefaults(): VelnoraConfig {
     return { integrations: [] };
@@ -72,6 +89,17 @@ export class Kernel {
 
     this.config = merge(this.configDefaults, this.config);
     BaseContext.setConfig(this.config);
+
+    const integrations = (this.config.integrations || []).map(integration =>
+      typeof integration === "function" ? integration(this.configEnv) : integration
+    );
+    this.integrationsGraph.addMany(integrations);
+
+    if (!this.integrationsGraph.has(unit => unit.kind === UnitKind.RUNTIME))
+      this.integrationsGraph.add(typeof node === "function" ? node(this.configEnv) : node);
+
+    if (!this.integrationsGraph.has(unit => unit.kind === UnitKind.ADAPTER))
+      this.integrationsGraph.add(typeof h3 === "function" ? h3(this.configEnv) : h3);
   }
 
   /**
@@ -85,27 +113,31 @@ export class Kernel {
       throw new Error("[Velnora] No projects discovered. Did you call kernel.init() first?");
     }
 
-    await this.configureIntegrations();
-    const runtimes = this.runtimeStoreRegistry.getAll<RuntimeUnit>();
+    await this.bootIntegrations();
+    this.bootHostAdapter();
+
+    const runtimes = this.integrationsGraph.filter(unit => unit.kind === UnitKind.RUNTIME);
 
     for (const project of this.projects) {
-      const relatedRuntimesPromises = await Array.fromAsync(
-        runtimes.map(async runtime => [await runtime.detect(project.root), runtime] as const)
-      );
-      const relatedRuntimes = relatedRuntimesPromises.filter(([detected]) => detected).map(([, runtime]) => runtime);
+      const runtime = await runtimes.filter(async runtime => await runtime.detect(project.root));
+      const nodes = runtime.toArray();
 
-      if (relatedRuntimes.length === 0) {
-        console.warn(
-          `[Velnora] No runtimes detected for project ${project.displayName} at ${project.path}. This project will be run in same runtime as the Velnora itself`
+      if (!nodes.length) {
+        throw new NoRuntimeProvidedException(
+          `No runtimes detected for project ${project.displayName} at ${project.path}. This project cannot be run.`
         );
-      } else if (relatedRuntimes.length === 1) {
-      } else {
+      }
+
+      const detected = nodes[0];
+      if (nodes.length > 1) {
         console.warn(
-          `[Velnora] Multiple runtimes detected for project ${project.displayName} at ${project.path}. This is not currently supported, so the first detected runtime will be used. Detected runtimes: ${relatedRuntimes
+          `[Velnora] Multiple runtimes detected for project ${project.displayName} at ${project.path}. This is not currently supported, so the first detected runtime will be used. Detected runtimes: ${nodes
             .map(runtime => runtime.name)
             .join(", ")}.`
         );
       }
+
+      console.log("detected runtime for %s project", project.name, detected);
     }
 
     // console.log(BaseContext);
@@ -163,41 +195,34 @@ export class Kernel {
     return this.projects;
   }
 
-  private async configureIntegrations() {
-    const { integrations: units = [] } = this.config || {};
-    const fetchedUnits: VelnoraUnit[] = [];
+  private async bootIntegrations() {
+    const promises = this.integrationsGraph.map(async unit => {
+      await unit.configure?.(BaseContext.for(unit));
+    });
+    await Promise.all(promises);
+  }
 
-    for (const unit of units) {
-      fetchedUnits.push(typeof unit === "function" ? unit(this.configEnv) : unit);
+  private bootHostAdapter() {
+    const adapters = this.integrationsGraph.filter(unit => unit.kind === UnitKind.ADAPTER);
+
+    if (adapters.size === 0) {
+      throw new NoAdapterProvidedException(
+        "No adapters detected. Did you configure an integration that provides an adapter?"
+      );
     }
 
-    const runtimes = fetchedUnits.filter(unit => unit.kind === UnitKind.RUNTIME);
-    const adapters = fetchedUnits.filter(unit => unit.kind === UnitKind.ADAPTER);
-    const integrations = fetchedUnits.filter(unit => unit.kind === UnitKind.INTEGRATION);
-
-    if (!runtimes.length) runtimes.push(typeof node === "function" ? node(this.configEnv) : node);
-    if (!adapters.length) adapters.push(typeof h3 === "function" ? h3(this.configEnv) : h3);
-
-    await BaseContext.batch(async () => {
-      await Array.fromAsync(
-        runtimes.map(async runtime => {
-          await runtime.configure?.(BaseContext.for(runtime));
-          this.runtimeStoreRegistry.set(runtime.name, runtime);
-        })
+    if (adapters.size > 1) {
+      console.warn(
+        `[Velnora] Multiple adapters detected. This is not currently supported, so the first detected adapter will be used. Detected adapters: ${adapters
+          .toArray()
+          .map(adapter => adapter.name)
+          .join(", ")}.`
       );
+    }
 
-      await Array.fromAsync(
-        adapters.map(async adapter => {
-          await adapter.configure?.(BaseContext.for(adapter));
-          this.adapterStoreRegistry.set(adapter.name, adapter);
-        })
-      );
-      await Array.fromAsync(
-        integrations.map(async integration => {
-          await integration.configure?.(BaseContext.for(integration));
-          this.integrationStoreRegistry.set(integration.name, integration);
-        })
-      );
-    });
+    const adapter = adapters.toArray()[0]!;
+    console.log(`[Velnora] Booting host with adapter: ${adapter.name}`);
+    const http = BaseContext.for(adapter).query("http");
+    this.configRegistry.set("http", http);
   }
 }
