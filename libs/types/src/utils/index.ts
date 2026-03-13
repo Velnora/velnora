@@ -24,4 +24,5 @@
 
 export * from "./artifact";
 export * from "./config-env";
+export * from "./key";
 export * from "./required-keys";
