@@ -9,6 +9,7 @@
  */
 
 export * from "./core";
+export * from "./exceptions";
 export * from "./project";
 export * from "./utils";
 export * from "./types";
