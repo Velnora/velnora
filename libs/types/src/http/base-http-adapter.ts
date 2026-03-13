@@ -11,9 +11,9 @@ import type { HttpHandler } from "./http-handler";
 
 export interface BaseHttpAdapter {
   use(...handlers: HttpHandler[]): void;
+  use(route: string, handlers: HttpHandler): void;
 
-  listen(port: number): Promisable<Http.Server>;
-  listen(port: number, hostname: string): Promisable<Http.Server>;
+  listen(port?: number, hostname?: string): Promisable<Http.Server>;
 
   close(): Promisable<void>;
 }
