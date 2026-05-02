@@ -21,7 +21,7 @@
     "@velnora/utils": "workspace:^"
   },
   "devDependencies": {
-    "vite": "^8.0.0"
+    "vite": "^8.0.10"
   },
   "engines": {
     "node": ">=24"

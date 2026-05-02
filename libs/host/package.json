@@ -17,14 +17,14 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "defu": "^6.1.4",
-    "h3": "^2.0.1-rc.16",
-    "listhen": "^1.9.0"
+    "defu": "^6.1.7",
+    "h3": "^2.0.1-rc.21",
+    "listhen": "^1.10.0"
   },
   "devDependencies": {
     "@velnora/commands": "workspace:^",
     "@velnora/types": "workspace:^",
-    "vite": "^8.0.0"
+    "vite": "^8.0.10"
   },
   "engines": {
     "node": ">=24"

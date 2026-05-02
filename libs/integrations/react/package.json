@@ -29,14 +29,14 @@
     "@velnora/devkit": "workspace:^",
     "@velnora/plugin-api": "workspace:^",
     "@velnora/router": "workspace:^",
-    "@vitejs/plugin-react": "^5.1.1"
+    "@vitejs/plugin-react": "^6.0.1"
   },
   "devDependencies": {
     "@velnora/types": "workspace:^",
-    "eslint": "^9.39.1",
+    "eslint": "^10.3.0",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.14"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
   },
   "peerDependencies": {
     "react": "^18 || ^19",

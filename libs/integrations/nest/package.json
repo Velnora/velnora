@@ -22,16 +22,16 @@
     "typecheck": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "@nestjs/platform-express": "^11.1.9",
+    "@nestjs/platform-express": "^11.1.19",
     "@velnora/devkit": "workspace:^",
     "@velnora/plugin-api": "workspace:^",
     "@velnora/types": "workspace:^"
   },
   "devDependencies": {
-    "eslint": "^9.39.1",
+    "eslint": "^10.3.0",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.14"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
   },
   "peerDependencies": {
     "@nestjs/common": "^11",
