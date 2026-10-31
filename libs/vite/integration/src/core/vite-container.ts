@@ -1,10 +1,8 @@
 import { resolve } from "node:path";
-
-import _ from "lodash";
-import { type UserConfig, mergeConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
-
 import type { ModuleGraph, Package, Router, VelnoraConfig } from "@velnora/types";
+import _ from "lodash";
+import { mergeConfig, type UserConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 import { devSourceMapPlugin } from "../plugins/dev-source-map.plugin";
 import { htmlPlugin } from "../plugins/html";

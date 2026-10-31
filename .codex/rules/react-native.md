@@ -1,7 +1,8 @@
 ---
+
 description: "Apply when working on React Native or Expo components, screens, hooks, and package structure; confirm React Native or Expo usage from imports or package dependencies."
 alwaysApply: false
-globs: ["**/*.native.*","**/*.ios.*","**/*.android.*","**/metro.config.*","**/app.config.*","**/app.json"]
+globs: ["**/_.native._","**/_.ios._","**/_.android._","**/metro.config._","**/app.config._","**/app.json"]
 ---
 
 ## React Native

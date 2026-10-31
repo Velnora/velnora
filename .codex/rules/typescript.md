@@ -1,7 +1,8 @@
 ---
+
 description: "Apply when writing, reviewing, or configuring TypeScript, including declarations and TSX components."
 alwaysApply: false
-globs: ["**/*.ts","**/*.tsx","**/*.mts","**/*.cts","**/tsconfig*.json"]
+globs: ["**/*.ts","**/_.tsx","**/_.mts","**/*.cts","**/tsconfig*.json"]
 ---
 
 ## TypeScript

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-explicit-any */
+// biome-ignore-all lint/suspicious/noExplicitAny: The legacy CLI bridge adapts dynamically loaded command handlers.
 import { existsSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 

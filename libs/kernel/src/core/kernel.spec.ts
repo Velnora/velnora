@@ -8,11 +8,11 @@
  *   - `boot()` — guard clause and integration configuration
  *   - `shutdown()` — graceful close and idempotent re-shutdown
  */
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { Host } from "@velnora/host";
 import type { Project } from "@velnora/types";
 import { detectProjects, detectWorkspace, parseConfig } from "@velnora/utils";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { Kernel } from "./kernel";
 
@@ -53,7 +53,6 @@ vi.mock("@velnora/runtime-node", () => ({
 }));
 
 vi.mock("lodash.merge", () => ({
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   default: vi.fn((...args: unknown[]) => Object.assign({}, ...args))
 }));
 

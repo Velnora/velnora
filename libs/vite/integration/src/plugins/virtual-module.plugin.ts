@@ -1,9 +1,7 @@
 import { resolve } from "node:path";
-
+import type { VelnoraConfig } from "@velnora/types";
 import MagicString from "magic-string";
 import type { Plugin } from "vite";
-
-import type { VelnoraConfig } from "@velnora/types";
 
 export const virtualModulePlugin = (config: VelnoraConfig, virtualModules: Map<string, string>): Plugin => {
   const idFileMapping = new Map<string, string>();

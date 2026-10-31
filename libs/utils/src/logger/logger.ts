@@ -3,13 +3,11 @@
  * type: author
  * author: MDReal
  */
-import merge from "lodash.merge";
 
 import { format, inspect } from "node:util";
-
-import pc from "picocolors";
-
 import { type LogContext, LogLevel } from "@velnora/types";
+import merge from "lodash.merge";
+import pc from "picocolors";
 
 import { LEVEL_COLOR, LEVEL_LABEL } from "../constants";
 

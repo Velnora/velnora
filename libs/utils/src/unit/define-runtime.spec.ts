@@ -1,7 +1,7 @@
-import { describe, expect, it, vi } from "vitest";
+import type { ConfigEnv } from "@velnora/types";
 
 import { UnitKind } from "@velnora/types";
-import type { ConfigEnv } from "@velnora/types";
+import { describe, expect, it, vi } from "vitest";
 
 import { defineRuntime } from "./define-runtime";
 

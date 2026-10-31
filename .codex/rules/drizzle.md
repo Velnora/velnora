@@ -1,4 +1,5 @@
 ---
+
 description: "Apply when working on Drizzle ORM tables, inferred persistence types, relations, enums, reusable columns, or Drizzle configuration; confirm Drizzle usage from imports or dependencies."
 alwaysApply: false
 globs: ["**/drizzle.config.*"]

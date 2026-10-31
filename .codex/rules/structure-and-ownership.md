@@ -1,4 +1,5 @@
 ---
+
 description: "Apply to code organization, ownership, naming, and refactoring in every coding task."
 alwaysApply: true
 globs: []

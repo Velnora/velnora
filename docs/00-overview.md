@@ -12,15 +12,15 @@ under its own URL namespace through a single HTTP host.
 
 ## Architecture layers
 
-| Layer | Package            | Responsibility                                    |
-| ----- | ------------------ | ------------------------------------------------- |
-| 0     | `@velnora/kernel`  | Workspace detection, project discovery, Host boot |
-| 0     | `@velnora/host`    | h3 HTTP server, per-project routing               |
-| 0     | `@velnora/utils`   | Filesystem helpers, `Project` class               |
-| 0     | `@velnora/types`   | Shared interfaces and utility types               |
-| 3     | `@velnora/cli`     | CLI entry point (`velnora dev`)                    |
+| Layer | Package             | Responsibility                                    |
+| ----- | ------------------- | ------------------------------------------------- |
+| 0     | `@velnora/kernel`   | Workspace detection, project discovery, Host boot |
+| 0     | `@velnora/host`     | h3 HTTP server, per-project routing               |
+| 0     | `@velnora/utils`    | Filesystem helpers, `Project` class               |
+| 0     | `@velnora/types`    | Shared interfaces and utility types               |
+| 3     | `@velnora/cli`      | CLI entry point (`velnora dev`)                   |
 | —     | `@velnora/commands` | Command definitions and option types              |
-| —     | `velnora`          | Public `defineConfig()` helper                    |
+| —     | `velnora`           | Public `defineConfig()` helper                    |
 
 > Layers 1 (Adapters) and 2 (Composition) are planned but not yet implemented.
 
@@ -45,14 +45,14 @@ CLI  ──▶  createKernel()
 A **Project** is discovered by scanning `package.json` files inside workspace
 globs. The `Project` class (in `@velnora/utils`) provides:
 
-| Getter        | Source                         | Example             |
-| ------------- | ------------------------------ | ------------------- |
-| `name`        | relative path from root        | `apps/web`          |
-| `displayName` | `packageJson.name`             | `@acme/web`         |
-| `path`        | `/${packageJson.name}`         | `/@acme/web`        |
-| `root`        | absolute directory path        | `/repo/apps/web`    |
-| `packageJson` | parsed `package.json`          | `{ name: "…", … }` |
-| `config`      | `velnora.config.*` or `{}`     | `{ environments … }`|
+| Getter        | Source                     | Example              |
+| ------------- | -------------------------- | -------------------- |
+| `name`        | relative path from root    | `apps/web`           |
+| `displayName` | `packageJson.name`         | `@acme/web`          |
+| `path`        | `/${packageJson.name}`     | `/@acme/web`         |
+| `root`        | absolute directory path    | `/repo/apps/web`     |
+| `packageJson` | parsed `package.json`      | `{ name: "…", … }`   |
+| `config`      | `velnora.config.*` or `{}` | `{ environments … }` |
 
 ## Configuration
 

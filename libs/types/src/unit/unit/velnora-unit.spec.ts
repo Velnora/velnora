@@ -38,9 +38,7 @@ describe("VelnoraUnit type alias (type-level)", () => {
 
   describe("discriminant", () => {
     it("has `kind` that is a union of all three UnitKind members", () => {
-      expectTypeOf<VelnoraUnit["kind"]>().toEqualTypeOf<
-        UnitKind.RUNTIME | UnitKind.INTEGRATION | UnitKind.ADAPTER
-      >();
+      expectTypeOf<VelnoraUnit["kind"]>().toEqualTypeOf<UnitKind.RUNTIME | UnitKind.INTEGRATION | UnitKind.ADAPTER>();
     });
 
     it("`kind` covers the full UnitKind enum", () => {

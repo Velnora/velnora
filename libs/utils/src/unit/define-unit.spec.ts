@@ -1,6 +1,5 @@
-import { describe, expect, it } from "vitest";
-
 import { UnitKind } from "@velnora/types";
+import { describe, expect, it } from "vitest";
 
 import { defineUnit } from "./define-unit";
 

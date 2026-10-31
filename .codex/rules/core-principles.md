@@ -1,4 +1,5 @@
 ---
+
 description: "Apply to every task in this repository."
 alwaysApply: true
 globs: []

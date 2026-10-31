@@ -26,7 +26,6 @@ describe("ProjectOptions interface (type-level)", () => {
   });
 
   it("is not assignable from an empty object", () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     expectTypeOf<{}>().not.toExtend<ProjectOptions>();
   });
 });

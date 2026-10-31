@@ -1,12 +1,10 @@
 import * as crypto from "node:crypto";
-
-import type { FC } from "react";
-import { renderToPipeableStream } from "react-dom/server";
-
 import { pipeParsedHtml } from "@velnora/devkit";
 import { type ClientRoute, GlobalRouter } from "@velnora/router/client";
 import { createRouter } from "@velnora/router/server";
 import type { RenderFn, WithDefault } from "@velnora/types";
+import type { FC } from "react";
+import { renderToPipeableStream } from "react-dom/server";
 
 import { Router } from "../../client/components/router";
 import { getLayouts } from "../../client/utils/get-layouts";

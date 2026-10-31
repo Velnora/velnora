@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "build": "tsup --config tsup.config.ts",
-    "lint": "eslint .",
+    "lint": "biome lint .",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.build.json"
   },
@@ -24,7 +24,6 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.17.24",
-    "eslint": "^10.3.0",
     "hookable": "^6.1.1",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3",

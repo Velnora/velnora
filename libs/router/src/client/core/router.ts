@@ -28,7 +28,6 @@ export class Router implements VelnoraRouter {
   }
 
   getPublicInterface(): PublicRouter {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
 
     return {

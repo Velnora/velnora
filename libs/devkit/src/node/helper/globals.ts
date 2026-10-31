@@ -1,6 +1,5 @@
-import type { ValueOf } from "type-fest";
-
 import type { VelnoraConfig } from "@velnora/types";
+import type { ValueOf } from "type-fest";
 
 class Globals<TObject> extends Map<keyof TObject, ValueOf<TObject>> {
   getSilent<TKey extends keyof TObject>(key: TKey) {

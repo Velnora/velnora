@@ -1,7 +1,8 @@
 ---
+
 description: "Apply when working on Zod schemas, inferred contract types, derived schema variants, or nestjs-zod DTO validation; confirm Zod usage from imports or dependencies."
 alwaysApply: false
-globs: ["**/*.schema.ts","**/*.schema.mts","**/*.schema.cts"]
+globs: ["**/*.schema.ts","**/_.schema.mts","**/_.schema.cts"]
 ---
 
 ## Zod

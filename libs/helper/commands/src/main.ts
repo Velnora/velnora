@@ -7,7 +7,7 @@
  * layer: tooling
  * visibility: public
  */
-import { Program, type inferCommandType } from "@velnora/cli-helper";
+import { type inferCommandType, Program } from "@velnora/cli-helper";
 import type { RequiredKeys } from "@velnora/types";
 
 export const program = Program.createProgram();

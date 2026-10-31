@@ -1,6 +1,5 @@
-import type { FC } from "react";
-
 import type { WithDefault } from "@velnora/types";
+import type { FC } from "react";
 
 import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";
 

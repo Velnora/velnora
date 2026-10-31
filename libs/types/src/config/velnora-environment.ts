@@ -13,5 +13,4 @@
  * Currently a placeholder — will be populated as environment-aware
  * features (env variables, build flags, etc.) are implemented.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface VelnoraEnvironment {}

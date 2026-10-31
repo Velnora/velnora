@@ -1,6 +1,5 @@
-import { type ComponentType, type FC, type PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
-
 import type { PathObject } from "@velnora/router/client";
+import { type ComponentType, type FC, type PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
 
 import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";
 import { routerContext } from "../router/router-context";

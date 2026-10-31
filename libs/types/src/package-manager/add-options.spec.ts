@@ -22,7 +22,6 @@ describe("AddOptions interface (type-level)", () => {
   });
 
   it("is assignable from an empty object (all properties optional)", () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     expectTypeOf<{}>().toExtend<AddOptions>();
   });
 

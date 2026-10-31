@@ -1,6 +1,5 @@
-import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
 import { LogLevel } from "@velnora/types";
+import { afterEach, beforeEach, describe, expect, it, type MockInstance, vi } from "vitest";
 
 import { Logger } from "./logger";
 

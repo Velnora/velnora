@@ -1,13 +1,10 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
-
-import { glob } from "glob";
-import type { PackageJson } from "type-fest";
-
 import { velnoraAppConfigSchema } from "@velnora/contracts";
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import { Node as NodeClient } from "@velnora/devkit/client";
 import { type Package, PackageKind, type VelnoraAppConfig, type VelnoraConfig } from "@velnora/types";
+import { glob } from "glob";
+import type { PackageJson } from "type-fest";
 
 import { VelnoraConfigError } from "../error/velnora-config-error";
 import { loadConfigFile } from "../utils";
@@ -35,7 +32,7 @@ export class Node extends NodeClient implements Package {
     }
 
     if (
-      !!(this.packageJson.main || this.packageJson.module || this.packageJson.exports) &&
+      (this.packageJson.main || this.packageJson.module || this.packageJson.exports) &&
       glob.sync(`src/{main,index}.*`, { cwd: this.root }).length > 0
     ) {
       return PackageKind.Lib;

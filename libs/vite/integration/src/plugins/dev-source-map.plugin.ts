@@ -1,8 +1,6 @@
 import { resolve } from "node:path";
-
-import type { Plugin, ResolvedConfig } from "vite";
-
 import type { VelnoraConfig } from "@velnora/types";
+import type { Plugin, ResolvedConfig } from "vite";
 
 export const devSourceMapPlugin = (velnoraConfig: VelnoraConfig): Plugin => {
   let config: ResolvedConfig = null!;

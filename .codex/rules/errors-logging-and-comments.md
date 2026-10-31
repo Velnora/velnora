@@ -1,4 +1,5 @@
 ---
+
 description: "Apply when writing, reviewing, or refactoring error handling, logging, or code comments."
 alwaysApply: true
 globs: []

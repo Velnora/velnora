@@ -1,5 +1,5 @@
 import { defu } from "defu";
-import { type UserConfig, defineConfig } from "vite";
+import { defineConfig, type UserConfig } from "vite";
 import dtsPlugin from "vite-plugin-dts";
 import tsconfigPaths from "vite-tsconfig-paths";
 

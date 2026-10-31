@@ -1,8 +1,7 @@
+import type { Package, VirtualOptions, ViteApi } from "@velnora/types";
 import _ from "lodash";
 import type { LiteralUnion } from "type-fest";
 import type { EnvironmentOptions } from "vite";
-
-import type { Package, VirtualOptions, ViteApi } from "@velnora/types";
 
 import { debug } from "../utils/debug";
 import type { ViteContainer } from "./vite-container";

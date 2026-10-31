@@ -3,9 +3,9 @@
  * type: author
  * author: MDReal
  */
-import type { Promisable } from "type-fest";
 
 import type { Key } from "@velnora/types";
+import type { Promisable } from "type-fest";
 
 import type { DepNodeLike } from "../../types/dep-node-like";
 import type { DepSpecOrKey } from "../../types/dep-spec-or-node";

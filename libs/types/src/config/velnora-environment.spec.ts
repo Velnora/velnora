@@ -9,7 +9,6 @@ describe("VelnoraEnvironment interface (type-level)", () => {
   });
 
   it("should be assignable from an empty object", () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     expectTypeOf<{}>().toExtend<VelnoraEnvironment>();
   });
 

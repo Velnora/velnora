@@ -8,5 +8,5 @@
  * visibility: public
  */
 
-export * from "./program";
 export * from "./command";
+export * from "./program";

@@ -1,7 +1,7 @@
 import { dirname } from "node:path";
 
 import { initWorkspace } from "@velnora/generator";
-import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, type MockInstance, vi } from "vitest";
 
 import { handleInit } from "./init";
 

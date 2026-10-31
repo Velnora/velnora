@@ -50,7 +50,9 @@ The public `velnora` package exposes `defineConfig()` for type-safe authoring:
 
 ```ts
 import { defineConfig } from "velnora";
-export default defineConfig({ /* autocomplete here */ });
+export default defineConfig({
+  /* autocomplete here */
+});
 ```
 
 ## Validation

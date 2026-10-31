@@ -1,9 +1,7 @@
-import { createServer as createHttpServer } from "node:http";
 import type { Server as HttpServer } from "node:http";
-
-import express from "express";
-
+import { createServer as createHttpServer } from "node:http";
 import type { VelnoraConfig, Http as VelnoraHttp } from "@velnora/types";
+import express from "express";
 
 import { debug } from "../utils/debug";
 import { Middlewares } from "./middlewares";

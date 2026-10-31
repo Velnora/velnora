@@ -1,14 +1,34 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
-    "build": { "cache": true, "dependsOn": ["^build"] },
-    "lint": { "cache": true },
-    "test": { "cache": true },
-    "typecheck": { "cache": true }
+    "build": {
+      "cache": true,
+      "dependsOn": ["^build"]
+    },
+    "lint": {
+      "cache": true
+    },
+    "test": {
+      "cache": true
+    },
+    "typecheck": {
+      "cache": true
+    },
+    "format:check": {
+      "cache": true
+    },
+    "check": {
+      "cache": true
+    }
   },
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "sharedGlobals": ["{workspaceRoot}/tsconfig.base.json", "{workspaceRoot}/yarn.lock"]
+    "sharedGlobals": [
+      "{workspaceRoot}/tsconfig.base.json",
+      "{workspaceRoot}/yarn.lock",
+      "{workspaceRoot}/biome.json",
+      "{workspaceRoot}/.editorconfig"
+    ]
   },
   "release": {
     "version": {

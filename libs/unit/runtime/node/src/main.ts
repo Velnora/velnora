@@ -11,10 +11,8 @@ import { execSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { createRequire } from "node:module";
 import { resolve } from "node:path";
-
-import type { PackageJson } from "type-fest";
-
 import { defineRuntime, validateVersionRange } from "@velnora/utils";
+import type { PackageJson } from "type-fest";
 
 import pkgJson from "../package.json";
 import { NpmPackageManager } from "./package-managers/npm";

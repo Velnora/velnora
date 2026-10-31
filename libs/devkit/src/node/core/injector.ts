@@ -1,5 +1,3 @@
-import type { Request, Response } from "express";
-
 import type {
   BackendRoute,
   ContextManager,
@@ -19,6 +17,7 @@ import type {
   ViteServer,
   WithDefault
 } from "@velnora/types";
+import type { Request, Response } from "express";
 
 import { debug } from "../utils/debug";
 import { isAsyncIterable } from "../utils/is-async-iterable";

@@ -10,10 +10,10 @@ Start a development host that serves every project in the workspace.
 velnora dev [--port <number>] [--host <string>]
 ```
 
-| Flag     | Default       | Description                    |
-| -------- | ------------- | ------------------------------ |
-| `--port` | `3000`        | Port for the HTTP host         |
-| `--host` | `"localhost"` | Hostname to bind               |
+| Flag     | Default       | Description            |
+| -------- | ------------- | ---------------------- |
+| `--port` | `3000`        | Port for the HTTP host |
+| `--host` | `"localhost"` | Hostname to bind       |
 
 Options are typed as `DevCommandOptions` from `@velnora/commands`.
 
@@ -56,10 +56,10 @@ CLI (libs/cli)
 
 ## Routes
 
-| Route                     | Response                            |
-| ------------------------- | ----------------------------------- |
-| `GET /`                   | JSON index of all projects          |
-| `GET /{project.path}/**`  | Project-specific handler (stub)     |
+| Route                    | Response                        |
+| ------------------------ | ------------------------------- |
+| `GET /`                  | JSON index of all projects      |
+| `GET /{project.path}/**` | Project-specific handler (stub) |
 
 ## Error conditions
 

@@ -3,9 +3,9 @@
  * type: author
  * author: MDReal
  */
-import type { PackageJson } from "type-fest";
 
 import type { Project as IProject, ProjectOptions, VelnoraAppConfig } from "@velnora/types";
+import type { PackageJson } from "type-fest";
 
 /**
  * Represents a discovered project within the Velnora workspace.

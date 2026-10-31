@@ -27,9 +27,7 @@ describe("Toolchain interface (type-level)", () => {
     });
 
     it("has a `resolve` method that accepts ToolchainContext and returns Promisable<ResolvedToolchain>", () => {
-      expectTypeOf<Toolchain["resolve"]>().toEqualTypeOf<
-        (ctx: ToolchainContext) => Promisable<ResolvedToolchain>
-      >();
+      expectTypeOf<Toolchain["resolve"]>().toEqualTypeOf<(ctx: ToolchainContext) => Promisable<ResolvedToolchain>>();
     });
   });
 

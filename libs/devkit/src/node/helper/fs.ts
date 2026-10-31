@@ -1,11 +1,9 @@
-import { readFileSync } from "fs";
 import { mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
-
-import { type GlobOptionsWithFileTypesFalse, glob } from "glob";
-
 import type { FsApi, FsOptions } from "@velnora/types";
+import { readFileSync } from "fs";
+import { type GlobOptionsWithFileTypesFalse, glob } from "glob";
 
 export class Fs implements FsApi {
   private lockedPaths: string[] = [];

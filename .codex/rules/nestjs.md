@@ -1,7 +1,8 @@
 ---
+
 description: "Apply when working on NestJS applications, modules, controllers, services, repositories, providers, DTOs, or Nest wiring; confirm NestJS usage from imports or package dependencies."
 alwaysApply: false
-globs: ["**/*.module.ts","**/*.controller.ts","**/*.service.ts","**/*.repository.ts","**/*.provider.ts","**/*.dto.ts","**/nest-cli.json"]
+globs: ["**/*.module.ts","**/_.controller.ts","**/_.service.ts","**/*.repository.ts","**/_.provider.ts","**/_.dto.ts","**/nest-cli.json"]
 ---
 
 ## NestJS

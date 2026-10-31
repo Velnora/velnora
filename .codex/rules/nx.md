@@ -1,4 +1,5 @@
 ---
+
 description: "Apply before running Nx workspace tasks or generators, navigating Nx project relationships, or changing targets, task pipelines, caching, project metadata, package scripts, or Nx configuration."
 alwaysApply: false
 globs: ["**/nx.json","**/project.json","**/package.json","**/nx.config.*"]

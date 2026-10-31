@@ -1,7 +1,7 @@
 import { getModuleString } from "@velnora/devkit";
 import { collectLayoutsForPage, fileToRoutePath } from "@velnora/router";
 import type { ClientRoute } from "@velnora/router/client";
-import { type VelnoraContext, ssrTargetMode } from "@velnora/types";
+import { ssrTargetMode, type VelnoraContext } from "@velnora/types";
 
 import pkg from "../../../package.json";
 import { capitalize } from "../utils/capitalize";

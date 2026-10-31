@@ -1,4 +1,5 @@
 ---
+
 description: "Apply when writing, reviewing, or refactoring functions, control flow, and side effects."
 alwaysApply: true
 globs: []

@@ -8,12 +8,10 @@
  * visibility: public
  */
 import type { IncomingMessage, Server, ServerResponse } from "node:http";
-
-import { H3, defineEventHandler } from "h3";
+import { defineAdapter } from "@velnora/utils";
+import { defineEventHandler, H3 } from "h3";
 import { toNodeHandler } from "h3/node";
 import { listen } from "listhen";
-
-import { defineAdapter } from "@velnora/utils";
 
 import pkgJson from "../package.json";
 import type { HttpAdapter } from "./types/http-adapter";

@@ -3,9 +3,6 @@
  * type: author
  * author: MDReal
  */
-import merge from "lodash.merge";
-
-import type Http from "http";
 
 import h3 from "@velnora/adapter-h3";
 import type { DevCommandOptions } from "@velnora/commands";
@@ -22,15 +19,17 @@ import {
 } from "@velnora/types";
 import {
   CONFIG_REGISTRY,
+  DepGraph,
+  detectProjects,
+  detectWorkspace,
   GlobalRegistry,
   NoAdapterProvidedException,
   NoRuntimeProvidedException,
-  UNITS_REGISTRY,
-  detectProjects,
-  detectWorkspace,
-  parseConfig
+  parseConfig,
+  UNITS_REGISTRY
 } from "@velnora/utils";
-import { DepGraph } from "@velnora/utils";
+import type Http from "http";
+import merge from "lodash.merge";
 
 import { BaseContext } from "../helper/base-context";
 

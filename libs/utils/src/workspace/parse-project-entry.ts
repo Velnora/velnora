@@ -5,11 +5,9 @@
  */
 import { readFile } from "node:fs/promises";
 import { dirname, relative } from "node:path";
-
+import type { VelnoraAppConfig } from "@velnora/types";
 import destr from "destr";
 import type { PackageJson } from "type-fest";
-
-import type { VelnoraAppConfig } from "@velnora/types";
 
 import { Project } from "../project";
 import { parseConfig } from "./parse-config";

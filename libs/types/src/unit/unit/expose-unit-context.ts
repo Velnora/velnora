@@ -32,7 +32,9 @@ export interface ExposeUnitContext<
   ): void;
 
   /** Register a public API for multiple capabilities at once. */
-  expose(api: {
-    [TProp in TCapabilities[number]]?: TProp extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TProp] : never;
-  }): void;
+  expose(
+    api: {
+      [TProp in TCapabilities[number]]?: TProp extends keyof Velnora.UnitRegistry ? Velnora.UnitRegistry[TProp] : never;
+    }
+  ): void;
 }

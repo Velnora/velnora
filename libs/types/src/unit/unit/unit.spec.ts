@@ -168,9 +168,7 @@ describe("RuntimeUnit<TRequiredUnits, TOptionalUnits, TCapabilities> interface (
     });
 
     it("has `resolve` method returning Promisable<ResolvedToolchain>", () => {
-      expectTypeOf<RuntimeUnit["resolve"]>().toEqualTypeOf<
-        (ctx: ToolchainContext) => Promisable<ResolvedToolchain>
-      >();
+      expectTypeOf<RuntimeUnit["resolve"]>().toEqualTypeOf<(ctx: ToolchainContext) => Promisable<ResolvedToolchain>>();
     });
 
     it("has optional `compile` method with correct signature", () => {

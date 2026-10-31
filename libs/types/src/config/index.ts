@@ -8,5 +8,5 @@
  * visibility: public
  */
 
-export * from "./velnora-config";
 export * from "./velnora-app";
+export * from "./velnora-config";
