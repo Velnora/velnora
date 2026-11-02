@@ -246,3 +246,6 @@ Thumbs.db
 libs/**/build
 packages/**/build
 examples/**/build
+
+# Obsidian session layouts are local to each developer
+docs/.obsidian/workspace*.json

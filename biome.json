@@ -249,5 +249,13 @@
         "organizeImports": "on"
       }
     }
+  },
+  "markdown": {
+    "parser": {
+      "frontmatter": true
+    },
+    "formatter": {
+      "formatEmbeds": false
+    }
   }
 }
