@@ -20,4 +20,4 @@ A first pass adapted the reference setup for Codex, recorded in [the setup hando
 
 ## Current state
 
-Everything is on `chore/agent-setup/codex-workflow` and uncommitted. The clean-up handoff is the one to read first; the earlier four describe a Codex setup that no longer exists. The department flow is written but not automated: the coordinator starts each agent by hand. What still fails across the workspace is in [`STATUS.md`](../../../../STATUS.md).
+Everything is committed on `chore/agent-setup/claude-departments` and open for review as [pull request 24](https://github.com/Velnora/velnora/pull/24). The clean-up handoff is the one to read first; the earlier four describe a Codex setup that no longer exists. The department flow is written but not automated: the coordinator starts each agent by hand. What still fails across the workspace is in [`STATUS.md`](../../../../STATUS.md).

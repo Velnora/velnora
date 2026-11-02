@@ -1,6 +1,6 @@
 # Velnora status
 
-Updated 2026-11-02 from the code on `chore/agent-setup/codex-workflow`. [The book](docs/velnora.md) explains each part; this page lists what works, what doesn't, and what fails, so nobody mistakes a known failure for a new one.
+Updated 2026-11-02 from the code on `chore/agent-setup/claude-departments`. [The book](docs/velnora.md) explains each part; this page lists what works, what doesn't, and what fails, so nobody mistakes a known failure for a new one.
 
 ## What works
 

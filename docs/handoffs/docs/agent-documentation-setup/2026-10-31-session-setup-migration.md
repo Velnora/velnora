@@ -6,7 +6,7 @@ role: session
 model: unavailable
 date: "2026-10-31"
 status: done
-branch: chore/agent-setup/codex-workflow
+branch: chore/agent-setup/claude-departments
 pr:
 ---
 
@@ -32,7 +32,7 @@ The migrated hook passed all 82 source Node tests. Three direct protocol checks 
 
 ## Where it stands
 
-Implemented and locally verified, with changes uncommitted on `chore/agent-setup/codex-workflow`. No PR is open and no remote changes have been made by this setup migration. Claude is not installed in this environment, so hook behavior was tested through Node rather than a live Claude session.
+Implemented and locally verified, with changes uncommitted on `chore/agent-setup/claude-departments`. No PR is open and no remote changes have been made by this setup migration. Claude is not installed in this environment, so hook behavior was tested through Node rather than a live Claude session.
 
 ## Next
 

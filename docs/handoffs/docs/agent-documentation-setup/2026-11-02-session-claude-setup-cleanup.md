@@ -6,8 +6,8 @@ role: session
 model: claude-opus-5-5
 date: "2026-11-02"
 status: done
-branch: chore/agent-setup/codex-workflow
-pr:
+branch: chore/agent-setup/claude-departments
+pr: 24
 ---
 
 # Replace the Codex setup with a Claude one and rewrite the book
@@ -50,8 +50,8 @@ Legacy pages (`00-overview.md`, `10-runtime.md`, the iteration log, `spec/`, `ad
 
 ## Where it stands
 
-The book, the departments, the agent files, `STATUS.md` and the docs check are done and checked, all uncommitted on `chore/agent-setup/codex-workflow`. No department role has run on real work yet.
+The book, the departments, the agent files, `STATUS.md` and the docs check are done and checked, committed in two commits on `chore/agent-setup/claude-departments` (the docs check first, then everything else) and open as [pull request 24](https://github.com/Velnora/velnora/pull/24). The branch was renamed from `chore/agent-setup/codex-workflow`, since it no longer holds a Codex workflow. No department role has run on real work yet.
 
 ## Next
 
-Ask the maintainer how to split the commits, and whether to rename the branch, since it no longer holds a Codex workflow. Then try the department flow on one small real issue, to learn what each role is worth.
+Wait for the maintainer to review and merge pull request 24. Then try the department flow on one small real issue, to learn what each role is worth.

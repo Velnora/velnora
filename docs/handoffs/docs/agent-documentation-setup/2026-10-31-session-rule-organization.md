@@ -7,7 +7,7 @@ role: session
 model: unavailable
 date: "2026-10-31"
 status: done
-branch: chore/agent-setup/codex-workflow
+branch: chore/agent-setup/claude-departments
 pr:
 ---
 
@@ -29,7 +29,7 @@ The transformation preserved all four general sections and all 18 Nx rule bullet
 
 ## Where it stands
 
-The rules are grouped and the local setup remains uncommitted on `chore/agent-setup/codex-workflow`. GitHub Projects remains the task tracker, and native Codex hook configuration stays separate from rule documents.
+The rules are grouped and the local setup remains uncommitted on `chore/agent-setup/claude-departments`. GitHub Projects remains the task tracker, and native Codex hook configuration stays separate from rule documents.
 
 ## Next
 

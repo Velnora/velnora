@@ -7,7 +7,7 @@ role: session
 model: unavailable
 date: "2026-10-31"
 status: done
-branch: chore/agent-setup/codex-workflow
+branch: chore/agent-setup/claude-departments
 pr:
 ---
 
