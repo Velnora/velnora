@@ -15,6 +15,7 @@ import type { Command } from "../core";
  * type Options = inferCommandType<typeof cmd>; // { bar: string }
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+// biome-ignore lint/suspicious/noExplicitAny: Conditional inference matches arbitrary command implementations.
 export type inferCommandType<TCommand extends Command<any>> =
   TCommand extends Command<infer TOptions> ? TOptions : never;

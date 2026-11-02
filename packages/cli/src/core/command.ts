@@ -22,10 +22,9 @@ import { parseSpec } from "../utils/parse-spec";
  * @template TAccum - Accumulator type for parsed arguments (inferred from options/positionals).
  * @template TPrefetchResult - Type of the result from the prefetch callback.
  */
-export class Command<TAccum extends object = object, TPrefetchResult = void> implements CommandDef<
-  TAccum,
-  TPrefetchResult
-> {
+export class Command<TAccum extends object = object, TPrefetchResult = void>
+  implements CommandDef<TAccum, TPrefetchResult>
+{
   private readonly registeredCommands = new Set<string>();
 
   declare describe: string | undefined;
@@ -156,7 +155,6 @@ export class Command<TAccum extends object = object, TPrefetchResult = void> imp
    * @param cb - The callback function.
    */
   prefetch<const TResult>(cb: (args: TAccum) => Promisable<TResult>) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     this.prefetchableCb = cb;
     return this as unknown as Command<TAccum, TResult>;

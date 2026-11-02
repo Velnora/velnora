@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "build": "vite build --configLoader runner",
-    "lint": "eslint .",
+    "lint": "biome lint .",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json"
   },

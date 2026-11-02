@@ -7,11 +7,9 @@
  */
 import { statSync } from "node:fs";
 import { readFile } from "node:fs/promises";
-
+import type { Project } from "@velnora/types";
 import { listen } from "listhen";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-
-import type { Project } from "@velnora/types";
 
 import { resolveStaticFile } from "../utils/resolve-static-file";
 import { Host } from "./host";

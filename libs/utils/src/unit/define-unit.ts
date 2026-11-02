@@ -3,10 +3,9 @@
  * type: author
  * author: MDReal
  */
-import type { LiteralUnion } from "type-fest";
 
-import type { Unit, UnitKind } from "@velnora/types";
-import { type ConfigEnv } from "@velnora/types";
+import type { ConfigEnv, Unit, UnitKind } from "@velnora/types";
+import type { LiteralUnion } from "type-fest";
 
 import type { WithConfigEnv } from "../types";
 

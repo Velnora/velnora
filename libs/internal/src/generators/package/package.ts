@@ -5,21 +5,18 @@
  */
 import { createRequire } from "node:module";
 import { relative } from "node:path";
-
-import type { PackageJson } from "type-fest";
-import { type TsConfigJson } from "type-fest";
-
 import {
-  type Tree,
   formatFiles,
   generateFiles,
   getPackageManagerCommand,
   joinPathFragments,
   names,
+  type Tree,
   updateJson,
   writeJson
 } from "@nx/devkit";
 import { capitalize } from "@nx/devkit/src/utils/string-utils";
+import type { PackageJson, TsConfigJson } from "type-fest";
 
 import type { PackageGeneratorSchema } from "./schema";
 import { executeCommand } from "./utils/execute-command";

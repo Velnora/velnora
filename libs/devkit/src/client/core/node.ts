@@ -1,9 +1,7 @@
+import type { Package, PackageKind, VelnoraAppConfig, VelnoraConfig } from "@velnora/types";
 import { parse } from "semver";
 import type { PackageJson } from "type-fest";
 import { v4 as uuidv4 } from "uuid";
-
-import type { PackageKind } from "@velnora/types";
-import type { Package, VelnoraAppConfig, VelnoraConfig } from "@velnora/types";
 
 import type { Node as ServerNode } from "../../node/core/node";
 

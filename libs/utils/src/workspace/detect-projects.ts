@@ -4,11 +4,9 @@
  * author: MDReal
  */
 import { readFile } from "node:fs/promises";
-
+import type { Project } from "@velnora/types";
 import { glob } from "glob";
 import type { PackageJson } from "type-fest";
-
-import type { Project } from "@velnora/types";
 
 import { parseProjectEntry } from "./parse-project-entry";
 

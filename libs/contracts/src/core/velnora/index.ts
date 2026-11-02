@@ -1,2 +1,2 @@
-export * from "./velnora-config.schema";
 export * from "./server.schema";
+export * from "./velnora-config.schema";

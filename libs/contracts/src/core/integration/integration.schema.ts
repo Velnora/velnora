@@ -1,6 +1,5 @@
-import { z } from "zod";
-
 import type { Integration } from "@velnora/types";
+import { z } from "zod";
 
 export const integrationSchema = z.object({
   name: z.string(),

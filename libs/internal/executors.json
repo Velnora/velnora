@@ -1,0 +1,9 @@
+{
+  "executors": {
+    "docs-check": {
+      "implementation": "./src/executors/docs-check/executor",
+      "schema": "./src/executors/docs-check/schema.json",
+      "description": "Check links, book navigation, unique names and table alignment across workspace Markdown"
+    }
+  }
+}

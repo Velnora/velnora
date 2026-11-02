@@ -14,7 +14,6 @@ export * from "./base-unit-context";
 export * from "./expose-unit-context";
 export * from "./integration-unit";
 export * from "./runtime-unit";
+export * from "./unit";
 export * from "./unit-kind";
 export * from "./velnora-unit";
-
-export * from "./unit";

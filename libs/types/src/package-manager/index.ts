@@ -20,8 +20,8 @@
 
 export * from "./add-options";
 export * from "./audit-result";
-export * from "./dependency";
 export * from "./depdendency-scope";
+export * from "./dependency";
 export * from "./dependency-tree";
 export * from "./install-options";
 export * from "./outdated-result";

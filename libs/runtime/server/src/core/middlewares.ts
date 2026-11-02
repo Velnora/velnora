@@ -1,9 +1,7 @@
 import { EventEmitter } from "node:events";
-
-import type { RequestHandler } from "express";
-import type e from "express";
-
 import type { ExtractParamsObject, Middlewares as VelnoraMiddlewares } from "@velnora/types";
+import type e from "express";
+import type { RequestHandler } from "express";
 
 import { debug } from "../utils/debug";
 

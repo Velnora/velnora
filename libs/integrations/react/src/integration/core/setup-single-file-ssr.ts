@@ -1,5 +1,5 @@
 import type { ClientRoute } from "@velnora/router/client";
-import { type VelnoraContext, ssrTargetMode } from "@velnora/types";
+import { ssrTargetMode, type VelnoraContext } from "@velnora/types";
 
 import pkg from "../../../package.json";
 import { prepareSingleFileSetup } from "../helper/prepare-single-file-setup";

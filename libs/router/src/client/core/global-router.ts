@@ -1,8 +1,7 @@
-import { applications, applicationsMap } from "@velnora:applications";
-import bootstrap from "@velnora:bootstrap";
-
 import type { Node } from "@velnora/devkit/client";
 import type { Package } from "@velnora/types";
+import { applications, applicationsMap } from "@velnora:applications";
+import bootstrap from "@velnora:bootstrap";
 
 import type { AppPathObject, ExternalPathObject, PathObject } from "../types";
 import type { Router } from "./router";

@@ -1,5 +1,5 @@
-import { describe, expectTypeOf, it } from "vitest";
 import type { Promisable } from "type-fest";
+import { describe, expectTypeOf, it } from "vitest";
 
 import type { PackageManager } from "../../package-manager/package-manager";
 import type { Project } from "../../project/project";

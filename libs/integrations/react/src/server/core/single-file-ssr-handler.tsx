@@ -1,8 +1,7 @@
-import type { JSX } from "react";
-import { renderToString } from "react-dom/server";
-
 import type { ClientRoute } from "@velnora/router/client";
 import type { RenderFn, WithDefault } from "@velnora/types";
+import type { JSX } from "react";
+import { renderToString } from "react-dom/server";
 
 import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";
 

@@ -1,6 +1,5 @@
-import type { JSX } from "react";
-
 import type { ClientRoute, Router as VelnoraRouter } from "@velnora/router/client";
+import type { JSX } from "react";
 
 import type { ReactRouteDescriptor } from "../../types/react-route-descriptor";
 import { Router } from "../components/router";

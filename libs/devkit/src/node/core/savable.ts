@@ -1,9 +1,7 @@
 import { resolve } from "node:path";
-
+import type { FsApi } from "@velnora/types";
 import type { Debugger } from "debug";
 import type { Promisable } from "type-fest";
-
-import type { FsApi } from "@velnora/types";
 
 import { Fs, globals } from "../helper";
 

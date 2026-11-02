@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "DocsCheck",
+  "title": "Docs check executor",
+  "description": "Check every Markdown file in the whole workspace from context.root, not only the project folder.",
+  "type": "object",
+  "properties": {
+    "fix": {
+      "type": "boolean",
+      "default": false,
+      "description": "Align tables in place; report every other problem."
+    }
+  },
+  "additionalProperties": false
+}

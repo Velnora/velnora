@@ -3,10 +3,10 @@
  * type: author
  * author: MDReal
  */
-import type { Promisable } from "type-fest";
 
 import type { BaseUnitContext, ExposeUnitContext, VelnoraUnit } from "@velnora/types";
 import { CONTEXT_REGISTRY, GlobalRegistry, UNITS_REGISTRY } from "@velnora/utils";
+import type { Promisable } from "type-fest";
 
 import type { ExposeItem } from "../types/expose-item";
 
@@ -163,9 +163,7 @@ export class BaseContext implements BaseUnitContext, ExposeUnitContext {
         continue;
       }
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const value = apiObject[rawKey];
       this.enqueue({ kind: "set", key: canonicalKey, value });
     }

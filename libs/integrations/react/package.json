@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "build": "tsup --config tsup.config.ts",
-    "lint": "eslint .",
+    "lint": "biome lint .",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.build.json"
   },
@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "@velnora/types": "workspace:^",
-    "eslint": "^10.3.0",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3",
     "vitest": "^4.1.5"

@@ -3,9 +3,9 @@
  * type: author
  * author: MDReal
  */
-import pc from "picocolors";
 
 import { LogLevel } from "@velnora/types";
+import pc from "picocolors";
 
 import { makeRegistryObject } from "./utils/make-registry-object";
 

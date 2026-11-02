@@ -1,9 +1,7 @@
 import { resolve } from "node:path";
-
-import _ from "lodash";
-
 import type { DevCommandOptions } from "@velnora/commands";
 import type { VelnoraConfig } from "@velnora/types";
+import _ from "lodash";
 
 export const mergeConfig = (options: DevCommandOptions, config: VelnoraConfig): VelnoraConfig => {
   return _.merge<Partial<VelnoraConfig>, VelnoraConfig>(

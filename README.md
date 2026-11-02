@@ -11,25 +11,30 @@ Velnora is a next-generation platform for building scalable, independent microfr
 Modern frontend development is complex. You have legacy apps, strict SSR requirements, and a mix of various framework versions. Velnora solves the chaos by treating every app as its own universe.
 
 ### 🚀 True Independence
+
 Run different frameworks (React, Vue, Svelte, etc.) or different versions of the same framework side-by-side. Upgrade your legacy dashboard without breaking your new analytics page. Each app manages its own dependency graph, ensuring zero conflicts.
 
 ### ✨ Zero Boilerplate DX
+
 Focus on your code, not the glue. Velnora's intelligent plugins automatically inject lifecycle methods like `mount` and `render` at build time.
-*   **No manual entry points.**
-*   **No complex wiring.**
-*   Just write standard `client/app.tsx` or use the `appDir` router, and Velnora handles the rest.
+-   **No manual entry points.**
+-   **No complex wiring.**
+-   Just write standard `client/app.tsx` or use the `appDir` router, and Velnora handles the rest.
 
 ### 🧩 Smart Code Sharing
-Share UI libraries without the typical "version hell." Shared components bind to the *consumer's* framework version, not the producer's. Reuse your Design System everywhere, regardless of the app's framework version.
+
+Share UI libraries without the typical "version hell." Shared components bind to the _consumer's_ framework version, not the producer's. Reuse your Design System everywhere, regardless of the app's framework version.
 
 ### ⚡ Framework-Agnostic Routing
+
 A powerful Router Core orchestrates navigation across your entire platform. Move seamlessly between apps (`/dashboard` → `/settings`) with a unified browser history and zero page reloads.
 
 ### 🔗 Borderless Communication
+
 Micro apps in Velnora are not just isolated UI islands. They seamlessly connect client and server logic.
-*   **Unified Graph**: Client-side logic can transparently invoke server-side handlers.
-*   **Typed Contracts**: Define your API surface once and get full type-safety across the boundary.
-*   **Velnora Handles the Plumbing**: No need to manually configure Express/Fastify routes or CORS. It's just function calls.
+-   **Unified Graph**: Client-side logic can transparently invoke server-side handlers.
+-   **Typed Contracts**: Define your API surface once and get full type-safety across the boundary.
+-   **Velnora Handles the Plumbing**: No need to manually configure Express/Fastify routes or CORS. It's just function calls.
 
 ---
 
@@ -38,36 +43,59 @@ Micro apps in Velnora are not just isolated UI islands. They seamlessly connect 
 Velnora rethinks the microfrontend architecture to prioritize stability and developer experience.
 
 ### 1. The Apps (Microfrontends)
+
 All applications in Velnora, including the Host, share a unified architecture.
-*   **Uniform Functionality**: Any app can be configured to serve the root path (`/`) and act as the main entry point.
-*   **Autonomous Builds**: Each app is built independently.
-*   **Resolution Scopes**: Dependencies are resolved relative to the specific app, ensuring complete isolation.
-*   **CSR & SSR**: Full support for both Client-Side and Server-Side Rendering.
+-   **Uniform Functionality**: Any app can be configured to serve the root path (`/`) and act as the main entry point.
+-   **Autonomous Builds**: Each app is built independently.
+-   **Resolution Scopes**: Dependencies are resolved relative to the specific app, ensuring complete isolation.
+-   **CSR & SSR**: Full support for both Client-Side and Server-Side Rendering.
 
 ### 2. The Composition
+
 When a user navigates, Velnora dynamically loads the correct app and composes the output—whether it's a client-side mount or a server-side HTML stream.
 
 ---
 
 ## Architecture at a Glance
 
-| Feature | Implementation | benefit |
-| :--- | :--- | :--- |
-| **Routing** | Global Router Core | Consistent navigation without page reloads. |
+| Feature       | Implementation           | benefit                                         |
+| :------------ | :----------------------- | :---------------------------------------------- |
+| **Routing**   | Global Router Core       | Consistent navigation without page reloads.     |
 | **Isolation** | Unique Resolution Scopes | Different framework versions coexist perfectly. |
-| **SSR** | Per-App Renderer | No conflicts on the server; robust SEO. |
-| **Data** | Borderless Handlers | Seamless, typed client-server communication. |
-| **Registry** | `@velnora:applications` | Zero-configuration app discovery. |
+| **SSR**       | Per-App Renderer         | No conflicts on the server; robust SEO.         |
+| **Data**      | Borderless Handlers      | Seamless, typed client-server communication.    |
+| **Registry**  | `@velnora:applications`  | Zero-configuration app discovery.               |
 
 ---
 
 ## What Velnora Is Not
 
-*   ❌ **It is NOT Module Federation.** We do not force shared singletons or webpack-specific constraints.
-*   ❌ **It is NOT a Monolith.** Your apps are decoupled at build time and deploy time.
-*   ❌ **It is NOT "Just a Router."** It is a complete lifecycle runtime that handles the hard parts of orchestration for you.
+-   ❌ **It is NOT Module Federation.** We do not force shared singletons or webpack-specific constraints.
+-   ❌ **It is NOT a Monolith.** Your apps are decoupled at build time and deploy time.
+-   ❌ **It is NOT "Just a Router."** It is a complete lifecycle runtime that handles the hard parts of orchestration for you.
 
 ---
 
 **Ready to build the future of frontend?**
 Dive into the `examples/` directory to see Velnora in action.
+
+## Repository checks
+
+Use Yarn 4.12.0 and the repository-pinned Biome 2.6.4. Biome owns linting, formatting, and import organization; ESLint and Prettier are no longer used.
+
+| Command             | Purpose                                                    |
+| ------------------- | ---------------------------------------------------------- |
+| `yarn lint`         | Run package lint targets through Nx                        |
+| `yarn lint:all`     | Lint the entire repository, including tooling              |
+| `yarn format:check` | Check formatting without changing files                    |
+| `yarn format`       | Apply formatting                                           |
+| `yarn check`        | Check lint, formatting, and import organization            |
+| `yarn check:fix`    | Apply formatting, import organization, and safe lint fixes |
+
+Configuration lives in [biome.json](biome.json). Generated build output, dependencies, caches, IDE metadata, and the Yarn-managed lockfile are excluded. Nx cache inputs include the shared Biome configuration and EditorConfig. New packages generated by the internal package generator use Biome for linting.
+
+The lint configuration uses rules migrated from ESLint, with explicit type-only imports. Some type-aware TypeScript ESLint checks have no direct Biome equivalent; keep running `yarn typecheck` separately. The former Nx tag-based dependency-boundary rule was removed with ESLint. Biome uses its own import organization and package formatting rather than the former Prettier plugins.
+
+## Documentation
+
+Start with [the Velnora book](docs/velnora.md) for the product, runtime systems, package guide, and development workflow. [Current status](STATUS.md) separates implemented code from incomplete work and failing checks. The docs folder is an Obsidian vault with job and handoff templates. Claude Code loads [`CLAUDE.md`](CLAUDE.md) and the rules under [`.claude/rules/`](.claude/rules), and [the departments](docs/departments/README.md) describe the agent roles that work on Velnora.

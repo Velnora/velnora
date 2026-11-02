@@ -1,8 +1,7 @@
-import type { LiteralUnion, PackageJson } from "type-fest";
-import type { ViteDevServer } from "vite";
-import type * as vite from "vite";
-
 import type { Http, VelnoraConfig, ViteServer } from "@velnora/types";
+import type { LiteralUnion, PackageJson } from "type-fest";
+import type * as vite from "vite";
+import type { ViteDevServer } from "vite";
 
 import { devRunner } from "../../utils";
 import { debug } from "../../utils/debug";

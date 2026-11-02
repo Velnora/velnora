@@ -8,5 +8,5 @@
  * visibility: public
  */
 
-export * from "./kernel";
 export * from "./create-kernel";
+export * from "./kernel";

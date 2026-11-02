@@ -1,6 +1,5 @@
-import { describe, expect, it } from "vitest";
-
 import { LogLevel } from "@velnora/types";
+import { describe, expect, it } from "vitest";
 
 import { LEVEL_COLOR, LEVEL_LABEL, VELNORA_CONFIG_FILES } from "./constants";
 
