@@ -1,0 +1,13 @@
+{
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "name": "docs",
+  "targets": {
+    "check": {
+      "executor": "@velnora/internal:docs-check",
+      "cache": false,
+      "configurations": {
+        "fix": { "fix": true }
+      }
+    }
+  }
+}

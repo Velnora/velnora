@@ -7,6 +7,7 @@
   "dependencies": {
     "@nx/devkit": "^22.7.1",
     "defu": "^6.1.7",
+    "string-width": "^8.3.0",
     "vite": "^8.0.10",
     "vite-plugin-dts": "^5.0.0",
     "vite-tsconfig-paths": "^6.1.1"
@@ -14,5 +15,6 @@
   "devDependencies": {
     "type-fest": "^5.6.0"
   },
-  "generators": "./generators.json"
+  "generators": "./generators.json",
+  "executors": "./executors.json"
 }
